@@ -141,6 +141,55 @@ describe("description", () => {
   });
 });
 
+describe("user-invoked skills", () => {
+  // mattpocock/skills reported 19 description warnings; every one was a
+  // `disable-model-invocation: true` skill. The model never matches against
+  // those descriptions, so trigger-quality checks on them are pure noise.
+  it("does not demand a trigger from a skill only the human can invoke", () => {
+    expect(
+      check(
+        "alpha",
+        "name: alpha\ndescription: Stop. That last message did not land — re-pitch it.\ndisable-model-invocation: true",
+      ),
+    ).toEqual([]);
+  });
+
+  it("still demands one when the model can invoke it", () => {
+    expect(
+      check("alpha", "name: alpha\ndescription: Stop. That last message did not land — re-pitch it."),
+    ).toEqual(["description-thin", "description-no-trigger"]);
+  });
+
+  it("still enforces the spec limits either way", () => {
+    expect(
+      check(
+        "alpha",
+        `name: alpha\ndescription: ${"x".repeat(1025)}\ndisable-model-invocation: true`,
+      ),
+    ).toContain("description-too-long");
+  });
+});
+
+describe("platform validation", () => {
+  it("warns on a name containing a reserved word", () => {
+    expect(
+      check("claude-tools", "name: claude-tools\ndescription: Use when the claude tooling needs a check."),
+    ).toEqual(["name-reserved-word"]);
+  });
+
+  it("warns on an XML tag in the description", () => {
+    expect(
+      check("alpha", "name: alpha\ndescription: Use when processing <files> that arrive from intake."),
+    ).toEqual(["description-xml-tags"]);
+  });
+
+  it("does not read a comparison as a tag", () => {
+    expect(
+      check("alpha", "name: alpha\ndescription: Use when a list has more than 5 < n items to rebalance."),
+    ).toEqual([]);
+  });
+});
+
 describe("body", () => {
   it("flags frontmatter with nothing after it", () => {
     expect(check("alpha", GOOD, "")).toContain("body-empty");
@@ -160,6 +209,21 @@ describe("body", () => {
     fx.file("alpha/references/GUIDE.md", "# Guide\n");
     expect(check("alpha", GOOD, "See [the guide](references/GUIDE.md).")).toEqual([]);
   });
+
+  it("flags a reference file that links onward, past one level deep", () => {
+    // Claude previews chained files with `head -100` instead of reading them.
+    fx.file("alpha/references/GUIDE.md", "See [the details](details.md).");
+    expect(check("alpha", GOOD, "See [the guide](references/GUIDE.md).")).toEqual([
+      "nested-reference",
+    ]);
+  });
+
+  it("allows a reference file cross-linking a sibling SKILL.md also links", () => {
+    fx.file("alpha/references/GUIDE.md", "See also [the other](EXTRA.md).");
+    fx.file("alpha/references/EXTRA.md", "# Extra\n");
+    const body = "See [the guide](references/GUIDE.md) and [the extra](references/EXTRA.md).";
+    expect(check("alpha", GOOD, body)).toEqual([]);
+  });
 });
 
 describe("referencedFiles", () => {
@@ -176,6 +240,28 @@ describe("referencedFiles", () => {
 
   it("leaves backticked prose alone; bundledPathMentions owns that shape", () => {
     expect(referencedFiles("The ledger is `references/ledger.json`.")).toEqual([]);
+  });
+
+  it("ignores links inside a fenced block, which are syntax being demonstrated", () => {
+    // A skill that teaches a markdown format writes example links that were
+    // never meant to resolve. Reporting them is how a real broken link gets
+    // lost in the noise.
+    const body = [
+      "Write a slide like this:",
+      "",
+      "```markdown",
+      "![Board](./shots/board.png){ratio=16/8}",
+      "[the guide](references/NOPE.md)",
+      "```",
+      "",
+      "See [the real one](references/REAL.md).",
+    ].join("\n");
+    expect(referencedFiles(body)).toEqual(["references/REAL.md"]);
+  });
+
+  it("does not let an unclosed fence swallow the rest of the body", () => {
+    const body = "```\nopen forever\n\nSee [the guide](references/REAL.md).";
+    expect(referencedFiles(body)).toEqual(["references/REAL.md"]);
   });
 });
 
@@ -205,6 +291,11 @@ describe("bundledPathMentions", () => {
 
   it("ignores a bundled directory named without a file", () => {
     expect(bundledPathMentions("Move reference material into `references/`.")).toEqual([]);
+  });
+
+  it("ignores a path quoted inside a fenced block", () => {
+    const body = "```\nreferences/example.json\n```\n\nThe real one is `references/ledger.json`.";
+    expect(bundledPathMentions(body)).toEqual(["references/ledger.json"]);
   });
 });
 

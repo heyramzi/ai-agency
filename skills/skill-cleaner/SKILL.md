@@ -88,7 +88,7 @@ it by quoting the value.
 
 ```bash
 pnpm install
-pnpm test      # 92 tests
+pnpm test      # 95 tests
 pnpm build     # typecheck, then rebuild scripts/skill-cleaner.cjs
 ```
 

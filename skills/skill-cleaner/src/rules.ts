@@ -201,6 +201,31 @@ export function checkSkill(skill: Skill): Finding[] {
 }
 
 /**
+ * The body with every closed fenced block blanked out. A skill that teaches a
+ * markdown or config format writes example paths that were never meant to
+ * resolve, and reporting those is how a real broken link gets lost in the
+ * noise. An unclosed fence is left alone on purpose: reading the rest of the
+ * file as code would hide every reference after one stray backtick line.
+ */
+function withoutFences(body: string): string {
+  const lines = body.split("\n");
+  const kept = [...lines];
+  let open: { at: number; char: string } | null = null;
+  for (const [index, line] of lines.entries()) {
+    const marker = /^[ \t]*(`{3,}|~{3,})/.exec(line)?.[1];
+    if (!marker) continue;
+    const char = marker[0] ?? "";
+    if (!open) {
+      open = { at: index, char };
+    } else if (char === open.char && /^[ \t]*(?:`{3,}|~{3,})[ \t]*$/.test(line)) {
+      for (let j = open.at; j <= index; j++) kept[j] = "";
+      open = null;
+    }
+  }
+  return kept.join("\n");
+}
+
+/**
  * Only relative paths that look like bundled files. Absolute paths, URLs and
  * anchors belong to somewhere else. Templates (`{scenario_url}`) and bare words
  * used as link text targets (`clickup`) are skipped too: neither was ever meant
@@ -208,7 +233,7 @@ export function checkSkill(skill: Skill): Finding[] {
  */
 export function referencedFiles(body: string): string[] {
   const targets = new Set<string>();
-  for (const match of body.matchAll(MD_LINK)) {
+  for (const match of withoutFences(body).matchAll(MD_LINK)) {
     const href = match[1];
     if (!href) continue;
     if (/^([a-z]+:|\/|#)/i.test(href)) continue;
@@ -229,7 +254,7 @@ export function referencedFiles(body: string): string[] {
  */
 export function bundledPathMentions(body: string): string[] {
   const targets = new Set<string>();
-  for (const match of body.matchAll(CODE_SPAN)) {
+  for (const match of withoutFences(body).matchAll(CODE_SPAN)) {
     const path = match[1];
     if (!path) continue;
     if (/[{}$<>*]/.test(path)) continue;

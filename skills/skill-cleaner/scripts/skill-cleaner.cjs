@@ -7866,9 +7866,26 @@ function checkSkill(skill) {
   }
   return findings;
 }
+function withoutFences(body) {
+  const lines = body.split("\n");
+  const kept = [...lines];
+  let open = null;
+  for (const [index, line] of lines.entries()) {
+    const marker = /^[ \t]*(`{3,}|~{3,})/.exec(line)?.[1];
+    if (!marker) continue;
+    const char = marker[0] ?? "";
+    if (!open) {
+      open = { at: index, char };
+    } else if (char === open.char && /^[ \t]*(?:`{3,}|~{3,})[ \t]*$/.test(line)) {
+      for (let j = open.at; j <= index; j++) kept[j] = "";
+      open = null;
+    }
+  }
+  return kept.join("\n");
+}
 function referencedFiles(body) {
   const targets = /* @__PURE__ */ new Set();
-  for (const match of body.matchAll(MD_LINK)) {
+  for (const match of withoutFences(body).matchAll(MD_LINK)) {
     const href = match[1];
     if (!href) continue;
     if (/^([a-z]+:|\/|#)/i.test(href)) continue;
@@ -7881,7 +7898,7 @@ function referencedFiles(body) {
 }
 function bundledPathMentions(body) {
   const targets = /* @__PURE__ */ new Set();
-  for (const match of body.matchAll(CODE_SPAN)) {
+  for (const match of withoutFences(body).matchAll(CODE_SPAN)) {
     const path = match[1];
     if (!path) continue;
     if (/[{}$<>*]/.test(path)) continue;
