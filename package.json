@@ -1,0 +1,38 @@
+{
+  "name": "skill-cleaner",
+  "version": "0.1.0",
+  "description": "Audit, consolidate and clean up Agent Skills across every place they hide",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "agent-skills",
+    "skills",
+    "lint",
+    "audit"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "skill-cleaner": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --experimental-strip-types src/cli.ts",
+    "test": "vitest run",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
