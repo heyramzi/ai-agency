@@ -1,34 +1,6 @@
-# skill-cleaner
+# skill-cleaner checks
 
-Audits, consolidates and cleans up Agent Skills across every place they hide.
-
-A skill registry rots quietly. Nothing throws. A skill with a broken name is
-never offered, two skills with the same name silently become one, a copy made
-six months ago keeps answering while the original gets all the edits, and a
-skill that only exists in your home directory works perfectly right up until
-someone else clones the repo. `skill-cleaner` finds all of that in about two
-seconds and tells you which parts it can safely repair itself.
-
-```bash
-git clone https://github.com/heyramzi/vibe-systems
-cd vibe-systems/skill-cleaner && pnpm install && pnpm build
-node dist/cli.js audit
-```
-
-`pnpm link --global` afterwards puts `skill-cleaner` on your PATH.
-
-## What it does
-
-```
-skill-cleaner audit [roots...]              Report everything wrong, across every registry
-skill-cleaner fix [roots...] --apply        Apply only the repairs with one correct outcome
-skill-cleaner adopt <dir> --into <repo>     Move a homeless skill into a repo, link it back
-```
-
-With no roots it scans the current project, `~/.claude/skills`, and every
-installed plugin. `--all-runtimes` adds `~/.agents`, `~/.codex`, `~/.opencode`
-and `~/.gemini`. `--json` for machine output. Exit code 1 when errors remain, so
-it drops straight into CI or a pre-commit hook.
+Why the discovery is shaped the way it is, and what every check code means.
 
 ## Why discovery is the hard part
 
@@ -123,17 +95,3 @@ Fields Claude Code reads but the cross-runtime spec omits (`argument-hint`,
 `disable-model-invocation`, `user-invocable`, `model`) are accepted silently.
 The point of `unknown-field` is catching `descriptoin:`, and calling legitimate
 fields typos would bury the real ones.
-
-## Development
-
-```bash
-pnpm install
-pnpm test        # 77 tests
-pnpm build
-```
-
-Built against the [Agent Skills specification](https://agentskills.io/specification),
-and tuned against a real 264-skill registry — every threshold in here moved at
-least once because of what that registry actually contained.
-
-MIT.

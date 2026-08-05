@@ -12,32 +12,27 @@
   ],
   "license": "MIT",
   "type": "module",
-  "bin": {
-    "skill-cleaner": "./dist/cli.js"
-  },
-  "files": [
-    "dist"
-  ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "node --experimental-strip-types src/cli.ts",
+    "bundle": "esbuild src/cli.ts --bundle --platform=node --format=cjs --outfile=scripts/skill-cleaner.cjs",
+    "build": "tsc -p tsconfig.json && pnpm bundle",
     "test": "vitest run",
-    "check": "tsc -p tsconfig.json --noEmit",
-    "prepare": "tsc -p tsconfig.json"
+    "check": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "yaml": "^2.6.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "esbuild": "^0.24.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heyramzi/vibe-systems.git"
-  }
+  },
+  "private": true
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "vibe-systems",
+  "owner": {
+    "name": "Ramzi",
+    "url": "https://github.com/heyramzi"
+  },
+  "plugins": [
+    {
+      "name": "vibe-systems",
+      "source": "./",
+      "description": "Tools for keeping an agent setup honest"
+    }
+  ]
+}
