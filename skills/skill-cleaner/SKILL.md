@@ -53,6 +53,14 @@ the moment the command finishes.
 Links left behind by a skill directory that was deleted months ago still sit in
 the registry, still load, and return nothing.
 
+Then two that catch a skill which parses perfectly and has stopped being true.
+**`unknown-skill-reference`** is a body routing to a skill no registry provides.
+An instruction to hand the draft to a named skill still reads as authoritative
+after that name is gone. **`dangling-bundled-path`** is a companion file
+named in prose rather than linked, so `broken-reference` never saw it. Both are
+judged against the whole registry, because a skill quoting a sibling's reference
+file is the normal case and not a fault.
+
 ## What it will not do
 
 It reports overlapping skills with a similarity score and their paths, and then
@@ -80,7 +88,7 @@ it by quoting the value.
 
 ```bash
 pnpm install
-pnpm test      # 77 tests
+pnpm test      # 92 tests
 pnpm build     # typecheck, then rebuild scripts/skill-cleaner.cjs
 ```
 

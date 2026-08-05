@@ -7633,9 +7633,13 @@ function sortFindings(findings) {
 }
 
 // src/scan.ts
-var import_node_fs5 = require("node:fs");
+var import_node_fs6 = require("node:fs");
 var import_node_os2 = require("node:os");
-var import_node_path7 = require("node:path");
+var import_node_path8 = require("node:path");
+
+// src/analyze.ts
+var import_node_fs5 = require("node:fs");
+var import_node_path6 = require("node:path");
 
 // src/parse.ts
 var import_node_crypto = require("node:crypto");
@@ -7708,158 +7712,9 @@ var stripQuotes = (value) => /^(["']).*\1$/.test(value) ? value.slice(1, -1) : v
 var countLines = (text) => text.trim() === "" ? 0 : text.trim().split("\n").length;
 var str = (value) => typeof value === "string" ? value : null;
 
-// src/analyze.ts
-var OVERLAP_THRESHOLD = 0.75;
-var OVERLAP_MIN_WORDS = 8;
-var STOPWORDS = new Set(
-  `a an and are as at be but by for from has have how in into is it its of on or over per that the
-   this to under use used uses using was when where which while who why with without you your
-   skill skills claude agent agents run runs should must can will need needs`.split(/\s+/).filter(Boolean)
-);
-function analyze(skills, danglingBySrc = []) {
-  return [
-    ...registryCollisions(skills),
-    ...identicalCopies(skills),
-    ...overlaps(skills),
-    ...outsideCodebase(skills),
-    ...danglingBySrc.map(
-      (path) => ({
-        code: "dangling-symlink",
-        severity: "error",
-        message: "Symlink points at nothing, so the skill it stood for is simply absent.",
-        paths: [path],
-        fixable: true
-      })
-    )
-  ];
-}
-function registryCollisions(skills) {
-  const byName = /* @__PURE__ */ new Map();
-  for (const skill of skills) {
-    const name = str(skill.frontmatter.name);
-    if (!name) continue;
-    const list = byName.get(name);
-    if (list) list.push(skill);
-    else byName.set(name, [skill]);
-  }
-  const findings = [];
-  for (const [name, group] of byName) {
-    if (group.length < 2) continue;
-    if (new Set(group.map((s) => s.hash)).size === 1) continue;
-    findings.push({
-      code: "duplicate-name",
-      severity: "error",
-      message: `\`${name}\` is registered from ${group.length} places with different content. The runtime keeps one and silently drops the rest.`,
-      paths: group.map((s) => s.realPath)
-    });
-  }
-  return findings;
-}
-function identicalCopies(skills) {
-  const byHash = /* @__PURE__ */ new Map();
-  for (const skill of skills) {
-    const list = byHash.get(skill.hash);
-    if (list) list.push(skill);
-    else byHash.set(skill.hash, [skill]);
-  }
-  const findings = [];
-  for (const group of byHash.values()) {
-    if (group.length < 2) continue;
-    const name = str(group[0]?.frontmatter.name) ?? "unnamed";
-    findings.push({
-      code: "duplicate-copy",
-      severity: "warn",
-      message: `\`${name}\` exists as ${group.length} identical copies. Keep one source and symlink the rest, or the next edit only lands on one.`,
-      paths: group.map((s) => s.realPath)
-    });
-  }
-  return findings;
-}
-function overlaps(skills) {
-  const candidates = skills.map((skill) => ({ skill, words: significantWords(str(skill.frontmatter.description) ?? "") })).filter((c) => c.words.size >= OVERLAP_MIN_WORDS);
-  const findings = [];
-  for (let i = 0; i < candidates.length; i++) {
-    for (let j = i + 1; j < candidates.length; j++) {
-      const a = candidates[i];
-      const b = candidates[j];
-      if (!a || !b) continue;
-      if (a.skill.hash === b.skill.hash) continue;
-      if (str(a.skill.frontmatter.name) === str(b.skill.frontmatter.name)) continue;
-      const score = jaccard(a.words, b.words);
-      if (score < OVERLAP_THRESHOLD) continue;
-      findings.push({
-        code: "overlap",
-        severity: "warn",
-        message: `\`${str(a.skill.frontmatter.name)}\` and \`${str(b.skill.frontmatter.name)}\` describe the same trigger (${Math.round(score * 100)}% shared). One of them will be picked at random.`,
-        paths: [a.skill.realPath, b.skill.realPath]
-      });
-    }
-  }
-  return findings;
-}
-function outsideCodebase(skills) {
-  return skills.filter((skill) => skill.origin !== "plugin" && skill.repo === null).map((skill) => ({
-    code: "outside-codebase",
-    severity: "error",
-    message: `\`${str(skill.frontmatter.name) ?? "unnamed"}\` lives outside any repository. It cannot be reviewed, rolled back or used on another machine. Run \`skill-cleaner adopt\` to move it into one and link it back.`,
-    paths: [skill.realPath]
-  }));
-}
-function significantWords(text) {
-  return new Set(
-    text.toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((word) => word.length > 2 && !STOPWORDS.has(word))
-  );
-}
-function jaccard(a, b) {
-  if (a.size === 0 || b.size === 0) return 0;
-  let shared = 0;
-  for (const word of a) if (b.has(word)) shared++;
-  return shared / (a.size + b.size - shared);
-}
-
-// src/plugins.ts
-var import_node_path5 = require("node:path");
-var isMarketplaceClone = (path) => path.includes(`${import_node_path5.sep}plugins${import_node_path5.sep}marketplaces${import_node_path5.sep}`);
-var CACHE_VERSION = /[/\\]plugins[/\\]cache[/\\]([^/\\]+)[/\\]([^/\\]+)[/\\]([^/\\]+)[/\\]/;
-function keepNewestPluginVersions(located) {
-  const newest = /* @__PURE__ */ new Map();
-  const passthrough = [];
-  for (const item of located) {
-    const match = CACHE_VERSION.exec(item.realPath);
-    if (!match) {
-      passthrough.push(item);
-      continue;
-    }
-    const [, marketplace = "", plugin = "", version = ""] = match;
-    const key = `${marketplace}/${plugin}`;
-    const current = newest.get(key);
-    if (!current || compareVersions(version, current.version) > 0) {
-      newest.set(key, { version, items: [item] });
-    } else if (compareVersions(version, current.version) === 0) {
-      current.items.push(item);
-    }
-  }
-  return [...passthrough, ...[...newest.values()].flatMap((entry) => entry.items)];
-}
-function compareVersions(a, b) {
-  const partsA = a.split(/[.\-+]/);
-  const partsB = b.split(/[.\-+]/);
-  for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
-    const numA = Number(partsA[i] ?? 0);
-    const numB = Number(partsB[i] ?? 0);
-    if (Number.isNaN(numA) || Number.isNaN(numB)) {
-      const cmp = (partsA[i] ?? "").localeCompare(partsB[i] ?? "");
-      if (cmp !== 0) return cmp;
-      continue;
-    }
-    if (numA !== numB) return numA - numB;
-  }
-  return 0;
-}
-
 // src/rules.ts
 var import_node_fs4 = require("node:fs");
-var import_node_path6 = require("node:path");
+var import_node_path5 = require("node:path");
 var SPEC_FIELDS = /* @__PURE__ */ new Set([
   "name",
   "description",
@@ -7880,6 +7735,8 @@ var COMPATIBILITY_MAX = 500;
 var BODY_LINES_MAX = 500;
 var DESCRIPTION_MIN_USEFUL = 40;
 var MD_LINK = /\[[^\]]*\]\(([^)\s]+)\)/g;
+var CODE_SPAN = /`([^`\s]+)`/g;
+var BUNDLED_DIRS = ["references/", "scripts/", "assets/", "templates/", "examples/"];
 function checkSkill(skill) {
   const findings = [];
   const at = [skill.realPath];
@@ -7902,7 +7759,7 @@ function checkSkill(skill) {
   }
   const name = str(skill.frontmatter.name);
   const description = str(skill.frontmatter.description);
-  const dirName = (0, import_node_path6.basename)(skill.dir);
+  const dirName = (0, import_node_path5.basename)(skill.dir);
   if (name === null) {
     add("missing-name", "error", "`name` is required and must be a string.");
   } else {
@@ -7999,7 +7856,7 @@ function checkSkill(skill) {
     add("body-empty", "error", "Frontmatter with no body: the skill registers but teaches nothing.");
   }
   for (const target of referencedFiles(skill.body)) {
-    if (!(0, import_node_fs4.existsSync)((0, import_node_path6.join)(skill.dir, target))) {
+    if (!(0, import_node_fs4.existsSync)((0, import_node_path5.join)(skill.dir, target))) {
       add(
         "broken-reference",
         "error",
@@ -8022,11 +7879,230 @@ function referencedFiles(body) {
   }
   return [...targets].filter(Boolean);
 }
+function bundledPathMentions(body) {
+  const targets = /* @__PURE__ */ new Set();
+  for (const match of body.matchAll(CODE_SPAN)) {
+    const path = match[1];
+    if (!path) continue;
+    if (/[{}$<>*]/.test(path)) continue;
+    if (!BUNDLED_DIRS.some((dir) => path.startsWith(dir))) continue;
+    if (!/\.[a-z0-9]{1,5}$/i.test(path)) continue;
+    targets.add(path);
+  }
+  return [...targets];
+}
+
+// src/analyze.ts
+var OVERLAP_THRESHOLD = 0.75;
+var OVERLAP_MIN_WORDS = 8;
+var STOPWORDS = new Set(
+  `a an and are as at be but by for from has have how in into is it its of on or over per that the
+   this to under use used uses using was when where which while who why with without you your
+   skill skills claude agent agents run runs should must can will need needs`.split(/\s+/).filter(Boolean)
+);
+function analyze(skills, danglingBySrc = []) {
+  return [
+    ...registryCollisions(skills),
+    ...identicalCopies(skills),
+    ...overlaps(skills),
+    ...outsideCodebase(skills),
+    ...unknownSkillReferences(skills),
+    ...danglingBundledPaths(skills),
+    ...danglingBySrc.map(
+      (path) => ({
+        code: "dangling-symlink",
+        severity: "error",
+        message: "Symlink points at nothing, so the skill it stood for is simply absent.",
+        paths: [path],
+        fixable: true
+      })
+    )
+  ];
+}
+function registryCollisions(skills) {
+  const byName = /* @__PURE__ */ new Map();
+  for (const skill of skills) {
+    const name = str(skill.frontmatter.name);
+    if (!name) continue;
+    const list = byName.get(name);
+    if (list) list.push(skill);
+    else byName.set(name, [skill]);
+  }
+  const findings = [];
+  for (const [name, group] of byName) {
+    if (group.length < 2) continue;
+    if (new Set(group.map((s) => s.hash)).size === 1) continue;
+    findings.push({
+      code: "duplicate-name",
+      severity: "error",
+      message: `\`${name}\` is registered from ${group.length} places with different content. The runtime keeps one and silently drops the rest.`,
+      paths: group.map((s) => s.realPath)
+    });
+  }
+  return findings;
+}
+function identicalCopies(skills) {
+  const byHash = /* @__PURE__ */ new Map();
+  for (const skill of skills) {
+    const list = byHash.get(skill.hash);
+    if (list) list.push(skill);
+    else byHash.set(skill.hash, [skill]);
+  }
+  const findings = [];
+  for (const group of byHash.values()) {
+    if (group.length < 2) continue;
+    const name = str(group[0]?.frontmatter.name) ?? "unnamed";
+    findings.push({
+      code: "duplicate-copy",
+      severity: "warn",
+      message: `\`${name}\` exists as ${group.length} identical copies. Keep one source and symlink the rest, or the next edit only lands on one.`,
+      paths: group.map((s) => s.realPath)
+    });
+  }
+  return findings;
+}
+function overlaps(skills) {
+  const candidates = skills.map((skill) => ({ skill, words: significantWords(str(skill.frontmatter.description) ?? "") })).filter((c) => c.words.size >= OVERLAP_MIN_WORDS);
+  const findings = [];
+  for (let i = 0; i < candidates.length; i++) {
+    for (let j = i + 1; j < candidates.length; j++) {
+      const a = candidates[i];
+      const b = candidates[j];
+      if (!a || !b) continue;
+      if (a.skill.hash === b.skill.hash) continue;
+      if (str(a.skill.frontmatter.name) === str(b.skill.frontmatter.name)) continue;
+      const score = jaccard(a.words, b.words);
+      if (score < OVERLAP_THRESHOLD) continue;
+      findings.push({
+        code: "overlap",
+        severity: "warn",
+        message: `\`${str(a.skill.frontmatter.name)}\` and \`${str(b.skill.frontmatter.name)}\` describe the same trigger (${Math.round(score * 100)}% shared). One of them will be picked at random.`,
+        paths: [a.skill.realPath, b.skill.realPath]
+      });
+    }
+  }
+  return findings;
+}
+function outsideCodebase(skills) {
+  return skills.filter((skill) => skill.origin !== "plugin" && skill.repo === null).map((skill) => ({
+    code: "outside-codebase",
+    severity: "error",
+    message: `\`${str(skill.frontmatter.name) ?? "unnamed"}\` lives outside any repository. It cannot be reviewed, rolled back or used on another machine. Run \`skill-cleaner adopt\` to move it into one and link it back.`,
+    paths: [skill.realPath]
+  }));
+}
+function unknownSkillReferences(skills) {
+  const registered = /* @__PURE__ */ new Set();
+  for (const skill of skills) {
+    const name = str(skill.frontmatter.name);
+    if (name) registered.add(name);
+  }
+  const findings = [];
+  for (const skill of skills) {
+    const own = str(skill.frontmatter.name);
+    const missing = /* @__PURE__ */ new Set();
+    for (const referenced of routedSkillNames(skill.body)) {
+      const bare = referenced.includes(":") ? referenced.split(":").pop() ?? referenced : referenced;
+      if (referenced === own || bare === own) continue;
+      if (registered.has(referenced) || registered.has(bare)) continue;
+      missing.add(referenced);
+    }
+    if (missing.size === 0) continue;
+    const list = [...missing].map((n) => `\`${n}\``).join(", ");
+    findings.push({
+      code: "unknown-skill-reference",
+      severity: "warn",
+      message: `Routes to ${list}, which no scanned registry provides. The instruction reads as authoritative and the skill is never offered.`,
+      paths: [skill.realPath]
+    });
+  }
+  return findings;
+}
+function danglingBundledPaths(skills) {
+  const mentions = skills.map((skill) => ({ skill, paths: bundledPathMentions(skill.body) }));
+  const provided = /* @__PURE__ */ new Set();
+  for (const path of new Set(mentions.flatMap((m) => m.paths))) {
+    if (skills.some((skill) => (0, import_node_fs5.existsSync)((0, import_node_path6.join)(skill.dir, path)))) provided.add(path);
+  }
+  const findings = [];
+  for (const { skill, paths } of mentions) {
+    const dangling = paths.filter((path) => !provided.has(path));
+    if (dangling.length === 0) continue;
+    findings.push({
+      code: "dangling-bundled-path",
+      severity: "warn",
+      message: `Names ${dangling.map((p) => `\`${p}\``).join(", ")} as bundled material, and no scanned skill provides it.`,
+      paths: [skill.realPath]
+    });
+  }
+  return findings;
+}
+var SKILL_ROUTE = /`([a-z0-9][a-z0-9:-]*)`\s+skill\b|\bskills?\s+`([a-z0-9][a-z0-9:-]*)`/g;
+var SKILL_NAME_MIN = 3;
+function routedSkillNames(body) {
+  const names = /* @__PURE__ */ new Set();
+  for (const match of body.matchAll(SKILL_ROUTE)) {
+    const name = match[1] ?? match[2];
+    if (name && name.length >= SKILL_NAME_MIN) names.add(name);
+  }
+  return [...names];
+}
+function significantWords(text) {
+  return new Set(
+    text.toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((word) => word.length > 2 && !STOPWORDS.has(word))
+  );
+}
+function jaccard(a, b) {
+  if (a.size === 0 || b.size === 0) return 0;
+  let shared = 0;
+  for (const word of a) if (b.has(word)) shared++;
+  return shared / (a.size + b.size - shared);
+}
+
+// src/plugins.ts
+var import_node_path7 = require("node:path");
+var isMarketplaceClone = (path) => path.includes(`${import_node_path7.sep}plugins${import_node_path7.sep}marketplaces${import_node_path7.sep}`);
+var CACHE_VERSION = /[/\\]plugins[/\\]cache[/\\]([^/\\]+)[/\\]([^/\\]+)[/\\]([^/\\]+)[/\\]/;
+function keepNewestPluginVersions(located) {
+  const newest = /* @__PURE__ */ new Map();
+  const passthrough = [];
+  for (const item of located) {
+    const match = CACHE_VERSION.exec(item.realPath);
+    if (!match) {
+      passthrough.push(item);
+      continue;
+    }
+    const [, marketplace = "", plugin = "", version = ""] = match;
+    const key = `${marketplace}/${plugin}`;
+    const current = newest.get(key);
+    if (!current || compareVersions(version, current.version) > 0) {
+      newest.set(key, { version, items: [item] });
+    } else if (compareVersions(version, current.version) === 0) {
+      current.items.push(item);
+    }
+  }
+  return [...passthrough, ...[...newest.values()].flatMap((entry) => entry.items)];
+}
+function compareVersions(a, b) {
+  const partsA = a.split(/[.\-+]/);
+  const partsB = b.split(/[.\-+]/);
+  for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+    const numA = Number(partsA[i] ?? 0);
+    const numB = Number(partsB[i] ?? 0);
+    if (Number.isNaN(numA) || Number.isNaN(numB)) {
+      const cmp = (partsA[i] ?? "").localeCompare(partsB[i] ?? "");
+      if (cmp !== 0) return cmp;
+      continue;
+    }
+    if (numA !== numB) return numA - numB;
+  }
+  return 0;
+}
 
 // src/scan.ts
 function scan(roots = [], opts = {}) {
   const home = opts.home ?? (0, import_node_os2.homedir)();
-  const targets = (roots.length > 0 ? roots.map((r) => (0, import_node_path7.resolve)(r)) : defaultRoots(process.cwd(), home, { allRuntimes: opts.allRuntimes })).filter((r) => (0, import_node_fs5.existsSync)(r));
+  const targets = (roots.length > 0 ? roots.map((r) => (0, import_node_path8.resolve)(r)) : defaultRoots(process.cwd(), home, { allRuntimes: opts.allRuntimes })).filter((r) => (0, import_node_fs6.existsSync)(r));
   const located = keepNewestPluginVersions(
     targets.flatMap((root) => walkSkills(root, home)).filter((item) => !isMarketplaceClone(item.realPath))
   );

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { parseSkill } from "../src/parse.js";
-import { checkSkill, referencedFiles } from "../src/rules.js";
+import { bundledPathMentions, checkSkill, referencedFiles } from "../src/rules.js";
 import type { Located } from "../src/types.js";
 import { type Fixture, fixture } from "./fixture.js";
 
@@ -172,6 +172,39 @@ describe("referencedFiles", () => {
       [e](scripts/run.py#L4)
     `;
     expect(referencedFiles(body).sort()).toEqual(["references/A.md", "scripts/run.py"]);
+  });
+
+  it("leaves backticked prose alone; bundledPathMentions owns that shape", () => {
+    expect(referencedFiles("The ledger is `references/ledger.json`.")).toEqual([]);
+  });
+});
+
+describe("bundledPathMentions", () => {
+  it("takes a bundled path named in backticks, with no markdown link around it", () => {
+    // The ledger this check exists for was named in prose for a week while the
+    // file did not exist, and nothing reported it.
+    expect(bundledPathMentions("The ledger is `references/ledger.json`.")).toEqual([
+      "references/ledger.json",
+    ]);
+  });
+
+  it("leaves backticked paths that are not bundled resources alone", () => {
+    const body = `
+      Run it against \`~/.claude/skills\` and \`/etc/hosts\`.
+      Your project keeps them in \`.claude/skills/foo.md\`, which is not ours.
+      Prose about \`node_modules/x.js\` is somebody else's tree.
+    `;
+    expect(bundledPathMentions(body)).toEqual([]);
+  });
+
+  it("does not treat a command containing a path as a mention", () => {
+    // `node scripts/x.cjs audit` is an instruction, not a claim that the file
+    // sits next to SKILL.md. Only a bare single-token span counts.
+    expect(bundledPathMentions("Run `node scripts/skill-cleaner.cjs audit` to start.")).toEqual([]);
+  });
+
+  it("ignores a bundled directory named without a file", () => {
+    expect(bundledPathMentions("Move reference material into `references/`.")).toEqual([]);
   });
 });
 

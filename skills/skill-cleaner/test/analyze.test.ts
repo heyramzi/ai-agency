@@ -50,6 +50,102 @@ describe("duplicate-name", () => {
   });
 });
 
+describe("unknown-skill-reference", () => {
+  const routed = (body: string) =>
+    codes([
+      load("alpha", "name: alpha\ndescription: Use when doing the alpha job in a checkout.", body),
+      load("humanizer", "name: humanizer\ndescription: Use when copy reads as machine written."),
+    ]);
+
+  it("flags a body routing to a skill that is registered nowhere", () => {
+    expect(routed("Pass the draft through the `voice-dna` skill before shipping.")).toContain(
+      "unknown-skill-reference",
+    );
+  });
+
+  it("stays quiet when the skill it routes to is registered", () => {
+    expect(routed("Pass the draft through the `humanizer` skill before shipping.")).not.toContain(
+      "unknown-skill-reference",
+    );
+  });
+
+  it("reads the other word order too", () => {
+    expect(routed("Hand it to the skill `voice-dna` and wait.")).toContain(
+      "unknown-skill-reference",
+    );
+  });
+
+  it("resolves a plugin-namespaced reference by its bare name", () => {
+    expect(routed("Start with the `superpowers:humanizer` skill.")).not.toContain(
+      "unknown-skill-reference",
+    );
+  });
+
+  it("ignores backticked words that are not routing to a skill", () => {
+    const body = "Set `privacy` to public. The `status` field is a string. Run `audit` first.";
+    expect(routed(body)).not.toContain("unknown-skill-reference");
+  });
+
+  it("does not flag a skill for naming itself", () => {
+    expect(routed("This `alpha` skill owns the alpha job.")).not.toContain(
+      "unknown-skill-reference",
+    );
+  });
+});
+
+describe("dangling-bundled-path", () => {
+  it("flags a bundled file no scanned skill provides", () => {
+    const a = load(
+      "alpha",
+      "name: alpha\ndescription: Use when doing the alpha job in a checkout.",
+      "The ledger is `references/ledger.json` and the audit joins against it.",
+    );
+    expect(codes([a])).toContain("dangling-bundled-path");
+  });
+
+  it("stays quiet when the skill actually ships the file", () => {
+    fx.file("beta/references/ledger.json", "{}");
+    const b = load(
+      "beta",
+      "name: beta\ndescription: Use when doing the beta job in a checkout.",
+      "The ledger is `references/ledger.json`.",
+    );
+    expect(codes([b])).not.toContain("dangling-bundled-path");
+  });
+
+  it("stays quiet when a sibling skill provides it, which is the common shape", () => {
+    // "See the `humanizer` skill, `references/patterns.md`" is a correct pointer
+    // at somebody else's file, and judging it per-directory reported 48 of these.
+    fx.file("humanizer/references/patterns.md", "# patterns\n");
+    const owner = load(
+      "humanizer",
+      "name: humanizer\ndescription: Use when copy reads as machine written anywhere.",
+      "Patterns live in `references/patterns.md`.",
+    );
+    const quoter = load(
+      "alpha",
+      "name: alpha\ndescription: Use when doing the alpha job in a checkout.",
+      "Full treatment in the `humanizer` skill, `references/patterns.md` section 9.",
+    );
+    expect(codes([owner, quoter])).not.toContain("dangling-bundled-path");
+  });
+
+  it("counts a provider that ships the file without ever naming it", () => {
+    fx.file("humanizer/references/patterns.md", "# patterns\n");
+    const owner = load(
+      "humanizer",
+      "name: humanizer\ndescription: Use when copy reads as machine written anywhere.",
+      "No backticked path anywhere in this body.",
+    );
+    const quoter = load(
+      "alpha",
+      "name: alpha\ndescription: Use when doing the alpha job in a checkout.",
+      "Full treatment in the `humanizer` skill, `references/patterns.md` section 9.",
+    );
+    expect(codes([owner, quoter])).not.toContain("dangling-bundled-path");
+  });
+});
+
 describe("outside-codebase", () => {
   it("flags a skill with no repository behind it", () => {
     const loose = load("loose/alpha", "name: alpha\ndescription: Use when doing alpha work.", undefined, {

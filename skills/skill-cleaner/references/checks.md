@@ -58,6 +58,39 @@ personal skill that is *already* a symlink into a checkout is correct and is not
 reported. Personal and versioned are not opposites — the link is how you get
 both.
 
+## Rot that is not malformed
+
+Everything above is about a skill being wrong on its own terms. The two checks
+below are about a skill that parses perfectly and has quietly stopped being true,
+which is the failure mode that costs the most and shows the least.
+
+**`unknown-skill-reference`** is the routing equivalent of a dangling symlink. A
+skill that says "pass the draft through the `voice-dna` skill" is issuing an
+instruction, and when no `voice-dna` is registered anywhere, the instruction
+still reads as authoritative and the step simply never happens. Skills that
+delegate are exactly the ones where a rename three directories away goes
+unnoticed. Only the `` `name` skill `` and `` skill `name` `` shapes count, and
+the match is case-sensitive: skill names are lowercase by spec, and matching
+loosely turns a pillar-code table (`` `S` Skill, `C` ClickUp ``) into a page of
+findings. A plugin reference resolves by either `plugin:name` or `name`.
+
+**`dangling-bundled-path`** is a skill naming a companion file in prose rather
+than linking it. `broken-reference` only sees markdown links, so
+"the ledger is `references/ledger.json`" made exactly the same promise and was
+checked by nothing. The promise fails the same way.
+
+This one is only judgeable against the whole registry, which is why it lives in
+`analyze` and not in the per-skill rules. Skills quote each other's reference
+files constantly, and against a single skill's own directory every one of those
+reads as broken: the first cut of this check reported 48 findings on a real
+registry and the overwhelming majority were a correct pointer at a sibling. So a
+path that exists next to *any* scanned skill is a cross-reference and stays
+quiet, whether or not that sibling ever mentions it. What survives is a file no
+skill anywhere provides. The same registry then reported five, all real.
+
+Both are warnings. The skill still loads and still does most of its job; what
+has gone is one instruction inside it.
+
 ## What it will not do
 
 It will not merge two skills for you. Overlap is reported with a similarity
@@ -89,7 +122,8 @@ It is a dry run unless you pass `--apply`.
 
 `frontmatter-lenient-yaml` · `description-thin` · `description-no-trigger` ·
 `description-first-person` · `unknown-field` · `metadata-not-flat` ·
-`body-too-long` · `duplicate-copy` · `overlap`
+`body-too-long` · `duplicate-copy` · `overlap` · `unknown-skill-reference` ·
+`dangling-bundled-path`
 
 Fields Claude Code reads but the cross-runtime spec omits (`argument-hint`,
 `disable-model-invocation`, `user-invocable`, `model`) are accepted silently.

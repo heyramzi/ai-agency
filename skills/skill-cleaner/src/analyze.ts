@@ -1,4 +1,7 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { str } from "./parse.js";
+import { bundledPathMentions } from "./rules.js";
 import type { Finding, Skill } from "./types.js";
 
 /**
@@ -27,6 +30,8 @@ export function analyze(skills: Skill[], danglingBySrc: string[] = []): Finding[
     ...identicalCopies(skills),
     ...overlaps(skills),
     ...outsideCodebase(skills),
+    ...unknownSkillReferences(skills),
+    ...danglingBundledPaths(skills),
     ...danglingBySrc.map(
       (path): Finding => ({
         code: "dangling-symlink",
@@ -149,6 +154,111 @@ function outsideCodebase(skills: Skill[]): Finding[] {
       message: `\`${str(skill.frontmatter.name) ?? "unnamed"}\` lives outside any repository. It cannot be reviewed, rolled back or used on another machine. Run \`skill-cleaner adopt\` to move it into one and link it back.`,
       paths: [skill.realPath],
     }));
+}
+
+/**
+ * A skill that hands the reader to another skill by name, where no such skill
+ * is registered anywhere that was scanned.
+ *
+ * This is the routing equivalent of `dangling-symlink` and it fails the same
+ * silent way: the instruction reads as authoritative, the named skill is never
+ * offered, and the work quietly does not happen. Skills that delegate ("get the
+ * copy written by `generate-social`, then pass it through `humanizer`") are
+ * exactly the ones where a rename downstream goes unnoticed.
+ *
+ * Only the `\`name\` skill` / `skill \`name\`` shapes count. Backticks carry
+ * field names, flags and values far more often than they carry skill names, and
+ * a looser match reports all of them.
+ */
+function unknownSkillReferences(skills: Skill[]): Finding[] {
+  const registered = new Set<string>();
+  for (const skill of skills) {
+    const name = str(skill.frontmatter.name);
+    if (name) registered.add(name);
+  }
+
+  const findings: Finding[] = [];
+  for (const skill of skills) {
+    const own = str(skill.frontmatter.name);
+    const missing = new Set<string>();
+    for (const referenced of routedSkillNames(skill.body)) {
+      // A plugin ships as `plugin:name` but registers as `name`, so a reference
+      // resolves if either form is present.
+      const bare = referenced.includes(":")
+        ? (referenced.split(":").pop() ?? referenced)
+        : referenced;
+      if (referenced === own || bare === own) continue;
+      if (registered.has(referenced) || registered.has(bare)) continue;
+      missing.add(referenced);
+    }
+    if (missing.size === 0) continue;
+    const list = [...missing].map((n) => `\`${n}\``).join(", ");
+    findings.push({
+      code: "unknown-skill-reference",
+      severity: "warn",
+      message: `Routes to ${list}, which no scanned registry provides. The instruction reads as authoritative and the skill is never offered.`,
+      paths: [skill.realPath],
+    });
+  }
+  return findings;
+}
+
+/**
+ * A skill naming a bundled file in prose that exists nowhere in the registry.
+ *
+ * The registry is what makes this judgeable. Skills quote each other's
+ * reference files constantly ("see the `humanizer` skill, `references/patterns.md`"),
+ * and against a single skill's directory every one of those reads as broken: on
+ * this registry the naive check reported 48, of which the overwhelming majority
+ * were a correct pointer at a sibling. So a path found next to *any* scanned
+ * skill is a cross-reference and stays quiet. What is left is a file no skill
+ * anywhere provides, which is the case worth reporting: the ledger this tool's
+ * own sibling skill described for a week without ever creating it.
+ */
+function danglingBundledPaths(skills: Skill[]): Finding[] {
+  const mentions = skills.map((skill) => ({ skill, paths: bundledPathMentions(skill.body) }));
+
+  // Whether anyone provides a path is asked of every skill directory, not only
+  // of the ones that happen to name it. A skill that ships `references/team.md`
+  // without ever backticking it still provides it.
+  const provided = new Set<string>();
+  for (const path of new Set(mentions.flatMap((m) => m.paths))) {
+    if (skills.some((skill) => existsSync(join(skill.dir, path)))) provided.add(path);
+  }
+
+  const findings: Finding[] = [];
+  for (const { skill, paths } of mentions) {
+    const dangling = paths.filter((path) => !provided.has(path));
+    if (dangling.length === 0) continue;
+    findings.push({
+      code: "dangling-bundled-path",
+      severity: "warn",
+      message: `Names ${dangling.map((p) => `\`${p}\``).join(", ")} as bundled material, and no scanned skill provides it.`,
+      paths: [skill.realPath],
+    });
+  }
+  return findings;
+}
+
+/**
+ * Kebab or namespaced names in the two shapes that mean "use this skill".
+ *
+ * Case-sensitive on purpose. Skill names are lowercase by spec, and matching
+ * loosely turns a pillar-code table (`` `S` Skill, `C` ClickUp ``) into a page
+ * of findings.
+ */
+const SKILL_ROUTE = /`([a-z0-9][a-z0-9:-]*)`\s+skill\b|\bskills?\s+`([a-z0-9][a-z0-9:-]*)`/g;
+
+/** Shorter than this is an abbreviation or a table cell, never a skill name. */
+const SKILL_NAME_MIN = 3;
+
+export function routedSkillNames(body: string): string[] {
+  const names = new Set<string>();
+  for (const match of body.matchAll(SKILL_ROUTE)) {
+    const name = match[1] ?? match[2];
+    if (name && name.length >= SKILL_NAME_MIN) names.add(name);
+  }
+  return [...names];
 }
 
 export function significantWords(text: string): Set<string> {

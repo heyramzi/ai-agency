@@ -41,6 +41,18 @@ const DESCRIPTION_MIN_USEFUL = 40;
 /** Relative links and bare `scripts/x.py` mentions that a skill points at. */
 const MD_LINK = /\[[^\]]*\]\(([^)\s]+)\)/g;
 
+/** A single-token backtick span, the only shape that can be a bare path claim. */
+const CODE_SPAN = /`([^`\s]+)`/g;
+
+/**
+ * Directories the spec reserves for a skill's own bundled resources. A
+ * backticked path is only read as a claim about this skill's directory when it
+ * starts with one of these. Everything else in backticks (`~/.claude/skills`,
+ * `.claude/skills/x.md`, a project path) describes somebody else's tree, and
+ * reporting those trains the reader to ignore the rule.
+ */
+const BUNDLED_DIRS = ["references/", "scripts/", "assets/", "templates/", "examples/"];
+
 export function checkSkill(skill: Skill): Finding[] {
   const findings: Finding[] = [];
   const at = [skill.realPath];
@@ -206,4 +218,24 @@ export function referencedFiles(body: string): string[] {
     targets.add(path);
   }
   return [...targets].filter(Boolean);
+}
+
+/**
+ * Bundled paths a skill names in prose rather than linking, e.g. "the ledger is
+ * `references/ledger.json`". The same promise as a link, and it fails the same
+ * way, but it can only be judged against the whole registry: a skill quoting
+ * *another* skill's reference file is the common case here, not a mistake. So
+ * this only extracts candidates; `analyze` decides which are dangling.
+ */
+export function bundledPathMentions(body: string): string[] {
+  const targets = new Set<string>();
+  for (const match of body.matchAll(CODE_SPAN)) {
+    const path = match[1];
+    if (!path) continue;
+    if (/[{}$<>*]/.test(path)) continue;
+    if (!BUNDLED_DIRS.some((dir) => path.startsWith(dir))) continue;
+    if (!/\.[a-z0-9]{1,5}$/i.test(path)) continue;
+    targets.add(path);
+  }
+  return [...targets];
 }
