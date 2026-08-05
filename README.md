@@ -10,7 +10,7 @@ someone else clones the repo. `skill-cleaner` finds all of that in about two
 seconds and tells you which parts it can safely repair itself.
 
 ```bash
-npx skill-cleaner audit
+npx github:heyramzi/vibe-systems audit
 ```
 
 ## What it does
