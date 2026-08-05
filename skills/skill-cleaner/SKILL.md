@@ -72,7 +72,7 @@ which side of a name collision wins.
 frontmatter that strict YAML rejects, aligning a name to its directory, and
 removing dead links.
 
-## Two things that surprise people
+## Three things that surprise people
 
 **A personal skill is fine if it is a symlink into a repository.** The
 `outside-codebase` check runs on the resolved path, so linking a checkout into
@@ -84,11 +84,16 @@ contain `: `. Claude Code accepts it. Stricter readers do not. That is reported
 as `frontmatter-lenient-yaml`, a warning rather than an error, and `fix` repairs
 it by quoting the value.
 
+**A user-invoked skill is not judged on its trigger.** With
+`disable-model-invocation: true` the model never matches the description, so
+`description-thin` and `description-no-trigger` do not run on it. On one public
+registry that exemption dissolved 19 of 20 findings.
+
 ## Developing
 
 ```bash
 pnpm install
-pnpm test      # 95 tests
+pnpm test      # 106 tests
 pnpm build     # typecheck, then rebuild scripts/skill-cleaner.cjs
 ```
 

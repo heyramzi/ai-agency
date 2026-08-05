@@ -157,7 +157,7 @@ describe("user-invoked skills", () => {
   it("still demands one when the model can invoke it", () => {
     expect(
       check("alpha", "name: alpha\ndescription: Stop. That last message did not land — re-pitch it."),
-    ).toEqual(["description-thin", "description-no-trigger"]);
+    ).toEqual(["description-no-trigger"]);
   });
 
   it("still enforces the spec limits either way", () => {
@@ -199,6 +199,16 @@ describe("body", () => {
     expect(check("alpha", GOOD, "line\n".repeat(501))).toContain("body-too-long");
   });
 
+  it("warns on a long monolith that splits nothing out", () => {
+    expect(check("alpha", GOOD, "line\n".repeat(220))).toEqual(["body-verbose"]);
+  });
+
+  it("accepts the same length when detail is pushed into references", () => {
+    fx.file("alpha/references/DETAIL.md", "# Detail\n");
+    const body = `See [the detail](references/DETAIL.md).\n${"line\n".repeat(220)}`;
+    expect(check("alpha", GOOD, body)).toEqual([]);
+  });
+
   it("flags a reference to a file that is not there", () => {
     expect(check("alpha", GOOD, "See [the guide](references/GUIDE.md).")).toContain(
       "broken-reference",
@@ -216,6 +226,13 @@ describe("body", () => {
     expect(check("alpha", GOOD, "See [the guide](references/GUIDE.md).")).toEqual([
       "nested-reference",
     ]);
+  });
+
+  it("allows a reference file linking back to SKILL.md", () => {
+    // mattpocock/skills produced six of these and every one was a backlink
+    // to the root, not content buried two levels deep.
+    fx.file("alpha/references/GUIDE.md", "Come back to [the skill](../SKILL.md) when done.");
+    expect(check("alpha", GOOD, "See [the guide](references/GUIDE.md).")).toEqual([]);
   });
 
   it("allows a reference file cross-linking a sibling SKILL.md also links", () => {

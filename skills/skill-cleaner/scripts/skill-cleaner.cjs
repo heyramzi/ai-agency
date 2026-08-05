@@ -7734,6 +7734,7 @@ var DESCRIPTION_MAX = 1024;
 var COMPATIBILITY_MAX = 500;
 var BODY_LINES_MAX = 500;
 var DESCRIPTION_MIN_USEFUL = 40;
+var BODY_MONOLITH_LINES = 200;
 var MD_LINK = /\[[^\]]*\]\(([^)\s]+)\)/g;
 var CODE_SPAN = /`([^`\s]+)`/g;
 var BUNDLED_DIRS = ["references/", "scripts/", "assets/", "templates/", "examples/"];
@@ -7779,6 +7780,13 @@ function checkSkill(skill) {
     if (name.includes("--")) {
       add("name-double-hyphen", "error", `\`name: ${name}\` must not contain consecutive hyphens.`);
     }
+    if (/claude|anthropic/.test(name)) {
+      add(
+        "name-reserved-word",
+        "warn",
+        `\`name: ${name}\` contains a reserved word ("claude"/"anthropic"). Claude Code loads it; a claude.ai or API upload rejects it.`
+      );
+    }
     if (name !== dirName) {
       add(
         "name-dir-mismatch",
@@ -7788,6 +7796,7 @@ function checkSkill(skill) {
       );
     }
   }
+  const userInvokedOnly = skill.frontmatter["disable-model-invocation"] === true;
   if (description === null) {
     add("missing-description", "error", "`description` is required and must be a string.");
   } else {
@@ -7797,26 +7806,35 @@ function checkSkill(skill) {
         "error",
         `\`description\` is ${description.length} chars, max is ${DESCRIPTION_MAX}.`
       );
-    } else if (description.trim().length < DESCRIPTION_MIN_USEFUL) {
+    } else if (!userInvokedOnly && description.trim().length < DESCRIPTION_MIN_USEFUL) {
       add(
         "description-thin",
         "warn",
         `\`description\` is ${description.trim().length} chars and cannot carry a trigger, so nothing will match it.`
       );
     }
-    if (!/\buse\b|\bwhen\b|\btriggers?\b/i.test(description)) {
+    if (/<\/?[a-zA-Z][^>]*>/.test(description)) {
       add(
-        "description-no-trigger",
+        "description-xml-tags",
         "warn",
-        "`description` never says when to use the skill, so the model has nothing to match a task against."
+        "`description` contains an XML/HTML tag. Claude Code loads it; platform validation rejects it."
       );
     }
-    if (/^(I |I'll |I can |This skill lets me )/.test(description.trim())) {
-      add(
-        "description-first-person",
-        "warn",
-        "`description` is first person. It is injected into the system prompt and should read in the third person."
-      );
+    if (!userInvokedOnly) {
+      if (!/\buse\b|\bwhen\b|\btriggers?\b/i.test(description)) {
+        add(
+          "description-no-trigger",
+          "warn",
+          "`description` never says when to use the skill, so the model has nothing to match a task against."
+        );
+      }
+      if (/^(I |I'll |I can |This skill lets me )/.test(description.trim())) {
+        add(
+          "description-first-person",
+          "warn",
+          "`description` is first person. It is injected into the system prompt and should read in the third person."
+        );
+      }
     }
   }
   const compatibility = str(skill.frontmatter.compatibility);
@@ -7855,14 +7873,41 @@ function checkSkill(skill) {
   if (skill.bodyLines === 0) {
     add("body-empty", "error", "Frontmatter with no body: the skill registers but teaches nothing.");
   }
-  for (const target of referencedFiles(skill.body)) {
-    if (!(0, import_node_fs4.existsSync)((0, import_node_path5.join)(skill.dir, target))) {
+  const direct = referencedFiles(skill.body);
+  if (skill.bodyLines > BODY_MONOLITH_LINES && skill.bodyLines <= BODY_LINES_MAX && direct.length === 0) {
+    add(
+      "body-verbose",
+      "warn",
+      `Body is ${skill.bodyLines} lines with nothing split out. Every line competes with the conversation on every load; move detail into \`references/\` and link it.`
+    );
+  }
+  const resolvedDirect = /* @__PURE__ */ new Set([
+    (0, import_node_path5.normalize)((0, import_node_path5.join)(skill.dir, "SKILL.md")),
+    ...direct.map((target) => (0, import_node_path5.normalize)((0, import_node_path5.join)(skill.dir, target)))
+  ]);
+  const chaining = /* @__PURE__ */ new Set();
+  for (const target of direct) {
+    const path = (0, import_node_path5.join)(skill.dir, target);
+    if (!(0, import_node_fs4.existsSync)(path)) {
       add(
         "broken-reference",
         "error",
         `Points at \`${target}\`, which does not exist next to SKILL.md.`
       );
+      continue;
     }
+    if (!/\.md$/i.test(target)) continue;
+    const chained = referencedFiles((0, import_node_fs4.readFileSync)(path, "utf8")).filter(
+      (onward) => !resolvedDirect.has((0, import_node_path5.normalize)((0, import_node_path5.join)((0, import_node_path5.dirname)(path), onward)))
+    );
+    if (chained.length > 0) chaining.add(target);
+  }
+  if (chaining.size > 0) {
+    add(
+      "nested-reference",
+      "warn",
+      `\`${[...chaining].join("`, `")}\` link onward to files SKILL.md never links itself. Chained files get previewed, not read; keep references one level deep from SKILL.md.`
+    );
   }
   return findings;
 }

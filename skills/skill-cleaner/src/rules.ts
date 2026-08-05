@@ -1,5 +1,5 @@
-import { existsSync } from "node:fs";
-import { basename, join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { basename, dirname, join, normalize } from "node:path";
 import { str } from "./parse.js";
 import type { Finding, Skill } from "./types.js";
 
@@ -37,6 +37,14 @@ const COMPATIBILITY_MAX = 500;
 const BODY_LINES_MAX = 500;
 /** Under this a description cannot carry a trigger, so nothing will match it. */
 const DESCRIPTION_MIN_USEFUL = 40;
+/**
+ * Once loaded, every body line competes with the conversation for context. Past
+ * this with nothing split into bundled files, the skill has outgrown a single
+ * document and is paying for detail on every load; the fix the spec prescribes
+ * is progressive disclosure, not trimming. Half a body-too-long, because a
+ * monolith should be restructured well before it becomes illegible.
+ */
+const BODY_MONOLITH_LINES = 200;
 
 /** Relative links and bare `scripts/x.py` mentions that a skill points at. */
 const MD_LINK = /\[[^\]]*\]\(([^)\s]+)\)/g;
@@ -100,6 +108,13 @@ export function checkSkill(skill: Skill): Finding[] {
     if (name.includes("--")) {
       add("name-double-hyphen", "error", `\`name: ${name}\` must not contain consecutive hyphens.`);
     }
+    if (/claude|anthropic/.test(name)) {
+      add(
+        "name-reserved-word",
+        "warn",
+        `\`name: ${name}\` contains a reserved word ("claude"/"anthropic"). Claude Code loads it; a claude.ai or API upload rejects it.`,
+      );
+    }
     if (name !== dirName) {
       add(
         "name-dir-mismatch",
@@ -111,6 +126,13 @@ export function checkSkill(skill: Skill): Finding[] {
   }
 
   // ---- description
+  /**
+   * A skill the model cannot invoke is never matched against its description,
+   * so trigger-quality checks on it are noise: run against a registry of 35,
+   * they produced 19 findings and every one was a user-invoked skill. The spec
+   * limits still hold either way.
+   */
+  const userInvokedOnly = skill.frontmatter["disable-model-invocation"] === true;
   if (description === null) {
     add("missing-description", "error", "`description` is required and must be a string.");
   } else {
@@ -120,26 +142,35 @@ export function checkSkill(skill: Skill): Finding[] {
         "error",
         `\`description\` is ${description.length} chars, max is ${DESCRIPTION_MAX}.`,
       );
-    } else if (description.trim().length < DESCRIPTION_MIN_USEFUL) {
+    } else if (!userInvokedOnly && description.trim().length < DESCRIPTION_MIN_USEFUL) {
       add(
         "description-thin",
         "warn",
         `\`description\` is ${description.trim().length} chars and cannot carry a trigger, so nothing will match it.`,
       );
     }
-    if (!/\buse\b|\bwhen\b|\btriggers?\b/i.test(description)) {
+    if (/<\/?[a-zA-Z][^>]*>/.test(description)) {
       add(
-        "description-no-trigger",
+        "description-xml-tags",
         "warn",
-        "`description` never says when to use the skill, so the model has nothing to match a task against.",
+        "`description` contains an XML/HTML tag. Claude Code loads it; platform validation rejects it.",
       );
     }
-    if (/^(I |I'll |I can |This skill lets me )/.test(description.trim())) {
-      add(
-        "description-first-person",
-        "warn",
-        "`description` is first person. It is injected into the system prompt and should read in the third person.",
-      );
+    if (!userInvokedOnly) {
+      if (!/\buse\b|\bwhen\b|\btriggers?\b/i.test(description)) {
+        add(
+          "description-no-trigger",
+          "warn",
+          "`description` never says when to use the skill, so the model has nothing to match a task against.",
+        );
+      }
+      if (/^(I |I'll |I can |This skill lets me )/.test(description.trim())) {
+        add(
+          "description-first-person",
+          "warn",
+          "`description` is first person. It is injected into the system prompt and should read in the third person.",
+        );
+      }
     }
   }
 
@@ -187,14 +218,52 @@ export function checkSkill(skill: Skill): Finding[] {
     add("body-empty", "error", "Frontmatter with no body: the skill registers but teaches nothing.");
   }
 
-  for (const target of referencedFiles(skill.body)) {
-    if (!existsSync(join(skill.dir, target))) {
+  const direct = referencedFiles(skill.body);
+  if (
+    skill.bodyLines > BODY_MONOLITH_LINES &&
+    skill.bodyLines <= BODY_LINES_MAX &&
+    direct.length === 0
+  ) {
+    add(
+      "body-verbose",
+      "warn",
+      `Body is ${skill.bodyLines} lines with nothing split out. Every line competes with the conversation on every load; move detail into \`references/\` and link it.`,
+    );
+  }
+
+  // Seeded with SKILL.md itself: a reference file linking back to the root is
+  // navigation, not content buried two levels deep.
+  const resolvedDirect = new Set([
+    normalize(join(skill.dir, "SKILL.md")),
+    ...direct.map((target) => normalize(join(skill.dir, target))),
+  ]);
+  // Reference files linking onward to files SKILL.md never links bury those
+  // files two levels deep, where they are previewed rather than read. One
+  // finding per skill: a deep tree chains from many files for the same reason,
+  // and a page of repeats trains the reader to ignore the rule.
+  const chaining = new Set<string>();
+  for (const target of direct) {
+    const path = join(skill.dir, target);
+    if (!existsSync(path)) {
       add(
         "broken-reference",
         "error",
         `Points at \`${target}\`, which does not exist next to SKILL.md.`,
       );
+      continue;
     }
+    if (!/\.md$/i.test(target)) continue;
+    const chained = referencedFiles(readFileSync(path, "utf8")).filter(
+      (onward) => !resolvedDirect.has(normalize(join(dirname(path), onward))),
+    );
+    if (chained.length > 0) chaining.add(target);
+  }
+  if (chaining.size > 0) {
+    add(
+      "nested-reference",
+      "warn",
+      `\`${[...chaining].join("`, `")}\` link onward to files SKILL.md never links itself. Chained files get previewed, not read; keep references one level deep from SKILL.md.`,
+    );
   }
 
   return findings;

@@ -39,6 +39,38 @@ does, keeps checking the rest of the skill, and reports it as
 `frontmatter-lenient-yaml` — a warning that `fix` can repair by quoting the
 value.
 
+## What a description is for decides what gets checked
+
+A description exists so the model can match a task against it. A skill with
+`disable-model-invocation: true` is never matched — only the human can call it —
+so the trigger checks (`description-thin`, `description-no-trigger`,
+`description-first-person`) do not run on it. Run against a public registry of
+35 skills, those checks produced 19 findings; every one was a user-invoked
+skill, and every one was noise. The spec limits still apply to everyone.
+
+Two more platform rules land in the same "forgiving loader" family as the YAML
+trap: a `name` containing `claude` or `anthropic` (`name-reserved-word`) and an
+XML tag in the description (`description-xml-tags`). Claude Code loads both;
+a claude.ai or API upload rejects both. Warnings, because they run fine today.
+
+## Context is what a skill spends
+
+Two checks come straight from the authoring guidance: once a SKILL.md loads,
+every line competes with the conversation, and the prescribed fix for a long
+skill is progressive disclosure, not trimming.
+
+**`body-verbose`** is a body past 200 lines that links no bundled file at all —
+a monolith paying for every detail on every load, with the split not even
+started. It stops firing the moment detail moves into `references/` and gets
+linked, and `body-too-long` takes over at the spec's 500.
+
+**`nested-reference`** is a reference file linking onward to a file SKILL.md
+never links itself. That file now sits two levels deep, where it gets previewed
+with a partial read instead of read. A backlink to SKILL.md is navigation and
+does not count, and a skill reports this once with the offending files listed,
+not once per file: a deliberately deep tree chains from many files for the same
+reason, and a page of repeats trains the reader to ignore the rule.
+
 ## Skills belong in a repository
 
 A skill in `~/.claude/skills` cannot be reviewed, cannot be rolled back, does
@@ -121,8 +153,9 @@ It is a dry run unless you pass `--apply`.
 **Warnings** — it works, but something will bite later.
 
 `frontmatter-lenient-yaml` · `description-thin` · `description-no-trigger` ·
-`description-first-person` · `unknown-field` · `metadata-not-flat` ·
-`body-too-long` · `duplicate-copy` · `overlap` · `unknown-skill-reference` ·
+`description-first-person` · `description-xml-tags` · `name-reserved-word` ·
+`unknown-field` · `metadata-not-flat` · `body-too-long` · `body-verbose` ·
+`nested-reference` · `duplicate-copy` · `overlap` · `unknown-skill-reference` ·
 `dangling-bundled-path`
 
 Fields Claude Code reads but the cross-runtime spec omits (`argument-hint`,
