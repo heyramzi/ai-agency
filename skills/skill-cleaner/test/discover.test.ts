@@ -81,6 +81,17 @@ describe("dedupe", () => {
   });
 });
 
+describe("origin", () => {
+  it("classifies a skill inside an application bundle as vendor-managed", () => {
+    // A macOS app shipping its own skill updates it with the app; adopting it
+    // into a repo or linting its authoring would fight the vendor.
+    fx.skill("Apps/ego.app/Contents/Resources/ego-skills/alpha", FM);
+    const found = walkSkills(join(fx.dir, "Apps"));
+    expect(found).toHaveLength(1);
+    expect(found[0]?.origin).toBe("plugin");
+  });
+});
+
 describe("repoOf", () => {
   it("finds the enclosing worktree", () => {
     const repo = makeRepo(fx, "project");

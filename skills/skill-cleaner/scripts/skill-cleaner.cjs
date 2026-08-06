@@ -7384,6 +7384,7 @@ function defaultRoots(cwd = process.cwd(), home = (0, import_node_os.homedir)(),
 function classify(realPath, home) {
   const inHome = (rel) => realPath.startsWith((0, import_node_path.join)(home, rel) + import_node_path.sep);
   if (PLUGIN_HOMES.some(inHome)) return "plugin";
+  if (realPath.includes(`.app${import_node_path.sep}Contents${import_node_path.sep}`)) return "plugin";
   if (SKILL_HOMES.some(inHome)) return "personal";
   return "project";
 }
@@ -7401,6 +7402,7 @@ function walkSkills(root, home = (0, import_node_os.homedir)()) {
   const seenDirs = /* @__PURE__ */ new Set();
   const rootReal = safeReal(root);
   if (!rootReal) return found;
+  const homeReal = safeReal(home) ?? home;
   const visit = (dir, depth, viaSymlink) => {
     if (depth > MAX_DEPTH) return;
     const real = safeReal(dir);
@@ -7425,7 +7427,7 @@ function walkSkills(root, home = (0, import_node_os.homedir)()) {
           path: child,
           realPath: childReal,
           root,
-          origin: classify(childReal, home),
+          origin: classify(childReal, homeReal),
           viaSymlink: linked,
           repo: repoOf(childReal)
         });
@@ -7897,6 +7899,7 @@ function checkSkill(skill) {
       continue;
     }
     if (!/\.md$/i.test(target)) continue;
+    if ((0, import_node_path5.basename)(target) === "SKILL.md") continue;
     const chained = referencedFiles((0, import_node_fs4.readFileSync)(path, "utf8")).filter(
       (onward) => !resolvedDirect.has((0, import_node_path5.normalize)((0, import_node_path5.join)((0, import_node_path5.dirname)(path), onward)))
     );
@@ -8177,7 +8180,7 @@ function scan(roots = [], opts = {}) {
     try {
       const skill = parseSkill({ ...primary, realPath });
       skills.push(skill);
-      findings.push(...checkSkill(skill));
+      if (skill.origin !== "plugin") findings.push(...checkSkill(skill));
     } catch (error) {
       findings.push({
         code: "unreadable",

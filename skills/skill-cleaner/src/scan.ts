@@ -34,7 +34,10 @@ export function scan(
     try {
       const skill = parseSkill({ ...primary, realPath });
       skills.push(skill);
-      findings.push(...checkSkill(skill));
+      // Vendor content is not a lint target: a plugin's authoring is its
+      // vendor's to fix, and unactionable findings bury the actionable ones.
+      // Plugins still count in `analyze`, where they collide with local skills.
+      if (skill.origin !== "plugin") findings.push(...checkSkill(skill));
     } catch (error) {
       findings.push({
         code: "unreadable",

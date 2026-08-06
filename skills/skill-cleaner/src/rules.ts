@@ -253,6 +253,9 @@ export function checkSkill(skill: Skill): Finding[] {
       continue;
     }
     if (!/\.md$/i.test(target)) continue;
+    // A link to another skill's SKILL.md hands over to that skill; its onward
+    // links are its own tree's business, judged when it is scanned.
+    if (basename(target) === "SKILL.md") continue;
     const chained = referencedFiles(readFileSync(path, "utf8")).filter(
       (onward) => !resolvedDirect.has(normalize(join(dirname(path), onward))),
     );

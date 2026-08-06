@@ -54,6 +54,9 @@ export function defaultRoots(
 function classify(realPath: string, home: string): Origin {
   const inHome = (rel: string) => realPath.startsWith(join(home, rel) + sep);
   if (PLUGIN_HOMES.some(inHome)) return "plugin";
+  // A skill shipped inside an application bundle is vendor-managed the same way
+  // an installed plugin is: its app updates it, nobody authors it here.
+  if (realPath.includes(`.app${sep}Contents${sep}`)) return "plugin";
   if (SKILL_HOMES.some(inHome)) return "personal";
   return "project";
 }
@@ -87,6 +90,10 @@ export function walkSkills(root: string, home = homedir()): Located[] {
   const seenDirs = new Set<string>();
   const rootReal = safeReal(root);
   if (!rootReal) return found;
+  // Origins compare against resolved skill paths, so the home must be resolved
+  // too: on macOS `/var` is a symlink to `/private/var`, and an unresolved home
+  // silently classifies everything under it as "project".
+  const homeReal = safeReal(home) ?? home;
 
   const visit = (dir: string, depth: number, viaSymlink: boolean): void => {
     if (depth > MAX_DEPTH) return;
@@ -116,7 +123,7 @@ export function walkSkills(root: string, home = homedir()): Located[] {
           path: child,
           realPath: childReal,
           root,
-          origin: classify(childReal, home),
+          origin: classify(childReal, homeReal),
           viaSymlink: linked,
           repo: repoOf(childReal),
         });

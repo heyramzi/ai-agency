@@ -228,6 +228,14 @@ describe("body", () => {
     ]);
   });
 
+  it("does not police another skill's tree through a cross-skill link", () => {
+    // seo-keyword-research links a sibling skill's SKILL.md; that skill's
+    // onward links are its own tree's business, judged when it is scanned.
+    fx.file("beta/SKILL.md", "---\nname: beta\ndescription: Use when b.\n---\n\nSee [g](references/G.md).\n");
+    fx.file("beta/references/G.md", "# G\n");
+    expect(check("alpha", GOOD, "Related craft in [beta](../beta/SKILL.md).")).toEqual([]);
+  });
+
   it("allows a reference file linking back to SKILL.md", () => {
     // mattpocock/skills produced six of these and every one was a backlink
     // to the root, not content buried two levels deep.
