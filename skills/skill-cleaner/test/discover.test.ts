@@ -52,6 +52,16 @@ describe("walkSkills", () => {
     expect(walkSkills(join(fx.dir, "source"))).toHaveLength(1);
   });
 
+  it("does not register a SKILL.md vendored inside another skill", () => {
+    // The vercel plugin ships each skill with its source under
+    // `<skill>/upstream/SKILL.md`; the runtime registers the outer skill only.
+    fx.skill(".claude/skills/alpha", FM);
+    fx.skill(".claude/skills/alpha/upstream", "name: upstream\ndescription: Vendored source of alpha.");
+    const found = walkSkills(join(fx.dir, ".claude/skills"));
+    expect(found).toHaveLength(1);
+    expect(found[0]?.realPath.endsWith("alpha/SKILL.md")).toBe(true);
+  });
+
   it("does not descend into node_modules", () => {
     fx.skill(".claude/skills/node_modules/pkg/alpha", FM);
     expect(walkSkills(join(fx.dir, ".claude/skills"))).toHaveLength(0);

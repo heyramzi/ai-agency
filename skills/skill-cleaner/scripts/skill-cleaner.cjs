@@ -7414,6 +7414,7 @@ function walkSkills(root, home = (0, import_node_os.homedir)()) {
     } catch {
       return;
     }
+    const isSkill = entries.includes("SKILL.md");
     for (const entry of entries) {
       if (SKIP_DIRS.has(entry)) continue;
       const child = (0, import_node_path.join)(dir, entry);
@@ -7433,6 +7434,7 @@ function walkSkills(root, home = (0, import_node_os.homedir)()) {
         });
         continue;
       }
+      if (isSkill) continue;
       const target = safeStat(child);
       if (target?.isDirectory()) visit(child, depth + 1, linked);
     }

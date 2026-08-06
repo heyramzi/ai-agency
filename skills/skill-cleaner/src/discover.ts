@@ -108,6 +108,11 @@ export function walkSkills(root: string, home = homedir()): Located[] {
       return; // unreadable directory is not a reason to abandon the scan
     }
 
+    // A directory holding a SKILL.md is a skill; anything under it is that
+    // skill's bundled material. A nested SKILL.md (vendored source, an example)
+    // is not a registration, so the walk stops here.
+    const isSkill = entries.includes("SKILL.md");
+
     for (const entry of entries) {
       if (SKIP_DIRS.has(entry)) continue;
       const child = join(dir, entry);
@@ -130,6 +135,7 @@ export function walkSkills(root: string, home = homedir()): Located[] {
         continue;
       }
 
+      if (isSkill) continue;
       const target = safeStat(child);
       if (target?.isDirectory()) visit(child, depth + 1, linked);
     }

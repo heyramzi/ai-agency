@@ -26,6 +26,12 @@ conflicting registrations of the same name. Only the newest cached version
 counts, and marketplace checkouts are skipped entirely: they are what a plugin
 is installed *from*, not what the runtime loads.
 
+**A skill's subtree belongs to the skill.** A SKILL.md nested inside a
+directory that already has one is bundled material, not a registration: the
+vercel plugin ships each skill's source under `<skill>/upstream/SKILL.md`, and
+walking into it read one plugin as eleven collisions on the name `upstream`.
+The walk stops at the first SKILL.md it finds on a branch.
+
 ## Why the loader being forgiving is a trap
 
 `description: Use when interacting with ClickUp: reading tasks` is not valid
