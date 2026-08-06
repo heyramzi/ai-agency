@@ -219,11 +219,14 @@ export function checkSkill(skill: Skill): Finding[] {
   }
 
   const direct = referencedFiles(skill.body);
-  if (
-    skill.bodyLines > BODY_MONOLITH_LINES &&
-    skill.bodyLines <= BODY_LINES_MAX &&
-    direct.length === 0
-  ) {
+  // A backticked `references/shorts-playbook.md` splits detail out exactly as
+  // well as a markdown link does, and `dangling-bundled-path` already treats
+  // that shape as a real reference. Counting only links called video-hooks a
+  // monolith while it was carrying five reference files.
+  const split =
+    direct.length > 0 ||
+    bundledPathMentions(skill.body).some((path) => existsSync(join(skill.dir, path)));
+  if (skill.bodyLines > BODY_MONOLITH_LINES && skill.bodyLines <= BODY_LINES_MAX && !split) {
     add(
       "body-verbose",
       "warn",

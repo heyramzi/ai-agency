@@ -203,6 +203,15 @@ describe("body", () => {
     expect(check("alpha", GOOD, "line\n".repeat(220))).toEqual(["body-verbose"]);
   });
 
+  it("accepts the same length when the reference is named in prose, not linked", () => {
+    // video-hooks carries five reference files and backticks them instead of
+    // linking them. Counting only markdown links called it a monolith with
+    // nothing split out, which was the opposite of true.
+    fx.file("alpha/references/shorts-playbook.md", "# Playbook\n");
+    const body = `Read \`references/shorts-playbook.md\` first.\n${"line\n".repeat(220)}`;
+    expect(check("alpha", GOOD, body)).toEqual([]);
+  });
+
   it("accepts the same length when detail is pushed into references", () => {
     fx.file("alpha/references/DETAIL.md", "# Detail\n");
     const body = `See [the detail](references/DETAIL.md).\n${"line\n".repeat(220)}`;

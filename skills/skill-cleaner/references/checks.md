@@ -65,10 +65,13 @@ Two checks come straight from the authoring guidance: once a SKILL.md loads,
 every line competes with the conversation, and the prescribed fix for a long
 skill is progressive disclosure, not trimming.
 
-**`body-verbose`** is a body past 200 lines that links no bundled file at all —
+**`body-verbose`** is a body past 200 lines that names no bundled file at all —
 a monolith paying for every detail on every load, with the split not even
-started. It stops firing the moment detail moves into `references/` and gets
-linked, and `body-too-long` takes over at the spec's 500.
+started. It stops firing the moment detail moves into `references/`, whether
+that file is linked or merely backticked: `dangling-bundled-path` already
+treats a path named in prose as a real reference, and counting only markdown
+links called a skill carrying five reference files a monolith. `body-too-long`
+takes over at the spec's 500.
 
 **`nested-reference`** is a reference file linking onward to a file SKILL.md
 never links itself. That file now sits two levels deep, where it gets previewed
