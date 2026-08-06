@@ -69,7 +69,10 @@ never links itself. That file now sits two levels deep, where it gets previewed
 with a partial read instead of read. A backlink to SKILL.md is navigation and
 does not count, and a skill reports this once with the offending files listed,
 not once per file: a deliberately deep tree chains from many files for the same
-reason, and a page of repeats trains the reader to ignore the rule.
+reason, and a page of repeats trains the reader to ignore the rule. Only onward
+links to markdown count. A reference file linking the `.tsx` it is teaching, a
+fixture or an image is showing its work, and those get opened deliberately
+rather than previewed.
 
 ## Skills belong in a repository
 

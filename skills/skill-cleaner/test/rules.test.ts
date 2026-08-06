@@ -236,6 +236,15 @@ describe("body", () => {
     expect(check("alpha", GOOD, "Related craft in [beta](../beta/SKILL.md).")).toEqual([]);
   });
 
+  it("allows a reference file linking a code sample", () => {
+    // remotion's text-animations.md links the .tsx it is teaching. Showing the
+    // work is not a third level of instructions, and flagging it sent the
+    // reader to rewrite a reference file that was already right.
+    fx.file("alpha/references/GUIDE.md", "Copy [the component](assets/thing.tsx).");
+    fx.file("alpha/references/assets/thing.tsx", "export const Thing = () => null;\n");
+    expect(check("alpha", GOOD, "See [the guide](references/GUIDE.md).")).toEqual([]);
+  });
+
   it("allows a reference file linking back to SKILL.md", () => {
     // mattpocock/skills produced six of these and every one was a backlink
     // to the root, not content buried two levels deep.

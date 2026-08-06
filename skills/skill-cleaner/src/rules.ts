@@ -257,6 +257,11 @@ export function checkSkill(skill: Skill): Finding[] {
     // links are its own tree's business, judged when it is scanned.
     if (basename(target) === "SKILL.md") continue;
     const chained = referencedFiles(readFileSync(path, "utf8")).filter(
+      // Only prose buries prose. A reference file linking a code sample,
+      // a fixture or an image is showing its work, not hiding a third level
+      // of instructions: those get opened deliberately, not previewed.
+      (onward) => /\.md$/i.test(onward),
+    ).filter(
       (onward) => !resolvedDirect.has(normalize(join(dirname(path), onward))),
     );
     if (chained.length > 0) chaining.add(target);

@@ -93,7 +93,7 @@ registry that exemption dissolved 19 of 20 findings.
 
 ```bash
 pnpm install
-pnpm test      # 106 tests
+pnpm test      # 112 tests
 pnpm build     # typecheck, then rebuild scripts/skill-cleaner.cjs
 ```
 
