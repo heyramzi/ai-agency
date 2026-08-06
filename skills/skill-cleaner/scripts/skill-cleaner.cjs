@@ -8387,6 +8387,12 @@ function scan(roots = [], opts = {}) {
     }
   }
   findings.push(...analyze(skills, targets.flatMap((root) => danglingLinks(root))));
+  const taken = new Set(skills.map((skill) => str(skill.frontmatter.name)));
+  for (const finding of findings) {
+    if (finding.code !== "name-dir-mismatch" || !finding.fixable) continue;
+    const skill = skills.find((candidate) => candidate.realPath === finding.paths[0]);
+    if (skill && taken.has((0, import_node_path8.basename)(skill.dir))) finding.fixable = false;
+  }
   return { scanned: targets, skills, findings };
 }
 

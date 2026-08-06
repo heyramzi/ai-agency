@@ -144,10 +144,16 @@ hard to undo. Same for which side of a name collision wins.
 | Finding | Repair |
 | --- | --- |
 | `frontmatter-lenient-yaml` | Quote the offending values |
-| `name-dir-mismatch` | Set `name` to the directory name |
+| `name-dir-mismatch` | Set `name` to the directory name, unless that name is taken |
 | `dangling-symlink` | Remove the dead link |
 
 It is a dry run unless you pass `--apply`.
+
+That "unless" is load-bearing. `CLIs/umami` was named `umami-cli` next to an
+`analytics/umami`, and aligning it to its directory turned a cosmetic warning
+into a `duplicate-name` error, where the runtime keeps one and silently drops
+the other. A repair that creates a worse finding is not a one-outcome repair,
+so the finding is still reported and simply stops being offered as fixable.
 
 ## Checks
 

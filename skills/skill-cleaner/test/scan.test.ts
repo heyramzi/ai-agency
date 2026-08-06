@@ -40,4 +40,24 @@ describe("scan", () => {
 
     expect(report.findings.map((f) => f.code)).toContain("duplicate-name");
   });
+
+  it("stops offering to align a name onto one another skill already holds", () => {
+    // `CLIs/umami` was named `umami-cli` next to an `analytics/umami`. Applying
+    // the fix aligned it to its directory and created a duplicate-name error,
+    // where the runtime keeps one and silently drops the other.
+    fx.skill("project/.claude/skills/umami", "name: umami\ndescription: Use when reading traffic.");
+    fx.skill("project/clis/umami", "name: umami-cli\ndescription: Use when querying the CLI.");
+    const report = scan([`${fx.dir}/project`], { home: fx.dir });
+
+    const mismatch = report.findings.find((f) => f.code === "name-dir-mismatch");
+    expect(mismatch).toBeDefined();
+    expect(mismatch?.fixable).toBe(false);
+  });
+
+  it("still offers to align a name when the directory name is free", () => {
+    fx.skill("project/.claude/skills/beta", "name: beta-cli\ndescription: Use when doing beta.");
+    const report = scan([`${fx.dir}/project`], { home: fx.dir });
+
+    expect(report.findings.find((f) => f.code === "name-dir-mismatch")?.fixable).toBe(true);
+  });
 });

@@ -1,9 +1,9 @@
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
-import { resolve } from "node:path";
+import { basename, resolve } from "node:path";
 import { analyze } from "./analyze.js";
 import { danglingLinks, dedupe, defaultRoots, walkSkills } from "./discover.js";
-import { parseSkill } from "./parse.js";
+import { parseSkill, str } from "./parse.js";
 import { isMarketplaceClone, keepNewestPluginVersions } from "./plugins.js";
 import { checkSkill } from "./rules.js";
 import type { Report, Skill } from "./types.js";
@@ -49,6 +49,18 @@ export function scan(
   }
 
   findings.push(...analyze(skills, targets.flatMap((root) => danglingLinks(root))));
+
+  // Aligning a name to its directory is only a one-outcome repair while that
+  // directory name is free. `CLIs/umami` already had an `analytics/umami`
+  // registered, and applying the fix turned a cosmetic warning into a
+  // duplicate-name error, where the runtime silently drops one of the two.
+  // Judged here because a single skill cannot see the rest of the registry.
+  const taken = new Set(skills.map((skill) => str(skill.frontmatter.name)));
+  for (const finding of findings) {
+    if (finding.code !== "name-dir-mismatch" || !finding.fixable) continue;
+    const skill = skills.find((candidate) => candidate.realPath === finding.paths[0]);
+    if (skill && taken.has(basename(skill.dir))) finding.fixable = false;
+  }
 
   return { scanned: targets, skills, findings };
 }
