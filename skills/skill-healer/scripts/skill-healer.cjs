@@ -40,7 +40,11 @@ const LOG_HEADING = "## Learned Patterns";
  * itself. It belongs in the description rather than only the body: the
  * description is the part the model reads when deciding what to load.
  */
-const FRONTMATTER_PROMISE = /appends?\s+(?:new\s+)?(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
+// The quantifier between the verb and the noun is free: "appends new failure
+// modes", "appends every new failure mode", "appends any failure it hits" all
+// make the same promise, and pinning it to "new" reported four honest skills as
+// missing it.
+const FRONTMATTER_PROMISE = /appends?\s+(?:\w+\s+){0,3}(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
 
 /** An entry: `- YYYY-MM-DD: what went wrong, what to do instead.` */
 const ENTRY = /^-\s+(\d{4}-\d{2}-\d{2}):\s*(.+)$/;
@@ -120,22 +124,68 @@ function read(file) {
   const fence = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text);
   const frontmatter = fence ? fence[1] : "";
   const nameMatch = /^name:\s*["']?([^"'\n]+?)["']?\s*$/m.exec(frontmatter);
-  const descMatch = /^description:\s*([\s\S]*?)(?=\n[a-z-]+:|$)/m.exec(frontmatter);
+  const description = readDescription(frontmatter);
 
-  const headingAt = text.indexOf(`\n${LOG_HEADING}`);
+  // Case-insensitive: "## Learned patterns" is the same section, and reading it
+  // as absent reports a skill with a full log as having none.
+  const headingMatch = /\n##\s+learned\s+patterns\s*$/im.exec(text);
+  const headingAt = headingMatch ? headingMatch.index : -1;
   const logBlock = headingAt === -1 ? null : text.slice(headingAt + 1);
+
+  // A log that outgrew the body moves to references/ and leaves the section as a
+  // pointer. Reading only the section then reports a 60-entry log as empty, so
+  // follow the link and count the entries where they actually live.
+  let entries = logBlock ? parseEntries(logBlock) : [];
+  let entriesFile = null;
+  if (logBlock && entries.length === 0) {
+    const link = /\(([^)]*learn[^)]*\.md)\)|`([^`]*learn[^`]*\.md)`/i.exec(logBlock);
+    const target = link && (link[1] || link[2]);
+    if (target) {
+      const resolved = join(dirname(file), target);
+      if (existsSync(resolved)) {
+        entries = parseEntries(readFileSync(resolved, "utf8"));
+        entriesFile = resolved;
+      }
+    }
+  }
 
   return {
     file,
     text,
     name: nameMatch ? nameMatch[1].trim() : basename(dirname(file)),
-    description: descMatch ? descMatch[1].replace(/\s+/g, " ").trim() : "",
+    description,
     hasLog: headingAt !== -1,
     /** True when the log is the last section, which is where it belongs. */
     logIsLast: logBlock !== null && !/\n##\s/.test(logBlock.slice(LOG_HEADING.length + 1)),
-    entries: logBlock ? parseEntries(logBlock) : [],
+    entries,
+    /** Set when the entries live in references/ rather than in the body. */
+    entriesFile,
     bodyLines: text.split("\n").length,
   };
+}
+
+/**
+ * The description, flattened to one line.
+ *
+ * Read line by line rather than by regex: a lookahead ending in `$` under /m
+ * stops at the first end-of-line, which silently truncates a block scalar to its
+ * first line and hides a promise written on line four.
+ */
+function readDescription(frontmatter) {
+  const lines = frontmatter.split("\n");
+  const start = lines.findIndex((l) => /^description:/.test(l));
+  if (start === -1) return "";
+
+  const collected = [lines[start].replace(/^description:\s*/, "")];
+  for (let i = start + 1; i < lines.length; i++) {
+    if (/^[a-z-]+:/i.test(lines[i])) break; // next top-level key
+    collected.push(lines[i]);
+  }
+  return collected
+    .join(" ")
+    .replace(/^[|>][-+\d]*\s*/, "") // block scalar indicator
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function parseEntries(logBlock) {
@@ -156,7 +206,9 @@ function parseEntries(logBlock) {
 function audit(skill, now) {
   const missing = [];
   if (!FRONTMATTER_PROMISE.test(skill.description)) missing.push("frontmatter-promise");
-  if (!/if this run surfaced/i.test(skill.text)) missing.push("execution-step");
+  // "If a run surfaces" makes the same commitment as "if this run surfaced".
+  // What must not pass is a hedge, which is why "consider appending" is not here.
+  if (!/if (?:this|a|the) run surface[sd]/i.test(skill.text)) missing.push("execution-step");
   if (!/append(ed)?[^.\n]*\bLearned Patterns\b/i.test(skill.text)) missing.push("checklist-item");
   if (!skill.hasLog) missing.push("learned-patterns");
 
