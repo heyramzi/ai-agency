@@ -241,6 +241,20 @@ function audit(skill, now) {
  * execution step goes into the existing flow rather than a new section, so a
  * retrofitted skill reads like one that was written with the scaffold.
  */
+/**
+ * Add a section, keeping the log last.
+ *
+ * Appending to the end of the file is only correct when there is no log yet.
+ * Once there is one, the end of the file is inside it, and a new section there
+ * pushes the log out of last place, which the next `check` then reports.
+ */
+function appendSection(text, section) {
+  const heading = /\n##\s+learned\s+patterns\s*$/im.exec(text);
+  const body = `${section.replace(/\s*$/, "")}\n`;
+  if (!heading) return `${text.replace(/\s*$/, "")}\n\n${body}`;
+  return `${text.slice(0, heading.index).replace(/\s*$/, "")}\n\n${body}\n${text.slice(heading.index + 1)}`;
+}
+
 function retrofit(skill, missing, now) {
   let text = skill.text;
 
@@ -258,7 +272,10 @@ function retrofit(skill, missing, now) {
   }
 
   if (missing.includes("execution-step")) {
-    text = `${text.replace(/\s*$/, "")}\n\n## Closing a run\n\nIf this run surfaced a failure mode not already listed, append it to Learned\nPatterns with today's date before finishing. A learning that stays in the\nconversation is lost when the conversation ends.\n`;
+    text = appendSection(
+      text,
+      "## Closing a run\n\nIf this run surfaced a failure mode not already listed, append it to Learned\nPatterns with today's date before finishing. A learning that stays in the\nconversation is lost when the conversation ends.",
+    );
   }
 
   if (missing.includes("checklist-item")) {
@@ -266,7 +283,7 @@ function retrofit(skill, missing, now) {
     const item = "- [ ] New failure modes from this run appended to Learned Patterns\n";
     text = checklist.test(text)
       ? text.replace(checklist, (all, last) => `\n${last}${item}`)
-      : `${text.replace(/\s*$/, "")}\n\n## Verification\n\n${item}`;
+      : appendSection(text, `## Verification\n\n${item}`);
   }
 
   if (missing.includes("learned-patterns")) {
