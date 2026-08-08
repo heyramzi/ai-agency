@@ -8067,7 +8067,7 @@ function checkSkill(skill) {
     add("body-empty", "error", "Frontmatter with no body: the skill registers but teaches nothing.");
   }
   const direct = referencedFiles(skill.body);
-  const split = direct.length > 0 || bundledPathMentions(skill.body).some((path) => (0, import_node_fs4.existsSync)((0, import_node_path5.join)(skill.dir, path)));
+  const split = direct.length > 0 || bundledPathMentions(skill.body).some((path) => (0, import_node_fs5.existsSync)((0, import_node_path6.join)(skill.dir, path)));
   if (skill.bodyLines > BODY_MONOLITH_LINES && skill.bodyLines <= BODY_LINES_MAX && !split) {
     add(
       "body-verbose",
@@ -8392,7 +8392,7 @@ function scan(roots = [], opts = {}) {
   for (const finding of findings) {
     if (finding.code !== "name-dir-mismatch" || !finding.fixable) continue;
     const skill = skills.find((candidate) => candidate.realPath === finding.paths[0]);
-    if (skill && taken.has((0, import_node_path8.basename)(skill.dir))) finding.fixable = false;
+    if (skill && taken.has((0, import_node_path9.basename)(skill.dir))) finding.fixable = false;
   }
   return { scanned: targets, skills, findings };
 }
