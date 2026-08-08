@@ -7356,9 +7356,10 @@ var require_dist = __commonJS({
 // src/cli.ts
 var import_node_util = require("node:util");
 
-// src/fix.ts
-var import_node_fs2 = require("node:fs");
-var import_node_path2 = require("node:path");
+// src/consolidate.ts
+var import_node_child_process = require("node:child_process");
+var import_node_fs3 = require("node:fs");
+var import_node_path3 = require("node:path");
 
 // src/discover.ts
 var import_node_fs = require("node:fs");
@@ -7501,160 +7502,16 @@ function safeLstat(p) {
   }
 }
 
-// src/fix.ts
-function applyFixes(skills, findings, opts) {
-  const applied = [];
-  const byPath = new Map(skills.map((s) => [s.realPath, s]));
-  for (const finding of findings) {
-    if (!finding.fixable) continue;
-    if (finding.code === "dangling-symlink") {
-      for (const path of finding.paths) {
-        applied.push({ action: "remove dangling symlink", path });
-        if (!opts.dryRun) (0, import_node_fs2.unlinkSync)(path);
-      }
-      continue;
-    }
-    if (finding.code === "frontmatter-lenient-yaml") {
-      for (const path of finding.paths) {
-        applied.push({ action: "quote frontmatter values so strict YAML accepts them", path });
-        if (!opts.dryRun) (0, import_node_fs2.writeFileSync)(path, quoteFrontmatter((0, import_node_fs2.readFileSync)(path, "utf8")));
-      }
-      continue;
-    }
-    if (finding.code === "name-dir-mismatch") {
-      for (const path of finding.paths) {
-        const skill = byPath.get(path);
-        if (!skill) continue;
-        const dirName = (0, import_node_path2.basename)(skill.dir);
-        applied.push({ action: `set name to \`${dirName}\``, path });
-        if (!opts.dryRun) (0, import_node_fs2.writeFileSync)(path, renameField((0, import_node_fs2.readFileSync)(path, "utf8"), dirName));
-      }
-    }
-  }
-  return applied;
-}
-function renameField(text, name) {
-  return text.replace(/^(---\r?\n[\s\S]*?)^name:.*$/m, `$1name: ${name}`);
-}
-function quoteFrontmatter(text) {
-  const fence = /^(---\r?\n)([\s\S]*?)(\r?\n---)/;
-  return text.replace(fence, (_all, open, raw, close) => {
-    const fixed = raw.split("\n").map((line) => {
-      const match = /^([A-Za-z][\w-]*:)([ \t]+)(.*)$/.exec(line);
-      if (!match) return line;
-      const [, key = "", gap = " ", value = ""] = match;
-      const trimmed = value.trim();
-      if (!trimmed) return line;
-      if (/^["'|>[{&*!]/.test(trimmed)) return line;
-      if (!/:\s/.test(trimmed) && !trimmed.includes(" #")) return line;
-      return `${key}${gap}"${trimmed.replace(/(["\\])/g, "\\$1")}"`;
-    });
-    return `${open}${fixed.join("\n")}${close}`;
-  });
-}
-function adopt(skillDir, intoRepo, opts) {
-  const from = (0, import_node_path2.resolve)(skillDir);
-  if (!(0, import_node_fs2.existsSync)((0, import_node_path2.join)(from, "SKILL.md"))) {
-    throw new Error(`${from} has no SKILL.md, so it is not a skill directory.`);
-  }
-  const repo = (0, import_node_path2.resolve)(intoRepo);
-  if (!(0, import_node_fs2.existsSync)((0, import_node_path2.join)(repo, ".git"))) {
-    throw new Error(`${repo} is not a git repository, which defeats the point of adopting.`);
-  }
-  if (repoOf((0, import_node_path2.join)(from, "SKILL.md")) !== null) {
-    throw new Error(`${from} is already inside a repository.`);
-  }
-  const to = (0, import_node_path2.join)(repo, ".claude", "skills", (0, import_node_path2.basename)(from));
-  if ((0, import_node_fs2.existsSync)(to)) throw new Error(`${to} already exists.`);
-  if (!opts.dryRun) {
-    (0, import_node_fs2.mkdirSync)((0, import_node_path2.dirname)(to), { recursive: true });
-    (0, import_node_fs2.renameSync)(from, to);
-    (0, import_node_fs2.symlinkSync)((0, import_node_path2.relative)((0, import_node_path2.dirname)(from), to), from, "dir");
-  }
-  return { from, to, link: `${from} -> ${(0, import_node_path2.relative)((0, import_node_path2.dirname)(from), to)}` };
-}
-
-// src/report.ts
-var import_node_path3 = require("node:path");
-var RESET = "\x1B[0m";
-var DIM = "\x1B[2m";
-var BOLD = "\x1B[1m";
-var RED = "\x1B[31m";
-var YELLOW = "\x1B[33m";
-var GREEN = "\x1B[32m";
-var ORDER = [
-  "duplicate-name",
-  "outside-codebase",
-  "missing-frontmatter",
-  "frontmatter-unparseable",
-  "missing-name",
-  "missing-description",
-  "dangling-symlink",
-  "broken-reference"
-];
-function render(report, opts) {
-  const c = (code, text) => opts.color ? `${code}${text}${RESET}` : text;
-  const short = (p) => {
-    const rel = (0, import_node_path3.relative)(opts.cwd, p);
-    return rel && !rel.startsWith("..") ? rel : p;
-  };
-  const lines = [];
-  const errors = report.findings.filter((f) => f.severity === "error");
-  const warns = report.findings.filter((f) => f.severity === "warn");
-  lines.push(
-    c(BOLD, `${report.skills.length} skills`) + c(DIM, ` across ${report.scanned.length} roots`)
-  );
-  lines.push("");
-  if (report.findings.length === 0) {
-    lines.push(c(GREEN, "Nothing to clean up."));
-    return lines.join("\n");
-  }
-  for (const group of [
-    { label: "errors", items: errors, color: RED },
-    { label: "warnings", items: warns, color: YELLOW }
-  ]) {
-    if (group.items.length === 0) continue;
-    lines.push(c(BOLD, `${group.items.length} ${group.label}`));
-    for (const finding of sortFindings(group.items)) {
-      const mark = finding.fixable ? c(DIM, " [fixable]") : "";
-      lines.push(`  ${c(group.color, finding.code)}${mark}  ${finding.message}`);
-      for (const path of finding.paths) lines.push(c(DIM, `      ${short(path)}`));
-    }
-    lines.push("");
-  }
-  const fixable = report.findings.filter((f) => f.fixable).length;
-  if (fixable > 0) lines.push(c(DIM, `${fixable} can be repaired with \`skill-cleaner fix\`.`));
-  return lines.join("\n").trimEnd();
-}
-function sortFindings(findings) {
-  const rank = (code) => {
-    const index = ORDER.indexOf(code);
-    return index === -1 ? ORDER.length : index;
-  };
-  return [...findings].sort(
-    (a, b) => rank(a.code) - rank(b.code) || a.code.localeCompare(b.code)
-  );
-}
-
-// src/scan.ts
-var import_node_fs6 = require("node:fs");
-var import_node_os2 = require("node:os");
-var import_node_path8 = require("node:path");
-
-// src/analyze.ts
-var import_node_fs5 = require("node:fs");
-var import_node_path6 = require("node:path");
-
 // src/parse.ts
 var import_node_crypto = require("node:crypto");
-var import_node_fs3 = require("node:fs");
-var import_node_path4 = require("node:path");
+var import_node_fs2 = require("node:fs");
+var import_node_path2 = require("node:path");
 var import_yaml = __toESM(require_dist(), 1);
 var FENCE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 function parseSkill(located) {
-  const text = (0, import_node_fs3.readFileSync)(located.realPath, "utf8");
+  const text = (0, import_node_fs2.readFileSync)(located.realPath, "utf8");
   const hash = (0, import_node_crypto.createHash)("sha256").update(text).digest("hex");
-  const dir = (0, import_node_path4.dirname)(located.realPath);
+  const dir = (0, import_node_path2.dirname)(located.realPath);
   const match = FENCE.exec(text);
   if (!match?.[1]) {
     return {
@@ -7716,9 +7573,341 @@ var stripQuotes = (value) => /^(["']).*\1$/.test(value) ? value.slice(1, -1) : v
 var countLines = (text) => text.trim() === "" ? 0 : text.trim().split("\n").length;
 var str = (value) => typeof value === "string" ? value : null;
 
-// src/rules.ts
+// src/consolidate.ts
+var ORIGIN_RANK = { project: 0, personal: 1, plugin: 2 };
+function pickWinner(group) {
+  const ranked = [...group].sort((a, b) => {
+    const repo = Number(a.repo === null) - Number(b.repo === null);
+    if (repo !== 0) return repo;
+    const origin = ORIGIN_RANK[a.origin] - ORIGIN_RANK[b.origin];
+    if (origin !== 0) return origin;
+    if (a.bodyLines !== b.bodyLines) return b.bodyLines - a.bodyLines;
+    return a.realPath.localeCompare(b.realPath);
+  });
+  const [winner, ...losers] = ranked;
+  if (!winner) throw new Error("pickWinner needs at least one skill.");
+  return { winner, losers };
+}
+function sections(body) {
+  const out = [];
+  const lines = body.split("\n");
+  let current = null;
+  let fenced = false;
+  for (const line of lines) {
+    if (/^```/.test(line.trim())) fenced = !fenced;
+    if (!fenced && /^##\s+/.test(line)) {
+      if (current) out.push(current);
+      current = { heading: line.replace(/^##\s+/, "").trim(), text: line };
+      continue;
+    }
+    if (current) current.text += `
+${line}`;
+  }
+  if (current) out.push(current);
+  return out;
+}
+function planConsolidation(skills, findings) {
+  const byPath = new Map(skills.map((s) => [s.realPath, s]));
+  const consumed = /* @__PURE__ */ new Set();
+  const actions = [];
+  const skipped = [];
+  const resolve4 = (paths) => paths.map((p) => byPath.get(p)).filter((s) => s !== void 0);
+  for (const finding of findings.filter((f) => f.code === "duplicate-copy")) {
+    const group = resolve4(finding.paths).filter((s) => !consumed.has(s.realPath));
+    if (group.length < 2) continue;
+    const { winner, losers } = pickWinner(group);
+    for (const loser of losers) {
+      consumed.add(loser.realPath);
+      actions.push({
+        kind: "link",
+        name: str(winner.frontmatter.name) ?? "unnamed",
+        winner: winner.dir,
+        loser: loser.dir
+      });
+    }
+  }
+  for (const finding of findings.filter(
+    (f) => f.code === "duplicate-name" || f.code === "overlap"
+  )) {
+    const group = resolve4(finding.paths).filter((s) => !consumed.has(s.realPath));
+    if (group.length < 2) {
+      skipped.push({
+        reason: "already consolidated by an earlier action in this plan",
+        paths: finding.paths
+      });
+      continue;
+    }
+    const outside = group.filter((s) => s.repo === null);
+    if (outside.length > 0) {
+      skipped.push({
+        reason: "a side of this pair lives outside any repository, so a merge could not be undone. Run `adopt` first",
+        paths: outside.map((s) => s.realPath)
+      });
+      continue;
+    }
+    const { winner, losers } = pickWinner(group);
+    const winnerHeadings = new Set(sections(winner.body).map((s) => s.heading.toLowerCase()));
+    for (const loser of losers) {
+      consumed.add(loser.realPath);
+      const unique = sections(loser.body).filter((s) => !winnerHeadings.has(s.heading.toLowerCase())).map((s) => s.heading);
+      actions.push({
+        kind: "merge",
+        name: str(loser.frontmatter.name) ?? "unnamed",
+        winner: winner.realPath,
+        loser: loser.realPath,
+        sections: unique
+      });
+    }
+  }
+  const renamed = /* @__PURE__ */ new Map();
+  for (const action of actions) {
+    if (action.kind !== "merge") continue;
+    const loser = byPath.get(action.loser);
+    const winner = byPath.get(action.winner);
+    const from = str(loser?.frontmatter.name);
+    const to = str(winner?.frontmatter.name);
+    if (from && to && from !== to) renamed.set(from, to);
+  }
+  for (const skill of skills) {
+    if (consumed.has(skill.realPath)) continue;
+    for (const [from, to] of renamed) {
+      if (!routes(skill.body, from)) continue;
+      actions.push({
+        kind: "repoint",
+        name: str(skill.frontmatter.name) ?? "unnamed",
+        path: skill.realPath,
+        from,
+        to
+      });
+    }
+  }
+  return { actions, skipped };
+}
+function routes(body, name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\`${escaped}\`\\s+skill\\b|\\bskills?\\s+\`${escaped}\``).test(body);
+}
+function dirtyRepos(plan, skills) {
+  const byPath = new Map(skills.map((s) => [s.realPath, s]));
+  const repos = /* @__PURE__ */ new Set();
+  for (const action of plan.actions) {
+    const paths = action.kind === "repoint" ? [action.path] : [action.winner, action.loser];
+    for (const path of paths) {
+      const repo = byPath.get(path)?.repo ?? repoOf(path);
+      if (repo) repos.add(repo);
+    }
+  }
+  return [...repos].filter((repo) => {
+    try {
+      const out = (0, import_node_child_process.execFileSync)("git", ["-C", repo, "status", "--porcelain"], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"]
+      });
+      return out.trim() !== "";
+    } catch {
+      return true;
+    }
+  });
+}
+function applyConsolidation(plan, opts) {
+  const done = [];
+  for (const action of plan.actions) {
+    if (action.kind === "link") {
+      done.push({
+        action: `replace identical copy of \`${action.name}\` with a link to ${action.winner}`,
+        path: action.loser
+      });
+      if (!opts.dryRun) {
+        (0, import_node_fs3.rmSync)(action.loser, { recursive: true, force: true });
+        (0, import_node_fs3.symlinkSync)((0, import_node_path3.relative)((0, import_node_path3.dirname)(action.loser), action.winner), action.loser, "dir");
+      }
+      continue;
+    }
+    if (action.kind === "merge") {
+      const detail = action.sections.length > 0 ? `carrying ${action.sections.length} section${action.sections.length === 1 ? "" : "s"} across` : "with nothing unique to carry across";
+      done.push({ action: `merge \`${action.name}\` into ${action.winner}, ${detail}`, path: action.loser });
+      if (!opts.dryRun) {
+        (0, import_node_fs3.writeFileSync)(action.winner, mergeBodies(action));
+        (0, import_node_fs3.rmSync)((0, import_node_path3.dirname)(action.loser), { recursive: true, force: true });
+      }
+      continue;
+    }
+    done.push({
+      action: `repoint routing from \`${action.from}\` to \`${action.to}\``,
+      path: action.path
+    });
+    if (!opts.dryRun) {
+      (0, import_node_fs3.writeFileSync)(action.path, repoint((0, import_node_fs3.readFileSync)(action.path, "utf8"), action.from, action.to));
+    }
+  }
+  return done;
+}
+function mergeBodies(action) {
+  const winner = (0, import_node_fs3.readFileSync)(action.winner, "utf8");
+  if (action.sections.length === 0) return winner;
+  const loser = (0, import_node_fs3.readFileSync)(action.loser, "utf8");
+  const carried = sections(loser).filter((s) => action.sections.includes(s.heading)).map((s) => s.text.replace(/\s*$/, "")).join("\n\n");
+  return `${winner.replace(/\s*$/, "")}
+
+<!-- merged from \`${action.name}\`. Fold these into the sections above and delete this marker. -->
+
+${carried}
+`;
+}
+function repoint(text, from, to) {
+  const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.replace(new RegExp(`\`${escaped}\`(\\s+skill\\b)`, "g"), `\`${to}\`$1`).replace(new RegExp(`(\\bskills?\\s+)\`${escaped}\``, "g"), `$1\`${to}\``);
+}
+
+// src/fix.ts
 var import_node_fs4 = require("node:fs");
+var import_node_path4 = require("node:path");
+function applyFixes(skills, findings, opts) {
+  const applied = [];
+  const byPath = new Map(skills.map((s) => [s.realPath, s]));
+  for (const finding of findings) {
+    if (!finding.fixable) continue;
+    if (finding.code === "dangling-symlink") {
+      for (const path of finding.paths) {
+        applied.push({ action: "remove dangling symlink", path });
+        if (!opts.dryRun) (0, import_node_fs4.unlinkSync)(path);
+      }
+      continue;
+    }
+    if (finding.code === "frontmatter-lenient-yaml") {
+      for (const path of finding.paths) {
+        applied.push({ action: "quote frontmatter values so strict YAML accepts them", path });
+        if (!opts.dryRun) (0, import_node_fs4.writeFileSync)(path, quoteFrontmatter((0, import_node_fs4.readFileSync)(path, "utf8")));
+      }
+      continue;
+    }
+    if (finding.code === "name-dir-mismatch") {
+      for (const path of finding.paths) {
+        const skill = byPath.get(path);
+        if (!skill) continue;
+        const dirName = (0, import_node_path4.basename)(skill.dir);
+        applied.push({ action: `set name to \`${dirName}\``, path });
+        if (!opts.dryRun) (0, import_node_fs4.writeFileSync)(path, renameField((0, import_node_fs4.readFileSync)(path, "utf8"), dirName));
+      }
+    }
+  }
+  return applied;
+}
+function renameField(text, name) {
+  return text.replace(/^(---\r?\n[\s\S]*?)^name:.*$/m, `$1name: ${name}`);
+}
+function quoteFrontmatter(text) {
+  const fence = /^(---\r?\n)([\s\S]*?)(\r?\n---)/;
+  return text.replace(fence, (_all, open, raw, close) => {
+    const fixed = raw.split("\n").map((line) => {
+      const match = /^([A-Za-z][\w-]*:)([ \t]+)(.*)$/.exec(line);
+      if (!match) return line;
+      const [, key = "", gap = " ", value = ""] = match;
+      const trimmed = value.trim();
+      if (!trimmed) return line;
+      if (/^["'|>[{&*!]/.test(trimmed)) return line;
+      if (!/:\s/.test(trimmed) && !trimmed.includes(" #")) return line;
+      return `${key}${gap}"${trimmed.replace(/(["\\])/g, "\\$1")}"`;
+    });
+    return `${open}${fixed.join("\n")}${close}`;
+  });
+}
+function adopt(skillDir, intoRepo, opts) {
+  const from = (0, import_node_path4.resolve)(skillDir);
+  if (!(0, import_node_fs4.existsSync)((0, import_node_path4.join)(from, "SKILL.md"))) {
+    throw new Error(`${from} has no SKILL.md, so it is not a skill directory.`);
+  }
+  const repo = (0, import_node_path4.resolve)(intoRepo);
+  if (!(0, import_node_fs4.existsSync)((0, import_node_path4.join)(repo, ".git"))) {
+    throw new Error(`${repo} is not a git repository, which defeats the point of adopting.`);
+  }
+  if (repoOf((0, import_node_path4.join)(from, "SKILL.md")) !== null) {
+    throw new Error(`${from} is already inside a repository.`);
+  }
+  const to = (0, import_node_path4.join)(repo, ".claude", "skills", (0, import_node_path4.basename)(from));
+  if ((0, import_node_fs4.existsSync)(to)) throw new Error(`${to} already exists.`);
+  if (!opts.dryRun) {
+    (0, import_node_fs4.mkdirSync)((0, import_node_path4.dirname)(to), { recursive: true });
+    (0, import_node_fs4.renameSync)(from, to);
+    (0, import_node_fs4.symlinkSync)((0, import_node_path4.relative)((0, import_node_path4.dirname)(from), to), from, "dir");
+  }
+  return { from, to, link: `${from} -> ${(0, import_node_path4.relative)((0, import_node_path4.dirname)(from), to)}` };
+}
+
+// src/report.ts
 var import_node_path5 = require("node:path");
+var RESET = "\x1B[0m";
+var DIM = "\x1B[2m";
+var BOLD = "\x1B[1m";
+var RED = "\x1B[31m";
+var YELLOW = "\x1B[33m";
+var GREEN = "\x1B[32m";
+var ORDER = [
+  "duplicate-name",
+  "outside-codebase",
+  "missing-frontmatter",
+  "frontmatter-unparseable",
+  "missing-name",
+  "missing-description",
+  "dangling-symlink",
+  "broken-reference"
+];
+function render(report, opts) {
+  const c = (code, text) => opts.color ? `${code}${text}${RESET}` : text;
+  const short = (p) => {
+    const rel = (0, import_node_path5.relative)(opts.cwd, p);
+    return rel && !rel.startsWith("..") ? rel : p;
+  };
+  const lines = [];
+  const errors = report.findings.filter((f) => f.severity === "error");
+  const warns = report.findings.filter((f) => f.severity === "warn");
+  lines.push(
+    c(BOLD, `${report.skills.length} skills`) + c(DIM, ` across ${report.scanned.length} roots`)
+  );
+  lines.push("");
+  if (report.findings.length === 0) {
+    lines.push(c(GREEN, "Nothing to clean up."));
+    return lines.join("\n");
+  }
+  for (const group of [
+    { label: "errors", items: errors, color: RED },
+    { label: "warnings", items: warns, color: YELLOW }
+  ]) {
+    if (group.items.length === 0) continue;
+    lines.push(c(BOLD, `${group.items.length} ${group.label}`));
+    for (const finding of sortFindings(group.items)) {
+      const mark = finding.fixable ? c(DIM, " [fixable]") : "";
+      lines.push(`  ${c(group.color, finding.code)}${mark}  ${finding.message}`);
+      for (const path of finding.paths) lines.push(c(DIM, `      ${short(path)}`));
+    }
+    lines.push("");
+  }
+  const fixable = report.findings.filter((f) => f.fixable).length;
+  if (fixable > 0) lines.push(c(DIM, `${fixable} can be repaired with \`skill-cleaner fix\`.`));
+  return lines.join("\n").trimEnd();
+}
+function sortFindings(findings) {
+  const rank = (code) => {
+    const index = ORDER.indexOf(code);
+    return index === -1 ? ORDER.length : index;
+  };
+  return [...findings].sort(
+    (a, b) => rank(a.code) - rank(b.code) || a.code.localeCompare(b.code)
+  );
+}
+
+// src/scan.ts
+var import_node_fs7 = require("node:fs");
+var import_node_os2 = require("node:os");
+var import_node_path9 = require("node:path");
+
+// src/analyze.ts
+var import_node_fs6 = require("node:fs");
+var import_node_path7 = require("node:path");
+
+// src/rules.ts
+var import_node_fs5 = require("node:fs");
+var import_node_path6 = require("node:path");
 var SPEC_FIELDS = /* @__PURE__ */ new Set([
   "name",
   "description",
@@ -7764,7 +7953,7 @@ function checkSkill(skill) {
   }
   const name = str(skill.frontmatter.name);
   const description = str(skill.frontmatter.description);
-  const dirName = (0, import_node_path5.basename)(skill.dir);
+  const dirName = (0, import_node_path6.basename)(skill.dir);
   if (name === null) {
     add("missing-name", "error", "`name` is required and must be a string.");
   } else {
@@ -7886,13 +8075,13 @@ function checkSkill(skill) {
     );
   }
   const resolvedDirect = /* @__PURE__ */ new Set([
-    (0, import_node_path5.normalize)((0, import_node_path5.join)(skill.dir, "SKILL.md")),
-    ...direct.map((target) => (0, import_node_path5.normalize)((0, import_node_path5.join)(skill.dir, target)))
+    (0, import_node_path6.normalize)((0, import_node_path6.join)(skill.dir, "SKILL.md")),
+    ...direct.map((target) => (0, import_node_path6.normalize)((0, import_node_path6.join)(skill.dir, target)))
   ]);
   const chaining = /* @__PURE__ */ new Set();
   for (const target of direct) {
-    const path = (0, import_node_path5.join)(skill.dir, target);
-    if (!(0, import_node_fs4.existsSync)(path)) {
+    const path = (0, import_node_path6.join)(skill.dir, target);
+    if (!(0, import_node_fs5.existsSync)(path)) {
       add(
         "broken-reference",
         "error",
@@ -7901,14 +8090,14 @@ function checkSkill(skill) {
       continue;
     }
     if (!/\.md$/i.test(target)) continue;
-    if ((0, import_node_path5.basename)(target) === "SKILL.md") continue;
-    const chained = referencedFiles((0, import_node_fs4.readFileSync)(path, "utf8")).filter(
+    if ((0, import_node_path6.basename)(target) === "SKILL.md") continue;
+    const chained = referencedFiles((0, import_node_fs5.readFileSync)(path, "utf8")).filter(
       // Only prose buries prose. A reference file linking a code sample,
       // a fixture or an image is showing its work, not hiding a third level
       // of instructions: those get opened deliberately, not previewed.
       (onward) => /\.md$/i.test(onward)
     ).filter(
-      (onward) => !resolvedDirect.has((0, import_node_path5.normalize)((0, import_node_path5.join)((0, import_node_path5.dirname)(path), onward)))
+      (onward) => !resolvedDirect.has((0, import_node_path6.normalize)((0, import_node_path6.join)((0, import_node_path6.dirname)(path), onward)))
     );
     if (chained.length > 0) chaining.add(target);
   }
@@ -8094,7 +8283,7 @@ function danglingBundledPaths(skills) {
   const mentions = skills.map((skill) => ({ skill, paths: bundledPathMentions(skill.body) }));
   const provided = /* @__PURE__ */ new Set();
   for (const path of new Set(mentions.flatMap((m) => m.paths))) {
-    if (skills.some((skill) => (0, import_node_fs5.existsSync)((0, import_node_path6.join)(skill.dir, path)))) provided.add(path);
+    if (skills.some((skill) => (0, import_node_fs6.existsSync)((0, import_node_path7.join)(skill.dir, path)))) provided.add(path);
   }
   const findings = [];
   for (const { skill, paths } of mentions) {
@@ -8132,8 +8321,8 @@ function jaccard(a, b) {
 }
 
 // src/plugins.ts
-var import_node_path7 = require("node:path");
-var isMarketplaceClone = (path) => path.includes(`${import_node_path7.sep}plugins${import_node_path7.sep}marketplaces${import_node_path7.sep}`);
+var import_node_path8 = require("node:path");
+var isMarketplaceClone = (path) => path.includes(`${import_node_path8.sep}plugins${import_node_path8.sep}marketplaces${import_node_path8.sep}`);
 var CACHE_VERSION = /[/\\]plugins[/\\]cache[/\\]([^/\\]+)[/\\]([^/\\]+)[/\\]([^/\\]+)[/\\]/;
 function keepNewestPluginVersions(located) {
   const newest = /* @__PURE__ */ new Map();
@@ -8174,7 +8363,7 @@ function compareVersions(a, b) {
 // src/scan.ts
 function scan(roots = [], opts = {}) {
   const home = opts.home ?? (0, import_node_os2.homedir)();
-  const targets = (roots.length > 0 ? roots.map((r) => (0, import_node_path8.resolve)(r)) : defaultRoots(process.cwd(), home, { allRuntimes: opts.allRuntimes })).filter((r) => (0, import_node_fs6.existsSync)(r));
+  const targets = (roots.length > 0 ? roots.map((r) => (0, import_node_path9.resolve)(r)) : defaultRoots(process.cwd(), home, { allRuntimes: opts.allRuntimes })).filter((r) => (0, import_node_fs7.existsSync)(r));
   const located = keepNewestPluginVersions(
     targets.flatMap((root) => walkSkills(root, home)).filter((item) => !isMarketplaceClone(item.realPath))
   );
@@ -8206,18 +8395,22 @@ var USAGE = `skill-cleaner - audit, consolidate and clean up Agent Skills
 
   skill-cleaner audit [roots...]        Report everything wrong across every registry
   skill-cleaner fix [roots...]          Apply only the repairs with one correct outcome
+  skill-cleaner consolidate [roots...]  Merge duplicates and overlaps, one survivor each
   skill-cleaner adopt <dir> --into <repo>   Move a homeless skill into a repo, link it back
 
 Options
   --json          Machine-readable output
   --quiet         Errors only, no warnings
-  --apply         For \`fix\`: write the changes (default is a dry run)
+  --apply         For \`fix\` and \`consolidate\`: write the changes (default is a dry run)
   --into <repo>   For \`adopt\`: the repository to move the skill into
   --all-runtimes  Also scan ~/.agents, ~/.codex, ~/.opencode and ~/.gemini
   --plain         No colour (also honours NO_COLOR)
 
 With no roots, scans the current project, ~/.claude/skills and installed
-plugins. Exits 1 when errors remain.`;
+plugins. Exits 1 when errors remain.
+
+\`consolidate\` deletes skills. It refuses to run against a dirty git tree, so
+\`git diff\` is always the review and \`git checkout .\` is always the undo.`;
 var CONFIG = {
   allowPositionals: true,
   options: {
@@ -8270,7 +8463,7 @@ ${USAGE}
       return 2;
     }
   }
-  if (command !== "audit" && command !== "fix") {
+  if (command !== "audit" && command !== "fix" && command !== "consolidate") {
     process.stderr.write(`unknown command \`${command}\`
 
 ${USAGE}
@@ -8279,6 +8472,49 @@ ${USAGE}
   }
   const report = scan(rest, { allRuntimes: values["all-runtimes"] });
   const visible = values.quiet ? report.findings.filter((f) => f.severity === "error") : report.findings;
+  if (command === "consolidate") {
+    const plan = planConsolidation(report.skills, report.findings);
+    if (plan.actions.length === 0) {
+      if (values.json) process.stdout.write(`${JSON.stringify(plan, null, 2)}
+`);
+      else process.stdout.write("Nothing to consolidate. No duplicates, no overlaps.\n");
+      return 0;
+    }
+    const dirty = values.apply ? dirtyRepos(plan, report.skills) : [];
+    if (dirty.length > 0) {
+      process.stderr.write(
+        `Refusing to consolidate: uncommitted changes in
+${dirty.map((r) => `  ${r}`).join("\n")}
+
+This command deletes skills. A clean tree is what makes \`git checkout .\` an undo.
+`
+      );
+      return 2;
+    }
+    const done = applyConsolidation(plan, { dryRun: !values.apply });
+    if (values.json) {
+      process.stdout.write(
+        `${JSON.stringify({ applied: done, skipped: plan.skipped, dryRun: !values.apply }, null, 2)}
+`
+      );
+      return 0;
+    }
+    const prefix = values.apply ? "" : "would ";
+    for (const item of done) process.stdout.write(`${prefix}${item.action}
+  ${item.path}
+`);
+    for (const skip of plan.skipped) {
+      process.stdout.write(`skipped: ${skip.reason}
+${skip.paths.map((p) => `  ${p}`).join("\n")}
+`);
+    }
+    if (values.apply) {
+      process.stdout.write("\nReview with `git diff`, then fold each merge marker into the prose above it.\n");
+    } else {
+      process.stdout.write("\nRe-run with --apply to write these. Requires a clean git tree.\n");
+    }
+    return 0;
+  }
   if (command === "fix") {
     const applied = applyFixes(report.skills, report.findings, { dryRun: !values.apply });
     if (values.json) {

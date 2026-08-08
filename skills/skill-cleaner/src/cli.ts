@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { parseArgs } from "node:util";
+import { applyConsolidation, dirtyRepos, planConsolidation } from "./consolidate.js";
 import { adopt, applyFixes } from "./fix.js";
 import { render } from "./report.js";
 import { scan } from "./scan.js";
@@ -8,18 +9,22 @@ const USAGE = `skill-cleaner - audit, consolidate and clean up Agent Skills
 
   skill-cleaner audit [roots...]        Report everything wrong across every registry
   skill-cleaner fix [roots...]          Apply only the repairs with one correct outcome
+  skill-cleaner consolidate [roots...]  Merge duplicates and overlaps, one survivor each
   skill-cleaner adopt <dir> --into <repo>   Move a homeless skill into a repo, link it back
 
 Options
   --json          Machine-readable output
   --quiet         Errors only, no warnings
-  --apply         For \`fix\`: write the changes (default is a dry run)
+  --apply         For \`fix\` and \`consolidate\`: write the changes (default is a dry run)
   --into <repo>   For \`adopt\`: the repository to move the skill into
   --all-runtimes  Also scan ~/.agents, ~/.codex, ~/.opencode and ~/.gemini
   --plain         No colour (also honours NO_COLOR)
 
 With no roots, scans the current project, ~/.claude/skills and installed
-plugins. Exits 1 when errors remain.`;
+plugins. Exits 1 when errors remain.
+
+\`consolidate\` deletes skills. It refuses to run against a dirty git tree, so
+\`git diff\` is always the review and \`git checkout .\` is always the undo.`;
 
 const CONFIG = {
   allowPositionals: true,
@@ -70,7 +75,7 @@ function main(argv: string[]): number {
     }
   }
 
-  if (command !== "audit" && command !== "fix") {
+  if (command !== "audit" && command !== "fix" && command !== "consolidate") {
     process.stderr.write(`unknown command \`${command}\`\n\n${USAGE}\n`);
     return 2;
   }
@@ -79,6 +84,47 @@ function main(argv: string[]): number {
   const visible = values.quiet
     ? report.findings.filter((f) => f.severity === "error")
     : report.findings;
+
+  if (command === "consolidate") {
+    const plan = planConsolidation(report.skills, report.findings);
+
+    if (plan.actions.length === 0) {
+      if (values.json) process.stdout.write(`${JSON.stringify(plan, null, 2)}\n`);
+      else process.stdout.write("Nothing to consolidate. No duplicates, no overlaps.\n");
+      return 0;
+    }
+
+    // Checked before the dry run prints, not only before the write, so the
+    // reader learns the plan cannot be applied at the same time as they learn
+    // what it would do.
+    const dirty = values.apply ? dirtyRepos(plan, report.skills) : [];
+    if (dirty.length > 0) {
+      process.stderr.write(
+        `Refusing to consolidate: uncommitted changes in\n${dirty.map((r) => `  ${r}`).join("\n")}\n\n` +
+          "This command deletes skills. A clean tree is what makes `git checkout .` an undo.\n",
+      );
+      return 2;
+    }
+
+    const done = applyConsolidation(plan, { dryRun: !values.apply });
+    if (values.json) {
+      process.stdout.write(
+        `${JSON.stringify({ applied: done, skipped: plan.skipped, dryRun: !values.apply }, null, 2)}\n`,
+      );
+      return 0;
+    }
+    const prefix = values.apply ? "" : "would ";
+    for (const item of done) process.stdout.write(`${prefix}${item.action}\n  ${item.path}\n`);
+    for (const skip of plan.skipped) {
+      process.stdout.write(`skipped: ${skip.reason}\n${skip.paths.map((p) => `  ${p}`).join("\n")}\n`);
+    }
+    if (values.apply) {
+      process.stdout.write("\nReview with `git diff`, then fold each merge marker into the prose above it.\n");
+    } else {
+      process.stdout.write("\nRe-run with --apply to write these. Requires a clean git tree.\n");
+    }
+    return 0;
+  }
 
   if (command === "fix") {
     const applied = applyFixes(report.skills, report.findings, { dryRun: !values.apply });
