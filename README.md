@@ -1,6 +1,6 @@
 # vibe-systems
 
-Tools for keeping an agent setup honest.
+Tools for keeping an agent setup honest, and the SEO kit that runs on top of them.
 
 Agent configuration rots in a specific way: it never fails loudly. A broken skill
 is not reported, it is simply never offered. A duplicated name does not conflict,
@@ -20,6 +20,46 @@ keep the rest honest as the registry grows.
 ```
 
 Or clone it and point Claude Code at the directory.
+
+**Not in a terminal?** Claude Cowork and claude.ai take one skill at a time as a
+zip. Every skill here is prebuilt as one in [`zips/`](zips): download the zip you
+want, then go to Customize, Skills, the plus button, Create skill, Upload a
+skill, and pick it. About a minute per skill, and it is the same skill either
+way.
+
+## The SEO kit
+
+Fourteen skills that take a site from a blank keyword file to published pages
+that rank, plus the read of the scoreboard afterwards. They are the ones behind
+[The SEO Engine](https://www.skool.com/ai-agency-systems-3191), and the five
+marked below are the whole workflow in order.
+
+| Skill | Does |
+| --- | --- |
+| [**seo-keyword-research**](skills/seo-keyword-research) | ① Seeds to a saved keyword file with volume, difficulty and intent |
+| [**seo-content-strategy**](skills/seo-content-strategy) | ② That file to an ordered plan, pillars and clusters |
+| [**seo-competitor-alternatives**](skills/seo-competitor-alternatives) | ③ The vs and alternative pages, which are the ones that convert |
+| [**seo-meta-tags-optimizer**](skills/seo-meta-tags-optimizer) | ④ Title, description and social cards, written in the repo |
+| [**search-console**](skills/search-console) | ⑤ Real GSC data: page-two pages, dead click rates, pages competing with each other |
+| [seo-audit](skills/seo-audit) · [seo-page-audit](skills/seo-page-audit) | Whole-site and single-page technical passes |
+| [seo-site-architecture](skills/seo-site-architecture) · [seo-broken-links](skills/seo-broken-links) | Structure, internal linking, and what is 404ing |
+| [seo-competitor-profiling](skills/seo-competitor-profiling) | The research that feeds the comparison pages |
+| [seo-schema-markup](skills/seo-schema-markup) · [seo-analytics-tracking](skills/seo-analytics-tracking) | Structured data, and measuring what lands |
+| [seo-ai-seo](skills/seo-ai-seo) | Getting cited by ChatGPT, Perplexity and AI Overviews |
+| [programmatic-seo](skills/programmatic-seo) | The end-to-end pipeline, with Serper scripts for research and drafting |
+
+Once a skill is installed you do not summon it with a magic phrase. Describe the
+job and Claude picks it up:
+
+> Do keyword research for Mac dictation apps. Save it to a file.
+
+> Look at that keyword file and tell me the first ten articles to write, best intent first.
+
+> Write the comparison page for us against VoiceInk. Here are my numbers.
+
+Two of them want an API key. `seo-keyword-research` and `programmatic-seo` use
+[serper.dev](https://serper.dev), free for 2,500 queries. `search-console` uses
+your own Google account through `gcloud`, and reads only.
 
 ## The two failure modes
 
@@ -57,7 +97,12 @@ skills/
     SKILL.md            frontmatter and instructions
     references/         detail loaded only when needed
     scripts/            executables, committed, no install step
+zips/
+  <skill-name>.zip      one zip per skill, for Cowork and claude.ai
 ```
+
+`zips/` is generated. After changing anything under `skills/`, run
+`./scripts/build-zips.sh` and commit what it writes.
 
 Each skill is self-contained, carries its own reference material, and ships a
 dependency-free script so it works on a fresh clone. Node 20 or later, nothing
