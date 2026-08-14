@@ -34,7 +34,7 @@ equally, so the reader has no way to know the later one won.
 
 **3. Write the smallest edit that prevents a repeat.** Patch an existing file
 rather than creating a new one, tighten a sentence rather than adding a
-paragraph. Specific and actionable. "Check dates carefully" teaches nothing.
+paragraph. Specific and specific. "Check dates carefully" teaches nothing.
 "Buffer accepts a 600-character tweet and lets it die at send, so measure before
 scheduling" prevents a repeat.
 
@@ -106,7 +106,7 @@ accumulated caveats is not better documented, it is unreadable, and unreadable
 is the same as undocumented.
 
 - An edit should leave the file no longer than it found it, unless the learning
-  is a genuinely new case.
+  is a really new case.
 - A learning that repeats across three or more files becomes one rule, and the
   three copies become pointers to it.
 - An entry that has hardened into how the body describes the work gets folded
@@ -142,7 +142,7 @@ node scripts/skill-healer.cjs log . "what was assumed, what to do instead" --app
 
 - [ ] The owning file was edited, not the conversation
 - [ ] What the learning contradicts was deleted, not left below the new text
-- [ ] The file is no longer than it was, or the learning is a genuinely new case
+- [ ] The file is no longer than it was, or the learning is a really new case
 - [ ] Frontmatter still parses and links still resolve
 - [ ] New failure modes from this run appended to Learned Patterns
 

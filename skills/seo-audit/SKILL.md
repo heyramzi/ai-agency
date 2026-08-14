@@ -83,7 +83,7 @@ At scale: `<xhtml:link>` children do not count toward the 50K URL sitemap limit,
 
 **Locale URL structure.** Recommended: subdirectories (`/en/`, `/ar/`). Acceptable: subdomains or ccTLDs. Not recommended: URL parameters (`?lang=en`). All locales prefixed (hiding locale prevents Google from distinguishing versions). Root URL handled as `x-default` with redirect or default-locale content. No IP / Accept-Language content negotiation (Googlebot uses US IPs and no Accept-Language header). Trailing slash and case consistent across locale paths, canonicals, hreflang, and sitemaps.
 
-**Content quality across locales.** AI-translated content is not inherently spam (Google 2025), but scaled low-value translations trigger the scaled content abuse policy. Translate ALL content (title, description, headings, body), not just boilerplate. Helpful content system is site-wide, many thin locale pages can suppress rankings for strong pages too. Do not noindex thin locales (wastes crawl budget) or cross-locale canonical (conflicts with hreflang). Best approach: do not create locale pages you cannot make actually useful.
+**Content quality across locales.** AI-translated content is not by itself spam (Google 2025), but scaled low-value translations trigger the scaled content abuse policy. Translate ALL content (title, description, headings, body), not just boilerplate. Helpful content system is site-wide, many thin locale pages can suppress rankings for strong pages too. Do not noindex thin locales (wastes crawl budget) or cross-locale canonical (conflicts with hreflang). Best approach: do not create locale pages you cannot make actually useful.
 
 ## On-Page SEO
 
@@ -227,7 +227,7 @@ Blog posts: 1,500-2,500 words. Product pages: 300-500 words minimum. Category pa
 
 ## Related Skills
 
-- **seo-page-audit**. deep dive on a single URL (requires an explicit URL)
+- **seo-page-audit**. detailed analysis of a single URL (requires an explicit URL)
 - **programmatic-seo**. pages at scale
 - **seo-schema-markup**. structured data only
 - **landing-page-cro**. page conversion (not ranking)
