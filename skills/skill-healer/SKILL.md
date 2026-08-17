@@ -18,7 +18,7 @@ the next session makes the same mistake against the same unchanged file.
 
 ## The loop
 
-Four steps, in order. Step 2 is the one that gets skipped, and skipping it is
+Five steps, in order. Step 2 is the one that gets skipped, and skipping it is
 what turns instruction files into archives nobody trusts.
 
 **1. Find the owning file.** Every fact has exactly one home. Grep for where the
@@ -41,6 +41,15 @@ scheduling" prevents a repeat.
 **4. Read it back.** Re-read the changed section. Confirm the frontmatter still
 parses, the links still resolve, and nothing else in the file now contradicts the
 edit.
+
+**5. Retest in a cleared session.** Reading the edit back proves the file says the
+right thing. It does not prove the file *changes what happens*, because this
+session already knows the lesson and will comply with it whether or not the text
+carries any weight. Run the task again with the context cleared and judge the
+output. Where a full rerun is not worth it, the cheap version is to ask what the
+file alone would produce, without leaning on the conversation. A heal that only
+works in the session that wrote it has not landed. The full loop for this, and
+the risk tiers that decide how hard to hold it, are in `skill-creator`.
 
 ## What counts as a learning
 
@@ -144,12 +153,15 @@ node scripts/skill-healer.cjs log . "what was assumed, what to do instead" --app
 - [ ] What the learning contradicts was deleted, not left below the new text
 - [ ] The file is no longer than it was, or the learning is a really new case
 - [ ] Frontmatter still parses and links still resolve
+- [ ] The heal was retested against a cleared context, not only re-read
 - [ ] New failure modes from this run appended to Learned Patterns
 
 ## Learned Patterns
 
 Appended when a run surfaces something this skill did not already know. Newest first.
 
+- 2026-08-17: Reported a fact as having two homes because two paths held it, without resolving either one; the first was a symlink to the second, so the registry was already single-source and the duplication did not exist. Resolve every path with readlink -f before calling anything a duplicate, and note that find -type f hides symlinks while diff and wc follow them.
+- 2026-08-16: A rule was filed under a heading scoped to one repo, so it would only ever be read by sessions taking that path, while two of the three failures it describes came from sessions that never open the file. Check who reads the section, not just which file owns the fact, and place the general form where its audience already loads it.
 - 2026-08-08: A skill can carry all four scaffold parts and still never heal, because the closing step said "consider appending" rather than naming the command. Hedged instructions read as optional and get skipped; the closing step names the exact command to run.
 - 2026-08-08: Retrofitting a description by appending the promise sentence broke a plain YAML scalar whose value already contained `: `, which strict readers then rejected. Preserve the original quoting style when rewriting a frontmatter value, and never introduce a colon-space into an unquoted scalar.
 - 2026-08-08: An append targeting the end of the file landed mid-document on skills where Learned Patterns was not the last section, silently attaching entries to whatever followed. Check that the log is the final section before writing to it, and report it when it is not.
