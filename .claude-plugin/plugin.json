@@ -1,12 +1,25 @@
 {
   "name": "vibe-systems",
-  "description": "A 14-skill SEO kit, from keyword research to reading Search Console, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
-  "version": "0.3.0",
+  "description": "A 14-skill SEO kit, from keyword research to reading Search Console, a thumbnail pipeline that bands a niche before it designs a frame, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
+  "version": "0.4.0",
   "author": {
     "name": "Ramzi",
     "url": "https://github.com/heyramzi"
   },
   "homepage": "https://github.com/heyramzi/vibe-systems",
   "license": "MIT",
-  "keywords": ["skills", "seo", "keyword-research", "search-console", "content", "audit", "lint", "maintenance", "claude-code"]
+  "keywords": [
+    "skills",
+    "seo",
+    "keyword-research",
+    "search-console",
+    "content",
+    "audit",
+    "lint",
+    "maintenance",
+    "claude-code",
+    "thumbnail",
+    "youtube",
+    "image-generation"
+  ]
 }

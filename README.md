@@ -1,6 +1,7 @@
 # vibe-systems
 
-Tools for keeping an agent setup honest, and the SEO kit that runs on top of them.
+Tools for keeping an agent setup honest, and the kits that run on top of them: SEO,
+and YouTube thumbnails.
 
 Agent configuration rots in a specific way: it never fails loudly. A broken skill
 is not reported, it is simply never offered. A duplicated name does not conflict,
@@ -60,6 +61,32 @@ job and Claude picks it up:
 Two of them want an API key. `seo-keyword-research` and `programmatic-seo` use
 [serper.dev](https://serper.dev), free for 2,500 queries. `search-console` uses
 your own Google account through `gcloud`, and reads only.
+
+## The thumbnail pipeline
+
+One skill, [**youtube-thumbnail**](skills/youtube-thumbnail), that treats a thumbnail as a
+measurement problem before it treats it as a design problem.
+
+Most thumbnail advice is a style opinion repeated until it sounded like a rule. The way
+past that is banding: for every channel you learn from, build a winner band and a control
+band from that same channel and period, so brand, photographer and budget are held
+constant. **A trait present in both bands is house style, and copying house style buys
+nothing.** Only a trait that separates the bands is a lever.
+
+Run it on a real niche and the usual advice starts falling over. A face tends to appear in
+both bands, so its presence is not a lever and a close-up filling the frame is often a
+control marker. Somebody else's revenue is a control marker. Adjectives with no object are
+control markers. What separates, reliably, is a bounded promise in two to four words.
+
+The skill carries the method end to end: how to build the bands, how to choose between the
+face and faceless variants, six copy formulas with the ban list, and the composite rules
+for rendering with an image model. [`scripts/render.mjs`](skills/youtube-thumbnail/scripts/render.mjs)
+is a dependency-free renderer that takes your own photographs as reference images, so the
+model composites around a real face instead of inventing one. Bring a Gemini API key, or
+point it at a gateway.
+
+It ships without an evidence file on purpose. The bands are yours to build, on your own
+niche, and the skill is the method for building them.
 
 ## The two failure modes
 
