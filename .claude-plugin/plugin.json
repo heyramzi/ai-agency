@@ -1,6 +1,6 @@
 {
   "name": "vibe-systems",
-  "description": "A 14-skill SEO kit, from keyword research to reading Search Console, a thumbnail pipeline that bands a niche before it designs a frame, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
+  "description": "A 14-skill SEO kit and a 13-skill YouTube video-production kit, from hook to published post, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
   "version": "0.4.0",
   "author": {
     "name": "Ramzi",
@@ -11,15 +11,17 @@
   "keywords": [
     "skills",
     "seo",
+    "youtube",
+    "video",
+    "descript",
+    "remotion",
+    "thumbnail",
     "keyword-research",
     "search-console",
     "content",
     "audit",
     "lint",
     "maintenance",
-    "claude-code",
-    "thumbnail",
-    "youtube",
-    "image-generation"
+    "claude-code"
   ]
 }

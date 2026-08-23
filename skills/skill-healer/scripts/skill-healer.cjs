@@ -47,7 +47,11 @@ const LOG_HEADING = "## Learned Patterns";
 const FRONTMATTER_PROMISE = /appends?\s+(?:\w+\s+){0,3}(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
 
 /** An entry: `- YYYY-MM-DD: what went wrong, what to do instead.` */
-const ENTRY = /^-\s+(\d{4}-\d{2}-\d{2}):\s*(.+)$/;
+// A dated entry is the default, because a date is what makes staleness checkable.
+// An undated bullet still counts: a skill published for other people to fork carries
+// its lessons without the author's calendar, and a log that reads as empty because of
+// a formatting choice is worse than one with no dates in it.
+const ENTRY = /^-\s+(?:(\d{4}-\d{2}-\d{2}):\s*)?(.+)$/;
 
 /**
  * Past this many entries the log has stopped being a log and become a second
@@ -193,7 +197,7 @@ function parseEntries(logBlock) {
   for (const line of logBlock.split("\n")) {
     if (/^##\s/.test(line) && !line.startsWith(LOG_HEADING)) break;
     const match = ENTRY.exec(line.trim());
-    if (match) entries.push({ date: match[1], text: match[2] });
+    if (match) entries.push({ date: match[1] ?? null, text: match[2] });
   }
   return entries;
 }
@@ -224,11 +228,12 @@ function audit(skill, now) {
       `${skill.entries.length} entries is a second body. Fold the hardened ones into the prose.`,
     );
   }
-  const stale = skill.entries.filter((e) => daysBetween(e.date, now) > FOLD_AFTER_DAYS);
+  const stale = skill.entries.filter((e) => e.date && daysBetween(e.date, now) > FOLD_AFTER_DAYS);
   if (stale.length > 0) {
     warnings.push(`${stale.length} entries older than ${FOLD_AFTER_DAYS} days. Run \`fold\`.`);
   }
-  const unordered = skill.entries.some((e, i) => i > 0 && e.date > skill.entries[i - 1].date);
+  const dated = skill.entries.filter((e) => e.date);
+  const unordered = dated.some((e, i) => i > 0 && e.date > dated[i - 1].date);
   if (unordered) warnings.push("Entries are not newest first.");
 
   return { missing, warnings, stale };
@@ -340,10 +345,13 @@ function appendEntry(skill, entry, now) {
   entries.push({ date: now, text: normalise(entry) });
   // Stable within a date, so entries logged on the same day keep the order they
   // were learned in rather than being reshuffled on every write.
-  entries.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  entries.sort((a, b) => {
+    if (!a.date || !b.date) return 0;
+    return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+  });
 
   const rebuilt =
-    [LOG_HEADING, "", ...(intro.length > 0 ? [...intro, ""] : []), ...entries.map((e) => `- ${e.date}: ${e.text}`)]
+    [LOG_HEADING, "", ...(intro.length > 0 ? [...intro, ""] : []), ...entries.map((e) => (e.date ? `- ${e.date}: ${e.text}` : `- ${e.text}`))]
       .join("\n") + "\n";
 
   return skill.text.slice(0, start) + rebuilt + skill.text.slice(end);

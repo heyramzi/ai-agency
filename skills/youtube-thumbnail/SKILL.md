@@ -206,7 +206,7 @@ Two or more failures means rebuild, not retouch.
 
 ## Closing a run
 
-This skill appends new failure modes to its own pattern list after each run. If this run
+This skill appends new failure modes to its own pattern list after each run. If this run surfaced one that is not already listed, append it to Learned Patterns before finishing. If this run
 surfaced one that is not already listed, append it to Learned Patterns with today's date
 before finishing. A learning that stays in the conversation is lost when the conversation
 ends.

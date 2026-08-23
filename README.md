@@ -1,7 +1,7 @@
 # vibe-systems
 
 Tools for keeping an agent setup honest, and the kits that run on top of them: SEO,
-and YouTube thumbnails.
+and YouTube video production.
 
 Agent configuration rots in a specific way: it never fails loudly. A broken skill
 is not reported, it is simply never offered. A duplicated name does not conflict,
@@ -62,9 +62,41 @@ Two of them want an API key. `seo-keyword-research` and `programmatic-seo` use
 [serper.dev](https://serper.dev), free for 2,500 queries. `search-console` uses
 your own Google account through `gcloud`, and reads only.
 
-## The thumbnail pipeline
+## The YouTube kit
 
-One skill, [**youtube-thumbnail**](skills/youtube-thumbnail), that treats a thumbnail as a
+Thirteen skills that take a video from the first line of the hook to the posts cut out of
+it afterwards. They are the ones behind [The YouTube
+Engine](https://www.skool.com/ai-agency-systems-3191), and they run in this order.
+
+| Skill | Does |
+| --- | --- |
+| [**video-hooks**](skills/video-hooks) | ① The opening. Variants by named mechanism, each rated for drop-off risk |
+| [**video-script**](skills/video-script) | ② The body. Eight blocks, a beat budget, and one commercial ask at the end |
+| [**video-coach**](skills/video-coach) | ③ The take reviewed against its plan, before a single cut, returning one habit to change |
+| [**descript-script-edit**](skills/descript-script-edit) | ④ The cut, made by rewriting Descript's rich clipboard rather than by dragging |
+| [**youtube-thumbnail**](skills/youtube-thumbnail) | ⑤ The frame, designed off a measurement you run yourself |
+| [descript-projects](skills/descript-projects) | Footage into Descript, named and foldered so the media browser is the shot list |
+| [dji-sync](skills/dji-sync) | The lav take waveform-matched to the camera clip and swapped in losslessly |
+| [motion-broll](skills/motion-broll) · [youtube-ctas](skills/youtube-ctas) | Motion graphics cut against the read, and the transparent overlays an edit is dressed with |
+| [whiteboard](skills/whiteboard) | Concept boards written as code and drawn onto the tablet live, on camera |
+| [ai-video-prompting](skills/ai-video-prompting) | Prompts for Veo, Kling, Seedance and the rest, and when a model should not render a beat at all |
+| [shorts-production](skills/shorts-production) | A finished Short coded, filed and scheduled, with the rule that an export ships untouched |
+| [generate-social](skills/generate-social) | The transcript turned back into LinkedIn and X posts |
+
+Nothing in it is summoned with a magic phrase either. Describe the job:
+
+> Write me three hooks for a video about why agency retainers stall. Rate each one.
+
+> Here is the raw transcript of the take. Coach me before I cut it.
+
+> Cut this Descript script. I copied it, it is on the clipboard.
+
+Two of them need more than a terminal. `descript-script-edit` drives the macOS clipboard,
+and `motion-broll` and `youtube-ctas` render through [Remotion](https://remotion.dev).
+
+### The thumbnail, in more detail
+
+[**youtube-thumbnail**](skills/youtube-thumbnail) treats a thumbnail as a
 measurement problem before it treats it as a design problem.
 
 Most thumbnail advice is a style opinion repeated until it sounded like a rule. The way
@@ -86,7 +118,9 @@ model composites around a real face instead of inventing one. Bring a Gemini API
 point it at a gateway.
 
 It ships without an evidence file on purpose. The bands are yours to build, on your own
-niche, and the skill is the method for building them.
+niche, and the skill is the method for building them. The whole kit is written that way:
+every measured claim in it names what produced the number, and every one of them is worth
+re-running on your own channel before you trust it.
 
 ## The two failure modes
 
