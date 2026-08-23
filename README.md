@@ -122,6 +122,32 @@ niche, and the skill is the method for building them. The whole kit is written t
 every measured claim in it names what produced the number, and every one of them is worth
 re-running on your own channel before you trust it.
 
+## The courses, run by the agent
+
+The four classrooms in [AI Agency](https://www.skool.com/ai-agency-systems-3191) are free,
+and each one ships a second copy of itself written for the agent instead of for you. The
+course is the mental model you read. The command is the same system as instructions your
+own Claude can execute, so the reading and the building happen at once.
+
+| Command | Course | Runs |
+| --- | --- | --- |
+| `/start-here` | Start Here | Scores your agency out of twelve, then builds the intake end to end |
+| `/seo-engine` | The SEO Copywriter | Your rows, your keyword file, one page shape, then the console queue |
+| `/marketing-department` | The Media Buyer | The five files, built on your own calls and your own numbers |
+| `/youtube-engine` | The Creative Director | The four numbers off your own channel, from the runtime table to the ledger |
+
+Install the plugin and type the command. Each one runs a module a sitting, asks you the
+decisions that are yours, stops at the checkpoint, and names the lesson you read next.
+It does not replace the course and it will send you back to it.
+
+**No terminal?** Every command is one markdown file. Paste this into any Claude and it
+does the same thing:
+
+> Read https://raw.githubusercontent.com/heyramzi/vibe-systems/main/commands/seo-engine.md and run it with me.
+
+None of them touch a live account without showing you first, none of them invent a number
+you have not measured, and every one of them stops when the module ends.
+
 ## The two failure modes
 
 A skills registry decays in two directions at once, and the fixes pull against
@@ -153,6 +179,8 @@ pass fold in what the heal passes accumulated.
 .claude-plugin/
   marketplace.json      this repo as a marketplace
   plugin.json           this repo as a plugin
+commands/
+  <course>.md           one slash command per Skool course
 skills/
   <skill-name>/
     SKILL.md            frontmatter and instructions

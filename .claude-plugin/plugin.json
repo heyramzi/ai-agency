@@ -1,7 +1,7 @@
 {
   "name": "vibe-systems",
-  "description": "A 14-skill SEO kit and a 13-skill YouTube video-production kit, from hook to published post, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
-  "version": "0.4.0",
+  "description": "A 14-skill SEO kit and a 13-skill YouTube video-production kit, from hook to published post, four slash commands that run the free Skool courses on your own business, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
+  "version": "0.5.0",
   "author": {
     "name": "Ramzi",
     "url": "https://github.com/heyramzi"
@@ -22,6 +22,7 @@
     "audit",
     "lint",
     "maintenance",
-    "claude-code"
+    "claude-code",
+    "courses"
   ]
 }
