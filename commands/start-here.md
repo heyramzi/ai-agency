@@ -170,6 +170,19 @@ that remain are capacity, approvals, handover and reporting, and each has the sa
 find the moment in the week where the answer is free, put a field there, write the steps
 onto the template.
 
+## The takeaway lines
+
+One per lesson, and the finish reads them back in order. Where a line carries a number, read it
+from their own files so it is their score rather than the course's.
+
+1. Five processes carry the money in an agency and the other forty are filing.
+2. Capture the answer at the one moment it is free.
+3. Twelve answers off three finished jobs is the whole diagnosis.
+4. Five fields on one link, because a sixth is the one the client skips.
+5. One field per answer, because a field can be counted.
+6. The steps ride on the task template.
+7. The score moving is the only proof the build worked.
+
 ## Rules that do not bend
 
 1. **Their tool wins.** Build in what they pay for. Never sell them a migration.

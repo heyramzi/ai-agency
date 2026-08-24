@@ -159,6 +159,21 @@ have been live long enough to have numbers, so the next session is not today.
 The highest impression query with no page behind it, and the one query where most of
 their own pages compete. Those are the next two jobs, in that order. Append and stop.
 
+## The takeaway lines
+
+One per lesson, and the finish reads them back in order. Where a line carries a number, read it
+from their own file rather than from the course.
+
+1. One shape times one file of rows is a page per row.
+2. Intent decides whether traffic pays.
+3. A keyword file on disk is what they plan against for a year.
+4. Every page carries one fact only they can supply.
+5. The job gets described in a normal sentence.
+6. Ship the row live and write the date down.
+7. Ten minutes on their own console beats an hour guessing.
+8. The console is a free queue of pages half-ranked already.
+9. Impressions go on a slide and intent pays the rent.
+
 ## Rules that do not bend
 
 1. **Never invent a number.** Every measurement on their pages is one they took. If they
