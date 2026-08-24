@@ -54,8 +54,8 @@ Five files in all: 4 instruction files, 1 numbers file, and the corpus that make
 3. **Where the numbers come from.** Which surfaces do they actually run: an ad account, a
    board, Search Console. `reader.md` only works on a surface they have.
 4. **Nothing gets installed for sessions 1 and 2.** The skills in session 3 are one line:
-   `/plugin marketplace add heyramzi/vibe-systems` then
-   `/plugin install vibe-systems@vibe-systems`.
+   `/plugin marketplace add heyramzi/ai-agency` then
+   `/plugin install ai-agency@ai-agency`.
 
 ## Session 1, the corpus and the lines (lessons 2, 3)
 

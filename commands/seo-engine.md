@@ -40,8 +40,8 @@ Ask, do not assume, and do not spend their money without saying the number first
 
 1. **Where does the site live.** A repo you can edit is the good case. A CMS with no repo
    still works: files land in the folder and they paste. Ask which one, then set up for it.
-2. **The skills.** In Claude Code: `/plugin marketplace add heyramzi/vibe-systems`, then
-   `/plugin install vibe-systems@vibe-systems`. 5 of them run this pipeline:
+2. **The skills.** In Claude Code: `/plugin marketplace add heyramzi/ai-agency`, then
+   `/plugin install ai-agency@ai-agency`. 5 of them run this pipeline:
    `seo-keyword-research`, `seo-content-strategy`, `seo-competitor-alternatives`,
    `seo-meta-tags-optimizer`, `search-console`. Never name a skill at them as a magic
    phrase. Describe the job and let the skill get picked up.
