@@ -1,12 +1,12 @@
 ---
-description: Run The Video Producer with me. Build the four numbers off my own channel.
+description: Run The Video Producer with me. Build the 4 numbers off my own channel.
 ---
 <!-- Generated from REDACTED/youtube-engine/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
 
 # The Video Producer, the agent's copy
 
 Course: https://www.skool.com/ai-agency-systems-3191/classroom/34b13a52
-Ten lessons, about twenty minutes of reading. Version 2026-08-24.
+10 lessons, about 20 minutes of reading. Version 2026-08-24.
 
 The course is the mental model for the person in front of you. This file is the same
 system written for you. **They keep every decision and they keep reading the lessons.
@@ -16,7 +16,7 @@ Every number in the course was measured on somebody else's channel. The point of
 course is that they end holding their own. Never hand them a course number as if it were
 theirs.
 
-## The thirteen skills, so you have the whole set before you start
+## The 13 skills, so you have the whole set before you start
 
 You may have landed here with no other context. This is the pipeline in full. Describe the
 job in plain words and let the right one get picked up; naming a skill at Claude as a magic
@@ -24,10 +24,10 @@ phrase is not how they load.
 
 | Skill | What it does | Lessons |
 | --- | --- | --- |
-| `video-hooks` | The first 30 seconds of long-form, or the first three of a Short | 1, 4 |
-| `video-script` | The body: eight blocks, budgeted in beats | 3, 4 |
+| `video-hooks` | The first 30 seconds of long-form, or the first 3 of a Short | 1, 4 |
+| `video-script` | The body: 8 blocks, budgeted in beats | 3, 4 |
 | `video-coach` | Reads the raw take and names one habit | 5 |
-| `descript-script-edit` | The two-pass cut, through the clipboard | 6 |
+| `descript-script-edit` | The 2-pass cut, through the clipboard | 6 |
 | `youtube-thumbnail` | The bands first, then the frame | 7 |
 | `motion-broll` | Graphics that carry an idea | 8 |
 | `youtube-ctas` | The evergreen transparent overlays | 8 |
@@ -40,13 +40,13 @@ phrase is not how they load.
 
 ## Say this first, before you touch anything (lesson 1)
 
-Four sentences, in your own words, and then wait:
+Say these 4 sentences in your own words, then wait:
 
-> You can take a video from idea to published on your own, in seven steps, and each step
+> You can take a video from idea to published on your own, in 7 steps, and each step
 > has a skill that does the work. The order they run in is not the order of impact: the
 > subject decides reach, then the title and the thumbnail, and only then is the hook ever
 > heard. So when views are the problem you fix the subject and the packaging, and when
-> people arrive and leave you fix the hook and the body. By the end you hold four numbers
+> people arrive and leave you fix the hook and the body. By the end you hold 4 numbers
 > off your own channel and none of mine.
 
 Then ask which session they are on. If they do not know, they are on session 1.
@@ -62,17 +62,17 @@ video/
   ledger.json      one row per recording
 ```
 
-Four numbers, and every one of them re-measured on their channel.
+That is 4 numbers, and every one of them re-measured on their channel.
 
 ## Preflight, once
 
 1. **The skills.** `/plugin marketplace add heyramzi/vibe-systems`, then
-   `/plugin install vibe-systems@vibe-systems`. The check is one sentence: ask for three
+   `/plugin install vibe-systems@vibe-systems`. The check is one sentence: ask for 3
    hooks. Rated variants means it is installed.
-2. **The channel.** Session 1 needs ten published videos with runtimes and lifetime views.
-   Fewer than ten and the table is an opinion. Say so rather than building it anyway.
+2. **The channel.** Session 1 needs 10 published videos with runtimes and lifetime views.
+   Fewer than 10 and the table is an opinion. Say so rather than building it anyway.
 3. **The editor.** Session 2's cut runs in Descript through the clipboard. If they edit
-   somewhere else, the two passes still apply and the four commands do not.
+   somewhere else, the 2 passes still apply and the 4 commands do not.
 4. **Ask what is actually wrong.** Views, or retention. The answer decides which session
    is worth their afternoon, and it is the most useful question in the course.
 
@@ -80,9 +80,9 @@ Four numbers, and every one of them re-measured on their channel.
 
 ### Build their own table first
 
-1. Their last ten videos, out of YouTube Studio.
+1. Their last 10 videos, out of YouTube Studio.
 2. Runtime and lifetime views for each, into `channel.md`.
-3. Sort by views. Read the runtimes off the top three.
+3. Sort by views. Read the runtimes off the top 3.
 4. Note the promise in each title, and whether it is a number a viewer could picture
    reaching next quarter.
 
@@ -90,38 +90,38 @@ Four numbers, and every one of them re-measured on their channel.
 table always flatters them. A number they have to caveat is worth more than one they
 cannot.
 
-If their top three are their longest three, the course's finding does not hold on their
+If their top 3 are their longest 3, the course's finding does not hold on their
 channel, and the length rules in lesson 3 are not theirs to apply. Tell them that.
 
 ### Then the script, in beats
 
-A nineteen-minute video is 158 to 185 beats at about 6.95 seconds a beat. Write in beats,
+A 19-minute video is 158 to 185 beats at about 6.95 seconds a beat. Write in beats,
 not in words. A word target gets hit by growing the bullets that already exist until every
 one is a 30 to 50 word sentence, which satisfies every rule on the page and cannot be read
 on camera.
 
 1. Every bullet under 14 words, and the words are the thing itself: the click, the field
    name, the number on screen, or the mistake most people make here and what it costs.
-2. Write out in full, in quotes, only three things: the opening lines of the cold open, the
+2. Write out in full, in quotes, only 3 things: the opening lines of the cold open, the
    closing ask, and any measured number, which is spoken exactly and never rounded.
 3. Cut every stage direction. "Land it:", "Say it plainly:", "The turn:" is a director
    talking to the talent, and the talent is the author.
 4. Count the bullets before they record. Under 158 means a step is missing, not that words
    are missing.
 
-### Then the eight blocks
+### Then the 8 blocks
 
 Cold open 0:00 to 0:30. The failure, 8%, theirs, told in full. The stakes, 7%, one real
 number with its artefact. The mechanism, 15%, named, and it leads rather than the promise.
 Build blocks, 50%, one idea each. The proof, 12%, the artefact doing the thing. The honest
-limit, 5%, who this does not work for. The ask, the last twenty seconds.
+limit, 5%, who this does not work for. The ask, the last 20 seconds.
 
 **Every build block ends on a visible state change.** A block that ends on a sentence is a
 paragraph.
 
-Two kinds of ask and they are counted separately. An in-platform ask costs the viewer
+There are 2 kinds of ask and they are counted separately. An in-platform ask costs the viewer
 nothing: subscribe, like, comment, one of them around the one minute mark after something
-has landed. An outbound ask spends attention and trust: exactly one, in the last twenty
+has landed. An outbound ask spends attention and trust: exactly one, in the last 20
 seconds. A second outbound ask does not add a second conversion, it converts the video into
 an ad in the viewer's memory.
 
@@ -133,7 +133,7 @@ an ad in the viewer's memory.
 
 ### Checkpoint, module 1
 
-Four numbers before they record: target runtime, beat count, the percentage of runtime
+Take 4 numbers before they record: target runtime, beat count, the percentage of runtime
 where the first outbound ask lands, and the promise in the title. If the ask is before 95%,
 move it and note what it moved from. Append and stop.
 
@@ -150,18 +150,18 @@ a floor rather than a measurement.
 
 It answers one question: what should be different in the next recording. It leads with
 **exactly one habit**, named, with the seconds it cost in this take and the recording where
-it last appeared. A note listing eight things gets read once and changes nothing.
+it last appeared. A note listing 8 things gets read once and changes nothing.
 
 It does not grade fidelity to the script. The best takes are usually the ones that left the
 page. Report drift only when it cost something measurable: a promise opened and never paid,
-an ask that moved out of the last twenty seconds, a number said with no artefact behind it.
+an ask that moved out of the last 20 seconds, a number said with no artefact behind it.
 
 Append one row to `ledger.json`: date, title, writing score, the one habit, and the
 previous row's habit. **Read the previous row before writing the new one** and test its
 habit against this take's numbers. Open the report with that verdict, because it is the
 only claim in the document that has already been tested.
 
-### The cut, in four commands
+### The cut, in 4 commands
 
 1. `dscript grab <name>` decodes and archives the clipboard, then prints the state. They do
    Cmd+A Cmd+C first.
@@ -174,11 +174,11 @@ only claim in the document that has already been tested.
 Cuts ship as **Ignore**, never Delete. Struck through, reversible, text byte-identical, the
 speaker's pauses kept.
 
-Two passes. Pass one removes the wreckage of speaking: stutters, restarts, duplicate takes.
-Pass two removes complete, well-formed sentences that carry nothing: announcements of what
+2 passes. Pass one removes the wreckage of speaking: stutters, restarts, duplicate takes.
+Pass 2 removes complete, well-formed sentences that carry nothing: announcements of what
 the next sentence will say, a second utterance of one idea in new words, hedges,
 digressions, every sentence whose subject is the speaker. The test is one sentence at a
-time: delete it, read its two neighbours together, name what the viewer lost. Nothing lost
+time: delete it, read its 2 neighbours together, name what the viewer lost. Nothing lost
 is a cut.
 
 A first-take lesson gives up 14 to 20% of its characters to pass one and 22 to 30% to both.
@@ -196,7 +196,7 @@ takes each sit in their own silence.
 
 ### Checkpoint, module 2
 
-One pass-two cut on their last recording. The character ratio removed, and the seconds the
+One pass-2 cut on their last recording. The character ratio removed, and the seconds the
 composition actually lost. Under 22% means reading the transcript again as prose and
 finding the sentence they left in. Append and stop.
 
@@ -207,16 +207,16 @@ finding the sentence they left in. Append and stop.
 A trait shared by a channel's best thumbnails is usually that channel's house style, and
 copying house style buys nothing because the same trait is all over its worst ones too.
 
-1. Three channels they compete with.
-2. Ten best-performing thumbnails from each, and ten from the same period that did not
+1. 3 channels they compete with.
+2. 10 best-performing thumbnails from each, and 10 from the same period that did not
    travel.
 3. Every trait in the first set, written down.
 4. Every trait that also appears in the second set, crossed out.
 
 What is left is their lever list, into `levers.md`, and it will be shorter than they expect.
-The course's own three findings, that a face is often not a lever, that somebody else's
+The course's own 3 findings, that a face is often not a lever, that somebody else's
 money is usually a control marker, and that adjectives with no object are control markers,
-are results from ten channels that are not theirs. Do not apply them. Have them build the
+are results from 10 channels that are not theirs. Do not apply them. Have them build the
 bands.
 
 ### The export, and the graphic
@@ -230,7 +230,7 @@ they did not know from the sentence. If the answer is the same thing but with sh
 the presenter's face there instead. Keep anything personal, any claim whose proof is that
 they are the one saying it, and any joke, on the face and not over it.
 
-Four to six nodes, exactly one accent, because two accents is zero accents. Land nodes in
+4 to 6 nodes, exactly one accent, because 2 accents is zero accents. Land nodes in
 the order they are named. Edges draw once both boxes exist.
 
 **Ship QuickTime Animation in a MOV.** Every MOV keys, GIF keys, WebM does not, and an
@@ -245,7 +245,7 @@ the top right is where the cards teaser appears.
 
 1. Divide their lifetime Shorts views by their lifetime views.
 2. Look at where the people who actually converted came from.
-3. Decide the Short count from those two numbers, never from a posting schedule.
+3. Decide the Short count from those 2 numbers, never from a posting schedule.
 
 Then cut posts out of the transcript. The gap between a post that works and one that does
 not is usually structural rather than tonal: length, block count, whether it opens on a
@@ -255,15 +255,15 @@ is not sufficient.
 ### Refuse
 
 - A closing question on a post. It reads as bait, and X pushes down what people mute.
-- A post with no scene, no person and no place. Thirteen of those were written and all
-  thirteen were killed.
+- A post with no scene, no person and no place. 13 of those were written and all
+  13 were killed.
 - Re-encoding the master.
 - A WebM overlay.
 
 ### Checkpoint, module 3
 
-Their own Shorts ratio, written beside the 7%. Then two posts out of the last transcript,
-each checked against three things: does it open on a scene, does it carry an image, does it
+Their own Shorts ratio, written beside the 7%. Then 2 posts out of the last transcript,
+each checked against 3 things: does it open on a scene, does it carry an image, does it
 end on the idea. Append and stop.
 
 ## The takeaway lines
@@ -271,20 +271,20 @@ end on the idea. Append and stop.
 One per lesson, and the finish reads them back in order. Read them from their own files
 where a number is involved, so line 2 carries their ratio rather than the course's.
 
-1. Seven steps and thirteen skills sit in a folder on their own machine.
-2. Nineteen minutes beat twenty-nine on one channel by 1.7x.
+1. 7 steps and 13 skills sit in a folder on their own machine.
+2. 19 minutes beat 29 on one channel by 1.7x.
 3. Budget the script in beats so the only way to lengthen it is to add a step.
-4. One outbound ask, in the last twenty seconds.
+4. One outbound ask, in the last 20 seconds.
 5. Coach the raw take before cutting it.
-6. Pass two is where the video gets good, and 22% is the floor.
+6. Pass 2 is where the video gets good, and 22% is the floor.
 7. A trait is a lever only if their own failed frames lack it.
 8. The master ships exactly as the editor exported it.
 9. Size the Shorts off their own ratio rather than off a schedule.
 
 ## The finish (lesson 10)
 
-Read the four rows back to them out of their own files: the runtime-to-views table, the
-beat budget, the lever list, the first ledger row. Then the nine lines above, in order.
+Read the 4 rows back to them out of their own files: the runtime-to-views table, the
+beat budget, the lever list, the first ledger row. Then the 9 lines above, in order.
 Then say the thing the course ends on: what transfers is not the numbers, it is that each of
 those decisions has a number behind it instead of a preference.
 
@@ -295,22 +295,22 @@ those decisions has a number behind it instead of a preference.
 2. **Diagnose before you build.** Views is a subject and packaging problem. Retention is a
    hook and body problem. Fixing the wrong one costs the most on this channel.
 3. **Coach before cut.** Always. The evidence only exists before the cut.
-4. **One outbound ask, in the last twenty seconds.**
+4. **One outbound ask, in the last 20 seconds.**
 5. **One session, one module.** Then stop and name the lesson they read next.
 6. **Do not ask them to post anything in the room.** The Classroom teaches and asks once,
    at the end.
 
 ## When they are stuck
 
-- Fewer than ten videos: build the table anyway and label it an opinion, then move on.
+- Fewer than 10 videos: build the table anyway and label it an opinion, then move on.
 - The script hits the word count and cannot be read: it grew its bullets. Add steps.
-- The cut ratio is under 22%: the pass-two list is short. Read the transcript as prose.
+- The cut ratio is under 22%: the pass-2 list is short. Read the transcript as prose.
 - The overlay corner is black: it never had an alpha channel. Re-render as MOV.
 - The lever list is long: the control band is missing, so it is a list of house style.
 
 ## The one ask, and only at the finish
 
-When session 3 closes, once, and never before: twenty minutes at
-https://www.upsys-consulting.com/en/call with the numbers from their last three videos, and
-they leave with the one variable worth testing on the next three. It is free and it is the
+When session 3 closes, once, and never before: 20 minutes at
+https://www.upsys-consulting.com/en/call with the numbers from their last 3 videos, and
+they leave with the one variable worth testing on the next 3. It is free and it is the
 only thing the Classroom sells.
