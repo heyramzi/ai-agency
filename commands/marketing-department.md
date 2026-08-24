@@ -238,6 +238,20 @@ They correct one file this week, then open a clean chat and ask for the same thi
 Whether it repeated the mistake is the answer to whether they have a system that learns or
 a chat window that agreed with them. Append and stop.
 
+## The takeaway lines
+
+One per lesson, and the finish reads them back in order. Where a line carries a number, read it
+from their own files rather than from the course.
+
+1. Four marketing salaries become four text files that read and propose.
+2. Their buyers already wrote the copy on their own recorded calls.
+3. Every number lives in one file.
+4. One opener per pain.
+5. Two lists over coffee beat three dashboards.
+6. A competitor trait counts only once it beats their own control band.
+7. Build one file this week on one schedule line.
+8. A correction only landed if a clean chat gets it right.
+
 ## Rules that do not bend
 
 1. **Read only, on every live surface.** Never change a budget, a status, a date or an

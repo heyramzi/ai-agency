@@ -1,12 +1,12 @@
 ---
-description: Run The Creative Director with me. Build the four numbers off my own channel.
+description: Run The Video Producer with me. Build the four numbers off my own channel.
 ---
 <!-- Generated from upsys/business/marketing/courses/youtube-engine/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
 
-# The Creative Director, the agent's copy
+# The Video Producer, the agent's copy
 
 Course: https://www.skool.com/ai-agency-systems-3191/classroom/34b13a52
-Ten lessons, about fifteen minutes of reading. Version 2026-08-23.
+Ten lessons, about twenty minutes of reading. Version 2026-08-24.
 
 The course is the mental model for the person in front of you. This file is the same
 system written for you. **They keep every decision and they keep reading the lessons.
@@ -15,6 +15,28 @@ You do the work the lessons tell them to do.**
 Every number in the course was measured on somebody else's channel. The point of the
 course is that they end holding their own. Never hand them a course number as if it were
 theirs.
+
+## The thirteen skills, so you have the whole set before you start
+
+You may have landed here with no other context. This is the pipeline in full. Describe the
+job in plain words and let the right one get picked up; naming a skill at Claude as a magic
+phrase is not how they load.
+
+| Skill | What it does | Lessons |
+| --- | --- | --- |
+| `video-hooks` | The first 30 seconds of long-form, or the first three of a Short | 1, 4 |
+| `video-script` | The body: eight blocks, budgeted in beats | 3, 4 |
+| `video-coach` | Reads the raw take and names one habit | 5 |
+| `descript-script-edit` | The two-pass cut, through the clipboard | 6 |
+| `youtube-thumbnail` | The bands first, then the frame | 7 |
+| `motion-broll` | Graphics that carry an idea | 8 |
+| `youtube-ctas` | The evergreen transparent overlays | 8 |
+| `whiteboard` | Boards as code, drawn onto the iPad | 8 |
+| `shorts-production` | Clips out of the long video | 9 |
+| `generate-social` | LinkedIn and X posts out of the transcript | 9 |
+| `descript-projects` | Footage in, named correctly | 10 |
+| `dji-sync` | The lav audio onto the camera take, losslessly | 10 |
+| `ai-video-prompting` | Prompts behind generated b-roll | 10 |
 
 ## Say this first, before you touch anything (lesson 1)
 
@@ -45,9 +67,8 @@ Four numbers, and every one of them re-measured on their channel.
 ## Preflight, once
 
 1. **The skills.** `/plugin marketplace add heyramzi/vibe-systems`, then
-   `/plugin install vibe-systems@vibe-systems`. Thirteen of them run this pipeline. Do not
-   name a skill at them as a magic phrase. Describe the job and let it get picked up.
-   The check is one sentence: ask for three hooks. Rated variants means it is installed.
+   `/plugin install vibe-systems@vibe-systems`. The check is one sentence: ask for three
+   hooks. Rated variants means it is installed.
 2. **The channel.** Session 1 needs ten published videos with runtimes and lifetime views.
    Fewer than ten and the table is an opinion. Say so rather than building it anyway.
 3. **The editor.** Session 2's cut runs in Descript through the clipboard. If they edit
@@ -245,12 +266,27 @@ Their own Shorts ratio, written beside the 7%. Then two posts out of the last tr
 each checked against three things: does it open on a scene, does it carry an image, does it
 end on the idea. Append and stop.
 
+## The takeaway lines
+
+One per lesson, and the finish reads them back in order. Read them from their own files
+where a number is involved, so line 2 carries their ratio rather than the course's.
+
+1. Seven steps and thirteen skills sit in a folder on their own machine.
+2. Nineteen minutes beat twenty-nine on one channel by 1.7x.
+3. Budget the script in beats so the only way to lengthen it is to add a step.
+4. One outbound ask, in the last twenty seconds.
+5. Coach the raw take before cutting it.
+6. Pass two is where the video gets good, and 22% is the floor.
+7. A trait is a lever only if their own failed frames lack it.
+8. The master ships exactly as the editor exported it.
+9. Size the Shorts off their own ratio rather than off a schedule.
+
 ## The finish (lesson 10)
 
 Read the four rows back to them out of their own files: the runtime-to-views table, the
-beat budget, the lever list, the first ledger row. Then say the thing the course ends on:
-what transfers is not the numbers, it is that each of those decisions has a number behind it
-instead of a preference.
+beat budget, the lever list, the first ledger row. Then the nine lines above, in order.
+Then say the thing the course ends on: what transfers is not the numbers, it is that each of
+those decisions has a number behind it instead of a preference.
 
 ## Rules that do not bend
 
