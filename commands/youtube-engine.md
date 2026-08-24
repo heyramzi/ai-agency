@@ -66,8 +66,8 @@ That is 4 numbers, and every one of them re-measured on their channel.
 
 ## Preflight, once
 
-1. **The skills.** `/plugin marketplace add heyramzi/vibe-systems`, then
-   `/plugin install vibe-systems@vibe-systems`. The check is one sentence: ask for 3
+1. **The skills.** `/plugin marketplace add heyramzi/ai-agency`, then
+   `/plugin install ai-agency@ai-agency`. The check is one sentence: ask for 3
    hooks. Rated variants means it is installed.
 2. **The channel.** Session 1 needs 10 published videos with runtimes and lifetime views.
    Fewer than 10 and the table is an opinion. Say so rather than building it anyway.

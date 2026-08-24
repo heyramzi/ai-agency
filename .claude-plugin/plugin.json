@@ -1,28 +1,32 @@
 {
-  "name": "vibe-systems",
-  "description": "A 14-skill SEO kit and a 13-skill YouTube video-production kit, from hook to published post, four slash commands that run the free Skool courses on your own business, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
-  "version": "0.5.0",
+  "name": "ai-agency",
+  "description": "A 14-skill SEO kit, a 13-skill YouTube video-production kit, a 12-skill ClickUp delivery kit with the project-manager agent on top, five slash commands that run the free Skool courses on your own business, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
+  "version": "0.6.0",
   "author": {
     "name": "Ramzi",
     "url": "https://github.com/heyramzi"
   },
-  "homepage": "https://github.com/heyramzi/vibe-systems",
+  "homepage": "https://github.com/heyramzi/ai-agency",
   "license": "MIT",
   "keywords": [
-    "skills",
-    "seo",
-    "youtube",
-    "video",
-    "descript",
-    "remotion",
-    "thumbnail",
-    "keyword-research",
-    "search-console",
-    "content",
+    "agency",
     "audit",
+    "claude-code",
+    "clickup",
+    "content",
+    "courses",
+    "delivery",
+    "descript",
+    "keyword-research",
     "lint",
     "maintenance",
-    "claude-code",
-    "courses"
+    "project-management",
+    "remotion",
+    "search-console",
+    "seo",
+    "skills",
+    "thumbnail",
+    "video",
+    "youtube"
   ]
 }

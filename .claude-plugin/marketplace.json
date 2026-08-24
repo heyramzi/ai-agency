@@ -1,15 +1,15 @@
 {
   "$schema": "https://code.claude.com/schemas/marketplace.json",
-  "name": "vibe-systems",
+  "name": "ai-agency",
   "owner": {
     "name": "Ramzi",
     "url": "https://github.com/heyramzi"
   },
   "plugins": [
     {
-      "name": "vibe-systems",
+      "name": "ai-agency",
       "source": "./",
-      "description": "An SEO kit that takes a site from keyword research to ranked pages, a YouTube kit that takes a video from hook to published post, four commands that run the free Skool courses on your own business, and the tools that keep a skills registry honest"
+      "description": "An SEO kit that takes a site from keyword research to ranked pages, a YouTube kit that takes a video from hook to published post, a ClickUp kit that runs agency delivery end to end, five commands that run the free Skool courses on your own business, and the tools that keep a skills registry honest"
     }
   ]
 }

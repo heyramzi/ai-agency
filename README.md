@@ -1,4 +1,4 @@
-# vibe-systems
+# ai-agency
 
 Tools for keeping an agent setup honest, and the kits that run on top of them: SEO,
 and YouTube video production.
@@ -16,8 +16,8 @@ on. Add your skills under `skills/`, keep the two that ship with it, and they
 keep the rest honest as the registry grows.
 
 ```
-/plugin marketplace add heyramzi/vibe-systems
-/plugin install vibe-systems@vibe-systems
+/plugin marketplace add heyramzi/ai-agency
+/plugin install ai-agency@ai-agency
 ```
 
 Or clone it and point Claude Code at the directory.
@@ -122,9 +122,40 @@ niche, and the skill is the method for building them. The whole kit is written t
 every measured claim in it names what produced the number, and every one of them is worth
 re-running on your own channel before you trust it.
 
+## The ClickUp kit
+
+Twelve skills and one agent that run an agency's delivery on ClickUp: intake,
+capacity, approvals and handover. They are the ones behind
+[The Project Manager](https://www.skool.com/ai-agency-systems-3191), and they all
+talk to the same `cu` command line rather than to the API by hand.
+
+| Skill | Does |
+| --- | --- |
+| [**clickup-cli**](skills/clickup-cli) | ① Every read and write: tasks, lists, docs, views, fields, time |
+| [**clickup-ops**](skills/clickup-ops) | ② The week: triage, a meeting turned into tasks, the ad-hoc pass |
+| [**batch-workload**](skills/batch-workload) | ③ Points, a per-person cap, and a week that fits inside it |
+| [**clickup-audit**](skills/clickup-audit) | ④ A workspace assessed before you agree to run anything in it |
+| [**clickup-stale-triage**](skills/clickup-stale-triage) | ⑤ What stopped moving, ruled on one list at a time |
+| [board-spec](skills/board-spec) · [board-start](skills/board-start) | A task specced into a brief, then built in its own worktree |
+| [board-ship](skills/board-ship) · [board-move](skills/board-move) | The merge gate, and a status change on its own |
+| [clickup-data-manager](skills/clickup-data-manager) | Bulk creation, bulk updates and cleanup at a scale nobody clicks through |
+| [clickup-browser](skills/clickup-browser) | Templates, automations, dashboards and statuses, which have no public API |
+| [clickup-super-agents](skills/clickup-super-agents) | Building and debugging ClickUp's own agents |
+
+The agent on top is [**project-manager**](agents/project-manager.md). It reads the
+board, names what is late, names who is over capacity, names what is waiting on a
+client, and proposes one move per problem. It never presses the button itself.
+
+> What is late on the delivery board, and who is over capacity this week?
+
+> Turn yesterday's client call into tasks, then tell me what has to move to make room.
+
+**These need the `cu` command line.** Its install line is handed out in The Project
+Manager, lesson 2. The skills read as documentation without it, and run with it.
+
 ## The courses, run by the agent
 
-The four classrooms in [AI Agency](https://www.skool.com/ai-agency-systems-3191) are free,
+The five classrooms in [AI Agency](https://www.skool.com/ai-agency-systems-3191) are free,
 and each one ships a second copy of itself written for the agent instead of for you. The
 course is the mental model you read. The command is the same system as instructions your
 own Claude can execute, so the reading and the building happen at once.
@@ -135,6 +166,7 @@ own Claude can execute, so the reading and the building happen at once.
 | `/seo-engine` | The SEO Copywriter | Your rows, your keyword file, one page shape, then the console queue |
 | `/marketing-department` | The Media Buyer | The five files, built on your own calls and your own numbers |
 | `/youtube-engine` | The Creative Director | The four numbers off your own channel, from the runtime table to the ledger |
+| `/the-project-manager` | The Project Manager | Your board, your capacity number, and the four gates the work passes |
 
 Install the plugin and type the command. Each one runs a module a sitting, asks you the
 decisions that are yours, stops at the checkpoint, and names the lesson you read next.
@@ -143,7 +175,7 @@ It does not replace the course and it will send you back to it.
 **No terminal?** Every command is one markdown file. Paste this into any Claude and it
 does the same thing:
 
-> Read https://raw.githubusercontent.com/heyramzi/vibe-systems/main/commands/seo-engine.md and run it with me.
+> Read https://raw.githubusercontent.com/heyramzi/ai-agency/main/commands/seo-engine.md and run it with me.
 
 None of them touch a live account without showing you first, none of them invent a number
 you have not measured, and every one of them stops when the module ends.
