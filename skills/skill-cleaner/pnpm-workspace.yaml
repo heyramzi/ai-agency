@@ -1,2 +1,7 @@
 allowBuilds:
   esbuild: true
+
+overrides:
+  # WHY: security version floors (Dependabot). Range-scoped so a bare
+  # floor does not over-bump a major line.
+  nanoid@>=3.0.0 <3.3.18: ">=3.3.18 <4"
