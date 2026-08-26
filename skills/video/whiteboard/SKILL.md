@@ -2,7 +2,7 @@
 name: whiteboard
 description: "Lays out hand-drawn concept boards as code and draws them onto the iPad live over Excalidraw's collaboration protocol, so a diagram arrives already composed and still editable on camera. Use when a video needs a board behind it, when an idea has to become circles, arrows and highlighter rings, when a board needs re-laying out or re-pushing, or when anything needs drawing into an Excalidraw canvas from a laptop. Appends new failure modes to its own pattern list after each run."
 license: MIT
-compatibility: Node 20 or later, and an Excalidraw collaboration room
+compatibility: Node 20 or later, pnpm, and an Excalidraw collaboration room
 ---
 
 # Whiteboard
@@ -11,13 +11,18 @@ compatibility: Node 20 or later, and an Excalidraw collaboration room
 small helper library, registered by name, built to JSON, and then pushed into a live collaboration
 room so it appears on the iPad already composed and still editable on camera.
 
-Build the project once and reuse it. Three commands are all it needs:
+The library is [`tool/`](tool) in this folder, and it is the whole engine: the scene helpers, the
+collaboration client and one worked board, `old-way-new-way`, to read and copy. Install it once and
+run everything from there.
 
 ```bash
+cd tool && pnpm install         # once, for socket.io-client and tsx
 pnpm build                      # every board to out/
 pnpm build <board>              # just one
 pnpm push <board> --room '<excalidraw collab link>' --pace 700
 ```
+
+Everything below is written from `tool/`, so `src/boards.ts` means `tool/src/boards.ts`.
 
 **Why Excalidraw and not Freeform or Miro.** Excalidraw's collaboration room is a websocket that
 accepts a scene from any client, so a laptop can draw into a canvas an iPad has open. Nothing else in
@@ -73,16 +78,33 @@ work. Do not push a dictated set without that pass.
 the boards said out loud in order, which is why `Element order is the talk track` below matters. A
 board added after the recording usually means a beat the argument did not have.
 
-## Push it yourself
+## Deliver it, by whichever route is open
 
-Building a board is not delivering one. A board that exists only in `out/` has not arrived, and
-neither has one sitting on the clipboard: pasting lands it in whatever canvas happens to be open,
-which is usually a local file rather than the collaboration room. **Run the push as the
-last step of every board, without being asked**, then say the room and the element count back.
+Building a board is not delivering one, and there are three routes that deliver. **Take one of them
+as the last step of every board, without being asked**, then say what landed and where.
 
-`WHITEBOARD_ROOM` in `tools/whiteboard/.env` is the room, quoted. If it is missing, ask for the link
-once and pass it as `--room` for that run rather than writing it to disk. Offer the clipboard only
-when a push has actually failed.
+| Route | Command | When |
+| --- | --- | --- |
+| Push into the room | `pnpm push <board>` | Somebody is in the collaboration room. Fastest, and the board arrives already composed. |
+| The clipboard | `pnpm copy <piece>` | Any canvas that is already open, including a local file. Normalises the set back to the origin. |
+| The files | `pnpm build <board>` | `out/<board>.excalidraw` is a real file. Drag it onto Excalidraw, or open it in ExcalidrawZ. |
+
+**The push is not required, and it never was.** The relay stores nothing, so a push only works while
+a peer is connected, and building the delivery around that makes an empty room look like a failure
+when the files were sitting in `out/` the whole time. Pick the route that fits, and name the `out/`
+path when the answer is the files.
+
+**A shared canvas is append-only.** The room holds work no repo knows about: another product's
+screenshots, a morning of Pencil annotation. Read it first with `pnpm inspect`, which reports every
+occupied band, then take a **free** band. Never clear, erase or reset a band to make room, and never
+write a command that does. Clearing a band to "replace" a board takes somebody else's work off the
+canvas whenever the band held two boards and only one was being replaced. No command can know what
+somebody else put there. This holds for every shared surface, not just this one.
+
+`WHITEBOARD_ROOM` in `tool/.env` is the room, quoted. **Quote the value**: Node's `.env` parser
+reads an unquoted `#` as a comment and drops the fragment, which is the half carrying the room id
+and the key. If it is missing, ask for the link once and pass it as `--room` for that run rather
+than writing it to disk.
 
 **Two boards pushed into one room need different coordinates.** Pushes carry absolute positions, so a
 second board authored from the same origin lands on top of the first. Give each one its own band of
@@ -130,7 +152,7 @@ up once it is on the iPad in front of a camera.
 
 ```bash
 pnpm typecheck && pnpm build <board>
-node <skill>/scripts/check-layout.mjs out/<board>.excalidraw
+node ../scripts/check-layout.mjs out/<board>.excalidraw
 ```
 
 The gate reports text over text, text over an off-centre shape, and text over an underline, then
@@ -156,7 +178,7 @@ Write what the mechanism does for the viewer and keep the machinery out of the f
 
 - [ ] `pnpm typecheck` clean and the board rebuilt after the last source edit
 - [ ] `check-layout.mjs` prints `layout clean`
-- [ ] `pnpm push` actually run, and `pnpm inspect` says the room holds the board complete
+- [ ] Delivered by one of the three routes, and said which; a push verified with `pnpm inspect`
 - [ ] Element order matches the spoken order, and `elements * pace` fits the script
 - [ ] One ring, and it is around the number the board exists for
 - [ ] Every label read against the voice profile, with no internal mechanics vocabulary
@@ -170,14 +192,37 @@ not already listed, append it to Learned Patterns before finishing.
 
 ## Learned Patterns
 
-Appended when a run surfaces something this skill did not already know. Newest first.
+Appended when a run surfaces something this skill did not already know. One line per entry, newest
+first: what the run taught, without the run. **Read this list before a run.**
 
-- A dictated set of boards is a talk track, not a layout. Run the layout check before pushing, or the
-  board arrives correct in content and unreadable in composition.
-- A board that exists only in `out/` has not been delivered, and neither has one on the clipboard:
-  pasting lands it in whichever canvas happens to be open, which is usually a local file rather than
-  the collaboration room.
-- Never set roughness or a font family on a single element to work around the house look. Change the
-  one look switch and rebuild, or every board drifts apart from every other.
-- Element order is the talk track. Pushing at a pace makes the board draw itself in the order the
-  argument is spoken, so ordering the array is a scripting decision rather than a cosmetic one.
+- 2026-08-24: The skill demanded a push and treated every other route as a fallback, and the demand
+  was wrong. Deliver by whatever route is open, and say which one
+- 2026-08-24: Renaming a board changes every element id, so a re-push adds a second copy instead of
+  replacing the first. A rename or a split means clearing the canvas before pushing, not re-pushing
+- 2026-08-24: A board's `+` and `=` signs turned two lists into a calculation, which is the one thing
+  the losing version did. Before drawing any sum, check whether the board could show the count instead
+- 2026-08-24: `line()` and `arrow()` store `x` at the start point and `width` as an absolute, so a
+  right-to-left stroke reports a bounding box extending the wrong way
+- 2026-08-14: Ten boards arrived and the canvas looked like three, because the bands they were given
+  left a ten thousand pixel hole through the middle. Allocate a band next to the boards it is pushed
+  with, not at the next round number
+- 2026-08-14: `push` can only report what it sent, so `pnpm inspect` is what reads the canvas back
+- 2026-08-14: Two boards were authored into the same band and nothing checked it
+- 2026-08-14: Ids are `<board>-<index>`, assigned in `boards.ts` after the registry is assembled
+- 2026-08-13: A board pushed into the canvas of a different piece is invisible even though the push
+  worked. For a different canvas, `pnpm copy` is the route
+- 2026-08-13: A push with a live peer still drew nothing, twice, and reported success both times.
+  `peers` in `join()` already excludes self
+- 2026-08-13: "The room is empty" can mean the viewport is somewhere else
+- 2026-08-12: Every uppercase label shipped clipped, because Excalidraw never re-measures a text
+  element it did not see edited
+- 2026-08-12: The relay stores nothing, so a push into an empty room is lost and still reports success
+- 2026-08-12: A ring around a stack of lines has to circle one text element, not several
+- 2026-08-11: Node's `.env` parser cut the room link in half, silently
+- 2026-08-11: `flags.indexOf('--room')` returns -1, and `flags[-1 + 1]` is `flags[0]`
+- 2026-08-11: A script column went out as prose and had to be rebuilt as bullets
+- 2026-08-11: A board shipped carrying internal mechanics vocabulary, which never appears on camera
+- 2026-08-11: A dictated set of boards is a talk track, not a layout. Run the layout check before
+  delivering, or the board arrives correct in content and unreadable in composition
+- 2026-08-11: Never set roughness or a font family on a single element to work around the house look.
+  Change the one look switch and rebuild, or every board drifts apart from every other

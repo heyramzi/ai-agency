@@ -1,5 +1,5 @@
 ---
-name: ClickUp Super Agents
+name: clickup-super-agents
 description: Builds, edits and verifies ClickUp Super Agents, including the MCP tools they call and the Docs they read as knowledge. Use when an agent has to be created, re-scoped, given tools, pointed at a doc, or debugged for answering from the wrong place. The click paths for App Center and the builder form live in clickup-browser; this skill is what to put in the form and why.
 ---
 
