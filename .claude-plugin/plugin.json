@@ -1,7 +1,7 @@
 {
   "name": "ai-agency",
-  "description": "A 14-skill SEO kit, a 13-skill YouTube video-production kit, a 12-skill ClickUp delivery kit with the project-manager agent on top, five slash commands that run the free Skool courses on your own business, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
-  "version": "0.6.0",
+  "description": "A 14-skill SEO kit, a 13-skill YouTube video-production kit, a 12-skill ClickUp delivery kit with the project-manager agent on top, five slash commands that run the free courses at go.upsys-consulting.com/skool on your own business, plus the two tools that keep the registry honest: skill-cleaner merges it down, skill-healer keeps it current.",
+  "version": "0.7.0",
   "author": {
     "name": "Ramzi",
     "url": "https://github.com/heyramzi"
