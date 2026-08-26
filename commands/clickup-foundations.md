@@ -153,8 +153,8 @@ level fixed it and stop.
 5. Read the 3 rules back and ask them which one their workspace is currently failing.
 6. Read the 10 takeaway lines back to them in order (lesson 9 and lesson 10).
 7. Ask whether `cu` is on their machine. If it is not, walk the lesson 10 install
-   with them: the package access, the GitHub token, the 2 `~/.npmrc` lines, then
-   `npm i -g @heyramzi/clickup-cli`, `cu init` and `cu status`.
+   with them: `npm i -g heyramzi/clickup-cli`, then `cu init` and `cu status`. It is
+   a public repository, so there is no access to ask for and no GitHub token to make.
 8. Once `cu status` reaches their workspace, run the read commands with them:
    `cu hierarchy`, then `cu views list --list <id>` and `cu fields list --list <id>`
    on their busiest list. Propose the delete order and let them delete.
@@ -168,7 +168,7 @@ level fixed it and stop.
 - Do not invite anybody to their workspace. That is an account they pay for.
 - Do not run a `cu` write command on their workspace. Read commands only, and they
   press the button on every deletion `cu` proposes.
-- Do not write their GitHub token or their ClickUp token into any file you keep.
+- Do not write their ClickUp token into any file you keep.
 
 **Checkpoint, sitting 4.** Ask which of the 3 rules their workspace fails today, one
 thing they will delete this week, and what `cu status` printed. Append all 3 and stop.
@@ -221,9 +221,9 @@ Read these back at the finish, in order, as the course itself does.
 - **They have no clients yet.** The course still runs. Use their own internal projects
   as the lists, and the structure survives the first real client arriving.
 - **`cu` says command not found.** The global install did not reach their PATH. Run
-  `npm i -g @heyramzi/clickup-cli` again and read `npm prefix -g` back with them.
-- **npm cannot see the package.** Either the scope line is missing from `~/.npmrc`
-  or the GitHub token does not carry `read:packages`. Both are lesson 10, step 3.
+  `npm i -g heyramzi/clickup-cli` again and read `npm prefix -g` back with them.
+- **The install fails on git or on Node.** It clones a public repository, so there is
+  nothing to authenticate. Check `git --version` and that `node --version` is 20 or above.
 - **`cu status` reaches the wrong workspace.** They hold a token for a personal
   workspace as well. `cu profiles` names them, and `cu profile use` switches.
 

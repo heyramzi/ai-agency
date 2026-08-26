@@ -42,9 +42,9 @@ Ask, do not assume, and never write to their board before they have seen the cha
    owner or a member. A member token cannot create tags or fields, and that shows up
    as a `401` in the middle of session 2 rather than now.
 2. **The command line.** `cu status` proves it. If it fails, lesson 2 is where they
-   set it up: access to the package is granted in the room, and it needs a GitHub token
-   carrying `read:packages` plus 2 lines in their own `~/.npmrc`. Do not paste a token
-   for them and never write one into a repo.
+   set it up: `npm i -g heyramzi/clickup-cli`, then `cu init`. The package is public,
+   so there is nothing to ask for. Do not paste their ClickUp token for them and never
+   write one into a repo.
 3. **The skills.** In Claude Code: `/plugin marketplace add heyramzi/ai-agency`, then
    `/plugin install ai-agency@ai-agency`. The ones that run this course are
    `clickup-cli`, `clickup-ops`, `batch-workload`, `clickup-stale-triage` and
