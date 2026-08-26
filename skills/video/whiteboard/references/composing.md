@@ -14,7 +14,7 @@ Colours are two constants: `INK` for every stroke and `HIGHLIGHT` for the marker
 from your own brand tokens rather than picking them by eye, and keep them as hex, because Excalidraw
 stores hex. If the palette moves, re-derive rather than eyeballing a replacement.
 
-**The sketchy look is a switch, not the tool.** `LOOK` in `src/scene.ts` is `clean` since 16 August
+**The sketchy look is a switch, not the tool.** `LOOK` in `tool/src/scene.ts` is `clean` since 16 August
 2026: figures draw as straight strokes in a clean face, and only the highlight ring and underline stay rough,
 because those stand in for a marker pass over a finished diagram. `hand` restores rough.js and
 Excalifont everywhere. Never set roughness or `fontFamily` on an element to work around the house
@@ -22,7 +22,7 @@ look; change `LOOK` and rebuild, or every board drifts apart.
 
 ## One hue per concept
 
-A board that carries several parallel ideas gets a colour per idea, from `HUES` in `src/scene.ts`
+A board that carries several parallel ideas gets a colour per idea, from `HUES` in `tool/src/scene.ts`
 (`indigo`, `amber`, `rose`, `green`, `teal`, `violet`). Each entry is a stroke, a pale tint for the
 fill, and a darker label that survives sitting on that tint, so `node(cx, cy, r, name, size,
 HUES.amber)` gives a filled circle whose caption stays readable.
