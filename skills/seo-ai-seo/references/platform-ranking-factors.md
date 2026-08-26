@@ -1,5 +1,16 @@
 # How Each AI Platform Picks Sources
 
+## Contents
+
+- The Fundamentals
+- Google AI Overviews
+- ChatGPT
+- Perplexity
+- Microsoft Copilot
+- Claude
+- Allowing AI Bots in robots.txt
+- Where to Start
+
 Each AI search platform has its own search index, ranking logic, and content preferences. This guide covers what matters for getting cited on each one.
 
 Sources cited throughout: Princeton GEO study (KDD 2024), SE Ranking domain authority study, ZipTie content-answer fit analysis.

@@ -2,8 +2,10 @@
 # Regenerates zips/<skill>.zip, one zip per skill folder.
 #
 # Claude Code installs skills from this repo as a plugin and never needs these.
-# Claude Cowork and claude.ai take one zip per skill through Customize > Skills,
-# so a non-technical member needs a file they can download and upload as-is.
+# Claude Cowork and claude.ai take one file per skill through Settings > Skills >
+# Add > Upload a skill, so a non-technical member needs a file they can download
+# and upload as-is. The uploader accepts .zip and .skill (both must contain a
+# SKILL.md) and a bare .md whose YAML frontmatter carries name and description.
 #
 # Run this after any change under skills/ and commit the result.
 

@@ -36,18 +36,32 @@ is missing the scaffold.`;
 const LOG_HEADING = "## Learned Patterns";
 
 /**
- * The phrase that tells a reader of the description that this skill rewrites
- * itself. It belongs in the description rather than only the body: the
- * description is the part the model reads when deciding what to load.
+ * The phrase that tells a reader that this skill rewrites itself.
+ *
+ * Matched against the whole file, not the description. The description is
+ * preloaded into every session for every skill in the registry, and this
+ * sentence does nothing for the choice of which skill to load, so it is the
+ * one part of the scaffold that must not live there. A skill that still
+ * carries it in the description passes either way.
  */
 // The quantifier between the verb and the noun is free: "appends new failure
 // modes", "appends every new failure mode", "appends any failure it hits" all
 // make the same promise, and pinning it to "new" reported four honest skills as
 // missing it.
-const FRONTMATTER_PROMISE = /appends?\s+(?:\w+\s+){0,3}(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
+const HEAL_PROMISE = /appends?\s+(?:\w+\s+){0,3}(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
 
 /** An entry: `- YYYY-MM-DD: what went wrong, what to do instead.` */
-const ENTRY = /^-\s+(\d{4}-\d{2}-\d{2}):\s*(.+)$/;
+const ENTRY = /^-\s+\*{0,2}(\d{4}-\d{2}-\d{2})\s*(?:\([^)]*\))?\s*[,.:\u2013\u2014-]\s*(.+)$/;
+
+/**
+ * The same entry written the way a human dates a line: `- 26 Aug 2026 - ...`,
+ * `- **24 Aug 2026, ...**`. Reading only the ISO form reported eight logs as
+ * empty while they held between 8 and 300 entries, so the 25-entry ceiling never
+ * fired on the logs furthest past it. Counting is what the ceiling runs on, so
+ * it counts every shape; only what this tool writes is ISO.
+ */
+const ENTRY_DATED = /^-\s+\*{0,2}(\d{1,2})\s+([A-Z][a-z]{2})[a-z]*\.?\s+(\d{4})\s*[,.:;—–-]*\s*(.+)$/;
+const MONTHS = "jan feb mar apr may jun jul aug sep oct nov dec".split(" ");
 
 /**
  * Past this many entries the log has stopped being a log and become a second
@@ -91,23 +105,44 @@ function skillFile(target) {
   return file;
 }
 
-/** Every SKILL.md one level under the given roots. */
+/**
+ * Every SKILL.md under the given roots, at any depth.
+ *
+ * A flat registry (`.claude/skills/<name>/`) and a packaged source
+ * (`ai-doc/skills/<area>/<name>/`) are both real layouts, and a one-level scan
+ * reads the packaged one as empty: `check ai-doc/skills` reported "No SKILL.md
+ * found" across 191 skills, which reads as a mistyped path rather than as a
+ * layout the tool cannot see. Descending stops at a directory that owns a
+ * SKILL.md, so a vendored pack's children and every `references/` stay out.
+ */
 function discover(roots) {
   const found = [];
-  for (const root of roots) {
-    if (!existsSync(root)) continue;
-    for (const entry of readdirSync(root)) {
-      const dir = join(root, entry);
+  const walk = (dir, depth) => {
+    if (depth > 4) return;
+    let entries;
+    try {
+      entries = readdirSync(dir);
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      if (entry.startsWith(".") || entry === "node_modules") continue;
+      const child = join(dir, entry);
       let stats;
       try {
-        stats = statSync(dir);
+        stats = statSync(child);
       } catch {
         continue; // a dangling symlink is skill-cleaner's finding, not this one's
       }
       if (!stats.isDirectory()) continue;
-      const file = join(dir, "SKILL.md");
+      const file = join(child, "SKILL.md");
       if (existsSync(file)) found.push(file);
+      else walk(child, depth + 1);
     }
+  };
+  for (const root of roots) {
+    if (!existsSync(root)) continue;
+    walk(root, 0);
   }
   return found.sort();
 }
@@ -137,13 +172,19 @@ function read(file) {
   // follow the link and count the entries where they actually live.
   let entries = logBlock ? parseEntries(logBlock) : [];
   let entriesFile = null;
-  if (logBlock && entries.length === 0) {
-    const link = /\(([^)]*learn[^)]*\.md)\)|`([^`]*learn[^`]*\.md)`/i.exec(logBlock);
+  // Follow the link out of the section. A skill that points at its log from a
+  // `Closing a run` step instead of from a `Learned Patterns` heading is still a
+  // skill with a log: three of them held 75 KB, 68 KB and 54 KB of entries and
+  // were reported as having no log at all, so the search widens to the whole
+  // body when the section is missing.
+  if (entries.length === 0) {
+    const searched = logBlock || text;
+    const link = /\(([^)]*learn[^)]*\.md)\)|`([^`]*learn[^`]*\.md)`/i.exec(searched);
     const target = link && (link[1] || link[2]);
     if (target) {
       const resolved = join(dirname(file), target);
       if (existsSync(resolved)) {
-        entries = parseEntries(readFileSync(resolved, "utf8"));
+        entries = parseEntries(readFileSync(resolved, "utf8"), { inBody: false });
         entriesFile = resolved;
       }
     }
@@ -154,7 +195,7 @@ function read(file) {
     text,
     name: nameMatch ? nameMatch[1].trim() : basename(dirname(file)),
     description,
-    hasLog: headingAt !== -1,
+    hasLog: headingAt !== -1 || entriesFile !== null,
     /** True when the log is the last section, which is where it belongs. */
     logIsLast: logBlock !== null && !/\n##\s/.test(logBlock.slice(LOG_HEADING.length + 1)),
     entries,
@@ -188,12 +229,52 @@ function readDescription(frontmatter) {
     .trim();
 }
 
-function parseEntries(logBlock) {
+/**
+ * Every entry in a log block.
+ *
+ * `raw` is kept so a rebuild puts the line back exactly as its author wrote it.
+ * Rebuilding from `date` and `text` reformats a whole hand-dated log on the next
+ * append, which is a diff nobody asked for over a log nobody was editing.
+ */
+function parseEntries(logBlock, { inBody = true } = {}) {
   const entries = [];
+  const seen = new Set();
+  const add = (date, text, raw) => {
+    const key = normalise(text).toLowerCase();
+    if (seen.has(key)) return; // a Contents list and its own headings are one log
+    seen.add(key);
+    entries.push({ date, text, raw });
+  };
   for (const line of logBlock.split("\n")) {
-    if (/^##\s/.test(line) && !line.startsWith(LOG_HEADING)) break;
-    const match = ENTRY.exec(line.trim());
-    if (match) entries.push({ date: match[1], text: match[2] });
+    const trimmed = line.trim();
+    // Outside a body an entry can be a heading rather than a bullet, and the
+    // file often carries both: a Contents list of every entry, then the entries
+    // as H2s. Reading one shape only lost a whole log; reading both without
+    // deduping counted every entry twice.
+    if (!inBody) {
+      const head = /^#{2,3}\s+(.+)$/.exec(trimmed);
+      if (head) {
+        const [hit] = parseEntries(`- ${head[1]}`, { inBody: false });
+        if (hit) add(hit.date, hit.text, trimmed);
+        continue;
+      }
+    }
+    // A `## ` heading ends the section, but only inside a body. A log that moved
+    // to references/ uses H2 for its own structure (a Contents list, an entry
+    // per heading), and stopping at the first one read a 54-entry log as empty.
+    if (inBody && /^##\s/.test(line) && !line.startsWith(LOG_HEADING)) break;
+    const iso = ENTRY.exec(trimmed);
+    if (iso) {
+      add(iso[1], iso[2], trimmed);
+      continue;
+    }
+    const dated = ENTRY_DATED.exec(trimmed);
+    if (dated) {
+      const month = MONTHS.indexOf(dated[2].toLowerCase());
+      if (month === -1) continue;
+      const date = `${dated[3]}-${String(month + 1).padStart(2, "0")}-${dated[1].padStart(2, "0")}`;
+      add(date, dated[4], trimmed);
+    }
   }
   return entries;
 }
@@ -205,7 +286,7 @@ function parseEntries(logBlock) {
  */
 function audit(skill, now) {
   const missing = [];
-  if (!FRONTMATTER_PROMISE.test(skill.description)) missing.push("frontmatter-promise");
+  if (!HEAL_PROMISE.test(skill.text)) missing.push("heal-promise");
   // "If a run surfaces" makes the same commitment as "if this run surfaced".
   // What must not pass is a hedge, which is why "consider appending" is not here.
   if (!/if (?:this|a|the) run surface[sd]/i.test(skill.text)) missing.push("execution-step");
@@ -219,9 +300,17 @@ function audit(skill, now) {
   if (skill.hasLog && skill.entries.length === 0) {
     warnings.push("Learned Patterns is empty. Seed it from the run that motivated the skill.");
   }
-  if (skill.entries.length > LOG_ENTRIES_MAX) {
+  // The ceiling is what a reader pays, not how many lines there are. A log split
+  // into one-line rules plus an archive can hold 128 entries and still be 130
+  // lines, and warning on the count there tells a maintainer to undo the fix.
+  // What makes a log a second body is entries that carry their evidence inline.
+  const inlineEvidence =
+    skill.entries.length > 0 &&
+    skill.entries.reduce((n, e) => n + e.text.length, 0) / skill.entries.length > 400;
+  if (skill.entries.length > LOG_ENTRIES_MAX && (inlineEvidence || !skill.entriesFile)) {
     warnings.push(
-      `${skill.entries.length} entries is a second body. Fold the hardened ones into the prose.`,
+      `${skill.entries.length} entries is a second body. Split the rules from the evidence ` +
+        `with ai-cleaner's split_log.py, or fold the hardened ones into the prose.`,
     );
   }
   const stale = skill.entries.filter((e) => daysBetween(e.date, now) > FOLD_AFTER_DAYS);
@@ -258,24 +347,21 @@ function appendSection(text, section) {
 function retrofit(skill, missing, now) {
   let text = skill.text;
 
-  if (missing.includes("frontmatter-promise")) {
-    text = text.replace(
-      /^(description:\s*)(["']?)([\s\S]*?)\2(\s*)$/m,
-      (all, key, quote, value, tail) => {
-        const trimmed = value.trim().replace(/\s+$/, "");
-        const joined = `${trimmed}${/[.!?]$/.test(trimmed) ? "" : "."} Appends new failure modes to its own pattern list after each run.`;
-        // Requote only if it was quoted, so a plain scalar stays plain and a
-        // quoted one does not gain a nested quote.
-        return `${key}${quote}${joined}${quote}${tail}`;
-      },
-    );
-  }
+  const PROMISE = "This skill appends new failure modes to its own pattern list after each run.";
 
   if (missing.includes("execution-step")) {
+    // The promise rides along in the same section, because both parts speak to
+    // the session that has already loaded the skill.
+    const promise = missing.includes("heal-promise") ? `${PROMISE}\n\n` : "";
     text = appendSection(
       text,
-      "## Closing a run\n\nIf this run surfaced a failure mode not already listed, append it to Learned\nPatterns with today's date before finishing. A learning that stays in the\nconversation is lost when the conversation ends.",
+      `## Closing a run\n\n${promise}If this run surfaced a failure mode not already listed, append it to Learned\nPatterns with today's date before finishing. A learning that stays in the\nconversation is lost when the conversation ends.`,
     );
+  } else if (missing.includes("heal-promise")) {
+    const closing = /\n## Closing a run\s*\n+/.exec(text);
+    text = closing
+      ? `${text.slice(0, closing.index + closing[0].length)}${PROMISE}\n\n${text.slice(closing.index + closing[0].length)}`
+      : appendSection(text, `## Closing a run\n\n${PROMISE}`);
   }
 
   if (missing.includes("checklist-item")) {
@@ -315,6 +401,20 @@ function sameEntry(a, b) {
  */
 function appendEntry(skill, entry, now) {
   const line = `- ${now}: ${normalise(entry)}`;
+  if (skill.entriesFile) {
+    const text = readFileSync(skill.entriesFile, "utf8");
+    const lines = text.split("\n");
+    // Newest first, so the entry goes above the first one already there. With no
+    // entries yet it goes at the end, under whatever prose introduces the file.
+    const at = lines.findIndex((l) => ENTRY.test(l.trim()));
+    if (at === -1) return `${text.replace(/\s*$/, "")}\n\n${line}\n`;
+    // Match the file's own spacing. An index of one-line rules runs them
+    // together; a log of paragraphs separates them, and mixing the two makes
+    // every append visible as a formatting change.
+    const spaced = lines.slice(at + 1).some((l, i) => l.trim() === "" && ENTRY.test((lines[at + i + 2] || "").trim()));
+    lines.splice(at, 0, ...(spaced ? [line, ""] : [line]));
+    return lines.join("\n");
+  }
   if (!skill.hasLog) {
     return `${skill.text.replace(/\s*$/, "")}\n\n${LOG_HEADING}\n\n${line}\n`;
   }
@@ -331,10 +431,10 @@ function appendEntry(skill, entry, now) {
   const section = skill.text.slice(start, end);
   const intro = [];
   const entries = [];
-  for (const raw of section.split("\n").slice(1)) {
-    const match = ENTRY.exec(raw.trim());
-    if (match) entries.push({ date: match[1], text: match[2] });
-    else if (raw.trim() !== "") intro.push(raw);
+  for (const line of section.split("\n").slice(1)) {
+    const [parsed] = parseEntries(line);
+    if (parsed) entries.push(parsed);
+    else if (line.trim() !== "") intro.push(line);
   }
 
   entries.push({ date: now, text: normalise(entry) });
@@ -343,7 +443,7 @@ function appendEntry(skill, entry, now) {
   entries.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
   const rebuilt =
-    [LOG_HEADING, "", ...(intro.length > 0 ? [...intro, ""] : []), ...entries.map((e) => `- ${e.date}: ${e.text}`)]
+    [LOG_HEADING, "", ...(intro.length > 0 ? [...intro, ""] : []), ...entries.map((e) => e.raw || `- ${e.date}: ${e.text}`)]
       .join("\n") + "\n";
 
   return skill.text.slice(0, start) + rebuilt + skill.text.slice(end);
@@ -448,9 +548,10 @@ function main(argv) {
       return 0;
     }
     const next = appendEntry(skill, entry, now);
-    if (flags.apply) writeFileSync(file, next);
+    const dest = skill.entriesFile || file;
+    if (flags.apply) writeFileSync(dest, next);
     const prefix = flags.apply ? "logged" : "would log";
-    process.stdout.write(`${prefix} to ${short(file)}:\n  - ${now}: ${entry}\n`);
+    process.stdout.write(`${prefix} to ${short(dest)}:\n  - ${now}: ${entry}\n`);
     if (!flags.apply) process.stdout.write("\nRe-run with --apply to write it.\n");
     return 0;
   }

@@ -1,5 +1,16 @@
 # GA4 Implementation Reference
 
+## Contents
+
+- Configuration
+- Custom Events
+- Conversions Setup
+- Custom Dimensions and Metrics
+- Audiences
+- Debugging
+- Data Quality
+- Integration with Google Ads
+
 Detailed implementation guide for Google Analytics 4.
 
 ## Configuration

@@ -6,11 +6,12 @@ import { danglingLinks, dedupe, defaultRoots, walkSkills } from "./discover.js";
 import { parseSkill, str } from "./parse.js";
 import { isMarketplaceClone, keepNewestPluginVersions } from "./plugins.js";
 import { checkSkill } from "./rules.js";
+import { readLedger, unusedFindings } from "./usage.js";
 import type { Report, Skill } from "./types.js";
 
 export function scan(
   roots: string[] = [],
-  opts: { home?: string; allRuntimes?: boolean } = {},
+  opts: { home?: string; allRuntimes?: boolean; usage?: string } = {},
 ): Report {
   const home = opts.home ?? homedir();
   const targets = (
@@ -49,6 +50,12 @@ export function scan(
   }
 
   findings.push(...analyze(skills, targets.flatMap((root) => danglingLinks(root))));
+
+  // What ran is evidence no file carries, so it arrives from the invocation
+  // ledger rather than from the walk. The path is always explicit: a scan that
+  // silently read the caller's real ledger would make its own tests depend on
+  // how the machine running them has been used.
+  if (opts.usage) findings.push(...unusedFindings(skills, readLedger(opts.usage)));
 
   // Aligning a name to its directory is only a one-outcome repair while that
   // directory name is free. `CLIs/umami` already had an `analytics/umami`

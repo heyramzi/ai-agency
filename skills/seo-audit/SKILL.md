@@ -1,8 +1,8 @@
 ---
 name: seo-audit
-description: Full-site SEO diagnosis AND remediation. Use when the user wants to audit, review, diagnose, or fix SEO issues on their site. Triggers on "SEO audit," "technical SEO," "why am I not ranking," "SEO issues," "on-page SEO," "meta tags review," "SEO health check," "fix my SEO," "optimize my content," or "keyword research." Covers diagnosis (crawl, indexation, on-page, content quality) and execution (keyword strategy, rewrites, checklists, topic clusters). For a single specific URL, use seo-page-audit. For pages at scale, see programmatic-seo. For structured data only, see seo-schema-markup. For 404s and broken links, see seo-broken-links.
+description: "Full-site SEO diagnosis and remediation, covering crawl, indexation, on-page and content quality, then keyword strategy, rewrites and topic clusters. Use on 'SEO audit', 'technical SEO', 'why am I not ranking', 'SEO health check', 'fix my SEO', 'keyword research'. For a single URL use seo-page-audit, for pages at scale programmatic-seo, for structured data seo-schema-markup, for 404s seo-broken-links."
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # SEO Audit
@@ -223,6 +223,7 @@ Blog posts: 1,500-2,500 words. Product pages: 300-500 words minimum. Category pa
 ## Tools
 
 **Free:** Google Search Console, PageSpeed Insights, Bing Webmaster Tools, Rich Results Test, Mobile-Friendly Test, Schema Validator.
+**Free full-site crawl:** OpenSEO self-hosted (`github.com/every-app/open-seo`, MIT, `docker compose up -d`). Its MCP `run_site_audit` with `runLighthouse: false` crawls robots.txt and the sitemap and returns typed issues with severity and fix, using no paid data. Its keyword, SERP, backlink and rank tools bill DataForSEO per call, so keep those for questions first-party data cannot answer.
 **Paid:** Screaming Frog, Ahrefs/Semrush, Sitebulb, ContentKing.
 
 ## Related Skills

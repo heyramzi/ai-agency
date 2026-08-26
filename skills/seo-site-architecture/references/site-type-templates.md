@@ -1,5 +1,14 @@
 # Site Type Templates
 
+## Contents
+
+- SaaS Marketing Site
+- Content / Blog Site
+- E-Commerce
+- Documentation Site
+- Hybrid SaaS + Content
+- Small Business / Local
+
 Full page hierarchy templates with ASCII trees, URL maps, and navigation recommendations for common site types.
 
 ---
