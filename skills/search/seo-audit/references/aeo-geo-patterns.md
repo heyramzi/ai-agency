@@ -1,5 +1,20 @@
 # AEO and GEO Content Patterns
 
+## Contents
+
+- Answer Engine Optimization (AEO) Patterns
+- What is [Term]?
+- What is Answer Engine Optimization?
+- How to [Action/Goal]
+- How to Optimize Content for Featured Snippets
+- [Option A] vs [Option B]: [Brief Descriptor]
+- Advantages and Disadvantages of [Topic]
+- Frequently Asked Questions
+- [Number] Best [Items] for [Goal/Purpose]
+- Generative Engine Optimization (GEO) Patterns
+- Domain-Specific GEO Tactics
+- Voice Search Optimization
+
 Reusable content block patterns optimized for answer engines and AI citation.
 
 ---

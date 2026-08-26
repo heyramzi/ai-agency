@@ -1,5 +1,16 @@
 # Google Tag Manager Implementation Reference
 
+## Contents
+
+- Container Structure
+- Naming Conventions
+- Data Layer Patterns
+- Common Tag Configurations
+- Preview and Debug
+- Workspaces and Versioning
+- Consent Management
+- Advanced Patterns
+
 Detailed guide for implementing tracking via Google Tag Manager.
 
 ## Container Structure

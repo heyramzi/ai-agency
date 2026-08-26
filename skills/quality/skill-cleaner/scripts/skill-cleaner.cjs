@@ -7897,9 +7897,9 @@ function sortFindings(findings) {
 }
 
 // src/scan.ts
-var import_node_fs7 = require("node:fs");
-var import_node_os2 = require("node:os");
-var import_node_path9 = require("node:path");
+var import_node_fs8 = require("node:fs");
+var import_node_os3 = require("node:os");
+var import_node_path10 = require("node:path");
 
 // src/analyze.ts
 var import_node_fs6 = require("node:fs");
@@ -8361,10 +8361,69 @@ function compareVersions(a, b) {
   return 0;
 }
 
+// src/usage.ts
+var import_node_fs7 = require("node:fs");
+var import_node_os2 = require("node:os");
+var import_node_path9 = require("node:path");
+var DEFAULT_LEDGER = (0, import_node_path9.join)((0, import_node_os2.homedir)(), ".claude", "skill-usage.jsonl");
+var MIN_LEDGER_DAYS = 30;
+var DAY_MS = 24 * 60 * 60 * 1e3;
+function readLedger(path = DEFAULT_LEDGER, now = Date.now()) {
+  if (!(0, import_node_fs7.existsSync)(path)) return null;
+  const lastUse = /* @__PURE__ */ new Map();
+  let since = null;
+  for (const line of (0, import_node_fs7.readFileSync)(path, "utf8").split("\n")) {
+    if (!line.trim()) continue;
+    let entry;
+    try {
+      entry = JSON.parse(line);
+    } catch {
+      continue;
+    }
+    const at = typeof entry.at === "string" ? entry.at : null;
+    const name = typeof entry.name === "string" ? entry.name : null;
+    if (!at || !name || Number.isNaN(Date.parse(at))) continue;
+    if (!since || at < since) since = at;
+    if (entry.kind !== "skill" && entry.kind !== "agent") continue;
+    const seen = lastUse.get(name);
+    if (!seen || at > seen) lastUse.set(name, at);
+  }
+  const days = since ? Math.floor((now - Date.parse(since)) / DAY_MS) : 0;
+  return { path, lastUse, since, days };
+}
+function unusedFindings(skills, ledger) {
+  if (!ledger) return [];
+  if (ledger.days < MIN_LEDGER_DAYS) {
+    return [
+      {
+        code: "usage-ledger-young",
+        severity: "warn",
+        message: `The invocation ledger covers ${ledger.days} day(s), under the ${MIN_LEDGER_DAYS} needed before silence means unused. No skill is reported as unused yet.`,
+        paths: [ledger.path]
+      }
+    ];
+  }
+  const findings = [];
+  for (const skill of skills) {
+    if (skill.origin === "plugin") continue;
+    const dir = (0, import_node_path9.basename)(skill.dir);
+    const declared = str(skill.frontmatter.name);
+    if (ledger.lastUse.has(dir)) continue;
+    if (declared && ledger.lastUse.has(declared)) continue;
+    findings.push({
+      code: "never-used",
+      severity: "warn",
+      message: `Never invoked in the ${ledger.days} days the ledger covers. Delete it, or fix the description that fails to trigger it.`,
+      paths: [skill.realPath]
+    });
+  }
+  return findings;
+}
+
 // src/scan.ts
 function scan(roots = [], opts = {}) {
-  const home = opts.home ?? (0, import_node_os2.homedir)();
-  const targets = (roots.length > 0 ? roots.map((r) => (0, import_node_path9.resolve)(r)) : defaultRoots(process.cwd(), home, { allRuntimes: opts.allRuntimes })).filter((r) => (0, import_node_fs7.existsSync)(r));
+  const home = opts.home ?? (0, import_node_os3.homedir)();
+  const targets = (roots.length > 0 ? roots.map((r) => (0, import_node_path10.resolve)(r)) : defaultRoots(process.cwd(), home, { allRuntimes: opts.allRuntimes })).filter((r) => (0, import_node_fs8.existsSync)(r));
   const located = keepNewestPluginVersions(
     targets.flatMap((root) => walkSkills(root, home)).filter((item) => !isMarketplaceClone(item.realPath))
   );
@@ -8388,11 +8447,12 @@ function scan(roots = [], opts = {}) {
     }
   }
   findings.push(...analyze(skills, targets.flatMap((root) => danglingLinks(root))));
+  if (opts.usage) findings.push(...unusedFindings(skills, readLedger(opts.usage)));
   const taken = new Set(skills.map((skill) => str(skill.frontmatter.name)));
   for (const finding of findings) {
     if (finding.code !== "name-dir-mismatch" || !finding.fixable) continue;
     const skill = skills.find((candidate) => candidate.realPath === finding.paths[0]);
-    if (skill && taken.has((0, import_node_path9.basename)(skill.dir))) finding.fixable = false;
+    if (skill && taken.has((0, import_node_path10.basename)(skill.dir))) finding.fixable = false;
   }
   return { scanned: targets, skills, findings };
 }
@@ -8411,6 +8471,8 @@ Options
   --apply         For \`fix\` and \`consolidate\`: write the changes (default is a dry run)
   --into <repo>   For \`adopt\`: the repository to move the skill into
   --all-runtimes  Also scan ~/.agents, ~/.codex, ~/.opencode and ~/.gemini
+  --usage <path>  Invocation ledger to read (default ~/.claude/skill-usage.jsonl)
+  --no-usage      Do not report unused skills, even with a ledger present
   --plain         No colour (also honours NO_COLOR)
 
 With no roots, scans the current project, ~/.claude/skills and installed
@@ -8426,6 +8488,8 @@ var CONFIG = {
     apply: { type: "boolean", default: false },
     into: { type: "string" },
     "all-runtimes": { type: "boolean", default: false },
+    usage: { type: "string" },
+    "no-usage": { type: "boolean", default: false },
     plain: { type: "boolean", default: false },
     help: { type: "boolean", short: "h", default: false }
   }
@@ -8477,7 +8541,10 @@ ${USAGE}
 `);
     return 2;
   }
-  const report = scan(rest, { allRuntimes: values["all-runtimes"] });
+  const report = scan(rest, {
+    allRuntimes: values["all-runtimes"],
+    usage: values["no-usage"] ? void 0 : values.usage ?? DEFAULT_LEDGER
+  });
   const visible = values.quiet ? report.findings.filter((f) => f.severity === "error") : report.findings;
   if (command === "consolidate") {
     const plan = planConsolidation(report.skills, report.findings);

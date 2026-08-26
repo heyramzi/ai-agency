@@ -1,5 +1,13 @@
 # International SEO: Evidence & Sources
 
+## Contents
+
+- Hreflang
+- Canonicalization & i18n
+- International Sitemaps
+- URL Structure
+- Content Quality Across Locales
+
 Backs the International SEO & Localization section of seo-audit. Organized by topic with source URLs and key quotes.
 
 ---

@@ -1,5 +1,13 @@
 # Healing detail
 
+## Contents
+
+- Deciding which file owns a fact
+- Retrofitting a registry
+- What not to heal
+- Worked examples
+- Cadence
+
 Loaded when a learning does not have an obvious home, or when retrofitting a
 registry that was never written to heal.
 

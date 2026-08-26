@@ -1,5 +1,25 @@
 # Section Templates for Competitor Pages
 
+## Contents
+
+- TL;DR Summary
+- Paragraph Comparison (Not Just Tables)
+- Features
+- Feature Comparison Section
+- Feature Comparison
+- Pricing Comparison Section
+- Pricing
+- Service & Support Comparison
+- Service & Support
+- Who It's For Section
+- Who Should Choose [Competitor]
+- Who Should Choose [Your Product]
+- Migration Section
+- Switching from [Competitor]
+- Social Proof Section
+- What Customers Say
+- Comparison Table Best Practices
+
 Ready-to-use templates for each section of competitor comparison pages.
 
 ## TL;DR Summary

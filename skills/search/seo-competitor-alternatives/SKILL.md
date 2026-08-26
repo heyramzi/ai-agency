@@ -1,6 +1,6 @@
 ---
 name: seo-competitor-alternatives
-description: "When the user wants to create competitor comparison or alternative pages for SEO and sales enablement. Also use when the user mentions 'alternative page,' 'vs page,' 'competitor comparison,' 'comparison page,' '[Product] vs [Product],' '[Product] alternative,' or 'competitive landing pages.' Covers four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. Emphasizes deep research, modular content architecture, and varied section types beyond feature tables. This skill builds the public-facing pages; for upstream competitor research and structured profile docs, run seo-competitor-profiling first."
+description: "Builds competitor comparison and alternative pages in four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. Use on 'alternative page', 'vs page', 'competitor comparison', '[Product] vs [Product]', '[Product] alternative'. Run seo-competitor-profiling first for the upstream research."
 metadata:
   version: "1.0.0"
 ---

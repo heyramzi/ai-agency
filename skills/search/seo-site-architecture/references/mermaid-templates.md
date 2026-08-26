@@ -1,5 +1,15 @@
 # Mermaid Diagram Templates
 
+## Contents
+
+- Basic Hierarchy
+- Hierarchy with Navigation Zones
+- Hierarchy with URL Labels
+- Hub-and-Spoke Content Model
+- Internal Linking Flow
+- Before/After Restructuring
+- Color-Coding Conventions
+
 Copy-paste-ready Mermaid diagrams for visual sitemaps. Customize node labels and connections for your site.
 
 ---

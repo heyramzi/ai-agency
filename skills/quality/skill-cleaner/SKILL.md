@@ -30,7 +30,8 @@ installed plugin. Exit code is 1 when errors remain, so it drops into CI.
 | `adopt <dir> --into <repo> --apply` | Move a homeless skill into a repo, link it back |
 
 Flags: `--json`, `--quiet` (errors only), `--all-runtimes` (also scan
-`~/.agents`, `~/.codex`, `~/.opencode`, `~/.gemini`), `--plain`.
+`~/.agents`, `~/.codex`, `~/.opencode`, `~/.gemini`), `--usage <path>`,
+`--no-usage`, `--plain`.
 
 Every writing command is a dry run unless you pass `--apply`. Read the dry run
 first.
@@ -62,6 +63,26 @@ after that name is gone. **`dangling-bundled-path`** is a companion file
 named in prose rather than linked, so `broken-reference` never saw it. Both are
 judged against the whole registry, because a skill quoting a sibling's reference
 file is the normal case and not a fault.
+
+## Unused skills
+
+Which skill is dead is the one question the files cannot answer, because
+nothing in a SKILL.md records that it ran. The evidence comes from an
+invocation ledger: `~/.claude/skill-usage.jsonl`, one JSON line per run,
+appended by a Claude Code PostToolUse hook on the `Skill` and `Agent` tools
+(`REDACTED/hooks/skill-usage.mjs`). Point somewhere else with
+`--usage <path>`, or turn the check off with `--no-usage`.
+
+**`never-used`** is a skill the ledger has never seen invoked. It is a warning,
+never fixable, because the repair is a judgment: delete it, or repair the
+description that fails to trigger it.
+
+The ledger has to be older than 30 days before any of that is said. Under that,
+one `usage-ledger-young` note replaces every verdict, since a young ledger
+would report a seasonal skill as dead. Matching accepts the directory name and
+the frontmatter `name`, because a skill is invoked by its directory while the
+frontmatter is only a label. Plugin skills are exempt, as they are in the
+authoring rules: deleting a vendor's skill is not your call.
 
 ## Consolidating
 
@@ -131,7 +152,7 @@ registry that exemption dissolved 19 of 20 findings.
 
 ```bash
 pnpm install
-pnpm test      # 132 tests
+pnpm test      # 141 tests
 pnpm build     # typecheck, then rebuild scripts/skill-cleaner.cjs
 ```
 

@@ -1,5 +1,15 @@
 # Content Architecture for Competitor Pages
 
+## Contents
+
+- Centralized Competitor Data
+- Competitor Data Template
+- Your Product Data
+- Page Generation
+- Index Page Structure
+- Explore [Your Product] as an Alternative
+- Footer Navigation
+
 How to structure and maintain competitor data for scalable comparison pages.
 
 ## Centralized Competitor Data

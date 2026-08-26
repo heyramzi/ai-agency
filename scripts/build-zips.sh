@@ -7,10 +7,13 @@
 # hand-kept list of forty is a list that goes stale in silence, which is the exact
 # failure this repo exists to make visible, so it is generated here instead.
 #
-# The zips are for Claude Cowork and claude.ai, which take one skill at a time
-# through Customize > Skills. Claude Code installs the plugin and never needs them.
-# The zip is flat inside, `<skill>/SKILL.md`, because the area is a fact about this
-# repo and not about the skill.
+# Claude Code installs skills from this repo as a plugin and never needs the zips.
+# Claude Cowork and claude.ai take one file per skill through Settings > Skills >
+# Add > Upload a skill, so a non-technical member needs a file they can download
+# and upload as-is. The uploader accepts .zip and .skill (both must contain a
+# SKILL.md) and a bare .md whose YAML frontmatter carries name and description.
+# The zip is flat inside, `<skill>/SKILL.md`, because the area is a fact about
+# this repo and not about the skill.
 #
 # Run this after any change under skills/ and commit the result.
 

@@ -174,7 +174,11 @@ so the finding is still reported and simply stops being offered as fixable.
 `description-first-person` · `description-xml-tags` · `name-reserved-word` ·
 `unknown-field` · `metadata-not-flat` · `body-too-long` · `body-verbose` ·
 `nested-reference` · `duplicate-copy` · `overlap` · `unknown-skill-reference` ·
-`dangling-bundled-path`
+`dangling-bundled-path` · `never-used` · `usage-ledger-young`
+
+`never-used` and `usage-ledger-young` come from the invocation ledger, not from
+the files, and appear only when a ledger is read (`--usage`, or the default
+`~/.claude/skill-usage.jsonl`). See the Unused skills section of SKILL.md.
 
 Fields Claude Code reads but the cross-runtime spec omits (`argument-hint`,
 `disable-model-invocation`, `user-invocable`, `model`) are accepted silently.

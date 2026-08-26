@@ -1,5 +1,15 @@
 # Event Library Reference
 
+## Contents
+
+- Marketing Site Events
+- Product/App Events
+- Monetization Events
+- E-commerce Events
+- B2B / SaaS Specific Events
+- Event Properties (Parameters)
+- Funnel Event Sequences
+
 Comprehensive list of events to track by business type and context.
 
 ## Marketing Site Events

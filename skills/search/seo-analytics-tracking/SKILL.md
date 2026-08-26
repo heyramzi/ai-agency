@@ -1,13 +1,13 @@
 ---
 name: seo-analytics-tracking
-description: When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions "set up tracking," "GA4," "Google Analytics," "conversion tracking," "event tracking," "UTM parameters," "tag manager," "GTM," "analytics implementation," or "tracking plan." For A/B test measurement, see seo-ab-test-setup.
+description: When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions "set up tracking," "GA4," "Google Analytics," "conversion tracking," "event tracking," "UTM parameters," "tag manager," "GTM," "analytics implementation," or "tracking plan." For A/B test measurement, see ab-test-setup.
 metadata:
   version: "1.0.0"
 ---
 
 # Analytics Tracking
 
-Set up tracking that provides actionable insights for marketing and product decisions.
+Set up tracking that provides specific insights for marketing and product decisions.
 
 ## Initial Assessment
 
@@ -81,7 +81,7 @@ checkout_payment_completed
 
 ## GA4 Implementation
 
-**Setup:** create property + data stream → install gtag.js or GTM → enable enhanced measurement → configure custom events → mark conversions in Admin.
+**Setup:** create property + data stream → install gtag.js or GTM → turn on enhanced measurement → configure custom events → mark conversions in Admin.
 
 ```javascript
 gtag("event", "signup_completed", {
@@ -166,10 +166,10 @@ Cookie consent required in EU/UK/CA · no PII in analytics properties · data re
 
 ## Tool Integrations
 
-**GA4** (web analytics, Google ecosystem; MCP ✓) · **Mixpanel** (product analytics) · **Amplitude** (cohort analysis) · **PostHog** (open-source, session replay) · **Segment** (CDP, routing).
+**GA4** (web analytics, Google stack; MCP ✓) · **Mixpanel** (product analytics) · **Amplitude** (cohort analysis) · **PostHog** (open-source, session replay) · **Segment** (CDP, routing).
 
 ## Related Skills
 
-- **seo-ab-test-setup**. experiment tracking
+- **ab-test-setup**. experiment tracking
 - **seo-audit**. organic traffic analysis
 - **landing-page-cro**. conversion optimization (uses this data)

@@ -1,5 +1,15 @@
 # Navigation Patterns
 
+## Contents
+
+- Header Navigation
+- Footer Navigation
+- Sidebar Navigation
+- Breadcrumbs
+- Mobile Navigation
+- Anti-Patterns
+- Navigation for SEO
+
 Detailed navigation patterns for different site types and contexts.
 
 ---

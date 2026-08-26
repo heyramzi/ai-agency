@@ -1,8 +1,8 @@
 ---
 name: seo-audit
-description: Full-site SEO diagnosis AND remediation. Use when the user wants to audit, review, diagnose, or fix SEO issues on their site. Triggers on "SEO audit," "technical SEO," "why am I not ranking," "SEO issues," "on-page SEO," "meta tags review," "SEO health check," "fix my SEO," "optimize my content," or "keyword research." Covers diagnosis (crawl, indexation, on-page, content quality) and execution (keyword strategy, rewrites, checklists, topic clusters). For a single specific URL, use seo-page-audit. For pages at scale, see programmatic-seo. For structured data only, see seo-schema-markup. For 404s and broken links, see seo-broken-links.
+description: "Full-site SEO diagnosis and remediation, covering crawl, indexation, on-page and content quality, then keyword strategy, rewrites and topic clusters. Use on 'SEO audit', 'technical SEO', 'why am I not ranking', 'SEO health check', 'fix my SEO', 'keyword research'. For a single URL use seo-page-audit, for pages at scale programmatic-seo, for structured data seo-schema-markup, for 404s seo-broken-links."
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # SEO Audit
@@ -83,7 +83,7 @@ At scale: `<xhtml:link>` children do not count toward the 50K URL sitemap limit,
 
 **Locale URL structure.** Recommended: subdirectories (`/en/`, `/ar/`). Acceptable: subdomains or ccTLDs. Not recommended: URL parameters (`?lang=en`). All locales prefixed (hiding locale prevents Google from distinguishing versions). Root URL handled as `x-default` with redirect or default-locale content. No IP / Accept-Language content negotiation (Googlebot uses US IPs and no Accept-Language header). Trailing slash and case consistent across locale paths, canonicals, hreflang, and sitemaps.
 
-**Content quality across locales.** AI-translated content is not inherently spam (Google 2025), but scaled low-value translations trigger the scaled content abuse policy. Translate ALL content (title, description, headings, body), not just boilerplate. Helpful content system is site-wide, many thin locale pages can suppress rankings for strong pages too. Do not noindex thin locales (wastes crawl budget) or cross-locale canonical (conflicts with hreflang). Best approach: do not create locale pages you cannot make actually useful.
+**Content quality across locales.** AI-translated content is not by itself spam (Google 2025), but scaled low-value translations trigger the scaled content abuse policy. Translate ALL content (title, description, headings, body), not just boilerplate. Helpful content system is site-wide, many thin locale pages can suppress rankings for strong pages too. Do not noindex thin locales (wastes crawl budget) or cross-locale canonical (conflicts with hreflang). Best approach: do not create locale pages you cannot make actually useful.
 
 ## On-Page SEO
 
@@ -223,11 +223,12 @@ Blog posts: 1,500-2,500 words. Product pages: 300-500 words minimum. Category pa
 ## Tools
 
 **Free:** Google Search Console, PageSpeed Insights, Bing Webmaster Tools, Rich Results Test, Mobile-Friendly Test, Schema Validator.
+**Free full-site crawl:** OpenSEO self-hosted (`github.com/every-app/open-seo`, MIT, `docker compose up -d`). Its MCP `run_site_audit` with `runLighthouse: false` crawls robots.txt and the sitemap and returns typed issues with severity and fix, using no paid data. Its keyword, SERP, backlink and rank tools bill DataForSEO per call, so keep those for questions first-party data cannot answer.
 **Paid:** Screaming Frog, Ahrefs/Semrush, Sitebulb, ContentKing.
 
 ## Related Skills
 
-- **seo-page-audit**. deep dive on a single URL (requires an explicit URL)
+- **seo-page-audit**. detailed analysis of a single URL (requires an explicit URL)
 - **programmatic-seo**. pages at scale
 - **seo-schema-markup**. structured data only
 - **landing-page-cro**. page conversion (not ranking)

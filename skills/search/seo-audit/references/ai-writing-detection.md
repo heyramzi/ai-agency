@@ -1,5 +1,16 @@
 # AI Writing Detection
 
+## Contents
+
+- Em Dashes: The Primary AI Tell
+- Overused Verbs
+- Overused Adjectives
+- Overused Transitions and Connectors
+- Phrases That Signal AI Writing
+- Filler Words and Empty Intensifiers
+- Academic-Specific AI Tells
+- How to Self-Check
+
 Words, phrases, and punctuation patterns commonly associated with AI-generated text. Avoid these to ensure writing sounds natural and human.
 
 Sources: Grammarly (2025), Microsoft 365 Life Hacks (2025), GPTHuman (2025), Walter Writes (2025), Textero (2025), Plagiarism Today (2025), Rolling Stone (2025), MDPI Blog (2025)

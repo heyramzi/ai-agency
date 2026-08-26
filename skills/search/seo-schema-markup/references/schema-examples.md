@@ -1,5 +1,20 @@
 # Schema Markup Examples
 
+## Contents
+
+- Organization
+- WebSite (with SearchAction)
+- Article / BlogPosting
+- Product
+- SoftwareApplication
+- FAQPage
+- HowTo
+- BreadcrumbList
+- LocalBusiness
+- Event
+- Multiple Schema Types
+- Implementation Example (Next.js)
+
 Complete JSON-LD examples for common schema types.
 
 ## Organization

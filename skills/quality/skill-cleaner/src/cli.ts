@@ -4,6 +4,7 @@ import { applyConsolidation, dirtyRepos, planConsolidation } from "./consolidate
 import { adopt, applyFixes } from "./fix.js";
 import { render } from "./report.js";
 import { scan } from "./scan.js";
+import { DEFAULT_LEDGER } from "./usage.js";
 
 const USAGE = `skill-cleaner - audit, consolidate and clean up Agent Skills
 
@@ -18,6 +19,8 @@ Options
   --apply         For \`fix\` and \`consolidate\`: write the changes (default is a dry run)
   --into <repo>   For \`adopt\`: the repository to move the skill into
   --all-runtimes  Also scan ~/.agents, ~/.codex, ~/.opencode and ~/.gemini
+  --usage <path>  Invocation ledger to read (default ~/.claude/skill-usage.jsonl)
+  --no-usage      Do not report unused skills, even with a ledger present
   --plain         No colour (also honours NO_COLOR)
 
 With no roots, scans the current project, ~/.claude/skills and installed
@@ -34,6 +37,8 @@ const CONFIG = {
     apply: { type: "boolean", default: false },
     into: { type: "string" },
     "all-runtimes": { type: "boolean", default: false },
+    usage: { type: "string" },
+    "no-usage": { type: "boolean", default: false },
     plain: { type: "boolean", default: false },
     help: { type: "boolean", short: "h", default: false },
   },
@@ -80,7 +85,10 @@ function main(argv: string[]): number {
     return 2;
   }
 
-  const report = scan(rest, { allRuntimes: values["all-runtimes"] });
+  const report = scan(rest, {
+    allRuntimes: values["all-runtimes"],
+    usage: values["no-usage"] ? undefined : (values.usage ?? DEFAULT_LEDGER),
+  });
   const visible = values.quiet
     ? report.findings.filter((f) => f.severity === "error")
     : report.findings;
