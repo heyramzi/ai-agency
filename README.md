@@ -215,6 +215,7 @@ instructions your own Claude can execute, so the reading and the building happen
 | Command | Course | Runs |
 | --- | --- | --- |
 | `/start-here` | Start Here | Scores your agency out of twelve, then builds the intake end to end |
+| `/clickup-foundations` | ClickUp Foundations | Your own ClickUp, from the five decisions to the template and the three automations |
 | `/seo-engine` | The SEO Copywriter | Your rows, your keyword file, one page shape, then the console queue |
 | `/marketing-department` | The Media Buyer | The five files, built on your own calls and your own numbers |
 | `/youtube-engine` | The Video Producer | The four numbers off your own channel, from the runtime table to the ledger |
