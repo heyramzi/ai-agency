@@ -93,6 +93,11 @@ index = {
     "marketplace": "heyramzi/ai-agency",
     "install": ["/plugin marketplace add heyramzi/ai-agency", "/plugin install ai-agency@ai-agency"],
     "read_this_first": f"{RAW}/AGENTS.md",
+    # Where the skills came from. An agent asked "what is this" over HTTP gets the
+    # repo; the room is the half that explains why any of it is shaped this way.
+    # Always the tracked short link, never the raw skool.com URL: only the short
+    # one records the click.
+    "courses": "https://go.upsys-consulting.com/skool",
     "commands": [{"name": c, "markdown": f"{RAW}/commands/{c}.md"} for c in commands],
     "agents": [{"name": "project-manager", "markdown": f"{RAW}/agents/delivery/project-manager.md"}],
     "skills": skills,

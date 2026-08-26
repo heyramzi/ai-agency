@@ -1,13 +1,20 @@
+<img src="assets/banner.png" alt="ai-agency" width="100%">
+
 # ai-agency
 
-Tools for keeping an agent setup honest, and the kits that run on top of them: SEO,
-and YouTube video production.
+Forty-one agent skills, five slash commands and one agent, for the three parts of an
+agency that repeat every week: search, video production and client delivery. Plus the
+two tools that keep a skills registry from rotting, because everything here has to
+survive being added to.
 
-Agent configuration rots in a specific way: it never fails loudly. A broken skill
-is not reported, it is simply never offered. A duplicated name does not conflict,
-one side just stops existing. Everything here exists to make that class of silent
-failure visible, and to repair the parts of it that have exactly one correct
-answer.
+Everything in it is the working version of something taught in **[AI Agency][skool]**,
+a free Skool room where each classroom teaches one column of an agency. The course is
+the mental model you read. The folder here is the same system your own Claude runs.
+
+[**Join the room**][skool] — it is free, the five built classrooms are open, and the
+commands below run their courses on your own business.
+
+[skool]: https://go.upsys-consulting.com/skool
 
 ## Start here
 
@@ -41,7 +48,7 @@ way.
 ## One folder per role
 
 Skills sit in `skills/<area>/<skill>/`, and the areas are the same twelve the
-[AI Agency](https://www.skool.com/ai-agency-systems-3191) classroom is built from. Each
+[AI Agency](https://go.upsys-consulting.com/skool) classroom is built from. Each
 area is one column of an agency, and the course named beside it teaches a person to run
 that column, so the shelf you read and the folder you install out of say the same thing.
 
@@ -72,7 +79,7 @@ fork is one folder plus one run of the script.
 
 Fourteen skills that take a site from a blank keyword file to published pages
 that rank, plus the read of the scoreboard afterwards. They are the ones behind
-[The SEO Copywriter](https://www.skool.com/ai-agency-systems-3191), and the five
+[The SEO Copywriter](https://go.upsys-consulting.com/skool), and the five
 marked below are the whole workflow in order.
 
 | Skill | Does |
@@ -106,7 +113,7 @@ your own Google account through `gcloud`, and reads only.
 
 Thirteen skills that take a video from the first line of the hook to the posts cut out of
 it afterwards. They are the ones behind [The Video
-Producer](https://www.skool.com/ai-agency-systems-3191), and they run in this order.
+Producer](https://go.upsys-consulting.com/skool), and they run in this order.
 
 | Skill | Does |
 | --- | --- |
@@ -170,7 +177,7 @@ re-running on your own channel before you trust it.
 
 Twelve skills and one agent that run an agency's delivery on ClickUp: intake,
 capacity, approvals and handover. They are the ones behind
-[The Project Manager](https://www.skool.com/ai-agency-systems-3191), and they all
+[The Project Manager](https://go.upsys-consulting.com/skool), and they all
 talk to the same `cu` command line rather than to the API by hand.
 
 | Skill | Does |
@@ -199,10 +206,11 @@ Manager, lesson 2. The skills read as documentation without it, and run with it.
 
 ## The courses, run by the agent
 
-The five classrooms in [AI Agency](https://www.skool.com/ai-agency-systems-3191) are free,
-and each one ships a second copy of itself written for the agent instead of for you. The
-course is the mental model you read. The command is the same system as instructions your
-own Claude can execute, so the reading and the building happen at once.
+The Classroom shelf in [AI Agency](https://go.upsys-consulting.com/skool) is thirteen
+cards, one per column of an agency plus Start Here, and five of them are built. All five
+are free, and each one ships a second copy of itself written for the agent instead of for
+you. The course is the mental model you read. The command is the same system as
+instructions your own Claude can execute, so the reading and the building happen at once.
 
 | Command | Course | Runs |
 | --- | --- | --- |
@@ -216,6 +224,11 @@ Install the plugin and type the command. Each one runs a module a sitting, asks 
 decisions that are yours, stops at the checkpoint, and names the lesson you read next.
 It does not replace the course and it will send you back to it.
 
+Start Here opens the day you join. The other four sit on the room's level ladder and
+open as you post and reply, which is a few days of turning up rather than a payment.
+The eight unbuilt cards are locked above every rung anyone has reached, because an
+empty course that opens is a worse promise than a padlock.
+
 **No terminal?** Every command is one markdown file. Paste this into any Claude and it
 does the same thing:
 
@@ -226,8 +239,14 @@ you have not measured, and every one of them stops when the module ends.
 
 ## The two failure modes
 
-A skills registry decays in two directions at once, and the fixes pull against
-each other. Keeping them as separate skills on separate cadences is the point.
+Agent configuration rots in a specific way: it never fails loudly. A broken skill
+is not reported, it is simply never offered. A duplicated name does not conflict,
+one side just stops existing. The two skills below exist to make that class of
+silent failure visible, and to repair the parts of it that have exactly one
+correct answer.
+
+A registry decays in two directions at once, and the fixes pull against each
+other. Keeping them as separate skills on separate cadences is the point.
 
 | Skill | Direction | Cadence | Use when |
 | --- | --- | --- | --- |
@@ -267,6 +286,7 @@ skills/
       scripts/          executables, committed, no install step
 zips/
   <skill-name>.zip      one zip per skill, for Cowork and claude.ai
+assets/                 the banner above and the social card, generated
 index.json              every skill, command and agent with its raw URL
 ```
 
@@ -291,5 +311,12 @@ node skills/operations/skill-healer/scripts/skill-healer.cjs check skills
 ```
 
 Both exit non-zero when something is wrong, so they drop into CI as-is.
+
+## Where the rest of it is
+
+The classrooms these skills came out of, the builds run in a real workspace one a
+week, and the room where you can ask about your own setup:
+
+**[go.upsys-consulting.com/skool][skool]** — free, and every request is read by hand.
 
 MIT.

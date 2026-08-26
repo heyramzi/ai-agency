@@ -6,6 +6,7 @@
     "/plugin install ai-agency@ai-agency"
   ],
   "read_this_first": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/AGENTS.md",
+  "courses": "https://go.upsys-consulting.com/skool",
   "commands": [
     {
       "name": "marketing-department",
