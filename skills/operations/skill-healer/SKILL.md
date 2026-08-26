@@ -18,7 +18,7 @@ the next session makes the same mistake against the same unchanged file.
 
 ## The loop
 
-Four steps, in order. Step 2 is the one that gets skipped, and skipping it is
+Five steps, in order. Step 2 is the one that gets skipped, and skipping it is
 what turns instruction files into archives nobody trusts.
 
 **1. Find the owning file.** Every fact has exactly one home. Grep for where the
@@ -34,13 +34,22 @@ equally, so the reader has no way to know the later one won.
 
 **3. Write the smallest edit that prevents a repeat.** Patch an existing file
 rather than creating a new one, tighten a sentence rather than adding a
-paragraph. Specific and actionable. "Check dates carefully" teaches nothing.
+paragraph. Specific and specific. "Check dates carefully" teaches nothing.
 "Buffer accepts a 600-character tweet and lets it die at send, so measure before
 scheduling" prevents a repeat.
 
 **4. Read it back.** Re-read the changed section. Confirm the frontmatter still
 parses, the links still resolve, and nothing else in the file now contradicts the
 edit.
+
+**5. Retest in a cleared session.** Reading the edit back proves the file says the
+right thing. It does not prove the file *changes what happens*, because this
+session already knows the lesson and will comply with it whether or not the text
+carries any weight. Run the task again with the context cleared and judge the
+output. Where a full rerun is not worth it, the cheap version is to ask what the
+file alone would produce, without leaning on the conversation. A heal that only
+works in the session that wrote it has not landed. The full loop for this, and
+the risk tiers that decide how hard to hold it, are in `skill-creator`.
 
 ## What counts as a learning
 
@@ -60,9 +69,11 @@ log lives inside the skill, so the next run reads it as instructions.
 Four parts, all required. Three of them heal by accident: the promise with no log
 has nowhere to write, and the log with no closing step is never written to.
 
-1. **Frontmatter** states that the skill appends new failure modes to its own
-   pattern list after each run. It goes in the description because the
-   description is what gets read when deciding whether to load the skill.
+1. **A stated promise** that the skill appends new failure modes to its own
+   pattern list after each run. It goes in the body, not the description: every
+   description in the registry is preloaded into every session, and this
+   sentence tells the runtime nothing about when to pick the skill. Skills that
+   still carry it in the description still pass the check.
 2. **The closing step of the flow** reads: if this run surfaced a failure mode
    not already listed, append it to Learned Patterns with today's date.
 3. **A verification item** confirming new patterns were appended.
@@ -106,7 +117,7 @@ accumulated caveats is not better documented, it is unreadable, and unreadable
 is the same as undocumented.
 
 - An edit should leave the file no longer than it found it, unless the learning
-  is a genuinely new case.
+  is a really new case.
 - A learning that repeats across three or more files becomes one rule, and the
   three copies become pointers to it.
 - An entry that has hardened into how the body describes the work gets folded
@@ -115,6 +126,13 @@ is the same as undocumented.
   sentence absorbs the lesson is a judgment about the work.
 - Past 25 entries the log has become a second body. That is the signal to fold,
   not to raise the number.
+- A log lives in `references/learned-patterns.md`, never in the `SKILL.md`. A
+  body is read in full on every invocation and a log is read on almost none.
+- Past the ceiling the log splits in two rather than growing: one line per entry
+  in `learned-patterns.md`, the entry as its run wrote it in
+  `learned-patterns-archive.md`, and `SKILL.md` links both. `ai-cleaner`'s
+  `split_log.py` does it. The rule is what a session needs before a run; the
+  evidence is for when the rule is argued with.
 
 Detail on retrofitting an existing registry, and the SSOT rules that decide which
 file owns a fact: [references/healing.md](references/healing.md).
@@ -142,14 +160,21 @@ node scripts/skill-healer.cjs log . "what was assumed, what to do instead" --app
 
 - [ ] The owning file was edited, not the conversation
 - [ ] What the learning contradicts was deleted, not left below the new text
-- [ ] The file is no longer than it was, or the learning is a genuinely new case
+- [ ] The file is no longer than it was, or the learning is a really new case
 - [ ] Frontmatter still parses and links still resolve
+- [ ] The heal was retested against a cleared context, not only re-read
 - [ ] New failure modes from this run appended to Learned Patterns
 
 ## Learned Patterns
 
 Appended when a run surfaces something this skill did not already know. Newest first.
 
+- 2026-08-26: `discover` only looked one level under a root, so `check ai-doc/skills` printed "No SKILL.md found" across 191 packaged skills and read as a mistyped path. A registry has more than one layout; walk down until a directory owns a SKILL.md, and stop there so references and vendored children stay out.
+- 2026-08-26: The entry regex matched one date format, so eight logs holding between 8 and 300 entries reported as empty and the 25-entry ceiling never fired on the logs furthest past it. Three formats were in use and none was wrong. Count every shape, keep `raw` so a rebuild does not reformat somebody's log, and write only ISO.
+- 2026-08-26: `log` wrote into the body even when the log had moved to `references/`, which `read` already knew how to follow. A read path and a write path that disagree about where a thing lives will split it across two files in silence.
+- 2026-08-17: Required the self-healing promise in the frontmatter description, which is preloaded into every session for every skill in the registry. Across 20 skills that was about 1,300 characters of text that tells the runtime nothing about when to pick a skill. Scaffold parts that address the session already inside the skill belong in the body; only what drives selection earns a place in the description.
+- 2026-08-17: Reported a fact as having two homes because two paths held it, without resolving either one; the first was a symlink to the second, so the registry was already single-source and the duplication did not exist. Resolve every path with readlink -f before calling anything a duplicate, and note that find -type f hides symlinks while diff and wc follow them.
+- 2026-08-16: A rule was filed under a heading scoped to one repo, so it would only ever be read by sessions taking that path, while two of the three failures it describes came from sessions that never open the file. Check who reads the section, not just which file owns the fact, and place the general form where its audience already loads it.
 - 2026-08-08: A skill can carry all four scaffold parts and still never heal, because the closing step said "consider appending" rather than naming the command. Hedged instructions read as optional and get skipped; the closing step names the exact command to run.
 - 2026-08-08: Retrofitting a description by appending the promise sentence broke a plain YAML scalar whose value already contained `: `, which strict readers then rejected. Preserve the original quoting style when rewriting a frontmatter value, and never introduce a colon-space into an unquoted scalar.
 - 2026-08-08: An append targeting the end of the file landed mid-document on skills where Learned Patterns was not the last section, silently attaching entries to whatever followed. Check that the log is the final section before writing to it, and report it when it is not.

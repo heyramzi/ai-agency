@@ -1,6 +1,6 @@
 ---
 name: seo-ai-seo
-description: "When the user wants to optimize content for AI search engines, get cited by LLMs, or appear in AI-generated answers. Also use when the user mentions 'AI SEO,' 'AEO,' 'GEO,' 'LLMO,' 'answer engine optimization,' 'generative engine optimization,' 'LLM optimization,' 'AI Overviews,' 'optimize for ChatGPT,' 'optimize for Perplexity,' 'AI citations,' 'AI visibility,' 'zero-click search,' 'how do I show up in AI answers,' 'LLM mentions,' or 'optimize for Claude/Gemini.' Use this whenever someone wants their content to be cited or surfaced by AI assistants and AI search engines. For traditional technical and on-page SEO audits, see seo-audit. For structured data implementation, see seo-schema-markup."
+description: "Optimises content to be cited by AI search engines and surfaced in AI-generated answers. Use when the user mentions AI SEO, AEO, GEO, LLMO, answer engine optimization, AI Overviews, AI citations, zero-click search, or optimising for ChatGPT, Perplexity, Claude or Gemini. For traditional technical and on-page audits see seo-audit, for structured data see seo-schema-markup."
 metadata:
   version: 1.2.0
 ---
