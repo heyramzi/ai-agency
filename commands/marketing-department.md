@@ -1,7 +1,7 @@
 ---
 description: Run The Media Buyer with me. Build the five files on my own material.
 ---
-<!-- Generated from REDACTED/marketing-department/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
+<!-- Generated. Edit the course source and re-run the publisher; an edit made here is lost. -->
 
 # The Media Buyer, the agent's copy
 

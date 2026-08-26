@@ -1,7 +1,7 @@
 ---
 description: Run The Project Manager with me. One module a session, on my own delivery board.
 ---
-<!-- Generated from REDACTED/the-project-manager/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
+<!-- Generated. Edit the course source and re-run the publisher; an edit made here is lost. -->
 
 # The Project Manager, the agent's copy
 

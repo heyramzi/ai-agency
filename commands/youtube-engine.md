@@ -1,7 +1,7 @@
 ---
 description: Run The Video Producer with me. Build the 4 numbers off my own channel.
 ---
-<!-- Generated from REDACTED/youtube-engine/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
+<!-- Generated. Edit the course source and re-run the publisher; an edit made here is lost. -->
 
 # The Video Producer, the agent's copy
 
