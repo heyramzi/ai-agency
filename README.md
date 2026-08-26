@@ -22,6 +22,16 @@ keep the rest honest as the registry grows.
 
 Or clone it and point Claude Code at the directory.
 
+**Working through an agent with no terminal?** One fetch answers what is here:
+
+> Read https://raw.githubusercontent.com/heyramzi/ai-agency/main/index.json and tell me which skill fits.
+
+[`index.json`](index.json) is generated beside the zips and carries every skill's
+name, area and description with the raw URL of its `SKILL.md`, plus the five
+commands and the agent. An agent cannot list a directory over HTTP and guessing raw
+URLs off a README table is where a run goes wrong, so they are written out. Point any
+Claude at a `skill_md` URL and it runs that skill without installing anything.
+
 **Not in a terminal?** Claude Cowork and claude.ai take one skill at a time as a
 zip. Every skill here is prebuilt as one in [`zips/`](zips): download the zip you
 want, then go to Customize, Skills, the plus button, Create skill, Upload a
@@ -257,9 +267,10 @@ skills/
       scripts/          executables, committed, no install step
 zips/
   <skill-name>.zip      one zip per skill, for Cowork and claude.ai
+index.json              every skill, command and agent with its raw URL
 ```
 
-`zips/` and the `skills` array in `plugin.json` are both generated. After changing
+`zips/`, `index.json` and the `skills` array in `plugin.json` are all generated. After changing
 anything under `skills/`, run `./scripts/build-zips.sh` and commit what it writes. The
 zip is flat inside, `<skill>/SKILL.md`, because the area is a fact about this repo and
 not about the skill.

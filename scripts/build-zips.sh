@@ -39,11 +39,65 @@ for dir in skills/*/*/; do
 done
 
 python3 - "${paths[@]}" <<'PY'
-import json, sys
+import json, re, sys
+
+paths = sys.argv[1:]
+
 path = ".claude-plugin/plugin.json"
 m = json.load(open(path))
-m["skills"] = sys.argv[1:]
+m["skills"] = paths
 json.dump(m, open(path, "w"), indent=2, ensure_ascii=False)
 open(path, "a").write("\n")
-print(f"\n{len(sys.argv) - 1} skills declared in {path}")
+print(f"\n{len(paths)} skills declared in {path}")
+
+# index.json is the agent's entry point: one fetch answers "what is here, what
+# does each one do, and what URL do I read to run it". An agent with no terminal
+# cannot list a directory tree over HTTP, and guessing raw URLs from a README
+# table is where a run goes wrong, so the URLs are written out rather than
+# implied.
+RAW = "https://raw.githubusercontent.com/heyramzi/ai-agency/main"
+TREE = "https://github.com/heyramzi/ai-agency/tree/main"
+
+def frontmatter(file):
+    text = open(file, encoding="utf-8").read()
+    if not text.startswith("---"):
+        return {}
+    block = text.split("---", 2)[1]
+    out, key = {}, None
+    for line in block.splitlines():
+        hit = re.match(r"^([a-zA-Z_-]+):\s*(.*)$", line)
+        if hit:
+            key, value = hit.group(1), hit.group(2).strip()
+            out[key] = value.strip('"').strip("'")
+        elif key and line.startswith(" "):
+            out[key] = (out[key] + " " + line.strip()).strip()
+    return out
+
+skills = []
+for rel in paths:
+    rel = rel.lstrip("./")
+    area, name = rel.split("/")[1], rel.split("/")[2]
+    fm = frontmatter(f"{rel}/SKILL.md")
+    skills.append({
+        "name": fm.get("name", name),
+        "area": area,
+        "description": fm.get("description", ""),
+        "skill_md": f"{RAW}/{rel}/SKILL.md",
+        "folder": f"{TREE}/{rel}",
+        "zip": f"{RAW}/zips/{name}.zip",
+    })
+
+commands = sorted(f[:-3] for f in __import__("os").listdir("commands") if f.endswith(".md"))
+index = {
+    "repository": "https://github.com/heyramzi/ai-agency",
+    "marketplace": "heyramzi/ai-agency",
+    "install": ["/plugin marketplace add heyramzi/ai-agency", "/plugin install ai-agency@ai-agency"],
+    "read_this_first": f"{RAW}/AGENTS.md",
+    "commands": [{"name": c, "markdown": f"{RAW}/commands/{c}.md"} for c in commands],
+    "agents": [{"name": "project-manager", "markdown": f"{RAW}/agents/delivery/project-manager.md"}],
+    "skills": skills,
+}
+json.dump(index, open("index.json", "w"), indent=2, ensure_ascii=False)
+open("index.json", "a").write("\n")
+print(f"{len(skills)} skills and {len(commands)} commands written to index.json")
 PY
