@@ -14,7 +14,7 @@ Read `clickup-cli` for the `cu` command reference. This skill owns the ruling; t
 ## Run it
 
 ```bash
-S=.claude/skills/clickup-stale-triage/scripts       # from any repo that syncs vibe-kit
+S=.claude/skills/clickup-stale-triage/scripts       # wherever this skill is installed
 python3 $S/scan.py                                  # full report, read-only, ~75s
 python3 $S/scan.py --space MARKETING                # one space
 python3 $S/scan.py --verdict delete                 # one verdict

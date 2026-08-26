@@ -1,7 +1,7 @@
 ---
 description: Run Start Here with me. Score my agency, then build the intake end to end.
 ---
-<!-- Generated from REDACTED/start-here/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
+<!-- Generated. Edit the course source and re-run the publisher; an edit made here is lost. -->
 
 # Start Here, the agent's copy
 

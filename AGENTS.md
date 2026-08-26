@@ -1,7 +1,6 @@
 # AGENTS.md
 
-<!-- vibekit:agents-core:start -->
-<!-- Generated from REDACTED/references/agents-core.md. Edit there, then run: node REDACTED/scripts/sync-agents-core.cjs -->
+<!-- Generated. Edited in the source this repo is projected from, never here. -->
 
 Rules that apply to every prompt. Anything conditional is a skill or a hook, not a line here.
 
@@ -53,5 +52,3 @@ Confirm these four, and nothing else:
 - pushing into a client's live production system
 
 The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
-
-<!-- vibekit:agents-core:end -->

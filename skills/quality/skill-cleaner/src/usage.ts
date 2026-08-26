@@ -10,7 +10,7 @@ import type { Finding, Skill } from "./types.js";
  * rarely-needed one by reading files, because nothing in a SKILL.md records
  * that it ran; the ledger is the only evidence, and this is where it is read.
  *
- * Home: REDACTED/hooks/skill-usage.mjs writes it.
+ * A PostToolUse hook on `Skill` and `Agent` writes it; this only reads it.
  */
 export const DEFAULT_LEDGER = join(homedir(), ".claude", "skill-usage.jsonl");
 

@@ -43,7 +43,7 @@ Access Control Issues, Unprotected Views, Notification Overload, Unused Automati
 
 ## Process
 
-1. **Setup**: get workspace ID, verify consultant seat. Create audit list from template `t-REDACTED/REDACTED` in Audits folder `REDACTED`, named `Audit {Client Name}`. Gather baseline via `cu hierarchy`, `cu members`.
+1. **Setup**: get workspace ID, verify consultant seat. Create the audit list from your own audit template, in your own Audits folder, named `Audit {Client Name}`. Gather baseline via `cu hierarchy`, `cu members`.
 
 2. **Systematic review**: for each issue: task name matching checklist, description with context/examples, one screenshot per issue, specific recommendation (effort vs impact), set topic + priority.
 
@@ -155,5 +155,10 @@ Set custom fields for topic and recommendation:
 
 ## Integration
 
-Template: `https://app.clickup.com/template/subcategory/t-REDACTED/REDACTED`
-Keep the audit template as a list in your own workspace and copy it per engagement.
+**The template is yours to build, and its ID is not written down here.** A ClickUp
+template address is `https://app.clickup.com/template/subcategory/t-<id>/<hash>`, and
+that pair addresses one workspace's own object. This file used to carry a live one,
+which is a private workspace ID published to strangers; it went on 26 Aug 2026.
+
+Build the list once from the checklist above, save it as a template, and keep the
+address in your own `.tasks/config.json` rather than in a skill. Copy it per engagement.

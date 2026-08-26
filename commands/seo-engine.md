@@ -1,7 +1,7 @@
 ---
 description: Run The SEO Copywriter with me. One module a session, on my own site.
 ---
-<!-- Generated from REDACTED/seo-engine/agent.md. Edit there, then run _lib/publish-packs.mjs. -->
+<!-- Generated. Edit the course source and re-run the publisher; an edit made here is lost. -->
 
 # The SEO Copywriter, the agent's copy
 
