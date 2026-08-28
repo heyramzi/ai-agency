@@ -159,7 +159,9 @@ they are before spending the sentence.
 
 For the short window: `references/shorts-playbook.md` for the algorithm and specs. The metric that matters is viewed versus swiped away. **Above 75% is good, below 50% means the hook is broken**, not the video.
 
-For the long window: `references/hook-variants-upstream.md` and `references/retention-scripting-guide.md`.
+For the long window: the four jobs below, then `SKILL.md`'s execution steps. The vendored
+long-form hook writer and its retention guide were removed on 29 Aug 2026 with the rest of the
+vendor files; `mechanisms.md` and `gap-shapes.md` carry what this skill actually uses.
 
 ### The long open has a fifth job the Short does not: make the viewer feel safe
 

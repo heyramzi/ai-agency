@@ -135,3 +135,7 @@ Appended when a run surfaces something this skill did not already know. Newest f
   the reference files and the loading order is the process.
 - A green-screen route back to alpha exists and is worse than drawing the same thing. Reach for it
   only when the subject could not have been drawn.
+
+---
+
+*Author: Serge Shima ([t.me/aimastersme](https://t.me/aimastersme) · [sergeshima.com](https://sergeshima.com) · [aimasters.me](https://aimasters.me)) · License: CC BY 4.0 — attribution required · Source: [smixs/visual-skills](https://github.com/smixs/visual-skills)*
