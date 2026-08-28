@@ -55,7 +55,8 @@ source of truth is your own voice profile, and inside it
 
 ## The emotional register
 
-Pick the lever first, then find the true material that carries it. Full taxonomy in `references/emotional-angles-upstream.md`.
+Pick the lever first, then find the true material that carries it. The table below is the whole
+taxonomy this skill uses; the vendored 454-line version behind it was removed on 29 Aug 2026.
 
 | Lever | The move | Needs to be true |
 | --- | --- | --- |
