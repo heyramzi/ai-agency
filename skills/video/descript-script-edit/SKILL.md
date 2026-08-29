@@ -176,9 +176,10 @@ minutes. Both were cut correctly. Only one of them moves.
 frame two words later is the same frame, which is how an edit reaches 123 cuts and still
 sits still.
 
-`plan` reads five triggers off the surviving script - a run of short clauses, "this is
-what it looks like", a count, the call to action, and a frame that has sat still - and
-prints a shot list: the timecode, the trigger, the line, and the clip if one matched by
+`plan` reads six triggers off the surviving script - a run of short clauses, "this is
+what it looks like", a count, the call to action, and a frame that has sat still, which
+prefers a **jump cut** over a zoom whenever the stretch holds an announcement worth
+ignoring - and prints a shot list: the timecode, the trigger, the line, and the clip if one matched by
 name. A clip named `07 [06-41] Each Video Builds A Space.mp4` binds to the slot within 25
 seconds of its own bracket. Everything else prints as `OPEN`, which is a brief for the
 clip that does not exist yet, not a hole to fill with whatever is nearest.
