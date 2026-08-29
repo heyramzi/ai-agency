@@ -56,11 +56,19 @@ the shot is the answer to something the sentence cannot say on its own.
 | `screen` | "this is what it looks like", "an example of", "let me show you" | the screen recording beside the speaker, and a zoom in at the detail |
 | `motion` | a quantity or a count in the line: "50 plus clients", "three pillars", "tens of" | a graphic full frame, camera in the corner |
 | `cta` | "the link is in the description", "book a call", "it's your decision" | the call-to-action card |
-| `zoom` | nothing fired and the frame has sat still past the gate | the next step of the ladder, on a sentence start |
+| `jumpcut` | a dead stretch holds an announcement of what the next sentence will say, under 3.5s | ignore it. The frame breaks and the video shortens at once |
+| `zoom` | a dead stretch with nothing in it worth cutting | the next step of the ladder, on a sentence start |
 
 The `list` trigger is the one nobody writes by hand. Three short parallel clauses read as
 one sentence and edit as three shots: one measured edit spends four seconds on four of
 them, a clip a clause, and it is the fastest-moving four seconds in the video.
+
+**A dead stretch prefers a jump cut to a zoom.** A zoom breaks the still frame. Ignoring an
+announcement breaks it and takes the words out at the same time, which is the cheaper fix twice
+over. The worst stretch in the measured edit is 29 seconds, and `plan` splits it by ignoring
+"And one last thing," at 6:43 - the same needle a person writes by hand against the same stretch.
+Jump cuts land in a `.phrases.json` beside the shot list, because they belong to the cut rather
+than to the frame.
 
 **The zoom ladder returns to 100 between steps**: `110, 100, 120, 100, 130, 100`. A zoom
 holds until the next card changes it, so two steps in a row read as a slow drift rather

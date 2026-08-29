@@ -40,6 +40,14 @@ COUNT = re.compile(r"\b(\d+\s*(\+|plus)?\s*(agencies|clients|people|hours|days|w
 CTA = re.compile(r"\b(link is (down|in) (the )?description|down description|book a call|"
                  r"see you on the other side|it'?s your (choice|decision))\b", re.I)
 TC = re.compile(r"\[(\d{2})-(\d{2})\]")
+# An announcement of what the next sentence will say. Cutting one inside a dead stretch is a
+# cheaper fix than a zoom, because it buys the jump cut AND takes the words out: the worst
+# stretch measured (29s at 6:31) is split by ignoring "And one last thing," and nothing is lost.
+ANNOUNCE = re.compile(r"^(and |now |so |but )?(one last thing|another thing|the last thing|"
+                      r"what i (wanna|want to|will) (say|tell you|explain)|"
+                      r"here is the thing|here's the thing|let me explain|"
+                      r"before (i|we) (go|move|continue)|the other thing)\b", re.I)
+ANNOUNCE_MAX = 3.5      # seconds; a longer tau is carrying an argument, not announcing one
 
 
 # ---------------------------------------------------------------- the document
@@ -289,17 +297,27 @@ def plan(path, n, out):
     prev = 0.0
     for c in changes + [total]:
         if c - prev > GATE_DEAD:
-            # Four words minimum: a pin resolves on its `from` phrase, and a one-word anchor
-            # matches somewhere else in the take or matches nothing.
-            r = next((x for x in rows if x["start"] >= prev + GATE_DEAD * 0.6
-                      and x["start"] not in taken and len(x["flat"].split()) >= 4), None)
-            if r:
-                slots.append((r["start"], "zoom", r["dur"], r["flat"]))
-                taken.add(r["start"])
+            # Prefer a jump cut. An announcement inside the stretch is words the video does
+            # not need, so ignoring it breaks the still frame and shortens the video at once;
+            # a zoom only breaks the still frame. Fall back to the zoom when there is none.
+            inside = [x for x in rows if prev <= x["start"] < c and x["start"] not in taken]
+            cut = next((x for x in inside
+                        if x["dur"] <= ANNOUNCE_MAX and ANNOUNCE.match(x["flat"])), None)
+            if cut:
+                slots.append((cut["start"], "jumpcut", cut["dur"], cut["flat"]))
+                taken.add(cut["start"])
+            else:
+                # Four words minimum: a pin resolves on its `from` phrase, and a one-word
+                # anchor matches somewhere else in the take or matches nothing.
+                r = next((x for x in inside if x["start"] >= prev + GATE_DEAD * 0.6
+                          and len(x["flat"].split()) >= 4), None)
+                if r:
+                    slots.append((r["start"], "zoom", r["dur"], r["flat"]))
+                    taken.add(r["start"])
         prev = c
     slots.sort()
 
-    pins, ladder, opens = [], LADDER[:], 0
+    pins, phrases, ladder, opens = [], [], LADDER[:], 0
     print("%-8s %-7s %-6s %s" % ("at", "trigger", "media", "line"))
     for start, kind, dur, line in slots:
         covered = any(a <= start < b for a, b in held)
@@ -308,10 +326,16 @@ def plan(path, n, out):
         if seed and abs(seed[0] - start) > 25:
             seed = None
         print("%-8s %-7s %-6s %s%s"
-              % (mmss(start), kind, "zoom" if kind == "zoom" else
+              % (mmss(start), kind, "cut" if kind == "jumpcut" else "zoom" if kind == "zoom" else
                  "yes" if seed else ("held" if covered else "OPEN"),
                  line[:64], "   <- " + seed[1] if seed else ""))
         frm = " ".join(line.split()[:8])
+        if kind == "jumpcut":
+            # A jump cut is a cut-list needle, not a shot: it goes through the cut list and
+            # `dscript apply`, which is a different paste from the shots.
+            phrases.append({"text": line, "pass": 2,
+                            "reason": "announcement; the jump cut that breaks a still frame"})
+            continue
         if kind == "zoom":
             pins.append({"zoom": ladder[0], "from": frm, "why": "the frame sat still"})
             ladder = ladder[1:] + ladder[:1]
@@ -331,15 +355,19 @@ def plan(path, n, out):
             opens += 1
         pins.append(p)
 
-    print("\n%d slots: %d clips bound by name, %d OPEN, %d zoom steps"
+    print("\n%d slots: %d clips bound by name, %d OPEN, %d zoom steps, %d jump cuts"
           % (len(slots), len(pins) - opens - sum(1 for p in pins if "zoom" in p), opens,
-             sum(1 for p in pins if "zoom" in p)))
+             sum(1 for p in pins if "zoom" in p), len(phrases)))
     if full is None:
         print("no clip has ever been placed here, so there is no look to name: drag one onto the "
               "timeline, copy again, and re-run")
     if out:
         json.dump(pins, open(out, "w"), indent=1)
         print("wrote %s - replace every FILL ME with the clip that beat needs" % out)
+        if phrases:
+            side = out.replace(".json", "") + ".phrases.json"
+            json.dump(phrases, open(side, "w"), indent=1)
+            print("wrote %s - the jump cuts, for the cut list" % side)
     return 0
 
 
