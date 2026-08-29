@@ -120,7 +120,7 @@ Producer](https://go.upsys-consulting.com/skool), and they run in this order.
 | [**video-hooks**](skills/video/video-hooks) | ① The opening. Variants by named mechanism, each rated for drop-off risk |
 | [**video-script**](skills/video/video-script) | ② The body. Eight blocks, a beat budget, and one commercial ask at the end |
 | [**video-coach**](skills/video/video-coach) | ③ The take reviewed against its plan, before a single cut, returning one habit to change |
-| [**descript-script-edit**](skills/video/descript-script-edit) | ④ The cut, made by rewriting Descript's rich clipboard rather than by dragging |
+| [**descript-script-edit**](skills/video/descript-script-edit) | ④ The cut, made by rewriting Descript's rich clipboard rather than by dragging, then the rhythm of that cut measured and the shots placed against it |
 | [**youtube-thumbnail**](skills/design/youtube-thumbnail) | ⑤ The frame, designed off a measurement you run yourself |
 | [descript-projects](skills/video/descript-projects) | Footage into Descript, named and foldered so the media browser is the shot list |
 | [dji-sync](skills/video/dji-sync) | The lav take waveform-matched to the camera clip and swapped in losslessly |
@@ -137,6 +137,8 @@ Nothing in it is summoned with a magic phrase either. Describe the job:
 > Here is the raw transcript of the take. Coach me before I cut it.
 
 > Cut this Descript script. I copied it, it is on the clipboard.
+
+> The cut is fine and it still feels long. Where does the frame sit still?
 
 Three of them need more than a terminal. `descript-script-edit` drives the macOS clipboard,
 `motion-broll` and `youtube-ctas` render through [Remotion](https://remotion.dev), and `whiteboard`
