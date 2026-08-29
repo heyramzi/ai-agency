@@ -9,8 +9,7 @@ metadata:
 
 Implement schema.org markup that helps search engines understand content and enables rich results.
 
-## Initial Assessment
-
+## What to establish about the page
 If `.claude/product-marketing-context.md` exists, read first. Only ask for what's not covered.
 
 1. **Page Type** - what kind of page, primary content, what rich results are possible

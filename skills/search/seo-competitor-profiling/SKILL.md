@@ -9,8 +9,7 @@ metadata:
 
 Take a list of competitor URLs and produce structured profile documents combining live site scraping with SEO and market data.
 
-## Initial Assessment
-
+## What to confirm before profiling
 If `.agents/product-marketing-context.md` or `.claude/product-marketing-context.md` exists, read first.
 
 Before profiling, confirm:
