@@ -9,8 +9,7 @@ metadata:
 
 Build pages that rank for competitive search terms, provide genuine value to evaluators, and position your product effectively.
 
-## Initial Assessment
-
+## What to establish about the field
 If `.claude/product-marketing-context.md` exists, read first.
 
 1. **Your product**. core value prop, key differentiators, ICP, pricing, strengths and honest weaknesses

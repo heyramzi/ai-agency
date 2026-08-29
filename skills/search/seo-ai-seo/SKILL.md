@@ -126,8 +126,7 @@ AI agents are becoming buyers. Add `/pricing.md`, `/llms.txt`, and proper schema
 
 **Documentation**. numbered steps, code examples, HowTo schema, screenshots with alt text, prerequisites and outcomes.
 
-## Common Mistakes
-
+## What gets a page left out of an AI answer
 - Ignoring AI search (see AI Overview prevalence above)
 - Treating AI SEO as separate from SEO (good SEO is the foundation)
 - Writing for AI, not humans

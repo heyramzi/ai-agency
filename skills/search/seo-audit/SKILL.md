@@ -9,8 +9,7 @@ metadata:
 
 Two phases: diagnose what is wrong, then fix it. Work through both unless the user asks for diagnosis only.
 
-## Initial Assessment
-
+## What to establish about the site
 If `.claude/product-marketing-context.md` exists, read first. Only ask for what's not covered.
 
 1. **Site context**. type (SaaS, e-commerce, blog), primary SEO goal, priority keywords/topics

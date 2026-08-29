@@ -9,8 +9,7 @@ metadata:
 
 Set up tracking that provides specific insights for marketing and product decisions.
 
-## Initial Assessment
-
+## What to establish before instrumenting
 If `.claude/product-marketing-context.md` exists, read first.
 
 1. **Business context**. what decisions will this data inform? Key conversions? Key actions to track?
@@ -144,7 +143,7 @@ Cookie consent required in EU/UK/CA · no PII in analytics properties · data re
 ```markdown
 # [Site/Product] Tracking Plan
 
-## Overview
+## What each report answers
 - Tools: GA4, GTM
 - Last updated: [Date]
 

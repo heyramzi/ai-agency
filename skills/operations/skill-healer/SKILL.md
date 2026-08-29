@@ -34,7 +34,8 @@ equally, so the reader has no way to know the later one won.
 
 **3. Write the smallest edit that prevents a repeat.** Patch an existing file
 rather than creating a new one, tighten a sentence rather than adding a
-paragraph. Specific and specific. "Check dates carefully" teaches nothing.
+paragraph. The bar the edit has to clear is `skill-floor.md`, owned by the
+`skill-creator` skill; read it when the edit runs to more than a sentence. Specific and specific. "Check dates carefully" teaches nothing.
 "Buffer accepts a 600-character tweet and lets it die at send, so measure before
 scheduling" prevents a repeat.
 

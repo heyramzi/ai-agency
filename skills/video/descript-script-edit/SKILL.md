@@ -1,6 +1,6 @@
 ---
 name: descript-script-edit
-description: "Cuts a Descript composition's script, the false starts, retakes, filler and digressions, by rewriting the rich clipboard the user copies and pastes back. Use when a raw take is full of restarts, when Descript AI credits are exhausted, or when a script needs cutting and the project agent is unavailable. Appends new failure modes to its own pattern list after each run."
+description: "Cuts a Descript composition's script, the false starts, retakes, filler and digressions, by rewriting the rich clipboard the user copies and pastes back, then measures the rhythm of the cut and says where the shots belong. Use when a raw take is full of restarts, when an edit is cut but reads flat or has no b-roll, when a video needs its cut cadence and layouts decided, when Descript AI credits are exhausted, or when the project agent is unavailable. Appends new failure modes to its own pattern list after each run."
 license: MIT
 compatibility: macOS for the clipboard bridge (osascript), Python 3.9+, and a Descript account
 ---
@@ -154,6 +154,39 @@ named is a needle that never landed.
 A single missed needle is a one-line `cuts.json` through the same loop, so there is no
 reason to hand one back.
 
+## Where the shots go: the rhythm decides, not the eye
+
+A cut script is half an edit. The other half is the frame, and a frame that does not
+change is what makes a good script feel long. That half is measurable off the same
+payload, so it does not have to be guessed at by watching the video back.
+
+```bash
+python3 scripts/sequence.py audit ~/.descript-clip/current.json
+python3 scripts/sequence.py plan  ~/.descript-clip/current.json --out shots.json
+```
+
+`audit` exits 1 and names the timecodes when the edit misses any of three: **a state
+change every 7s** median, **20 to 50 per cent of runtime under a full-frame overlay**,
+and **no stretch over 12s where nothing changes**. Measured on two finished edits by the
+same editor: one changes what is on screen every 5.4 seconds and hides the speaker 24 per
+cent of the time, the other holds a single screen recording for nineteen unbroken
+minutes. Both were cut correctly. Only one of them moves.
+
+**A jump cut is not a state change.** Removing a restart makes the speaker jump and the
+frame two words later is the same frame, which is how an edit reaches 123 cuts and still
+sits still.
+
+`plan` reads five triggers off the surviving script - a run of short clauses, "this is
+what it looks like", a count, the call to action, and a frame that has sat still - and
+prints a shot list: the timecode, the trigger, the line, and the clip if one matched by
+name. A clip named `07 [06-41] Each Video Builds A Space.mp4` binds to the slot within 25
+seconds of its own bracket. Everything else prints as `OPEN`, which is a brief for the
+clip that does not exist yet, not a hole to fill with whatever is nearest.
+
+**Read [`references/sequencing.md`](references/sequencing.md) before the shot pass**: the
+two measured edits in full, the trigger table, the zoom ladder and what the gate refuses
+to decide for you.
+
 ## Verify with the API, not the screen
 
 The in-page duration readout is hard to scrape reliably; there are many `M:SS.s` nodes and
@@ -176,6 +209,7 @@ still occupies the timeline. For that, sum the unblocked segment durations, whic
 - [ ] The cut ratio landed in range for a first take
 - [ ] `dscript check` confirms the pasted payload matches what was built
 - [ ] The finished transcript was read as prose, not only grepped for seams
+- [ ] `sequence.py audit` passes, or every stretch it names is explained
 
 ## Closing a run
 
@@ -185,6 +219,9 @@ This skill appends new failure modes to its own pattern list after each run. If 
 
 Appended when a run surfaces something this skill did not already know. Newest first.
 
+- A cut ratio in range says nothing about the frame. One edit hit every cutting target
+  and still held a single screen recording for nineteen unbroken minutes at 9 per cent
+  coverage. Measure the rhythm as well as the words, on the same payload.
 - A clean seam scan is not a clean cut. Seams prove the needles you wrote landed
   correctly; they say nothing about the abandoned attempt nobody listed. Read the
   surviving transcript as prose before calling a run finished.
