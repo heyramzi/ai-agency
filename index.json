@@ -299,7 +299,7 @@
     {
       "name": "descript-script-edit",
       "area": "video",
-      "description": "Cuts a Descript composition's script, the false starts, retakes, filler and digressions, by rewriting the rich clipboard the user copies and pastes back. Use when a raw take is full of restarts, when Descript AI credits are exhausted, or when a script needs cutting and the project agent is unavailable. Appends new failure modes to its own pattern list after each run.",
+      "description": "Cuts a Descript composition's script, the false starts, retakes, filler and digressions, by rewriting the rich clipboard the user copies and pastes back, then measures the rhythm of the cut and says where the shots belong. Use when a raw take is full of restarts, when an edit is cut but reads flat or has no b-roll, when a video needs its cut cadence and layouts decided, when Descript AI credits are exhausted, or when the project agent is unavailable. Appends new failure modes to its own pattern list after each run.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/descript-script-edit/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/descript-script-edit",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/descript-script-edit.zip"
