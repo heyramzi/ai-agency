@@ -1,5 +1,19 @@
 # SvelteKit Blog Infrastructure Setup
 
+## Contents
+
+- Prerequisites
+- Step 1: Install Dependencies
+- Step 2: Configure mdsvex
+- Step 3: Create Content Directory Structure
+- Step 4: Create Blog Types
+- Step 5: Create Blog Loader
+- Step 6: Create Blog Routes
+- Step 7: Add RSS Feed
+- Step 8: Update Sitemap
+- Step 9: Add Prose Styles
+- Checklist
+
 This guide walks through setting up a markdown-based blog on the Seam SvelteKit website.
 
 ## Prerequisites

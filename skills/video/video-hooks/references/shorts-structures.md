@@ -8,7 +8,7 @@
 - Retention structures for the body
 - The Lego Brick decomposition
 - Worked example, annotated
-- A fill-in template
+- Template for a Short in your own register
 
 How a whole Short is built, not just its first line. The hook rules live in
 `../SKILL.md`; this file covers everything between the hook and the CTA.
@@ -17,15 +17,13 @@ How a whole Short is built, not just its first line. The hook rules live in
 
 Source: @kallawaymarketing (Kane Kallaway) on Instagram, scraped 6 Aug 2026:
 30 posts with full captions (his captions mirror his voiceovers almost word for
-word), plus whisper transcripts of its four most-liked reels. The account is also
-subscribed to his "Short Form Growth System" 7-day email series; the emails
-land in the corpus as they arrive. Raw corpus:
-a short-form corpus you transcribe yourself.
+word), plus whisper transcripts of his four most-liked reels, and his
+"Short Form Growth System" 7-day email series as the emails arrive.
 
 Two honesty notes before using any of it:
 
 1. **None of this is control-tested.** Unlike the findings in
-   your own banded evidence, there is no control band
+   `vibe-kit/ai-doc/references/competitor-evidence.md`, there is no control band
    here: these are the stated frameworks of one high-performing account
    (24.5k likes on the top post, ~300 on the median), and likes accumulate with
    age, so the ranking is recency-biased. Treat everything below as a strong
@@ -33,7 +31,7 @@ Two honesty notes before using any of it:
 2. **Import the structures, never the register.** His intensifiers
    ("scientifically impossible to skip", "hypnotize the viewer") are
    unverifiable claims, which the truth rule in `../SKILL.md` bans and
-   a measured voice profile would reject on sight. The skeleton survives the translation into
+   `voice-dna` would reject on sight. The skeleton survives the translation into
    calm, evidenced speech; the hype does not need to.
 
 ## The skeleton every one of his 30 posts uses
@@ -51,6 +49,17 @@ The most striking finding is uniformity: one structure, thirty times.
    recap line something to point at, and it gives the artefact CTA something
    to deliver. A name is not a factual claim, so this move is free under the
    truth rule.
+2b. **The objection sentence, optional and cheap.** Between naming the method and the first step,
+   say the doubt the viewer is already holding, in their words, before they act on it. "You have
+   heard this one before." "This is the part that sounds like it needs a bigger team than you
+   have." It is the only move in [`hook-teardown.md`](hook-teardown.md) that the registry did not
+   already carry, and the reason it earns a place is that it makes the piece more honest rather
+   than less: it concedes something true instead of promising something unfalsifiable.
+   `customer-voice` holds the doubts in verbatim form, so the sentence is quoted rather than
+   invented. **The version to avoid is the one that promises the video's own value** ("you are
+   really gonna want this one"), which is a claim about a thing the viewer cannot check yet and
+   which the truth rule bans.
+
 3. **Numbered steps, three or four.** Each step is one concept plus one
    concrete carrier: a worked example ("if your niche is dentistry, the
    subtopics might be brushing, flossing, cavities"), an analogy ("the big
@@ -79,7 +88,7 @@ His "6 Hook Power Words" (from the 2.2k-like breakdown, transcript
 - **Subject** — who the line is about. **It is always "you".** The stranger test
   pushed it that way; the ego cut of 20 Aug 2026 makes it the only option, because
   a hook whose subject is the speaker is the line the viewer swipes on.
-  "On camera, every I is a you".
+  `humanizer`, "On camera, every I is a you".
 - **Action** — the verb that produced the outcome ("had to grow").
 - **Objective / state change** — the end result ("zero to 100k subs").
 - **Contrast** — end state against base state ("zero to 100k" carries its own
@@ -125,7 +134,12 @@ the next one before attention runs out.**
   Stakes (a character to root for, something at risk, urgency) → Big Question
   (the juicy open question) → Headfake (reveal B where the viewer assumed A)
   → Rehook (restart the loop immediately). Great stories cascade several
-  loops; good ones have one.
+  loops; good ones have one. **He has since taught this at length**, and the
+  tactics for each beat live in `storytelling`,
+  [`references/addiction-loop.md`](../../../../content/writing/storytelling/references/addiction-loop.md):
+  the stakes triad, the big question that has to be specific enough to guess
+  at, the two-step head fake, and the re-hook as a timing rule. Read it before
+  writing a Short whose body is a story rather than a list of steps.
 - **Anticipation Loading** (`DbqLTOdONbR`): dopamine peaks just before a
   reveal, so build tension on top of the open question (examples, proof,
   subplots) without revealing, then reveal and immediately open the next
@@ -152,6 +166,28 @@ order:
 | Script | Story Structure, CTA | The paint: structure, CTA, retention principles |
 | Edit | Visual Layout, Elements | The brush: style, layout, pacing, captions, signature elements |
 
+**He restates the same decomposition as seven categories** on the Open Residency podcast,
+29 Jan 2026 (transcript in the corpus). It is the same object with the edit layer split
+apart, and it is the more usable of the two because every category is something a person
+can be handed:
+
+1. **Topic** — the subject.
+2. **Angle** — what is interesting about it, which is shocking for entertainment and
+   useful for education. `idea-mining` calls this the seed.
+3. **Hook structure** — the three surfaces, per `../SKILL.md`.
+4. **Story structure** — the video type: case study, breakdown, listicle, narrative.
+5. **Visual format** — how the frame is laid out: split screen, full screen, inset circle,
+   POV.
+6. **Key visuals** — what fills that format: A-roll, B-roll, graphics, the proof artefact.
+7. **Audio** — music and sound effects.
+
+**The remix rule in numbers: hold six, change one.** Topic and angle change every time
+anyway; of the five craft bricks, borrow the ones already proven in the niche and invent on
+exactly one. Inventing on several at once is what a beginner does because they cannot yet
+execute any of them, and it is why their first fifty pieces teach nothing: too much moved to
+attribute anything. Once the craft bricks are automatic, the one you invent on is where the
+channel's signature comes from.
+
 Two uses for this decomposition:
 
 1. **Diagnosis vocabulary.** When a Short underperforms, name the brick before
@@ -163,7 +199,7 @@ Two uses for this decomposition:
    in the niche, keep ~8 bricks, swap ~3. Structure is inherited, the swap is
    where the originality goes. This is exactly what this reference enables:
    the skeleton and retention structures are the inherited bricks; topic,
-   substance and proof are yours to swap in, and the substance bricks are where
+   substance and proof are your own swap — and the substance bricks are where
    the truth rule bites (measured numbers, real artefacts).
 
 **One per-video habit worth adopting: the improvement hypothesis.** His
@@ -195,18 +231,17 @@ in the corpus:
 | 9 | "Stakes, big question, head fake, re-hook is all you need." | Recap naming the parts |
 | 10 | "Over 100,000 people have watched this… comment 'storytelling' and I'll send it through." | Reply-trigger CTA, named artefact, social proof |
 
-## A fill-in template
+## Template for a Short in your own register
 
-The same skeleton in our register — calm, evidenced, no hype intensifiers.
-Every `[number]` must come from the proof table in
-your own proof table, or a screen you can show.
+The same skeleton, calm and evidenced, with no hype intensifiers. Every
+`[number]` must come from your proof table or a screen you can show.
 
 ```
 HOOK      This is how [outcome the viewer wants], in [true compressed time].
 NAME      It is called the [Named Method]. [count] steps.
 STEP 1    [Concept]. [Worked example in the viewer's world, not yours.]
 STEP 2    [Concept]. [Example or analogy.]
-~25s FLIP But knowing [part one] is not the point — here's how you actually do it.
+~25s FLIP [Part one] is the easy half. [The specific thing that breaks in part two.]
 STEP 3    [Concept]. [Example, ideally your own measured number, shown on screen.]
 RECAP     [Part], [part], [part]. That's the whole method.
 CTA       Comment "[trigger word]" and I'll send you [named artefact that exists].
@@ -214,3 +249,9 @@ CTA       Comment "[trigger word]" and I'll send you [named artefact that exists
 
 The name must be earned (a real method you use, countable), the flip happens
 once, and the artefact is built before the Short is published.
+
+**The flip carries a fact across the boundary, never an announcement.** The old version of that
+line read "but knowing part one is not the point, here's how you actually do it", which is a
+negation pivot on top of a throat-clearing opener, and deleting the transition leaves nothing
+standing. Name what breaks in part two and the re-hook does its own work.
+[`story-locks.md`](story-locks.md), lock 5, holds the test and the house-legal bank.

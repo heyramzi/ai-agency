@@ -1,13 +1,8 @@
 ---
 name: seo-meta-tags-optimizer
-argument-hint: "<URL or page title to optimize>"
-description: >
-  Rewrite a page's title tag, meta description, Open Graph and Twitter card
-  markup directly in the repo, tuned to SvelteKit sites and wired
-  into the seo-audit family. Use when editing meta tags in website or app
-  code, when a page's SERP snippet or social preview needs fixing at the
-  source, or as the remediation step after seo-audit or seo-page-audit flags
-  weak titles and descriptions.
+argument-hint: "<URL or page title to tune>"
+description: "Rewrites a page title tag, meta description, Open Graph and Twitter card markup directly in the repo, tuned to SvelteKit sites and wired into the seo-audit family. Use when editing meta tags in website or app code, when a SERP snippet or social preview needs fixing at the source, or as the remediation step after seo-audit or seo-page-audit flags weak titles and descriptions."
+tags: [writes, seo, svelte]
 ---
 
 <!-- Adapted from github.com/nowork-studio/toprank (MIT). Copyright (c) 2026 Toprank Contributors. -->
@@ -16,9 +11,11 @@ description: >
 
 ## Data Sources
 
-**With Search Console + an SEO tool (Ahrefs, Semrush, etc.) connected:** automatically pull current meta tags, CTR data by query, competitor title/description patterns, SERP preview data, and impression/click metrics.
+**Free lane first.** Everything this skill needs is free: the live HTML for current tags, and Search Console for CTR, impressions and position by query, through `gsc.py` or OpenSEO `get_search_console_performance`. Competitor title patterns come from reading the SERP. A metered SERP or keyword call is rarely justified here. See the cost policy in `programmatic-seo`.
 
-**With manual data only,** ask for: current title and meta description (if optimizing existing), target primary keyword and 2-3 secondary keywords, page URL and main content/value proposition, competitor URLs or well-performing SERP titles.
+**With Search Console connected:** automatically pull current meta tags, CTR data by query, competitor title/description patterns, SERP preview data, and impression/click metrics.
+
+**With manual data only,** ask for: current title and meta description (if tuning existing), target primary keyword and 2-3 secondary keywords, page URL and main content/value proposition, competitor URLs or well-performing SERP titles.
 
 Note in the output which metrics are from automated collection vs. user-provided data.
 

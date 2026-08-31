@@ -1,6 +1,7 @@
 ---
 name: clickup-data-manager
 description: "Manages ClickUp data programmatically: stale task and view cleanup, demo workspace enrichment, bulk task creation and updates, and doc page name standardisation to 'Company - Type - Date'. Use when running bulk updates, deleting views, or when doc pages have messy names. For interactive CLI work see clickup-cli, for a read-only audit clickup-audit."
+tags: [drives, clickup]
 ---
 
 # ClickUp Data Manager

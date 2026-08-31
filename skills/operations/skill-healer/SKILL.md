@@ -3,6 +3,7 @@ name: skill-healer
 description: "Use when a session teaches you something an instruction file should have known: a correction, a step that turned out to be stale, an approach that beat the documented one, or a failure that cost real time. Also use when a skill keeps repeating a mistake it already made, when setting up a registry so its skills learn from their own runs, or at the end of a session to write down what it taught. Appends new failure modes to its own pattern list after each run."
 license: MIT
 compatibility: Requires Node 20 or later
+tags: [makes, agents]
 ---
 
 # Skill Healer

@@ -56,3 +56,94 @@ what keeps a real client's space name out of a demo frame, which is the blast-ra
 above: the demo workspace's own space name sits in the sidebar and lands in every
 uncropped shot.
 
+## A copied browser profile never reaches a signed-in ClickUp page
+
+Four variants all landed on `app.clickup.com/login` with a valid, unexpired `cu_jwt`: Chrome's
+`Default` profile copied and driven headless, the same copy with the real Keychain
+(`ignoreDefaultArgs: ["--use-mock-keychain"]`), the same copy headed, and a clean profile with all
+71 cookies injected and `navigator.webdriver` masked. Dia's own profile copied and driven by Dia's
+binary over CDP failed identically. **Headed failing the same way rules out headless detection**, so
+ClickUp binds the session to something outside the cookie jar. This does not generalise from Skool,
+which the copy route handles fine.
+
+**A task detail is hide-then-crop, not crop alone.** A task page carries three things a deck does
+not want and cropping cannot remove, because they sit between the parts that matter: the
+`Ask Brain² for a presentation` promo strip, the empty `Add description` band, and the
+`Fields from <type> type` header with its `Create field` button. Hide those three with
+`el.style.display='none'` from `js()` first, then capture, then crop the content pane. The
+virtualised-rows warning above is about list views; a task detail is not virtualised, so hiding is
+safe there. An empty custom field (a `BATCH` row reading `–`) is worth hiding for the same reason.
+Then crop out the black sidebar on the left, the Activity panel on the right and the icon rail at
+the pane's right edge, and stop the frame on the last field rather than on `Add subtask`. Measured
+26 Aug 2026 shooting a freelancer invoice task for the Clic Tempo carousel.
+
+**ego lite reaches a signed-in ClickUp, and it is the first thing to try** (measured 26 Aug 2026,
+capturing the demo billing system). It inherits the live session rather than copying a profile,
+which is the whole reason the copy route above fails and this one does not. Capture with
+`cdp('Emulation.setDeviceMetricsOverride', {deviceScaleFactor: 2})` then
+`cdp('Page.captureScreenshot')`, and write the file with `await import('node:fs')`, because the
+heredoc is an ES module. See the ego lite section of `chrome-devtools`.
+
+The extension is the fallback. When `tabs_context_mcp` answers
+`Failed to query tabs: Tab not found for session ID`, that browser's pairing is stale and **another
+connected one may be fine**: call `list_connected_browsers` and try the next `deviceId` rather than
+concluding the extension is dead.
+
+### The URL forms, and two of them are not what the API id suggests
+
+Getting these wrong costs a whole run, because a wrong form loads a page whose `document.title` is
+the bare string `ClickUp` and looks exactly like a session problem.
+
+| Surface | URL | Loaded title reads |
+| --- | --- | --- |
+| Space or list **view** | `/{team}/v/l/{viewId}` | `<view> \| <space> \| <workspace> (List)` |
+| Space overview | `/{team}/v/o/s/{spaceId}` | `Overview \| <space> \| <workspace> (Overview)` |
+| **Chat channel** | `/{team}/chat/r/{channelId}` | `<channel> \| <workspace>` |
+
+**`/v/li/{viewId}` is the trap.** It is the form most docs and older sessions reach for, and on a
+view created through `POST /space/{id}/view` it renders the sidebar and nothing else, forever. The
+working form is `/v/l/`. **`/v/chat/{channelId}` is the same trap for chat**: it silently redirects
+to `All Tasks` (`/v/l/7-{team}-1`). The chat id is not guessable from the API either, which returns
+only `links.members` and `links.followers`; read a real one off any `<a>` on `/{team}/v/chat`.
+
+Assert on the title before capturing, and allow **20 to 30 seconds** for the SPA to paint. Navigate
+in one `ego-browser` round and capture in the next, or the call is killed at the shell timeout.
+
+## Public clickup.com pages screenshot fine headless
+
+The opposite case. Launch headless Chrome with `--remote-debugging-port`, drive CDP from Node,
+dismiss the OneTrust banner by clicking the button whose text is `ok`, hide every `position: fixed`
+or `sticky` element over 40px tall, then `Page.captureScreenshot` with a `clip` from
+`getBoundingClientRect` and `captureBeyondViewport: true`.
+
+Two mechanics: `/json/new?<url>` followed by `Runtime.evaluate` **hangs**, so create the tab on
+`about:blank` and `Page.navigate`; and a CDP evaluate result sits at `res.result.result.value`, two
+levels deep.
+
+Pricing selectors are CSS-module hashed and were stable on 2026-08-15:
+`.PricingV4CardsContainer_cardsGrid__NLbNu` for the four plan cards,
+`.PricingV4AIPricing_cardsContainer__IdMUU` for the AI cards, and
+`.BrainPricing_cardsContainer__nDUSk` on `/brain/pricing` for the add-ons. Re-probe the DOM rather
+than trusting a hash after a redesign.
+
+**`help.clickup.com` is Cloudflare bot-gated** and answers "Performing security verification" to
+headless, so take help-centre facts from `clickup.com/pricing` or through the extension.
+`clickup.com/ai/pricing` is a 404: the AI prices live on `/pricing` and `/brain/pricing`.
+
+## View URL type codes
+
+Guessing one wastes turns, because a wrong code renders a skeleton plus a
+`VALIDATION_DEFAULT_VIEWS` toast rather than a clean 404.
+
+| View type | Code | Example |
+|---|---|---|
+| table / grid | `gr` | `app.clickup.com/<team>/v/gr/8cbypq9-103975` |
+| list | `li` | |
+| board | `b` | |
+| workload | `wl` | |
+| space overview | `o/s` | `.../v/o/s/90154546093` |
+| folder overview | `o/f` | |
+
+Get the ids from `cu views list --space <id>` (also `--folder`, `--list`) rather than reading them
+off a URL. Safest of all: open the space and click the view tab.
+

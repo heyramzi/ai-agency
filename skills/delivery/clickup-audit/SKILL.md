@@ -1,6 +1,7 @@
 ---
 name: clickup-audit
 description: "Audits a client ClickUp workspace: hierarchy, views, custom fields, permissions, workflows, automations, integration mapping and custom field schema. Use on 'audit this workspace', 'ClickUp audit', 'review workspace', 'workspace health check'. For internal day-to-day work see clickup-ops, for scripted bulk CRUD clickup-data-manager."
+tags: [audits, clickup, client]
 ---
 
 # ClickUp Audit
@@ -25,6 +26,7 @@ Excessive Views, Duplicate Views, Cluttered Views, Underutilized Views, Overcomp
 
 ### Custom Fields
 Field Overload (>15 in a location), Unclear Fields, Unnecessary Fields (duplicate native features), Redundant Information.
+Count the duplicates with `cu fields duplicates`; consolidating them is the `clickup-field-merger` skill.
 
 ### Task Management
 Unassigned Tasks, Overdue Tasks, Missing Time Estimates, Missing Dates, Hidden Time Estimates, Unassigned+Unestimated, High Unassigned Rate, Duplication, Unclear Names, Missing Descriptions, Information Overload, Consolidation Needed, Inconsistent Tagging, Type Confusion, Multi-User Assignment, Multi-Assignee Overuse, Suboptimal Subtasks, Overuse of Subtasks, Cycle time increasing.
@@ -43,7 +45,7 @@ Access Control Issues, Unprotected Views, Notification Overload, Unused Automati
 
 ## Process
 
-1. **Setup**: get workspace ID, verify consultant seat. Create the audit list from your own audit template, in your own Audits folder, named `Audit {Client Name}`. Gather baseline via `cu hierarchy`, `cu members`.
+1. **Setup**: get workspace ID, verify consultant seat. Create audit list from template `t-901505831182/d2a735293041ab88d8` in Audits folder `90152403053`, named `Audit {Client Name}`. Gather baseline via `cu hierarchy`, `cu members`.
 
 2. **Systematic review**: for each issue: task name matching checklist, description with context/examples, one screenshot per issue, specific recommendation (effort vs impact), set topic + priority.
 
@@ -155,10 +157,5 @@ Set custom fields for topic and recommendation:
 
 ## Integration
 
-**The template is yours to build, and its ID is not written down here.** A ClickUp
-template address is `https://app.clickup.com/template/subcategory/t-<id>/<hash>`, and
-that pair addresses one workspace's own object. This file used to carry a live one,
-which is a private workspace ID published to strangers; it went on 26 Aug 2026.
-
-Build the list once from the checklist above, save it as a template, and keep the
-address in your own `.tasks/config.json` rather than in a skill. Copy it per engagement.
+Template: `https://app.clickup.com/template/subcategory/t-901505831182/d2a735293041ab88d8`
+Keep the audit template as a list in your own workspace and copy it per engagement.

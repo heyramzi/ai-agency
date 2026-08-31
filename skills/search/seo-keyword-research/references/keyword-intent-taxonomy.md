@@ -1,5 +1,14 @@
 # Keyword Intent Taxonomy
 
+## Contents
+
+- Overview
+- Primary Intent Types
+- Intent Mapping to Conversion Funnel
+- Mixed Intent Queries
+- SEO-Specific Keyword Intent Examples
+- Applying Intent Taxonomy in Keyword Research
+
 A comprehensive classification system for understanding search intent, mapping keywords to content strategies, and aligning with conversion funnels.
 
 ## Overview

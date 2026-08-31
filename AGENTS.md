@@ -1,5 +1,6 @@
 # AGENTS.md
 
+<!-- vibekit:agents-core:start -->
 <!-- Generated. Edited in the source this repo is projected from, never here. -->
 
 Rules that apply to every prompt. Anything conditional is a skill or a hook, not a line here.
@@ -52,3 +53,11 @@ Confirm these four, and nothing else:
 - pushing into a client's live production system
 
 The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
+
+## 7. The shell a Bash call actually gets
+
+Every Bash call starts a fresh shell at the repo root, and the transcript says so out loud: `Shell cwd was reset to ...` after any call that changed directory. So write absolute paths, or `cd` inside the same call. A `cd` on one line and the work on the next is the commonest wasted call in this workspace: it appeared in five of the six sessions a 2026-08-28 review scored as inefficient.
+
+Three more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
+
+<!-- vibekit:agents-core:end -->

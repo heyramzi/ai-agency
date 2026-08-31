@@ -1,5 +1,13 @@
 # CTR Optimization, Social Tags, and Page-Type Templates
 
+## Contents
+
+- Page-Type Meta Tag Templates
+- Title Tag Formula Patterns
+- Meta Description Copywriting Frameworks
+- CTR Optimization Data
+- Open Graph Best Practices by Platform
+
 Reference tables for click-through rate optimization, Open Graph best practices, meta description copywriting frameworks, and page-type meta tag templates.
 
 ---

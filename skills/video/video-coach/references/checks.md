@@ -11,8 +11,8 @@ the report.
 
 ## Doctrine checks
 
-Source: the `video-script` and `video-hooks` skills, and
-the three-run control in the `video-script` skill.
+Source: the `video-script` and `video-hooks` skills, and a three-run control read off one
+channel that shipped the same argument three ways.
 
 ### D1. One outbound ask, in the last twenty seconds
 
@@ -57,7 +57,7 @@ against its planned `endsOn`.
 
 ### D5. Camera language outside, mechanics inside
 
-`MARKETING.html` section 2. The failure, the stakes and the ask stay in the words
+the doctrine, camera language section. The failure, the stakes and the ask stay in the words
 a founder already uses. Named mechanics are allowed inside the teach blocks, once
 the thing is on screen.
 
@@ -103,14 +103,42 @@ and `firstPersonInOpen`, each hit carrying the sentence to rewrite.
   guaranteed.
 - Quote the worst offender and write the second-person sentence that replaces it.
 
-Source: "On camera, every I is a you". The line behind it: "People
-don't care about me. Every I should be a you."
+Source: `humanizer`, "On camera, every I is a you", and the rule as it was set, 20 Aug 2026:
+"People don't care about me. Every I should be a you."
+### D10. The story gate
+
+The only check in this file that is computed rather than read. `video-script`,
+`scripts/story_metrics.py --grade` returns seven rules over the transcript, in two tiers, each
+carrying the sentence that broke it and its percentile against 627 measured videos.
+
+```bash
+python3 .claude/skills/video-script/scripts/story_metrics.py transcript.txt \
+  --duration <seconds> --grade
+```
+
+- **fail** for every row the script marks FAIL: a banned throat-clearing transition, a re-hook with
+  no fact across the seam, more than three negation pivots, hedging above the corpus p90, a stretch
+  past 831 seconds with no question reopened, or contrast below the corpus p10.
+- A **WARN** row is not a fail. It is inside what the niche does and short of the house target, and
+  it goes under "Also seen" unless it is the one thing.
+- **n/a** on the sentence-shaped rows when the transcript has no punctuation, which the script
+  detects and says. Descript exports are punctuated; a yt-dlp caption track often is not.
+
+**Quote the sentence the script prints, never the count on its own.** The count is the finding and
+the sentence is what gets rewritten.
+
+Source: `video-script`, [`references/measuring.md`](../../video-script/references/measuring.md) for
+the rules and their thresholds, and
+a 627-video corpus for the percentiles they are read against.
+ **None of these axes separated a winner from a control**, so a fail here is a retention
+finding and never a reach one, and the report must say so where it lands.
+
 ---
 
 ## Strategy checks
 
-Source: your own banded competitor research. These are the findings
-that replicated across channels. Each one names its dossier.
+Source: the competitor dossiers. These are the findings that replicated across channels.
+Each one names its dossier.
 
 ### S1. The title names a specific product
 
@@ -154,7 +182,7 @@ $20,000 beat $100,000 by roughly 2x age-adjusted. Matt Gray found it
 independently at 11x on an age framing.
 
 - **fail** if the promise addresses the arrived rather than the aspirant.
-- Source: the three-run control in the `video-script` skill.
+- Source: the three-run control dossier, and one more channel that replicated it.
 
 ### S6. Length is not the variable
 
@@ -211,14 +239,21 @@ the total is printed over the number of lines that were scored.
 | W7 | Word budget (D7) | 3,600-4,200 delivered words | Within 15% of the band | Outside that |
 | W8 | The proof block exists | The artefact doing the thing, two configurations from one input | A screenshot | Nothing |
 | W9 | The honest limit exists | Who this does not fit, said plainly | Hedged | Nothing |
-| W10 | Register | Short declaratives, real nouns, contrast pairs carrying the teach | Mixed with abstraction and vague quantifiers | Benefit-speak throughout |
+| W10 | The story gate (D10) | Zero FAIL rows | One FAIL row, or three or more WARNs | Two or more FAIL rows |
 
 W1 to W7 read their verdict straight off the doctrine checks above, so the score
 cannot disagree with the table underneath it. W1b shares W1's point: half of it is
 the failure, half is the count, so a take that tells the failure well and still opens
 on the speaker scores 0.5 rather than 1. W8 and W9 are structural and are the
-two most often missing. W10 is the only judged line, and your voice profile plus
-the anti-slop pass are what it is judged against.
+two most often missing.
+
+**W10 used to be the one judged line and is now computed.** It read "register: short declaratives,
+real nouns, contrast pairs", which is what `voice-dna` and `humanizer` already own and what two
+reviewers scored two ways. It now reads off D10, which measures the same thing in seven axes with
+the sentence attached. The denominator stays 10, so the ledger's `writingScore` column is still
+comparable across recordings; what changed is that the last line can no longer be argued into a
+different number. Register itself did not stop mattering: it is audited by `humanizer` on the
+finished script, where it belongs, rather than scored twice.
 
 **Do not round the total.** 3.0 and 3.5 are different recordings. Print it as
 `x.x / 10` and put the ten lines in the report so the number can be argued with.

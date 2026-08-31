@@ -7,7 +7,7 @@ Two craft rules that decide whether a script lands. The hook mechanisms in SKILL
 This is the failure that survives every other check, because a line can be
 truthful, inside its word budget, and still be about the wrong person.
 
-The general rule is to write to the reader,
+The general rule lives in the `humanizer` skill, section "Write to the reader,
 never about the writer": count "I", "we", "my", "our" against "you", "your", and
 if the first group wins, rewrite. What follows is the video-specific form, where
 the same failure costs a swipe inside three seconds.
@@ -50,8 +50,8 @@ example carry a teaching beat further than fear does. Close a persuasion piece o
 a command, and a teaching piece on the offer of the artefact.
 
 For the register itself, and for what the speaker actually sounds like out loud, the
-source of truth is your own voice profile, and inside it
-`references/measured.md`, section "Spoken voice". Do not restate it here.
+source of truth is your own voice profile, measured off transcripts of them talking.
+Do not restate it here.
 
 ## The emotional register
 

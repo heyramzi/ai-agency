@@ -39,7 +39,7 @@ VOICEINK = os.path.expanduser(
     "~/Library/Application Support/com.prakashjoshipax.VoiceInk/WhisperModels")
 DEFAULT_MODEL = f"{VOICEINK}/ggml-large-v3-turbo-q5_0.bin"
 DEFAULT_VAD = "/Applications/VoiceInk.app/Contents/Resources/ggml-silero-v5.1.2.bin"
-DEFAULT_VAULT = os.environ.get("NOTES_VAULT", "~/Notes")
+DEFAULT_VAULT = "~/Studio/r-hub/vault"
 
 
 def hms(seconds: float) -> str:

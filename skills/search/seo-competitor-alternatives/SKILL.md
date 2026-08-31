@@ -3,6 +3,7 @@ name: seo-competitor-alternatives
 description: "Builds competitor comparison and alternative pages in four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. Use on 'alternative page', 'vs page', 'competitor comparison', '[Product] vs [Product]', '[Product] alternative'. Run seo-competitor-profiling first for the upstream research."
 metadata:
   version: "1.0.0"
+tags: [writes, seo, copy]
 ---
 
 # Competitor & Alternative Pages

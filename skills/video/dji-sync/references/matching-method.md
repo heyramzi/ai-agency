@@ -33,8 +33,8 @@ the whole file gave 249 words and **none** of the real content, while the same t
 1m00s gave 130 words and all of it.
 
 Given twenty minutes of near-silence, whisper locks into a repeat loop: 38 of the 42 lines it
-returned were the same sentence, and the actual thinking on the take, three separate ideas the
-speaker had worked through out loud, **did not appear once**.
+returned were the same sentence, and the actual thinking on the take, an all-in-one assistant,
+the ClickUp to Sheets user base in D1, a video about a skill cleaner, **did not appear once**.
 The transcript looked plausible and was worthless. Feed it only the spoken parts and all of it
 comes back. Size is the free side effect: 233.7 MB to 168 KB, **1393x**, at 24 kbps mono Opus.
 

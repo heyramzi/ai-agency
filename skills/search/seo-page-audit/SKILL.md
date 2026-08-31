@@ -1,23 +1,17 @@
 ---
 name: seo-page-audit
 argument-hint: "<URL of the page to analyze, e.g. https://example.com/blog/my-post>"
-description: >
-  Single-URL deep-dive SEO audit. Requires an explicit page URL as input. do NOT
-  route here for domain-level or full-site requests, use seo-audit instead.
-  Crawls the live HTML via WebFetch, scores the page across E-E-A-T, Helpful
-  Content, search intent alignment, on-page factors, content depth, and
-  technical signals, then produces a scored report with prioritized fixes.
-  Optionally enriches with GSC data when the user has run the search-console
-  skill first. Trigger on: "analyze this page", "audit this URL", "how is this
-  page doing", "evaluate my blog post", "check this landing page", "page SEO",
-  "content quality check", "is this page good enough", "review this page's
-  SEO", "what's wrong with this page", "how can I improve this page", "page
-  analysis", "single page audit", or "content audit for [URL]".
+description: "Deep-dive SEO audit of one URL, scoring E-E-A-T, Helpful Content, search intent, on-page factors, depth and technical signals into a report with prioritised fixes. Requires an explicit page URL. Use when auditing one specific page, and on 'audit this URL', 'how is this page doing', 'is this page good enough', 'what's wrong with this page'. For domain-level or full-site requests use seo-audit instead."
+tags: [audits, seo]
 ---
 
 <!-- Adapted from github.com/nowork-studio/toprank (MIT). Copyright (c) 2026 Toprank Contributors. -->
 
 # Single-Page SEO Analysis
+
+**One URL, not the site.** `seo-audit` crawls a whole site: indexation, technical, internal
+linking, content quality at scale. This scores one page deeply and is the right call when a
+specific URL underperforms. Running this over a site one URL at a time is the wrong tool.
 
 ## Step 0. Get the Target Page URL
 

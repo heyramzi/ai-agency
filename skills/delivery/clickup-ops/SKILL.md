@@ -1,6 +1,7 @@
 ---
 name: clickup-ops
 description: "Runs day-to-day ClickUp operations for your own workspace through the cu CLI. Use when planning the week, when turning a meeting or call into tasks, when triaging the board, when running batch updates, or on 'plan the week', 'operationalize this meeting', 'team workload'. For client workspace assessment see clickup-audit, for scripted bulk CRUD clickup-data-manager."
+tags: [drives, clickup]
 ---
 
 # ClickUp Ops

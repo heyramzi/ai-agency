@@ -1,7 +1,7 @@
 # The product CTA, and what QuickTime Animation charges for it
 
 `CtaProduct` is the one shape in the kit whose subject is an object rather than an action. There is
-one per sellable system - six of them - and they live in `tools/motion/src/product-ctas/`, not
+one per sellable system - six of them - and they live in `src/product-ctas/`, not
 `glass/`. It stands on `CtaHero`'s pane unchanged -
 radius 102, `40px 100px` padding, 84px statement, 25px indication - because the ask is the same
 weight as the discovery call and drawing it differently would say it was not. Only the left padding
@@ -20,7 +20,7 @@ Three things fall out of that, and none of them is available from an image:
 - **The product signs with its own mark where it has one, and with a considered glyph where it does
   not.** The shipped packshots carried a placeholder rocket and a placeholder grid on the two
   products that *do* have marks, and the decision to replace them outlived the pixels because the
-  pixels were baked. `app/scripts/build-recording-backgrounds.ts` already owns which mark each
+  pixels were baked. The recording-backgrounds builder already owns which mark each
   signs with - the angular AM monogram, the ClickUp symbol - and `product-ctas/marks.tsx` is a
   transcription of its geometry, plus the Claude asterisk. Re-key from there, never the other way
   round. The three products with no mark of their own take a Phosphor glyph from the kit's one icon
@@ -35,7 +35,7 @@ Three things fall out of that, and none of them is available from an image:
   centred there puts its foot and its contact shadow inside YouTube's controls. Only the box moves;
   the pane stays exactly where every other CTA's pane is.
 - **The same component renders the shelf's still**, at packshot scale on transparency, under
-  `pnpm render:product-boxes`. That is the whole reason the still
+  the motion project's `render:product-boxes` script. That is the whole reason the still
   composition exists: the clip and the still cannot show two different objects.
 
 The box overhangs the pane rather than sitting inside it. A product that fits neatly in its

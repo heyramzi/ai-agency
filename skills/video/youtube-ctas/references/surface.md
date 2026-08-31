@@ -29,7 +29,7 @@ whole subtree, so frosting the pane frosts the type inside it. Same lesson as th
 the rim `radius + 1.5`; each call site sets the pane's radius to the radius of the round thing
 inside it **plus the padding around it**. A 53px avatar in 22px of padding gives a 75px pane, not a
 62px one. Two curves that do not share a centre read as a mistake even when nobody can name it,
-and it is the first thing anyone spots on a finished render.
+and it is the first thing anybody spots on a finished render.
 
 It falls out that all three shapes are stadiums, because the concentric radius and half the pane
 height agree once the round element is the tallest child. When they disagree, the round element is
@@ -47,8 +47,9 @@ end the curve reaches `radius` px inward and the last letter has to clear it.
 ## Iconography
 
 **Phosphor, at duotone, from `@phosphor-icons/react`.** The kit used to carry six hand-drawn glyphs
-traced to look like everybody else's, which made it the only surface not on the house icon
-library. Duotone rather than regular or fill: regular disappears at distance on a phone and fill is
+traced to look like everybody else's, which made it the only surface here not on the house icon
+library.
+ Duotone rather than regular or fill: regular disappears at distance on a phone and fill is
 heavy enough to fight the type beside it.
 
 **The ghost layer has to be lifted, and there is no prop for it.** Phosphor writes `opacity="0.2"`
@@ -56,23 +57,25 @@ into the duotone path as a literal, and `duotoneOpacity` is not in `IconProps` o
 a saturated disc the ghost is invisible and the icon reads as the regular weight with extra steps.
 `glass/icons.tsx` injects one rule matching that literal and lifts it to 0.38.
 
-Your own mark stays hand-drawn. It is the mark, not an icon, and no icon set has it.
+The brand mark stays hand-drawn. It is the mark, not an icon, and Phosphor does not have it.
 
 **A glyph on terra is ink, never cream.** Cream on terra measures 3.24:1 and fails at any size;
 DESIGN.md records this. On indigo, cream is 8.4:1.
 
 ## Type
 
-The kit is set in the label face your design system assigns to code and labels, in the
-system, and a CTA pill word is a label: short, uppercase, tracked out. It was previously the system
-stack. Before that these were the only surface not carrying the brand type. Not the body face: that is the
+The kit is set in **Space Grotesk**, which the design system assigns the Code / Label role, and a
+CTA pill word is a label: short, uppercase, tracked out. It was previously the system stack, which
+made these the only surface here not carrying house type.
+ Not Manrope: that is the
 heading face and nothing here is a heading, the 38px end card title included.
 
-The face shows in the lowercase, so the payoff is concentrated on the channel handle (`@yourhandle`,
-46px, tracking -0.9) and the call CTA's sub-label. At 42px caps with +4.2 tracking a pill word is
+The face shows in the lowercase, so the payoff is concentrated on the channel handle (46px,
+tracking -0.9) and the call CTA's sub-label.
+ At 42px caps with +4.2 tracking a pill word is
 nearly face-agnostic, worth knowing before anybody expects a transformation across all eight.
 
-`font.ts` copies the woff2 into `public/fonts/` and holds the render with
+`font.ts` copies the woff2 out of the app's font folder into `public/fonts/` and holds the render with
 `delayRender` until `document.fonts.load` resolves for every weight. Do not swap it for a Google
 Fonts URL: a render is a hundred-odd headless frames, and a slow request means the first few come
 out in the fallback, which exits zero and looks like a mistake nobody made.

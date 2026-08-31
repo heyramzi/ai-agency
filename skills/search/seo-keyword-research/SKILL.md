@@ -1,13 +1,8 @@
 ---
 name: seo-keyword-research
 argument-hint: "<topic, niche, or seed keyword>"
-description: >
-  Discover, analyze, and prioritize keywords for SEO and GEO content strategies.
-  Identifies high-value opportunities based on search volume, competition,
-  intent, and business relevance. Generates topic clusters and content calendars.
-  Use when asked to "find keywords", "keyword research", "what should I write
-  about", "keyword analysis", "find me topics to write", "search volume",
-  "keyword difficulty", "content ideas", or any keyword discovery task.
+description: "Discovers, analyses and prioritises keywords for SEO and GEO content strategies, scoring them on volume, competition, intent and business relevance, then grouping them into topic clusters and a content calendar. Use when asked to find keywords, run keyword research, judge keyword difficulty or search volume, or decide what to write about next."
+tags: [plans, seo]
 ---
 
 <!-- Adapted from github.com/nowork-studio/toprank (MIT). Copyright (c) 2026 Toprank Contributors. -->
@@ -18,7 +13,9 @@ description: >
 
 All integrations are optional; this skill works without any API keys.
 
-**With Search Console + an SEO tool (Ahrefs, Semrush, etc.) connected:** automatically pull historical search volume, keyword difficulty scores, SERP analysis, current Search Console rankings, and competitor keyword overlap.
+**Free lane first.** Search Console rankings, striking-distance queries and SERP reading cost nothing, and they answer most briefs on a site with history. Volume, keyword difficulty and competitor overlap are metered DataForSEO calls: make them only when the recommendation changes on the number. The `programmatic-seo` skill holds the full cost policy and the OpenSEO MCP setup that serves both lanes.
+
+**With Search Console + a metered source (OpenSEO MCP over DataForSEO, or Ahrefs, Semrush) connected:** automatically pull historical search volume, keyword difficulty scores, SERP analysis, current Search Console rankings, and competitor keyword overlap.
 
 **Without tools connected:** ask the clarifying questions in step 1 below and proceed on the answers.
 

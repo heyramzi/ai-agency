@@ -43,7 +43,7 @@
     {
       "name": "generate-social",
       "area": "content",
-      "description": "Writes LinkedIn and X posts from YouTube transcripts, ideas or client stories, holding the structural targets for length and block count and the ban on bait endings. Use when a transcript needs repurposing, when an idea, insight or client story should become posts, or on 'create posts', 'write content'. Appends new failure modes to its own pattern list after each run.",
+      "description": "Writes LinkedIn and X posts from YouTube transcripts, ideas or client stories in the founder's own measured voice, holding the structural targets for length and block count and the ban on bait endings. Use when a transcript needs repurposing, when an idea, insight or client story should become posts, or on 'create posts', 'write content', '/generate-social'.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/content/generate-social/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/content/generate-social",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/generate-social.zip"
@@ -99,7 +99,7 @@
     {
       "name": "clickup-browser",
       "area": "delivery",
-      "description": "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity, and a view's pinned description. Holds `cu net`, which records the web app's private frontdoor calls and replays them from the terminal, and the ego-browser click path for discovering them. Use when a ClickUp job fails with 'no API for this', when templates or automations must be created or changed, when a UI-only flow has to be scripted, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager.",
+      "description": "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-browser/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-browser",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-browser.zip"
@@ -119,6 +119,14 @@
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-data-manager/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-data-manager",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-data-manager.zip"
+    },
+    {
+      "name": "clickup-field-merger",
+      "area": "delivery",
+      "description": "Cleans up redundant ClickUp custom fields: inventories every field in a workspace with its locations, groups the near-twins that differ only by an emoji or a capital, merges each group into one field and carries the task values of the merged-away fields onto the kept one. Use on 'merge custom fields', 'clean up custom fields', 'we have four Department fields', field sprawl found by clickup-audit, or before an integration that needs one field ID per concept.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-field-merger/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-field-merger",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-field-merger.zip"
     },
     {
       "name": "clickup-ops",
@@ -147,7 +155,7 @@
     {
       "name": "youtube-thumbnail",
       "area": "design",
-      "description": "Use when a video needs a thumbnail or a cover, when click-through is low and a frame has to be redesigned, when two variants are needed for a YouTube A/B test, or when a brief has to be written that a designer or an image model can build without re-deciding anything. Also use before commissioning thumbnails, so the evidence pass happens first. Appends new failure modes to its own pattern list after each run.",
+      "description": "Designs YouTube thumbnails for the founder, systems and AI-tooling niche off 270 measured frames, from a template library that grows out of what has already shipped. Ships a build order a designer can execute or a finished render. Use when a video needs a thumbnail or cover, when CTR needs improving, when thumbnails come out inconsistent, or on 'thumbnail', 'YouTube cover', 'thumbnail A/B', 'thumbnail template'.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/design/youtube-thumbnail/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/design/youtube-thumbnail",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/youtube-thumbnail.zip"
@@ -171,7 +179,7 @@
     {
       "name": "programmatic-seo",
       "area": "search",
-      "description": "| Programmatic SEO tools for keyword research and blog article generation. Use when: - Researching keywords for any niche/product - Generating SEO-optimized blog article drafts - Setting up or extending blog infrastructure on Svelte/SvelteKit websites - Analyzing competitor content and search trends - Creating content briefs for programmatic publishing Uses Serper.dev API for real Google data (autocomplete, related searches, PAA).",
+      "description": "The keyword-to-published-page pipeline, run at volume by one person, from Search Console history or from Serper.dev where there is none. Use when deciding what page to write next, when researching keywords for a niche, when judging whether a content cluster is worth entering, when generating article drafts or briefs, or when setting up blog infrastructure on SvelteKit. Holds the data cost policy for every SEO skill.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/programmatic-seo/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/programmatic-seo",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/programmatic-seo.zip"
@@ -179,7 +187,7 @@
     {
       "name": "search-console",
       "area": "search",
-      "description": "Query Google Search Console data for SEO audits, keyword performance, content gaps, and ranking analysis. This skill should be used when the user wants to check search performance, analyze keyword rankings, find content opportunities, compare periods, or audit SEO health using real GSC data. Triggers on \"search console\", \"GSC\", \"check rankings\", \"keyword performance\", \"search impressions\", \"content gaps\", \"what am I ranking for\", \"SEO audit\", \"search traffic\".",
+      "description": "Queries Google Search Console for keyword performance, content gaps, cannibalisation and ranking analysis. Use when checking search performance, when deciding what page to write next, when finding queries that rank with no page behind them, when comparing periods, or on 'GSC', 'check rankings', 'low-hanging fruit', 'what am I ranking for'.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/search-console/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/search-console",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/search-console.zip"
@@ -243,7 +251,7 @@
     {
       "name": "seo-keyword-research",
       "area": "search",
-      "description": "> Discover, analyze, and prioritize keywords for SEO and GEO content strategies. Identifies high-value opportunities based on search volume, competition, intent, and business relevance. Generates topic clusters and content calendars. Use when asked to \"find keywords\", \"keyword research\", \"what should I write about\", \"keyword analysis\", \"find me topics to write\", \"search volume\", \"keyword difficulty\", \"content ideas\", or any keyword discovery task.",
+      "description": "Discovers, analyses and prioritises keywords for SEO and GEO content strategies, scoring them on volume, competition, intent and business relevance, then grouping them into topic clusters and a content calendar. Use when asked to find keywords, run keyword research, judge keyword difficulty or search volume, or decide what to write about next.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-keyword-research/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-keyword-research",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-keyword-research.zip"
@@ -251,7 +259,7 @@
     {
       "name": "seo-meta-tags-optimizer",
       "area": "search",
-      "description": "> Rewrite a page's title tag, meta description, Open Graph and Twitter card markup directly in the repo, tuned to SvelteKit sites and wired into the seo-audit family. Use when editing meta tags in website or app code, when a page's SERP snippet or social preview needs fixing at the source, or as the remediation step after seo-audit or seo-page-audit flags weak titles and descriptions.",
+      "description": "Rewrites a page title tag, meta description, Open Graph and Twitter card markup directly in the repo, tuned to SvelteKit sites and wired into the seo-audit family. Use when editing meta tags in website or app code, when a SERP snippet or social preview needs fixing at the source, or as the remediation step after seo-audit or seo-page-audit flags weak titles and descriptions.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-meta-tags-optimizer/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-meta-tags-optimizer",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-meta-tags-optimizer.zip"
@@ -259,7 +267,7 @@
     {
       "name": "seo-page-audit",
       "area": "search",
-      "description": "> Single-URL deep-dive SEO audit. Requires an explicit page URL as input. do NOT route here for domain-level or full-site requests, use seo-audit instead. Crawls the live HTML via WebFetch, scores the page across E-E-A-T, Helpful Content, search intent alignment, on-page factors, content depth, and technical signals, then produces a scored report with prioritized fixes. Optionally enriches with GSC data when the user has run the search-console skill first. Trigger on: \"analyze this page\", \"audit this URL\", \"how is this page doing\", \"evaluate my blog post\", \"check this landing page\", \"page SEO\", \"content quality check\", \"is this page good enough\", \"review this page's SEO\", \"what's wrong with this page\", \"how can I improve this page\", \"page analysis\", \"single page audit\", or \"content audit for [URL]\".",
+      "description": "Deep-dive SEO audit of one URL, scoring E-E-A-T, Helpful Content, search intent, on-page factors, depth and technical signals into a report with prioritised fixes. Requires an explicit page URL. Use when auditing one specific page, and on 'audit this URL', 'how is this page doing', 'is this page good enough', 'what's wrong with this page'. For domain-level or full-site requests use seo-audit instead.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-page-audit/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-page-audit",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-page-audit.zip"
@@ -283,7 +291,7 @@
     {
       "name": "ai-video-prompting",
       "area": "video",
-      "description": "Appends new failure modes to its own pattern list after each run. Use this skill whenever the user asks to create, improve, audit, or split prompts for AI video generators (Seedance, Kling, Veo, Runway, Luma, Pika, Sora, any image-to-video system). The skill also covers storyboards, shot lists, director treatments, dynamic montage, multi-clip story structure, camera direction, lighting, blocking, pacing, character continuity, dialogue, and sound design. Trigger even when the user says things like \"придумай сцену для видео\", \"разбей на склейки\", \"сделай раскадровку\", \"улучши промпт для Kling\", \"переведи сценарий в промпты\", \"как снять X в AI-видео\", or shares a prompt and asks to fix it.",
+      "description": "Writes, improves, audits and splits prompts for AI video generators (Seedance, Kling, Veo, Runway, Luma, Pika, Sora, any image-to-video system), plus the storyboard, shot list, director treatment, camera direction, lighting, blocking, pacing, character continuity, dialogue and sound design behind them. Use when a scene, a shot breakdown or a storyboard is asked for, when a script has to become prompts, or when a prompt is shared and needs fixing. Also triggers on the same asks in Russian.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/ai-video-prompting/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/ai-video-prompting",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/ai-video-prompting.zip"
@@ -291,7 +299,7 @@
     {
       "name": "descript-projects",
       "area": "video",
-      "description": "Imports, names and folders media in a Descript project, and reorganises a media library that has gone loose. Use when footage or b-roll needs to land in Descript, when a project's media browser is disorganised, or when planning an import so the names come out right the first time. Appends new failure modes to its own pattern list after each run.",
+      "description": "Creates, names, folders and reorders everything in a Descript project from the terminal: projects, imported media, folders in both panels, and compositions. Use when footage or b-roll needs to land in Descript, when a project or a drive is disorganised, when a composition has to be created, duplicated or filed, or when planning an import so the names come out right the first time.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/descript-projects/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/descript-projects",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/descript-projects.zip"
@@ -299,7 +307,7 @@
     {
       "name": "descript-script-edit",
       "area": "video",
-      "description": "Cuts a Descript composition's script, the false starts, retakes, filler and digressions, by rewriting the rich clipboard the user copies and pastes back, then measures the rhythm of the cut and says where the shots belong. Use when a raw take is full of restarts, when an edit is cut but reads flat or has no b-roll, when a video needs its cut cadence and layouts decided, when Descript AI credits are exhausted, or when the project agent is unavailable. Appends new failure modes to its own pattern list after each run.",
+      "description": "Cuts a Descript composition's script - false starts, retakes, filler and digressions - then plans and places the shots on it: the jump-cut rhythm, the layout each beat calls for, and the b-roll, through the rich clipboard the user pastes back. Use when a raw take is full of restarts, when an edit is cut but has no b-roll or reads flat, when a video needs its sequence cuts and layouts decided, when Descript AI credits are exhausted, or when prompt_project_agent is unavailable.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/descript-script-edit/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/descript-script-edit",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/descript-script-edit.zip"
@@ -307,7 +315,7 @@
     {
       "name": "dji-sync",
       "area": "video",
-      "description": "Pulls DJI Mic takes off the transmitter, waveform-matches a reel take to its iPhone clip and swaps in the lav audio losslessly, or cuts and transcribes a solo take into the vault, then archives and wipes the card. Use when a reel was recorded with a DJI lav, when phone audio needs replacing with the lav take, when a rambled voice memo needs transcribing, or when the DJI card needs clearing. Appends new failure modes to its own pattern list after each run.",
+      "description": "Pulls DJI Mic takes off the transmitter, waveform-matches a reel take to its iPhone clip and swaps in the lav audio losslessly, or cuts and transcribes a solo take into the vault, then archives and wipes the card. Use when a reel was recorded with a DJI lav, when phone audio needs replacing with the lav take, when a rambled voice memo needs transcribing, or when the DJI card needs clearing.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/dji-sync/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/dji-sync",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/dji-sync.zip"
@@ -323,7 +331,7 @@
     {
       "name": "shorts-production",
       "area": "video",
-      "description": "Takes a finished short-form recording to a scheduled, coded, filed production record with the export in your media library. Covers reading a recording before deciding anything about it, the pillar code scheme, the rule that exports ship as they are and are never re-encoded, and the calendar write-back. Use when a Short has just been recorded, when a recording needs uploading, or when a Short needs coding and scheduling. Appends new failure modes to its own pattern list after each run.",
+      "description": "Takes a finished short-form recording to a scheduled, coded, attached ClickUp task, with the export on Google Drive. Covers the SCALPM pillar codes, the rule that exports ship as they are and are never re-encoded, and the calendar write-back. Use when a Short has just been recorded, when a recording needs uploading, or when a Short needs coding and scheduling in the Socials calendar.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/shorts-production/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/shorts-production",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/shorts-production.zip"
@@ -331,7 +339,7 @@
     {
       "name": "video-coach",
       "area": "video",
-      "description": "Reviews a recorded long-form take against the plan it was recorded from, before a single cut is made. Reads the script it was recorded from and the raw transcript from Descript, measures what the take actually did, and returns one habit to change on the next recording. Use after a recording lands and before descript-script-edit, when a take felt off and the reason is not obvious, or on 'coach me on this video', 'how did that take go'. Appends new failure modes to its own pattern list after each run.",
+      "description": "Reviews a recorded long-form take against the plan it was recorded from, before a single cut is made. Reads the concept and its script from the app, the raw transcript from Descript, measures what the take actually did, and returns one habit to change on the next recording. Use after a recording lands in Descript and before descript-script-edit, when a take felt off and the reason is not obvious, or on 'coach me on this video', 'how did that take go', '/video-coach'.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/video-coach/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/video-coach",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-coach.zip"
@@ -339,7 +347,7 @@
     {
       "name": "video-hooks",
       "area": "video",
-      "description": "Writes the opening of a video and the full structure of a Short, for both the 1-to-3-second Shorts window and the 30-second long-form open. Generates competing hook variants by named mechanism, rates each for drop-off risk, and holds every factual claim to something measured. Use when writing or fixing a hook, when restructuring a Short script, when a Short is being swiped away, or when a script opens weakly. Appends new failure modes to its own pattern list after each run.",
+      "description": "Writes the opening of a video and the full structure of a Short, for both the 1-to-3-second Shorts window and the 30-second long-form open. Generates competing hook variants by named mechanism, rates each for drop-off risk, and holds every factual claim to something measured. Use when writing or fixing a hook, when restructuring a Short script, when a Short is being swiped away, or when a script opens weakly.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/video-hooks/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/video-hooks",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-hooks.zip"
@@ -347,7 +355,7 @@
     {
       "name": "video-script",
       "area": "video",
-      "description": "Writes the body of a long-form YouTube script: the teach blocks, the demo choreography, the retention beats and the one commercial ask. Holds the measured findings on runtime, the beat budget, ask placement and which promise number to use. Use when a recorded video needs a script, when a long-form script runs long or asks too early, or when a script has to sell a product without turning into a pitch. The opening 30 seconds belong to video-hooks, not here. Appends new failure modes to its own pattern list after each run.",
+      "description": "Writes the body of a long-form YouTube script: the teach blocks, the demo choreography, the retention beats and the one commercial ask. Holds the measured findings on runtime, the beat budget, ask placement and which promise number to use. Use when a recorded video needs a script, when a long-form script runs long or asks too early, or when a script has to sell a product without turning into a pitch. The opening 30 seconds belong to video-hooks, not here.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/video-script/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/video-script",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-script.zip"
@@ -355,7 +363,7 @@
     {
       "name": "whiteboard",
       "area": "video",
-      "description": "Lays out hand-drawn concept boards as code and draws them onto the iPad live over Excalidraw's collaboration protocol, so a diagram arrives already composed and still editable on camera. Use when a video needs a board behind it, when an idea has to become circles, arrows and highlighter rings, when a board needs re-laying out or re-pushing, or when anything needs drawing into an Excalidraw canvas from a laptop. Appends new failure modes to its own pattern list after each run.",
+      "description": "Lays out hand-drawn concept boards as code and draws them onto the iPad live over Excalidraw's collaboration protocol, so a diagram arrives already composed and still editable on camera. Use when a video needs a board behind it, when an idea has to become circles, arrows and highlighter rings, when a board needs re-laying out or re-pushing, or when anything needs drawing into ExcalidrawZ from the Mac.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/whiteboard/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/whiteboard",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/whiteboard.zip"
@@ -363,7 +371,7 @@
     {
       "name": "youtube-ctas",
       "area": "video",
-      "description": "Builds the evergreen 1920x1080 transparent overlays a finished YouTube edit is dressed with, in Remotion: subscribe, like, comment, book-a-call and link-in-the-description pills, the channel lower third, and the end-screen bed. Use when a CTA, a lower third or an end card is needed, when an overlay renders without its alpha channel, when an overlay has to land where YouTube's own clickable elements go, or when adding a clip to the overlay shelf the editor pulls from. Appends new failure modes to its own pattern list after each run.",
+      "description": "Builds the evergreen 1920x1080 transparent overlays a finished YouTube edit is dressed with, in Remotion: subscribe, like, comment, book-a-call and link-in-the-description pills, the channel lower third, and the end-screen bed. Use when a CTA, a lower third or an end card is needed, when an overlay renders without its alpha channel, when an overlay has to land where YouTube's own clickable elements go, or when adding a clip to the Design Assets shelf.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/youtube-ctas/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/youtube-ctas",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/youtube-ctas.zip"

@@ -78,3 +78,14 @@ of itself, and the survivor is a short that opens on the viewer in its first sen
 22.8% at 40, and the eleven added needles are the difference between a script with no stutters and
 a script with nothing spare in it. `scripts/needles.example.json` is that finished list, both
 passes, every needle resolving exactly once.
+
+## Reading the finished transcript for what you never listed
+
+Moved out of SKILL.md on 31 Aug 2026 to hold it under the 250-line ceiling.
+
+A run reporting every needle landed says nothing about the needles you failed to write. Two faults,
+and only one is about seams: glued words mean a needle took both boundary spaces, and
+`[a-z][.,][A-Za-z]` finds those; a surviving restart means the cut list was short, and only the
+transcript read as prose finds that. Run `candidates.py` on the finished export as well, where
+anything beyond the dismissals you already named is a needle that never landed. A missed needle is a
+one-line `fix.json` through the same driver, so never hand one back.

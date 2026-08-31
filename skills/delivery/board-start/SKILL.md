@@ -3,6 +3,7 @@ name: board-start
 description: Pick up a ClickUp task and do the work. Moves it to In Progress, implements in an isolated worktree with tests, opens a PR whose branch/title carry the CU- id, self-reviews, then moves the task to In Review. Use when starting work on a board task by ID, when /board-start is invoked, or when a Ready task should be taken through implementation to In Review.
 argument-hint: <task-id> [base-branch]
 allowed-tools: Bash, Read, Edit, Write, Grep, Glob, Agent, Skill
+tags: [makes, clickup, code]
 ---
 
 # /board-start
@@ -74,13 +75,13 @@ git worktree add -b CU-<task-id>_<short-slug> ../<repo>-CU-<task-id> origin/<int
 
 **The branch name must contain the `CU-` task id** so ClickUp links the branch to the task automatically. Derive `<short-slug>` from the task name (kebab-case). All edits, commands, and tests run inside that worktree.
 
-**Put it beside the repo, not in a scratch directory.** A build that reaches a sibling path (`../../<shared-packages>/swift`, which native projects routinely do) resolves to nothing from `/tmp`, and the failure names a missing package rather than a wrong directory. `../<repo>-CU-<id>` keeps the relative depth the repo had.
+**Put it beside the repo, not in a scratch directory.** A build that reaches a sibling path (`../../vibe-kit/swift` in every Studio native project) resolves to nothing from `/tmp`, and the failure names a missing package rather than a wrong directory. `../<repo>-CU-<id>` keeps the relative depth the repo had.
 
 **The worktree is not private.** Another session's tooling can write into it: a dependency bump landed in `pnpm-lock.yaml` and `package.json` here mid-run, from nothing this session did. Never `git add -A` or `git commit -a`. Name the files at step 7 and leave the rest in the working tree rather than reverting them, which would be repairing somebody else's work to tidy your own diff.
 
 ### 5. Implement the fix
 
-- Read the project's `CLAUDE.md` and any path-scoped `.claude/rules/` for files you touch. Follow them.
+- Read the project's `CLAUDE.md` and any path-scoped `.claude/references/` for files you touch. Follow them.
 - Make the **smallest change that satisfies the AC**. No speculative refactors or adjacent cleanup.
 - Where testable, add or adjust a test that fails before and passes after. Prefer `superpowers:test-driven-development`. For UI-only changes, note that manual verification is required.
 

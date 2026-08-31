@@ -3,6 +3,7 @@ name: seo-competitor-profiling
 description: "Researches competitors from a list of URLs and writes structured competitor profile markdown files. Use on 'competitor research', 'competitor analysis', 'profile this competitor', 'competitive intelligence', 'competitor dossier', 'who are my competitors'. For comparison pages built from the profiles see seo-competitor-alternatives, for sales battle cards sales-enablement."
 metadata:
   version: 1.0.0
+tags: [plans, seo]
 ---
 
 # Competitor Profiling

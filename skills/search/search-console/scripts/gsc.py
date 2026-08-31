@@ -18,9 +18,12 @@ Usage:
 """
 
 import argparse
+import io
 import json
+import re
 import subprocess
 import sys
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta
 
@@ -78,18 +81,24 @@ def api_get(path, token):
         sys.exit(1)
 
 
-def api_post(path, token, data):
-    """POST request to Search Console API."""
+def api_post(path, token, data, exit_on_error=True):
+    """POST request to Search Console API.
+
+    `exit_on_error=False` raises instead, which the bulk inspector needs so it
+    can back off on a 429 rather than kill the whole run.
+    """
     url = f"{API_BASE}{path}"
     payload = json.dumps(data).encode()
     headers = _headers(token)
     headers["Content-Type"] = "application/json"
     req = urllib.request.Request(url, data=payload, method="POST", headers=headers)
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=60) as resp:
             return json.loads(resp.read())
     except urllib.error.HTTPError as e:
         body = e.read().decode()
+        if not exit_on_error:
+            raise RuntimeError(f"{e.code}: {body[:300]}")
         print(f"API Error {e.code}: {body}", file=sys.stderr)
         sys.exit(1)
 
@@ -352,6 +361,208 @@ def cmd_gaps(args):
     print(f"\n{len(gaps)} gap opportunities found.")
 
 
+STOPWORDS = {"the", "a", "an", "for", "to", "of", "in", "on", "and", "or", "is", "it",
+             "my", "your", "with", "how", "what", "do", "does", "i", "can", "app", "apps",
+             "which", "has", "have", "are", "that", "this", "there", "when", "where",
+             "why", "who", "any", "be", "will", "should"}
+
+
+def _tokens(text):
+    """Lowercase word tokens, stopwords removed."""
+    return [t for t in re.split(r"[^a-z0-9]+", text.lower()) if t and t not in STOPWORDS]
+
+
+def _slug_tokens(page_url):
+    """Tokens from a page URL's host and path, used as the 'what this page targets' set."""
+    parsed = urllib.parse.urlparse(page_url)
+    return set(_tokens(parsed.netloc + " " + parsed.path))
+
+
+def _potential_clicks(impressions, position):
+    """Clicks the query would earn at the average CTR for its position."""
+    return int(impressions * max(0.30 - (position - 1) * 0.03, 0.01))
+
+
+def aggregate_query_pages(args, min_impressions):
+    """Pull query,page rows and fold them into one record per query.
+
+    Returns a list of dicts: query, impressions, clicks, ctr, pages (impression-sorted
+    list of (url, impressions, position)), and coverage (share of the query's tokens
+    that appear in the top page's URL).
+    """
+    token = get_access_token()
+    body, start, end = build_query_body(args, dimensions=["query", "page"], row_limit=5000)
+    site = encode_site(args.site_url)
+    data = api_post(f"/webmasters/v3/sites/{site}/searchAnalytics/query", token, body)
+
+    by_query = {}
+    for row in data.get("rows", []):
+        query, page = row["keys"]
+        rec = by_query.setdefault(query, {"query": query, "impressions": 0, "clicks": 0, "pages": {}})
+        rec["impressions"] += row["impressions"]
+        rec["clicks"] += row["clicks"]
+        seen = rec["pages"].setdefault(page, {"impressions": 0, "position": row["position"]})
+        seen["impressions"] += row["impressions"]
+        seen["position"] = min(seen["position"], row["position"])
+
+    results = []
+    for rec in by_query.values():
+        if rec["impressions"] < min_impressions:
+            continue
+        pages = sorted(((url, p["impressions"], p["position"]) for url, p in rec["pages"].items()),
+                       key=lambda p: -p[1])
+        slug = _slug_tokens(pages[0][0])
+        qt = _tokens(rec["query"])
+        # A query token counts as covered when it appears inside a URL token, which lets
+        # "seam" match the host "getseam" but keeps "macnotch" from matching "mac".
+        hits = sum(1 for t in qt if any(t in s for s in slug))
+        rec["pages"] = pages
+        rec["position"] = pages[0][2]
+        rec["ctr"] = rec["clicks"] / rec["impressions"]
+        rec["coverage"] = hits / len(qt) if qt else 1.0
+        results.append(rec)
+    return results, start, end
+
+
+def cmd_orphans(args):
+    """Queries the site ranks for with no page that targets them.
+
+    The low-hanging-fruit method: Google already associates the domain with the query
+    but the page collecting the impressions is about something else. Each row is a
+    candidate for one dedicated page.
+    """
+    results, start, end = aggregate_query_pages(args, args.min_impressions)
+    orphans = [r for r in results
+               if r["coverage"] < args.max_coverage and r["position"] <= args.max_position]
+    orphans.sort(key=lambda r: -r["impressions"])
+    orphans = orphans[:args.limit]
+
+    print(f"Query gaps: {start} to {end}")
+    print(f"Criteria: impressions >= {args.min_impressions}, URL coverage < "
+          f"{args.max_coverage:.0%}, position <= {args.max_position}\n")
+
+    headers = ["Query", "Impressions", "Clicks", "CTR", "Position", "Cover", "Potential", "Ranking page"]
+    table_rows = [[
+        r["query"], str(int(r["impressions"])), str(int(r["clicks"])), f"{r['ctr']:.1%}",
+        f"{r['position']:.1f}", f"{r['coverage']:.0%}",
+        str(_potential_clicks(r["impressions"], min(r["position"], 3))),
+        urllib.parse.urlparse(r["pages"][0][0]).path or "/",
+    ] for r in orphans]
+    format_table(headers, table_rows,
+                 ["left", "right", "right", "right", "right", "right", "right", "left"])
+    print(f"\n{len(orphans)} queries ranking without a page that targets them.")
+    print("Validate volume and intent before writing. A gap with no demand is not an opportunity.")
+
+
+def cmd_cannibals(args):
+    """Queries where two or more of the site's own pages split the impressions."""
+    results, start, end = aggregate_query_pages(args, args.min_impressions)
+    splits = []
+    for r in results:
+        competing = [p for p in r["pages"] if p[1] >= args.min_share * r["impressions"]]
+        if len(competing) > 1:
+            r["competing"] = competing
+            splits.append(r)
+    splits.sort(key=lambda r: -r["impressions"])
+    splits = splits[:args.limit]
+
+    print(f"Cannibalisation: {start} to {end}")
+    print(f"Criteria: impressions >= {args.min_impressions}, "
+          f"each page holding >= {args.min_share:.0%} of them\n")
+
+    for r in splits:
+        print(f"{r['query']}  ({int(r['impressions'])} impressions, "
+              f"position {r['position']:.1f}, CTR {r['ctr']:.1%})")
+        for url, imps, pos in r["competing"]:
+            path = urllib.parse.urlparse(url).path or "/"
+            print(f"    {int(imps):>7} imp  pos {pos:>4.1f}  {path}")
+        print()
+    print(f"{len(splits)} queries split across more than one page.")
+    print("Fix by splitting the intents apart or by merging the weaker page into the stronger.")
+
+
+def _inspect_one(args_tuple):
+    """Inspect one URL. Returns (url, indexStatusResult dict or {'error': ...})."""
+    import time
+    token, site_url, url = args_tuple
+    body = {"inspectionUrl": url, "siteUrl": site_url, "languageCode": "en-US"}
+    for attempt in range(4):
+        try:
+            data = api_post("/v1/urlInspection/index:inspect", token, body, exit_on_error=False)
+            return url, data.get("inspectionResult", {}).get("indexStatusResult", {})
+        except RuntimeError as e:
+            if ("429" in str(e) or "503" in str(e)) and attempt < 3:
+                time.sleep(2 ** attempt)
+                continue
+            return url, {"error": str(e)[:200]}
+    return url, {"error": "retries exhausted"}
+
+
+def cmd_inspect(args):
+    """Bulk URL Inspection: Google's real per-URL index verdict.
+
+    WHY this exists: the index coverage report's per-reason URL lists are
+    UI-only, the API will not hand them over. URL Inspection will, one URL at a
+    time, and that is enough to rebuild the report if you bring your own list.
+    Build the list from the sitemap plus the `page` dimension of search
+    analytics, which together cover everything Google has shown for the site.
+
+    Quota is 2000 inspections per property per day, 600 per minute.
+    """
+    import json as _json
+    from concurrent.futures import ThreadPoolExecutor
+
+    token = get_access_token()
+    urls = []
+    if args.urls_file == "-":
+        urls = [l.strip() for l in sys.stdin if l.strip()]
+    else:
+        raw = io.open(args.urls_file, encoding="utf-8").read().strip()
+        if raw.startswith("["):
+            urls = _json.loads(raw)
+        else:
+            urls = [l.strip() for l in raw.splitlines() if l.strip()]
+
+    cache = {}
+    if args.out:
+        try:
+            cache = _json.load(io.open(args.out, encoding="utf-8"))
+        except Exception:
+            cache = {}
+
+    todo = [u for u in urls if u not in cache]
+    print(f"{len(todo)} to inspect ({len(cache)} cached)", file=sys.stderr)
+
+    done = 0
+    with ThreadPoolExecutor(max_workers=args.workers) as ex:
+        jobs = [(token, args.site_url, u) for u in todo]
+        for url, result in ex.map(_inspect_one, jobs):
+            cache[url] = result
+            done += 1
+            if args.out and done % 40 == 0:
+                print(f"  {done}/{len(todo)}", file=sys.stderr)
+                _json.dump(cache, io.open(args.out, "w", encoding="utf-8"), indent=1)
+    if args.out:
+        _json.dump(cache, io.open(args.out, "w", encoding="utf-8"), indent=1)
+
+    groups = {}
+    for url, r in cache.items():
+        groups.setdefault(r.get("coverageState", r.get("error", "?")), []).append((url, r))
+
+    print(f"\nInspected {len(cache)} URLs on {args.site_url}\n")
+    rows = [(state, str(len(items))) for state, items in
+            sorted(groups.items(), key=lambda kv: -len(kv[1]))]
+    format_table(["Coverage state", "URLs"], rows, ["left", "right"])
+
+    if args.state:
+        wanted = [s for s in groups if args.state.lower() in s.lower()]
+        for state in wanted:
+            print(f"\n=== {state} ({len(groups[state])}) ===")
+            for url, r in sorted(groups[state]):
+                crawled = (r.get("lastCrawlTime") or "never")[:10]
+                print(f"  [last crawl {crawled}] {url}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Google Search Console CLI")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -394,6 +605,29 @@ def main():
     gp.add_argument("--max-ctr", type=float, default=0.03, help="Maximum CTR threshold (default: 0.03)")
     gp.add_argument("--max-position", type=float, default=20, help="Maximum position (default: 20)")
 
+    # orphans
+    orp = sub.add_parser("orphans", help="Queries ranking with no page that targets them")
+    add_common_args(orp, default_limit=30)
+    orp.add_argument("--min-impressions", type=int, default=100, help="Minimum impressions (default: 100)")
+    orp.add_argument("--max-coverage", type=float, default=0.5,
+                     help="Max share of query tokens present in the ranking page's URL (default: 0.5)")
+    orp.add_argument("--max-position", type=float, default=30, help="Maximum position (default: 30)")
+
+    # cannibals
+    can = sub.add_parser("cannibals", help="Queries split across two or more of your own pages")
+    add_common_args(can, default_limit=20)
+    can.add_argument("--min-impressions", type=int, default=100, help="Minimum impressions (default: 100)")
+    can.add_argument("--min-share", type=float, default=0.15,
+                     help="Impression share a page needs to count as competing (default: 0.15)")
+
+    # inspect
+    ins = sub.add_parser("inspect", help="Bulk URL Inspection: Google's per-URL index verdict")
+    ins.add_argument("site_url", help="Property (e.g., sc-domain:example.com)")
+    ins.add_argument("urls_file", help="File of URLs (JSON array or one per line), or - for stdin")
+    ins.add_argument("--out", help="JSON cache file; resumes and skips URLs already inspected")
+    ins.add_argument("--workers", type=int, default=8, help="Concurrent inspections (default: 8)")
+    ins.add_argument("--state", help="Print the URL list for coverage states matching this string")
+
     args = parser.parse_args()
 
     commands = {
@@ -403,6 +637,9 @@ def main():
         "top-pages": cmd_top_pages,
         "compare": cmd_compare,
         "gaps": cmd_gaps,
+        "orphans": cmd_orphans,
+        "cannibals": cmd_cannibals,
+        "inspect": cmd_inspect,
     }
     commands[args.command](args)
 

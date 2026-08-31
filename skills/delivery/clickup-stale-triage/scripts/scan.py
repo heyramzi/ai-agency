@@ -195,11 +195,10 @@ def is_empty(t):
 
     assignees, time_estimate, points and start_date are deliberately NOT substance.
     A task template stamps all four on every subtask it creates, so counting them
-    splits identical sibling shells: on 17 Aug 2026 three of four onboarding shells
-    off one client template were flagged and the fourth spared, only because that
-    one carried the template's default 3h estimate; 30 of a blog list's "Validate
-    copy" shells hid in the review bucket only because the template named an
-    assignee.
+    splits identical sibling shells: on 17 Aug 2026 three of the four Bachgold
+    onboarding shells were flagged and the fourth spared, only because that one
+    carried the template's default 3h estimate; 30 of the Blog's "Validate copy"
+    shells hid in the review bucket only because the template named an assignee.
     An assignee with no due date and no description after 90 days is a nomination,
     not ownership. The `revive` verdict is what catches real ownership, and it
     requires an assignee AND a due date.

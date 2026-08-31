@@ -3,6 +3,7 @@ name: board-spec
 description: Turn a raw Open ClickUp task into a build-ready PRD. Investigates the codebase, writes problem/goals/acceptance criteria into the task description, then moves it to Ready for /board-start. Use when an Open board task lacks a spec, when /board-spec is invoked, or when a task needs acceptance criteria written before implementation starts.
 argument-hint: <task-id>
 allowed-tools: Bash, Read, Grep, Glob, Agent
+tags: [writes, clickup, code]
 ---
 
 # /board-spec
