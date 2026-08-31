@@ -1,6 +1,7 @@
 ---
 name: seo-broken-links
 description: "Finds broken links on a site (404s and 5xx), checks redirect chains and audits internal and external link health, returning a prioritised list with source pages. Use when hunting broken or dead links or auditing redirects. Triggers on \"broken links,\" \"link checker,\" \"404 audit,\" \"check links,\" \"find dead links,\" \"redirect chain audit.\" For broader SEO diagnostics see seo-audit."
+tags: [audits, seo]
 ---
 
 # SEO Broken Links

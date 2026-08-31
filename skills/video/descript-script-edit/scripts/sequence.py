@@ -1,36 +1,35 @@
 #!/usr/bin/env python3
 """The rhythm of an edit: how often it cuts, how often the frame changes, how much is covered.
 
-WHY THIS EXISTS: cutting a script is half an edit. The other half is the rhythm - how often the
-frame changes, how much of the runtime hides the speaker behind something - and that half is
-usually decided by watching the video and guessing. It is measurable off the same payload, so it
-is measured here: `audit` reads the rhythm a cut already has, `plan` says where the next state
-change belongs and which shot the line calls for.
+WHY THIS EXISTS: `pins.py` places a clip and `layout apply` stamps a look, but nothing decided
+WHERE either belongs, so the cut half of the edit was automated and the shot half stayed manual.
+This reads the rhythm off a finished edit (`audit`) and proposes the next one from the surviving
+script (`plan`), in the pins.json shape `pins.py` already consumes.
 
 THE CLOCK IS SPEED-ADJUSTED. `audioSegment.duration` is source time; a tau played at speed 1.05
-occupies duration/1.05 on the timeline. One measured 7:34 lesson sums to 476.83s raw
-and 454.54s adjusted, and 454.54 is what the API reports as the composition duration. Every second
-printed here is the adjusted one.
+occupies duration/1.05 on the timeline. ES02 sums to 476.83s raw and 454.54s adjusted, and 454.54
+is what `get_project` reports. Every second printed here is the adjusted one.
 
-IT READS THE PAYLOAD `dscript grab` ALREADY WROTE. The taus, the layout cards and the pinned
-clips all live in it, under `data[0]` as `copiedTaus`, `copiedComponents` and `pinTracks`. A
-project document exported some other way works too, under `compositions[].timeline`.
+BOTH HOMES OF THE SAME SHAPES. A `doc.json` from the CLI keeps them under
+`compositions[].timeline`; the clipboard payload `dscript grab` writes keeps the identical
+structures under `data[0]` as `copiedTaus`, `copiedComponents` and `pinTracks`. Either one works,
+so the rhythm can be read without a second tool in the loop.
 
-    sequence.py audit ~/.descript-clip/current.json          what rhythm this edit actually has
-    sequence.py plan  ~/.descript-clip/current.json [--out shots.json]
+    sequence.py audit <doc.json|grab.json> [--comp N]        what rhythm this edit actually has
+    sequence.py plan  <doc.json|grab.json> [--comp N] [--out pins.json]
 """
 import json, re, sys
 
-# The gate, measured on two finished edits. references/sequencing.md carries both tables.
+# The gate, measured on two finished edits. references/sequencing.md carries the table.
 GATE_DEAD = 12.0        # seconds the frame may sit unchanged
 GATE_MEDIAN = 7.0       # median seconds between state changes
 GATE_COVER = (0.20, 0.50)   # share of runtime under a visual overlay
 
 LIST_MAX = 2.6          # a clause this short, three in a row, is a micro-cut run
-# The measured zoom ladder, and it returns to 100 between steps: a zoom card has no closing
+# The zoom ladder ES02 uses, and it returns to 100 between steps: a zoom pin has no closing
 # card, so it holds until the next one and two steps in a row read as a drift, not a cut.
 LADDER = [110, 100, 120, 100, 130, 100]
-SPAN = 5.0              # a b-roll insert runs about this long; the measured median is 4.7s
+SPAN = 5.0              # a b-roll insert runs about this long; ES02's median is 4.7s
 SHOW = re.compile(r"\b(this is what|here'?s what|here is what|let me show|i'?ll show|"
                   r"an example of|this is an example|look at|on (the )?screen|what it looks like|"
                   r"what it can look like)\b", re.I)
@@ -41,8 +40,8 @@ CTA = re.compile(r"\b(link is (down|in) (the )?description|down description|book
                  r"see you on the other side|it'?s your (choice|decision))\b", re.I)
 TC = re.compile(r"\[(\d{2})-(\d{2})\]")
 # An announcement of what the next sentence will say. Cutting one inside a dead stretch is a
-# cheaper fix than a zoom, because it buys the jump cut AND takes the words out: the worst
-# stretch measured (29s at 6:31) is split by ignoring "And one last thing," and nothing is lost.
+# cheaper fix than a zoom, because it buys the jump cut AND takes the words out: ES02's worst
+# stretch (29s at 6:31) is split by ignoring "And one last thing," and nothing is lost.
 ANNOUNCE = re.compile(r"^(and |now |so |but )?(one last thing|another thing|the last thing|"
                       r"what i (wanna|want to|will) (say|tell you|explain)|"
                       r"here is the thing|here's the thing|let me explain|"
@@ -103,8 +102,8 @@ def states(cards, scenes, at, total):
     A card is a whole layer stack and layer order IS z-order, index 0 on top, so what the viewer
     sees is decided by what sits ABOVE the camera. A layer whose sourceSceneId is not a pinScene
     is the camera itself; a full-frame pinned scene above it hides the speaker, and the same scene
-    below it is a background plate. Counting plates as b-roll is how a first run read one edit at
-    70% coverage against the 34% its own timeline export shows.
+    below it is a background plate. Counting plates as b-roll is how a first run read ES02 at 70%
+    coverage against the 34% the FCPXML shows.
     """
     rows, looks = [], {}
     for c in cards:
@@ -253,8 +252,8 @@ def plan(path, n, out):
     st, looks = states(cards, scenes, at, total)
     ov = overlays(st)
     held = union([(o["start"], o["end"]) for o in ov])
-    # A look is named by a clip ALREADY placed, so the look this plan can ask for is one the
-    # video already uses. Take the full-frame look off a b-roll run
+    # `pins.py` keys its layout catalogue by the name of a clip ALREADY placed, so the look this
+    # plan can ask for is one the video already uses. Take the full-frame look off a b-roll run
     # rather than off the widest layer: the background plate is also 1.0 wide and sits above the
     # camera on a blocked tau's card, which is how a first run proposed `image-1` as the layout.
     names = [n for o in ov for n in o["cover"]]
@@ -331,8 +330,8 @@ def plan(path, n, out):
                  line[:64], "   <- " + seed[1] if seed else ""))
         frm = " ".join(line.split()[:8])
         if kind == "jumpcut":
-            # A jump cut is a cut-list needle, not a shot: it goes through the cut list and
-            # `dscript apply`, which is a different paste from the shots.
+            # A jump cut is a cut-list needle, not a pin: it goes through resolve.py and
+            # `dscript apply`, which is a different paste from `--pins`.
             phrases.append({"text": line, "pass": 2,
                             "reason": "announcement; the jump cut that breaks a still frame"})
             continue
@@ -359,15 +358,15 @@ def plan(path, n, out):
           % (len(slots), len(pins) - opens - sum(1 for p in pins if "zoom" in p), opens,
              sum(1 for p in pins if "zoom" in p), len(phrases)))
     if full is None:
-        print("no clip has ever been placed here, so there is no look to name: drag one onto the "
-              "timeline, copy again, and re-run")
+        print("no clip has ever been placed here, so there is no look to clone: drag one in, "
+              "copy again, then fill every layout by hand (pins.py refuses otherwise)")
     if out:
         json.dump(pins, open(out, "w"), indent=1)
-        print("wrote %s - replace every FILL ME with the clip that beat needs" % out)
+        print("wrote %s - replace every FILL ME, then: pins.py resolve %s" % (out, out))
         if phrases:
             side = out.replace(".json", "") + ".phrases.json"
             json.dump(phrases, open(side, "w"), indent=1)
-            print("wrote %s - the jump cuts, for the cut list" % side)
+            print("wrote %s - the jump cuts, through resolve.py and `dscript apply`" % side)
     return 0
 
 

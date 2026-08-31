@@ -3,6 +3,7 @@ name: seo-site-architecture
 description: "Plans and restructures a site's page hierarchy, navigation, URL structure and internal linking. Use on 'sitemap', 'site structure', 'page hierarchy', 'information architecture', 'navigation design', 'breadcrumbs', 'internal linking', 'what pages do I need', 'how should I organize my site'. Not for XML sitemaps or site audits (seo-audit), not for structured data (seo-schema-markup)."
 metadata:
   version: 1.1.0
+tags: [plans, seo]
 ---
 
 # Site Architecture

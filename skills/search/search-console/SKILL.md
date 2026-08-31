@@ -1,6 +1,7 @@
 ---
 name: search-console
-description: Query Google Search Console data for SEO audits, keyword performance, content gaps, and ranking analysis. This skill should be used when the user wants to check search performance, analyze keyword rankings, find content opportunities, compare periods, or audit SEO health using real GSC data. Triggers on "search console", "GSC", "check rankings", "keyword performance", "search impressions", "content gaps", "what am I ranking for", "SEO audit", "search traffic".
+description: "Queries Google Search Console for keyword performance, content gaps, cannibalisation and ranking analysis. Use when checking search performance, when deciding what page to write next, when finding queries that rank with no page behind them, when comparing periods, or on 'GSC', 'check rankings', 'low-hanging fruit', 'what am I ranking for'."
+tags: [drives, seo, analytics]
 ---
 
 # Google Search Console
@@ -8,6 +9,19 @@ description: Query Google Search Console data for SEO audits, keyword performanc
 Query GSC search analytics via the Search Console API using gcloud application-default credentials.
 
 ## Prerequisites
+
+**A raw `curl` call needs `x-goog-user-project` or it 403s.** The client library reads the ADC
+file's `quota_project_id`; curl does not, so it falls back to gcloud's shared project and returns a
+403 that reads like a permissions error and is a quota-project error. `scripts/gsc.py` uses a
+client library and picks the project up automatically; anything hand-rolled must pass the header.
+Point it at the project that actually has `searchconsole.googleapis.com` enabled, which is not
+necessarily the site's own GCP project. A project with the API switched off returns the same
+403, so check the API is on before reading the error as a permissions problem.
+
+**This skill is read-only by design.** Its auth uses `webmasters.readonly`. Submitting a sitemap
+needs the full `https://www.googleapis.com/auth/webmasters` scope, so it takes an interactive
+`gcloud auth application-default login` followed by
+`gcloud auth application-default set-quota-project <project>`.
 
 One-time auth setup (must include the `webmasters.readonly` scope):
 
@@ -36,6 +50,11 @@ GSC="python3 <skill-dir>/scripts/gsc.py"
 | `$GSC query <site>`       | Custom query with dimensions                |
 | `$GSC compare <site>`     | Compare current vs previous period          |
 | `$GSC gaps <site>`        | Find high-impression, low-CTR opportunities |
+| `$GSC orphans <site>`     | Queries you rank for with no page targeting them |
+| `$GSC cannibals <site>`   | Queries split across two or more of your own pages |
+| `$GSC inspect <site> <urls-file>` | Google's per-URL index verdict, in bulk |
+
+Requesting a crawl is not in that table because it is not in the API. See below.
 
 ### Common Flags
 
@@ -49,99 +68,48 @@ GSC="python3 <skill-dir>/scripts/gsc.py"
 | `--start-date 2026-01-01`   | Custom start date                              |
 | `--end-date 2026-01-31`     | Custom end date                                |
 
+`orphans` adds `--min-impressions` (default 100), `--max-coverage` (default 0.5) and
+`--max-position` (default 30). `cannibals` adds `--min-impressions` (default 100) and
+`--min-share` (default 0.15, the impression share a page needs to count as competing).
+`inspect` adds `--out` (a JSON cache that resumes a stopped run), `--workers` (default 8)
+and `--state` (print the URL list for coverage states matching a string).
+
+## Asking Google to crawl a page
+
+There is no API for it. The Indexing API accepts **only** `JobPosting` and `BroadcastEvent`
+embedded in a `VideoObject`, confirmed against Google's own quickstart on 2026-08-31, so no
+scope and no token reaches an ordinary page. The button in URL Inspection is the only route,
+so it takes browser automation against a Chrome that is already signed in to the property.
+
+**The quota is 13 URLs a day per property**, measured rather than read: the fourteenth
+request on 2026-08-31 returned "Quota Exceeded ... try submitting this again tomorrow". Stop the
+run on that message rather than burning the rest of the list against it.
+
+Three things cost a run each. Handle all three in whatever script drives the console.
+
+- **`/search-console/inspect?...&id=<page url>` is a 404.** The `id` is an opaque hash Google
+  mints for the query, so an inspection cannot be deep-linked. Type into the box instead:
+  `input[aria-label^="Inspect any URL"]`, and use `fillInput`, because `typeText` into that
+  field leaves the page on Overview.
+- **The console never unmounts a previous inspection**, so after three URLs the document holds
+  four `REQUEST INDEXING` buttons and "click the first one" resubmits a page already done. A
+  full navigation back to the property root between URLs is what makes the run trustworthy; refuse
+  to click unless exactly one button is on the page.
+- **No backslash may appear inside an injected template literal.** The outer template eats it
+  before the string reaches the page, so `split('\n')` arrives as a real newline and the
+  expression dies with "Invalid or unexpected token". Match on text in the page, and do the
+  whitespace work in Node.
+
+A request is a queue position, never an indexing decision. It is worth spending only on pages
+a crawl would actually reward, and it does nothing about *why* Google was not fetching them:
+for that, read `references/indexed-url-audit.md` and check what links to the page.
+
 ## Workflows
 
-### Weekly Review
+Every workflow, from the orphan sweep to the cannibalisation check: [`references/workflows.md`](references/workflows.md).
 
-A 5-minute scan that surfaces what changed this week. Run every Monday.
-
-```bash
-# 1. Period-over-period delta
-$GSC compare <site> --days 7 --limit 30
-
-# 2. Quick wins: high-impression, low-CTR queries
-$GSC gaps <site> --min-impressions 100 --max-ctr 0.03 --max-position 20 --limit 20
-
-# 3. Top movers in the last week
-$GSC top-queries <site> --days 7 --limit 50
-```
-
-Report back in three buckets:
-
-1. **What's up**: pages and queries with the biggest click increase vs previous 7 days.
-2. **What's down**: pages and queries with the biggest click drop. Diagnose: did position drop, did impressions drop, or did CTR drop?
-3. **Quick wins**: gap rows sorted by potential clicks. Recommend a meta-rewrite sprint for the top 5.
-
-### SEO Performance Audit
-
-Run the full set for a complete search performance picture:
-
-```bash
-$GSC sites
-$GSC top-queries <site> --limit 50 --days 28
-$GSC top-pages <site> --limit 30 --days 28
-$GSC compare <site> --days 28 --limit 30
-$GSC gaps <site> --min-impressions 50 --max-ctr 0.03 --max-position 20
-```
-
-After collecting data, check: which queries are position 5-15 (close to page 1, worth optimizing), and whether keyword clusters exist with no dedicated page. See Content Gap Identification below for interpreting the gaps output.
-
-### Keyword Analysis for a Specific Topic
-
-To check performance for a keyword cluster:
-
-```bash
-# All queries containing "notch"
-$GSC top-queries <site> --query-filter "notch" --limit 30
-
-# Performance of a specific page
-$GSC query <site> --page-filter "/blog/best-mac-notch-apps" --dimensions "query" --limit 30
-
-# Queries by page to detect cannibalization
-$GSC query <site> --query-filter "dynamic island" --dimensions "query,page" --limit 30
-```
-
-### Content Gap Identification
-
-The `gaps` command finds queries where the site gets impressions but low click-through:
-
-```bash
-$GSC gaps <site> --min-impressions 100 --max-ctr 0.02 --max-position 15
-```
-
-Interpret results:
-
-- **Position 1-3, low CTR**: Title/meta description needs improvement
-- **Position 4-10**: On page 1 but below fold; content quality or on-page SEO needs work
-- **Position 11-20**: Page 2; a better article could push to page 1
-- **"Potential Clicks"** column estimates traffic if CTR matched the average for that position
-
-### Blog Content Planning
-
-To identify what content to write next:
-
-```bash
-# Check existing blog performance
-$GSC top-pages <site> --page-filter "/blog/" --limit 30
-
-# Find queries hitting the homepage (could have dedicated pages)
-$GSC query <site> --page-filter "/" --dimensions "query" --limit 50
-
-# Queries with no good page match (potential new articles)
-$GSC gaps <site> --min-impressions 30 --max-ctr 0.01 --max-position 30 --limit 50
-```
-
-### Monitoring After Content Changes
-
-After publishing or updating content, track impact:
-
-```bash
-# Compare 14-day windows for early impact
-$GSC compare <site> --days 14 --limit 30
-
-# Check a specific page
-$GSC query <site> --page-filter "/blog/new-article" --dimensions "query,date" --limit 50 --days 14
-```
+Auditing which URLs Google actually has indexed against the routes that exist, and fixing the
+difference in `hooks.server.ts` and `vercel.json`: [`references/indexed-url-audit.md`](references/indexed-url-audit.md).
 
 ## Troubleshooting
 

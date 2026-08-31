@@ -3,6 +3,7 @@ name: seo-audit
 description: "Full-site SEO diagnosis and remediation, covering crawl, indexation, on-page and content quality, then keyword strategy, rewrites and topic clusters. Use on 'SEO audit', 'technical SEO', 'why am I not ranking', 'SEO health check', 'fix my SEO', 'keyword research'. For a single URL use seo-page-audit, for pages at scale programmatic-seo, for structured data seo-schema-markup, for 404s seo-broken-links."
 metadata:
   version: "1.2.0"
+tags: [audits, seo]
 ---
 
 # SEO Audit
@@ -230,5 +231,5 @@ Blog posts: 1,500-2,500 words. Product pages: 300-500 words minimum. Category pa
 - **seo-page-audit**. detailed analysis of a single URL (requires an explicit URL)
 - **programmatic-seo**. pages at scale
 - **seo-schema-markup**. structured data only
-- **landing-page-cro**. page conversion (not ranking)
+- **cro**. page conversion (not ranking)
 - **seo-analytics-tracking**. measuring SEO performance

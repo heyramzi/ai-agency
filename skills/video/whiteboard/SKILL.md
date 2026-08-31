@@ -1,48 +1,137 @@
 ---
 name: whiteboard
-description: "Lays out hand-drawn concept boards as code and draws them onto the iPad live over Excalidraw's collaboration protocol, so a diagram arrives already composed and still editable on camera. Use when a video needs a board behind it, when an idea has to become circles, arrows and highlighter rings, when a board needs re-laying out or re-pushing, or when anything needs drawing into an Excalidraw canvas from a laptop. Appends new failure modes to its own pattern list after each run."
-license: MIT
-compatibility: Node 20 or later, pnpm, and an Excalidraw collaboration room
+description: "Lays out hand-drawn concept boards as code and draws them onto the iPad live over Excalidraw's collaboration protocol, so a diagram arrives already composed and still editable on camera. Use when a video needs a board behind it, when an idea has to become circles, arrows and highlighter rings, when a board needs re-laying out or re-pushing, or when anything needs drawing into ExcalidrawZ from the Mac."
+tags: [makes, video, design]
 ---
 
 # Whiteboard
 
-**Boards are TypeScript, not drawings.** A board is an array of Excalidraw elements built from a
-small helper library, registered by name, built to JSON, and then pushed into a live collaboration
-room so it appears on the iPad already composed and still editable on camera.
-
-The library is [`tool/`](tool) in this folder, and it is the whole engine: the scene helpers, the
-collaboration client and one worked board, `old-way-new-way`, to read and copy. Install it once and
-run everything from there.
+Boards live in `tool/` as TypeScript, not as drawings. A board is an array of elements built from
+the helpers in `src/scene.ts` and registered in `src/boards.ts`. Run `pnpm install` in `tool/`
+once, and run every command below from there.
 
 ```bash
-cd tool && pnpm install         # once, for socket.io-client and tsx
 pnpm build                      # every board to out/
 pnpm build <board>              # just one
-pnpm push <board> --room '<excalidraw collab link>' --pace 700
+pnpm push <board> --room '<link>' --pace 700
 ```
 
-Everything below is written from `tool/`, so `src/boards.ts` means `tool/src/boards.ts`.
+`README.md` in that folder owns the protocol and the reasoning: why Excalidraw rather than Freeform
+or Miro, how the collab socket works, and the iCloud route for boards that do not need to arrive
+live. **Read it before changing anything in `src/`.** This file owns how a board gets composed,
+checked and drawn.
 
-**Why Excalidraw and not Freeform or Miro.** Excalidraw's collaboration room is a websocket that
-accepts a scene from any client, so a laptop can draw into a canvas an iPad has open. Nothing else in
-the category exposes that. The fallback for boards that do not need to arrive live is writing the
-`.excalidraw` file into a synced folder and opening it on the tablet.
+## The vocabulary
 
-This file owns how a board gets composed, checked and drawn.
+`node(cx, cy, r, label)` is a circle plus its centred caption and is the workhorse. `circle`, `text`,
+`arrow`, `underline` and `ring` are the rest. Coordinates are a plain top-left canvas, y grows
+downward, and every position is absolute, so a board is a set of named x constants with items hung
+off them.
 
-## Composing a board
+Colours are two constants in `src/scene.ts`, `INK` for every stroke and label and `HIGHLIGHT` for
+the marker pass. Derive both from your own brand tokens rather than picking them by eye. They are
+hex copies because Excalidraw stores hex, so re-derive them if the palette moves rather than
+eyeballing a replacement.
 
-`node(cx, cy, r, label)` is a circle plus its centred caption and is the workhorse.
-`circle`, `text`, `arrow`, `underline` and `ring` are the rest. Coordinates are a plain
-top-left canvas, y grows downward, and every position is absolute, so a board is a set of
-named x constants with items hung off them.
+**The sketchy look is a switch, not the tool.** `LOOK` in `src/scene.ts` is `clean` since 16 August
+2026: figures draw as straight strokes in Nunito, and only the terra ring and underline stay rough,
+because those stand in for a marker pass over a finished diagram. `hand` restores rough.js and
+Excalifont everywhere. Never set roughness or `fontFamily` on an element to work around the house
+look; change `LOOK` and rebuild, or every board drifts apart.
 
-Two colour constants, `INK` and `HIGHLIGHT`, plus one hue per parallel concept. The
-sketchy look is a single switch, never a per-element override.
+## One hue per concept
 
-The full vocabulary, the hue set, the spacing constraints and the layout gate:
-[`references/composing.md`](references/composing.md).
+A board that carries several parallel ideas gets a colour per idea, from `HUES` in `src/scene.ts`
+(`indigo`, `amber`, `rose`, `green`, `teal`, `violet`). Each entry is a stroke, a pale tint for the
+fill, and a darker label that survives sitting on that tint, so `node(cx, cy, r, name, size,
+HUES.amber)` gives a filled circle whose caption stays readable.
+
+**Colour the things that differ, leave everything else `INK`.** Four spaces, five stages, three
+products: those are parallel concepts and a viewer sorts them by colour before reading a word. The
+explanation around them is not a concept, it is prose, and prose in six colours is decoration.
+
+**The hue is the concept's identity across the whole board, and across the set.** Give a caption the
+same hue as the node it belongs to, and give an arrow leaving a node that node's hue, so a group
+reads as a group. If a second board covers the same concepts, it keeps the same assignment: two
+boards in one video that recolour the same four ideas cost more than they buy.
+
+**One monochrome board is still the default.** Reach for `HUES` when the board is a taxonomy or a
+comparison. A board that is one argument in three beats stays `INK` with `HIGHLIGHT` for emphasis.
+
+## Composition
+
+**One column per beat of the argument.** Declare the centres as constants (`const STACK = 380`) and
+place everything relative to them. Two or three columns fill a frame; four is too wide to read on
+camera.
+
+**Captions sit beside a node, never on it.** Text is centred on its `(cx, cy)` and its width is
+roughly `longest_line * fontSize * 0.52`, so a caption's half-width plus the circle radius decides
+the offset. Getting this wrong is the most common defect and the layout gate below is what catches it.
+
+**Rings and underlines are the emphasis budget.** One `ring` for the single number the board is
+built around, `underline` for a title and for a total that has been ruled off. More than two rings
+and none of them mean anything.
+
+**Show arithmetic as a sum, never as a total.** A board is the one surface where the working can be
+on screen: the parts, a rule across, then the result. Quoting the result alone throws away the
+retention that the calculation buys.
+
+**The talking points ride along as their own board, at negative x.** Build them with `paragraph`,
+which anchors at the top-left, and push them separately so they land in the same room without
+touching the diagram. **Bullets, never prose**: the opening and closing lines are said as written and
+the middle is spoken live, so a written-out middle gets read out on camera. `shorts-production`, "The
+note shape", owns that split.
+
+## The whole video is the board, walked
+
+A board can decorate a talking head, or it can **be** the video. The second is its own
+format and it is the one this skill is best at, so it gets named rather than rediscovered.
+
+Measured 24 Aug 2026 on Matis Clouet's `09a_B8KZURM` (19:22, 5,011 words, 29k views on a
+channel under 4k subscribers). The whole runtime is one canvas on a shared screen, walked
+node by node. He never opens the tool the system is built in, never clicks, never builds.
+The board carries the argument and the build is what he sells.
+
+What transfers:
+
+- **One canvas, several bands, walked in order.** Not one board per idea with cuts between.
+  The viewer keeps their bearings because the picture never resets, and `pieces` in
+  `src/boards.ts` already models exactly this.
+- **The diagram is the *what*, the tool is the *how*.** Teaching the shape and selling the
+  build is the split that makes a screen-share video sell without turning into a demo. If a
+  beat can only be shown by clicking something, it belongs in a different video.
+- **Screenshots are proof, not navigation.** A framed still that proves a claim the board
+  just made, cut in and back out. The moment the recording goes live in the product, the
+  format has collapsed into a tutorial.
+
+What does not transfer: he asks five or more times across the runtime. `video-script`'s ask
+rule is measured against a three-run control and his is not, so the count stays at one
+outbound ask in the last twenty seconds, with in-platform asks free and mid-roll.
+
+**Board 1 carries the idea every later board restates.** `video-script`'s teach-block
+finding is that one portable idea named once and pointed at six times holds longer than six
+ideas listed once. On a walked canvas that means the opening board is the vocabulary, and
+every board after it ends by naming the same thing again.
+
+## One video, one document
+
+**A video gets exactly one diagram.** Never split its visuals across several files, even when they
+band down one shared canvas. His words, 24 Aug 2026: *"I don't want nine diagrams. You should never
+ever create multiple diagrams for one video."* One video was built as nine `.excalidraw` boards
+banded down a canvas: on the canvas it read as one picture, and in Finder it was nine things to
+open, move and keep in sync. He deleted all of them and rebuilt it as a single board.
+
+So the beats are **zones inside one document**, laid out in the order they are spoken, not separate
+files. The `pieces` map below models a piece as a list of boards, which is the shape this rule
+rejects for a video: keep it to one entry per video and put the beats inside that board.
+
+**In Whimsical, shapes are never fully coloured.** Pass `deco: "outline"` with the hue, which
+renders a coloured stroke over a light tint, and leave notes light (white or smoke) rather than
+carrying a saturated fill. His words, same day: *"I never use fully colored, I use outline and light
+color in designs in whimsical."* A saturated fill puts white text on a strong ground and turns a
+diagram into a set of buttons; the outline keeps the hue as identity and leaves the words as the
+thing being read. `color` alone defaults to `deco: fill`, so pass `deco` explicitly on create. On an
+existing board, one `edit` call of `{op: "update", id, deco: "outline"}` per shape converts the lot.
 
 ## A piece of content, not a board
 
@@ -78,6 +167,7 @@ work. Do not push a dictated set without that pass.
 the boards said out loud in order, which is why `Element order is the talk track` below matters. A
 board added after the recording usually means a beat the argument did not have.
 
+
 ## Deliver it, by whichever route is open
 
 Building a board is not delivering one, and there are three routes that deliver. **Take one of them
@@ -89,50 +179,23 @@ as the last step of every board, without being asked**, then say what landed and
 | The clipboard | `pnpm copy <piece>` | Any canvas that is already open, including a local file. Normalises the set back to the origin. |
 | The files | `pnpm build <board>` | `out/<board>.excalidraw` is a real file. Drag it onto Excalidraw, or open it in ExcalidrawZ. |
 
-**The push is not required, and it never was.** The relay stores nothing, so a push only works while
-a peer is connected, and building the delivery around that makes an empty room look like a failure
-when the files were sitting in `out/` the whole time. Pick the route that fits, and name the `out/`
-path when the answer is the files.
+**The push is not required, and it never was.** Stated 24 Aug 2026: *"the skill does not need to push
+to the room. It can create locally and then I can copy paste or drag and drop into Excalidraw."* The
+relay stores nothing, so a push only works while a peer is connected, and building the delivery
+around that made an empty room look like a failure when the files were sitting in `out/` the whole
+time. Pick the route that fits, and name the `out/` path when the answer is the files.
 
 **A shared canvas is append-only.** The room holds work no repo knows about: another product's
 screenshots, a morning of Pencil annotation. Read it first with `pnpm inspect`, which reports every
 occupied band, then take a **free** band. Never clear, erase or reset a band to make room, and never
-write a command that does. Clearing a band to "replace" a board takes somebody else's work off the
-canvas whenever the band held two boards and only one was being replaced. No command can know what
-somebody else put there. This holds for every shared surface, not just this one.
+write a command that does. Clearing a band to "replace" a board took Wavenote's screenshots off the
+room on its first run, because the band held two boards and only one was being replaced. No command
+can know what somebody else put there. This holds for every shared surface, not just this one.
 
-`WHITEBOARD_ROOM` in `tool/.env` is the room, quoted. **Quote the value**: Node's `.env` parser
-reads an unquoted `#` as a comment and drops the fragment, which is the half carrying the room id
-and the key. If it is missing, ask for the link once and pass it as `--room` for that run rather
-than writing it to disk.
-
-**Two boards pushed into one room need different coordinates.** Pushes carry absolute positions, so a
-second board authored from the same origin lands on top of the first. Give each one its own band of
-the canvas (`const TOP = 1750`, mapped over the elements on export). `pnpm build` checks every
-board's bounding box against every other and exits non-zero on an overlap, whichever board was
-built, so a band clash is a build failure rather than a mess on the canvas.
-
-**A group of boards opens with a `banner` naming the video.** A recording session runs down the
-canvas and the boards do not say which take they belong to, so each group carries a grey title and a
-rule 300px above its first board: quiet, out of frame once a board is zoomed into, and unmissable
-while scrolling. The banner is authored in the group's first board so its bounding box stays honest.
-
-**Take the band next to the boards it ships with.** The allocation is mapped at the top of
-`src/boards.ts`, and the sets that share a room are packed one after another rather than spread over
-round numbers. A band reserved for a board that belongs on a different canvas is a hole in this one,
-and a hole reads as a push that half arrived.
-
-**A board another tool wrote goes up with `pnpm push-file <path.excalidraw>`.** Screenshots, an
-export off the iPad, anything with an embedded `files` map: it uploads the images first, then
-broadcasts the elements. `push` alone would draw empty frames, because the socket carries elements
-and an image element only names a `fileId`. Image uploads cannot be taken back, so check the file
-before sending it.
-
-**`pnpm inspect` reads the canvas back.** `push` can only report what it sent. A collaborator answers
-a new joiner by broadcasting its whole scene, so `inspect` joins, decrypts it and prints which boards
-are actually there, complete or partial, and whether any element still sits at a superseded band. Run
-it after a push, and run it first when somebody says a board is missing: a board can be on the canvas
-and off the screen.
+The room, the band allocation, `push-file` for a board another tool wrote, and `pnpm inspect` for
+reading the canvas back are in [`references/delivery.md`](references/delivery.md). **Two boards
+pushed into one room need different coordinates**, and `pnpm build` fails on an overlap, so a band
+clash never reaches the canvas.
 
 ## Element order is the talk track
 
@@ -152,7 +215,7 @@ up once it is on the iPad in front of a camera.
 
 ```bash
 pnpm typecheck && pnpm build <board>
-node ../scripts/check-layout.mjs out/<board>.excalidraw
+node <skill>/scripts/check-layout.mjs out/<board>.excalidraw
 ```
 
 The gate reports text over text, text over an off-centre shape, and text over an underline, then
@@ -160,19 +223,14 @@ prints the element count and the bounds. Concentric overlaps are skipped, becaus
 node and a ring around a figure are both concentric by construction. Fix the coordinates, rebuild,
 run it again. **A board is not pushed until this prints `layout clean`.**
 
-## The room link is a secret
-
-It carries the AES key in its fragment, so anyone who reads it off the screen can join the board.
-Keep it out of frame while recording, take it from the user each session rather than storing it, and
-never print it back into a summary.
-
 ## The words on a board are first-party copy
 
-A board is on camera under the presenter's name, so the copy rules apply to every label: no slop
-vocabulary, no engagement-bait close, no em dashes. **Internal mechanics vocabulary is banned on
-camera**, which is a separate and easier rule to break. The named parts of your own system never
-appear in transcripts of anyone talking, and a number on a board invites the question it stands for.
-Write what the mechanism does for the viewer and keep the machinery out of the frame.
+A board goes on camera under the author's name, so the voice profile and the copy rules apply to every label:
+no slop vocabulary, no engagement-bait close, no em dashes. **Internal mechanics vocabulary is
+banned on camera**, which is a separate and easier rule to break: points, slippage and the
+three-space model never appear in transcripts of him talking, and a number on a board invites the
+question it stands for. Write what the mechanism does for the viewer and keep the machinery out of
+the frame.
 
 ## Verification checklist
 
@@ -181,48 +239,12 @@ Write what the mechanism does for the viewer and keep the machinery out of the f
 - [ ] Delivered by one of the three routes, and said which; a push verified with `pnpm inspect`
 - [ ] Element order matches the spoken order, and `elements * pace` fits the script
 - [ ] One ring, and it is around the number the board exists for
-- [ ] Every label read against the voice profile, with no internal mechanics vocabulary
+- [ ] Every label read against `voice-dna`, with no internal mechanics vocabulary
 - [ ] The room link was not written into any summary or committed file
 - [ ] Any new failure mode appended to Learned Patterns
 
-## Closing a run
-
-This skill appends new failure modes to its own pattern list after each run. If this run surfaced one
-not already listed, append it to Learned Patterns before finishing.
-
 ## Learned Patterns
 
-Appended when a run surfaces something this skill did not already know. One line per entry, newest
-first: what the run taught, without the run. **Read this list before a run.**
-
-- 2026-08-24: The skill demanded a push and treated every other route as a fallback, and the demand
-  was wrong. Deliver by whatever route is open, and say which one
-- 2026-08-24: Renaming a board changes every element id, so a re-push adds a second copy instead of
-  replacing the first. A rename or a split means clearing the canvas before pushing, not re-pushing
-- 2026-08-24: A board's `+` and `=` signs turned two lists into a calculation, which is the one thing
-  the losing version did. Before drawing any sum, check whether the board could show the count instead
-- 2026-08-24: `line()` and `arrow()` store `x` at the start point and `width` as an absolute, so a
-  right-to-left stroke reports a bounding box extending the wrong way
-- 2026-08-14: Ten boards arrived and the canvas looked like three, because the bands they were given
-  left a ten thousand pixel hole through the middle. Allocate a band next to the boards it is pushed
-  with, not at the next round number
-- 2026-08-14: `push` can only report what it sent, so `pnpm inspect` is what reads the canvas back
-- 2026-08-14: Two boards were authored into the same band and nothing checked it
-- 2026-08-14: Ids are `<board>-<index>`, assigned in `boards.ts` after the registry is assembled
-- 2026-08-13: A board pushed into the canvas of a different piece is invisible even though the push
-  worked. For a different canvas, `pnpm copy` is the route
-- 2026-08-13: A push with a live peer still drew nothing, twice, and reported success both times.
-  `peers` in `join()` already excludes self
-- 2026-08-13: "The room is empty" can mean the viewport is somewhere else
-- 2026-08-12: Every uppercase label shipped clipped, because Excalidraw never re-measures a text
-  element it did not see edited
-- 2026-08-12: The relay stores nothing, so a push into an empty room is lost and still reports success
-- 2026-08-12: A ring around a stack of lines has to circle one text element, not several
-- 2026-08-11: Node's `.env` parser cut the room link in half, silently
-- 2026-08-11: `flags.indexOf('--room')` returns -1, and `flags[-1 + 1]` is `flags[0]`
-- 2026-08-11: A script column went out as prose and had to be rebuilt as bullets
-- 2026-08-11: A board shipped carrying internal mechanics vocabulary, which never appears on camera
-- 2026-08-11: A dictated set of boards is a talk track, not a layout. Run the layout check before
-  delivering, or the board arrives correct in content and unreadable in composition
-- 2026-08-11: Never set roughness or a font family on a single element to work around the house look.
-  Change the one look switch and rebuild, or every board drifts apart from every other
+They live in [`references/learned-patterns.md`](references/learned-patterns.md), newest first.
+**Read that file before a run**, and append to it after one whenever a run surfaces something not
+already there.

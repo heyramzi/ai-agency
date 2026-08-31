@@ -1,5 +1,17 @@
 # Meta Tag Formulas Reference
 
+## Contents
+
+- Title Tag Formulas by Content Type
+- Meta Description Templates
+- A/B Testing Methodology for Titles and Descriptions
+- Seasonal Title Patterns
+- CTR Benchmarks by Industry
+- Multi-Language Title Optimization
+- Title Tag Modifier Library
+- Common Title Tag Mistakes
+- Quick-Reference: Title Formula Selection Flowchart
+
 Extended title tag formulas, meta description templates, A/B testing methodology, seasonal patterns, CTR benchmarks, and multi-language optimization guidance.
 
 ---

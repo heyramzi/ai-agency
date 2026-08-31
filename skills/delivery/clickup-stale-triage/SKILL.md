@@ -1,6 +1,7 @@
 ---
 name: clickup-stale-triage
 description: "Finds ClickUp tasks that stopped moving and marks the dead ones with a delete tag for one human pass, holding the line between boards that can be triaged and registries that cannot. Use when a list is full of tasks nobody has touched in months, before a quarterly cleanup, or on 'clean up ClickUp', 'stale tasks', 'what can I delete', 'triage the workspace'. For planning the coming week from live tasks see clickup-ops."
+tags: [drives, clickup]
 ---
 
 # ClickUp Stale Triage
@@ -14,7 +15,7 @@ Read `clickup-cli` for the `cu` command reference. This skill owns the ruling; t
 ## Run it
 
 ```bash
-S=.claude/skills/clickup-stale-triage/scripts       # wherever this skill is installed
+S=.claude/skills/clickup-stale-triage/scripts       # from any repo that syncs vibe-kit
 python3 $S/scan.py                                  # full report, read-only, ~75s
 python3 $S/scan.py --space MARKETING                # one space
 python3 $S/scan.py --verdict delete                 # one verdict
@@ -24,7 +25,7 @@ python3 $S/scan.py --apply delete --min-confidence high
 ```
 
 Run it from the repo root: the two ledgers default to paths under
-`consulting/internal/clickup/`.
+one ledger directory outside the skill.
 
 `--apply delete` creates the tag in each affected space, adds it, then reads every task back and prints how many actually carry it. Nothing in the script deletes a task.
 
@@ -93,7 +94,7 @@ Two things handle this:
 
 - The `tagged` verdict is checked **before** the age gate, so a marked task never
   falls out of the report.
-- `--apply` appends every target to `consulting/internal/clickup/stale-triage-ledger.jsonl`
+- `--apply` appends every target to `stale-triage-ledger.jsonl` in that directory
   **before** it writes the tag, recording the real age and the reason. The `tagged`
   lines read their age back from there. Override the path with `--ledger`.
 
@@ -102,7 +103,7 @@ a scan was running erased the staleness of 56 tasks mid-session on 17 Aug 2026, 
 the `close` bucket silently fell from 23 to 2.
 
 The second ledger handles that. Every run appends its findings to
-`consulting/internal/clickup/stale-triage-seen.jsonl` (id, age, body length, status).
+`stale-triage-seen.jsonl` (id, age, body length, status).
 On a later run, if a task now reads younger but its body length and status are
 unchanged, the older age is carried forward and the reason says so. Real work on the
 task changes the body or the status, which drops the carry-over and lets the clock

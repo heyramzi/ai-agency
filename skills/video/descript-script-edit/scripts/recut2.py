@@ -8,12 +8,9 @@ the TAU boundaries - a TAU split to drop a filler must NOT start a paragraph.
 
 usage: recut2.py <cuts.json> [payload.json] [typos.json]
 """
-import json, re, sys, copy, uuid, unicodedata
+import json, os, re, sys, copy, uuid, unicodedata
 
-# Scratch directory for the intermediate payloads. Override with DSCRIPT_WORKDIR.
-import os
-D = os.environ.get("DSCRIPT_WORKDIR") or os.path.expanduser("~/.descript-clip/work")
-os.makedirs(D, exist_ok=True)
+D = os.path.expanduser("~/.descript-clip")   # `load()` falls back to the live grab
 FILLERS = {"uh","um","uhh","umm","uhm","er","erm","ah","mm","hmm","mhm"}
 
 def norm(w):
@@ -91,14 +88,59 @@ def apply_styles(new, payload, styles):
 
 
 def load(path=None):
-    p = json.load(open(path or (D + "/full_payload.json")))
+    """The payload, and the word alignment of EVERY media it uses.
+
+    One alignment is not enough. A take recorded in three sittings is three
+    media in one composition, and mapping all of its words against the first
+    one's alignment agreed on 740 of 5433 tokens (2026-08-25). Each TAU is
+    mapped against the alignment of its own media instead.
+    """
+    p = json.load(open(path or (D + "/current.json")))
     d = p["data"][0]
-    refs = {t["audioSegment"]["mediaRefId"] for t in d["copiedTaus"]}
+    refs = {(t.get("audioSegment") or {}).get("mediaRefId") for t in d["copiedTaus"]}
+    als = {}
     for m in d["mediaRefsCopyData"]:
-        if m["mediaRef"]["id"] in refs:
-            a = (m["mediaRef"].get("voiceover") or {}).get("metadata", {}).get("alignment")
-            if a: return p, a
-    sys.exit("no word alignment for the TAUs' media")
+        mid = m["mediaRef"]["id"]
+        if mid not in refs:
+            continue
+        a = (m["mediaRef"].get("voiceover") or {}).get("metadata", {}).get("alignment")
+        if a:
+            als[mid] = a
+    if not als:
+        sys.exit("no word alignment for the TAUs' media")
+    missing = sorted(r for r in refs if r and r not in als)
+    if missing:
+        names = {m["mediaRef"]["id"]: m["mediaRef"].get("displayName") for m in d["mediaRefsCopyData"]}
+        sys.exit("no alignment for media still on the timeline: %s"
+                 % ", ".join(str(names.get(r, r)) for r in missing))
+    return p, als
+
+
+def typo_pattern(bad):
+    """`\b` only where the key actually has a word edge.
+
+    Wrapping every key in \b makes a fix that ends in punctuation impossible:
+    `we are at .` never matched, because \b after the full stop demands a word
+    character that is not there (2026-08-25).
+    """
+    pat = re.escape(bad)
+    if bad[:1].isalnum() or bad[:1] == "_":
+        pat = r"\b" + pat
+    if bad[-1:].isalnum() or bad[-1:] == "_":
+        pat = pat + r"\b"
+    return pat
+
+
+def reseg(seg, offset, duration):
+    """A rebuilt segment keeps every field of the one it came from.
+
+    Reassembling it from named fields drops whatever Descript put there that we
+    do not know about, and it CRASHES on the 10-second end pad Descript appends
+    to a composition: that TAU has an audioSegment with no `mediaRefId` at all
+    (562-TAU take, 2026-08-25).
+    """
+    return dict(seg, offset=offset, duration=duration, suppressAutoMerge=False, effects=[])
+
 
 def copy_tokens(taus):
     """(tau_index, char_start, char_end, word) per token, char offsets tau-local."""
@@ -106,15 +148,29 @@ def copy_tokens(taus):
             for ti, t in enumerate(taus)
             for m in re.finditer(r"\S+", t["text"]["string"])]
 
-def map_to_alignment(toks, al, taus):
-    """token -> alignment index, BY TIME.
+def map_to_alignment(toks, als, taus):
+    """token -> its alignment WORD, by time.
 
     Text matching cannot tell twelve takes of one sentence apart; the TAU's own
     offset/duration can. Verify with word agreement, never with a count.
+
+    A punctuation-only token - a bare `...` or `--` left standing by the
+    transcriber - has NO alignment word, so it must not be counted in the
+    window. Counting it makes the window one word too wide, and on a single-TAU
+    take the widener then prepends index -1 and every word after it maps to its
+    neighbour: 2127/5970 agreement on a 40-minute take, 2026-08-24.
+
+    The value is the word dict, not an index into one list, because each TAU is
+    resolved against the alignment of its own media and those index spaces are
+    not comparable.
     """
-    m, i = {}, 0
-    for t in taus:
-        n = len(re.findall(r"\S+", t["text"]["string"]))
+    m = {}
+    for ti, t in enumerate(taus):
+        al = als.get((t.get("audioSegment") or {}).get("mediaRefId"))
+        if not al:
+            continue                      # the silent end pad carries no media
+        real = [k for k, tk in enumerate(toks) if tk[0] == ti and norm(tk[3])]
+        n = len(real)
         a = t["audioSegment"]; s0, s1 = a["offset"], a["offset"] + a["duration"]
         idx = [j for j, w in enumerate(al)
                if w["endTime"] > s0 + 1e-6 and w["startTime"] < s1 - 1e-6]
@@ -126,10 +182,45 @@ def map_to_alignment(toks, al, taus):
             b, a2 = idx[0] - 1, idx[-1] + 1
             gb = s0 - al[b]["endTime"] if b >= 0 else 1e9
             ga = al[a2]["startTime"] - s1 if a2 < len(al) else 1e9
+            if gb >= 1e9 and ga >= 1e9:
+                break                     # nothing left to borrow; a count check would lie
             idx.insert(0, b) if gb <= ga else idx.append(a2)
-        for k in range(min(n, len(idx))): m[i + k] = idx[k]
-        i += n
+        idx = _best_window(al, idx, [toks[k][3] for k in real])
+        for k in range(min(n, len(idx))):
+            m[real[k]] = al[idx[k]]
     return m
+
+
+def _best_window(al, idx, words):
+    """Nudge a time-picked window by a word when the words say it is off by one.
+
+    The widener borrows a neighbour whenever the time window under-selects, and
+    it can borrow at the head where the tail was meant: the whole TAU then reads
+    one word late. Two TAUs of a three-take composition did exactly that, 24
+    tokens between them (2026-08-25). Time chooses the window; the words get the
+    final say on where it starts.
+    """
+    if not idx:
+        return idx
+    n = len(idx)
+
+    def score(start):
+        if start < 0 or start + n > len(al):
+            return -1
+        return sum(1 for k in range(n) if norm(words[k]) == norm(al[start + k]["word"]))
+
+    here = idx[0]
+    best = max((here - 1, here, here + 1), key=lambda c: (score(c), c == here))
+    if score(best) <= score(here):
+        return idx
+    return list(range(best, best + n))
+
+
+def real_at(t2a, i, n):
+    """The first token from i that carries an alignment word."""
+    while i < n and i not in t2a:
+        i += 1
+    return i
 
 def reanchor(components, taus, segmap, new):
     """Move every component onto the TAU that still holds its character position.
@@ -204,13 +295,14 @@ def build_ignore(cuts, path=None, fillers=True, typos=None):
     Segments stay contiguous, so nothing is destroyed and any word can be
     un-ignored later in the editor.
     """
-    p, al = load(path)
+    p, als = load(path)
     taus = p["data"][0]["copiedTaus"]
     toks = copy_tokens(taus)
-    t2a = map_to_alignment(toks, al, taus)
-    agree = sum(1 for i, t in enumerate(toks) if i in t2a and norm(t[3]) == norm(al[t2a[i]]["word"]))
-    if agree < len(toks) - 4:
-        sys.exit("mapping unsafe: only %d/%d tokens agree on the word" % (agree, len(toks)))
+    t2a = map_to_alignment(toks, als, taus)
+    real = [i for i, t in enumerate(toks) if norm(t[3])]   # a bare "..." has no alignment word
+    agree = sum(1 for i in real if i in t2a and norm(toks[i][3]) == norm(t2a[i]["word"]))
+    if agree < len(real) - 4:
+        sys.exit("mapping unsafe: only %d/%d tokens agree on the word" % (agree, len(real)))
     cuts = list(cuts)
     if fillers:
         cuts += [{"start": i, "end": i + 1, "pass": 1, "reason": "filler", "text": t[3]}
@@ -219,12 +311,26 @@ def build_ignore(cuts, path=None, fillers=True, typos=None):
     # alignment indices: the alignment carries words that fall in gaps between TAUs,
     # so the two drift apart (2 words by the end of a 2012-word take, 2026-08-20).
     cut = {x for c in cuts for x in range(c["start"], c["end"])}
-    blocked = [i in t2a and i in cut for i in range(len(toks))]
+    # An Ignore already in the composition must SURVIVE a second pass. Building
+    # `blocked` from the new cut list alone un-ignores every earlier cut: on a
+    # take already cut to 25:30, an EMPTY cut list rebuilt to 34:41 and handed
+    # back nine minutes of struck-through restarts (2026-08-25).
+    was = [taus[t[0]].get("isBlocked", False) for t in toks]
+    blocked = [was[i] or (i in t2a and i in cut) for i in range(len(toks))]
 
     new, segmap = [], {}          # segmap: old tau index -> [(new id, char start, char end)]
     for ti, tau in enumerate(taus):
         idx = [i for i, t in enumerate(toks) if t[0] == ti]
         if not idx:
+            keep = copy.deepcopy(tau)
+            new.append(keep)
+            segmap[ti] = [(keep["id"], 0, len(keep["text"]["string"]))]
+            continue
+        if not any(i in t2a for i in idx):
+            # No token here has an alignment word: the 10-second end pad Descript
+            # appends, whose text is a zero-width space and whose audioSegment
+            # names no media. Carry it through untouched - rebuilding it walks
+            # `real_at` off the end of the token list (2026-08-25).
             keep = copy.deepcopy(tau)
             new.append(keep)
             segmap[ti] = [(keep["id"], 0, len(keep["text"]["string"]))]
@@ -237,24 +343,29 @@ def build_ignore(cuts, path=None, fillers=True, typos=None):
         for k, (a, b) in enumerate(segs):
             c0 = 0 if k == 0 else toks[a][1]
             c1 = len(src) if k == len(segs) - 1 else toks[segs[k+1][0]][1]
-            t0 = al[t2a[a]]["startTime"]
-            t1 = (al[t2a[segs[k+1][0]]]["startTime"] if k < len(segs) - 1
+            ra = real_at(t2a, a, len(toks))
+            # The FIRST segment keeps the TAU's own offset, the way the last one
+            # keeps its end. Taking the first word's startTime instead throws away
+            # the handle the previous edit left: a uniform 0.400s off the front of
+            # 30 TAUs, which is exactly where the breath lives, and it made an
+            # empty cut list a 10.9s edit (2026-08-25).
+            t0 = (tau["audioSegment"]["offset"] if k == 0
+                  else t2a[ra]["startTime"] if ra in t2a else tau["audioSegment"]["offset"])
+            rn = real_at(t2a, segs[k+1][0], len(toks)) if k < len(segs) - 1 else None
+            t1 = (t2a[rn]["startTime"] if rn is not None and rn in t2a
                   else tau["audioSegment"]["offset"] + tau["audioSegment"]["duration"])
             seg = tau["audioSegment"]
             nid = str(uuid.uuid4())
             segmap.setdefault(ti, []).append((nid, c0, c1))
             new.append({"id": nid,
                         "text": {"string": src[c0:c1], "attributes": []},
-                        "audioSegment": {"mediaRefId": seg["mediaRefId"], "offset": t0,
-                                         "duration": max(t1 - t0, 0.01),
-                                         "gain": seg.get("gain", 1), "suppressAutoMerge": False,
-                                         "speed": seg.get("speed", 1), "effects": []},
+                        "audioSegment": reseg(seg, t0, max(t1 - t0, 0.01)),
                         "ignoreAlignment": False, "isBlocked": bool(blocked[a])})
     for t in new:   # "th-them" -> "them": a stutter the transcriber glued together
         t["text"]["string"] = re.sub(r"\b(\w{1,3})-(\1\w*)\b", r"\2", t["text"]["string"], flags=re.I)
     for bad, good in (typos or {}).items():
         for t in new:
-            t["text"]["string"] = re.sub(r"\b%s\b" % re.escape(bad), good, t["text"]["string"])
+            t["text"]["string"] = re.sub(typo_pattern(bad), good, t["text"]["string"])
     out = copy.deepcopy(p)
     d = out["data"][0]
     comps = reanchor(d.get("copiedComponents", []), taus, segmap, new)
@@ -265,13 +376,14 @@ def build_ignore(cuts, path=None, fillers=True, typos=None):
 
 
 def build(cuts, path=None, fillers=True, typos=None):
-    p, al = load(path)
+    p, als = load(path)
     taus = p["data"][0]["copiedTaus"]
     toks = copy_tokens(taus)
-    t2a = map_to_alignment(toks, al, taus)
-    agree = sum(1 for i, t in enumerate(toks) if i in t2a and norm(t[3]) == norm(al[t2a[i]]["word"]))
-    if agree < len(toks) - 4:
-        sys.exit("mapping unsafe: only %d/%d tokens agree on the word" % (agree, len(toks)))
+    t2a = map_to_alignment(toks, als, taus)
+    real = [i for i, t in enumerate(toks) if norm(t[3])]   # a bare "..." has no alignment word
+    agree = sum(1 for i in real if i in t2a and norm(toks[i][3]) == norm(t2a[i]["word"]))
+    if agree < len(real) - 4:
+        sys.exit("mapping unsafe: only %d/%d tokens agree on the word" % (agree, len(real)))
     cuts = list(cuts)
     if fillers:
         cuts += [{"start": i, "end": i + 1, "pass": 1, "reason": "filler", "text": t[3]}
@@ -307,23 +419,23 @@ def build(cuts, path=None, fillers=True, typos=None):
                 if ch.isalpha():
                     if ch.islower(): text = text[:k] + ch.upper() + text[k+1:]
                     break
-        s = al[t2a[r[0]]]["startTime"]; e = al[t2a[r[-1]]]["endTime"]
+        rs, re_ = real_at(t2a, r[0], len(toks)), r[-1]
+        while re_ > r[0] and re_ not in t2a: re_ -= 1
+        if rs not in t2a or re_ not in t2a: continue
+        s = t2a[rs]["startTime"]; e = t2a[re_]["endTime"]
         if e - s <= 0.01: continue
         seg = taus[ti]["audioSegment"]
         nid = str(uuid.uuid4())
         segmap.setdefault(ti, []).append((nid, toks[r[0]][1], toks[r[-1]][2]))
         new.append({"id": nid,
                     "text": {"string": text, "attributes": []},
-                    "audioSegment": {"mediaRefId": seg["mediaRefId"], "offset": s,
-                                     "duration": e - s, "gain": seg.get("gain", 1),
-                                     "suppressAutoMerge": False,
-                                     "speed": seg.get("speed", 1), "effects": []},
+                    "audioSegment": reseg(seg, s, e - s),
                     "ignoreAlignment": False, "isBlocked": False})
     for t in new:   # "th-them" -> "them": a stutter the transcriber glued together
         t["text"]["string"] = re.sub(r"\b(\w{1,3})-(\1\w*)\b", r"\2", t["text"]["string"], flags=re.I)
     for bad, good in (typos or {}).items():
         for t in new:
-            t["text"]["string"] = re.sub(r"\b%s\b" % re.escape(bad), good, t["text"]["string"])
+            t["text"]["string"] = re.sub(typo_pattern(bad), good, t["text"]["string"])
     out = copy.deepcopy(p)
     d = out["data"][0]
     for ti in range(len(taus)):      # a TAU deleted whole hands its anchors to the next survivor

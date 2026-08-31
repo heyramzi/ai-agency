@@ -1,5 +1,19 @@
 # Page SEO Report Template
 
+## Contents
+
+- Overall Score: [X.X]/10
+- Top Priority Fixes
+- E-E-A-T Breakdown
+- Search Intent Analysis
+- On-Page SEO Audit
+- Content Quality Assessment
+- Technical SEO
+- GSC Performance Summary
+- What to Improve Next
+- Skill Handoffs
+- Report Rules
+
 Output the report in this exact format.
 
 ---

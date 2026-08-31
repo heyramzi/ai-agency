@@ -3,6 +3,7 @@ name: board-ship
 description: Review and ship a ClickUp task's PR in one prompt. Verifies it against the task's acceptance criteria, runs a thermonuclear (clean / DRY / elegant-integration) review, merges into the integration branch, moves the task to Done, and cleans up. Use when a board task's PR is ready to review and merge, when /board-ship is invoked, or when an In Review task should be verified and closed out.
 argument-hint: <task-id | PR-number> [integration-branch]
 allowed-tools: Bash, Read, Grep, Glob, Agent, Skill
+tags: [audits, clickup, code]
 ---
 
 # /board-ship
@@ -48,7 +49,7 @@ Extract every acceptance criterion from the task description (and any linked Git
 
 ### 3. Verify acceptance criteria (the AC gate)
 
-For each criterion, prove it from the diff and the current code (borrow the `board-reviewer` agent's discipline):
+For each criterion, prove it from the diff and the current code (the same discipline the `clickup-pm` agent applies when it verifies without merging):
 - "query no longer returns field X" → grep to confirm it's gone.
 - "page is paginated" → check the server logic for offset/limit/total.
 - "test exists" → find it and run it.
@@ -64,7 +65,7 @@ Prove the change is **clean, DRY, and integrates elegantly**. If `/code-review` 
 - **DRY / reuse**: does this duplicate existing utilities/components/patterns (check `@heyramzi/*` and local helpers)?
 - **Clean**: no dead code, leftover debug output, commented-out blocks, or unused imports/vars introduced by the change.
 - **Elegant integration**: fits the surrounding style and the integration branch's current state; pull the latest integration branch and check for conflicts/duplication.
-- **Project rules**: path-scoped `.claude/rules/`, design system, type-safety, lint (slop words, no em-dash, section order).
+- **Project rules**: path-scoped `.claude/references/`, design system, type-safety, lint (slop words, no em-dash, section order).
 - **Regression risk**: does anything on the integration branch break?
 
 ### 5. Verdict
@@ -109,7 +110,7 @@ Output: the verdict, what the review covered, the merge result (commit on the in
 
 ## Notes
 
-- This is a code-quality gate, not just an AC checker. That is the difference from the `board-reviewer` agent, which it complements.
+- This is a code-quality gate, not just an AC checker. That is the difference from a plain AC verification, which `clickup-pm` does without merging.
 - **Watch for duplicate tickets.** If resolving the PR reveals another open ticket covering the same work (a DAW-PRD restatement, a sub-scope, an accidental clone), close it as a duplicate with a comment pointing at this one rather than leaving the board with two live tickets for one change.
 - Never merge with failing checks, unmet AC, or unresolved review findings. Honesty over a green status.
 - The ClickUp task is the source of truth; the squash commit carries the `CU-` id so GitHub activity links back. Default merge strategy is squash unless the project documents otherwise.

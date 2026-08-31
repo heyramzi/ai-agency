@@ -4,6 +4,55 @@ Every command the CLI exposes, with its flags and the shape it returns. `SKILL.m
 
 ## Command Reference
 
+### Profiles, and the shorthand for IDs
+
+**No command needs an API key on the command line.** A profile bundles its
+tokens with the workspace they point at; `-p <name>` picks one for a single run,
+`CU_PROFILE` for a shell, `cu profile use` for good.
+
+```bash
+cu profiles                       # which exist, which is active
+cu -p personal tasks --list 901   # one run against another account
+cu profile add work --token pk_... --team <team-id> --also-token "me:pk_..."
+```
+
+`--also-token name:pk_...` builds the fallback chain: a 401 on the first token
+retries with the next. That is what makes a shared team token and a personal one
+cover each other, and `cu bulk *` walks the chain per task.
+
+**Every ID argument takes four shorthands**, and they are profile-scoped:
+
+| Form | Means |
+| --- | --- |
+| `3` | row 3 of the last task listing (`cu tasks`, `cu sprint`) |
+| `this` or nothing | the active task from `cu start` |
+| `@alias` | a favourite (`cu favorite add task <id> bug`) |
+| `sprint:current` | the current sprint's list, wherever a list ID goes |
+
+The `#` column and `--pick` only appear on a TTY. Piped or driven by an agent
+the rows are identical minus the column, so parsers never see a moving field.
+
+**Short IDs are rewritten by every listing.** `cu tasks --list A` then
+`cu tasks --list B` then `cu done 3` closes the third task of B. Re-list before
+trusting a number you did not just see.
+
+### Sprints
+
+`cu sprint` and `cu sprints` find the folder whose name carries "sprint",
+"iteration", "cycle" or "scrum", then the list whose dates cover today. No
+match: pin one with `cu favorite add sprint-folder <folderId> sprints`. Between
+sprints it picks the next to start; after the last, the most recent to end.
+
+### Bulk edits
+
+```bash
+cu bulk status review --tasks 1,2,5
+cu bulk move --list sprint:current --tasks @bug,86cb9uff6
+```
+
+Each row reports `ok` or `failed: <reason>` and the batch always finishes; the
+exit code is non-zero if any row failed. Never a silent partial write.
+
 ### Hierarchy Navigation
 
 | Command                                                 | Purpose                  |
@@ -14,6 +63,13 @@ Every command the CLI exposes, with its flags and the shape it returns. `SKILL.m
 | `cu lists [--space <id>] [--folder <id>] [--json]` | List lists               |
 | `cu hierarchy [--json] [--team <id>]`              | Full workspace tree      |
 | `cu members [--json] [--team <id>]`                | List team members        |
+| `cu folder move <id> (--space <id> \| --parent-folder <id>)` | Move or nest a folder |
+
+**`folder move` is the only way to re-parent a folder.** `folder update` renames and
+nothing else. `--parent-folder` nests the folder as a subfolder and wins over `--space`;
+it needs Subfolders enabled for the workspace, and ClickUp rejects the call otherwise.
+Add `--type-map-json '{"<srcTypeId>": destTypeId}'` when the destination lacks a task
+type the folder uses, or the move 400s.
 
 **`cu hierarchy` is not the workspace.** It walks only the spaces the token owns, so
 a space reached through folder sharing is absent and `GET /space/{id}` on it 401s. On
@@ -38,7 +94,19 @@ cu task get <taskId> [--json]           # Full task details
 cu task create --list <id> --name "..." [options]
 cu task update <taskId> [options]
 cu open <taskId>                        # Open in browser
+cu task estimate set <taskId> --estimate <userId>:<duration>   # per-assignee estimate
 ```
+
+**`--time-estimate` and `task estimate set` are different fields.** `task update
+--time-estimate 6h` writes the task's single total. `task estimate set --estimate
+183:4h --estimate 204:2h` writes ClickUp's per-assignee estimates and merges into what
+is already there; `--replace` drops every assignee you did not name. `unassigned` is a
+valid user ID.
+
+**The user must already be assigned to the task**, or ClickUp answers a bare
+`400 Invalid Request` with no hint. Run `cu task update <id> --add-assignee <userId>`
+first. The endpoint is Business plan and above, caps at 10 estimates per call, and
+`unassigned` is the one exception to the assignment rule.
 
 **Create options**: `--description <text>`, `--description-file <path>`, `--markdown`, `--status`, `--priority` (urgent/high/normal/low), `--assignee <ids...>`, `--tag <tags...>`, `--json`
 
@@ -82,7 +150,7 @@ Anything with structure goes through `--from`, which takes a **Quill Delta** bod
 inline formatting rides on the text op, line formatting rides on the trailing newline.
 Never hard-wrap a paragraph. Full format, the op-builder helpers, how to delete a
 comment you already posted, and the description `--markdown` trap:
-[`references/comment-authoring.md`](references/comment-authoring.md).
+[`references/comment-authoring.md`](comment-authoring.md).
 
 ### Time Tracking
 
@@ -141,6 +209,20 @@ cu fields update <fieldId> --list <id> --rename-options "Declaracao mensal=Decla
 cu task field set <taskId> --field <fieldId> --value <optionId|index>
 cu task field unset <taskId> --field <fieldId>
 ```
+
+Reading, deduplicating and deleting fields across a whole workspace is four more
+commands, on the private API (`cu net capture` first):
+
+```bash
+cu fields all [--type drop_down] [--level workspace|space|folder|list]
+cu fields duplicates [--loose]                      # groups near-twins, survivor first
+cu fields merge --into <keepId> --from <id,id> --dry-run
+cu fields delete <fieldId> --list <id>              # or --folder / --space
+```
+
+The merge moves every task value onto the kept field server-side and cannot be
+undone. Workflow, refusal codes and what a merge breaks: the
+`clickup-field-merger` skill.
 
 Fields ARE editable: `PATCH /api/v2/field/{id}` is the only verb the route
 allows (`PUT`/`POST` return 405, which reads like "not supported" and is why
@@ -224,6 +306,19 @@ cat file.md | cu docs update <pageId> --doc <docId>
 
 Accepts full ClickUp URLs or page IDs for `get` and `update` commands.
 
+**A Doc IS a view, and that is how you rename or delete one.** The docs API has no
+rename and no delete: `PUT`/`DELETE` on `/v3/workspaces/{ws}/docs/{docId}` both answer
+`405 method not allowed`, and pointing a page write at the doc id answers `403`. The doc
+id is also a view id (`cu view get <docId>` returns `"type": "doc"`), so the v2 view
+endpoints do both jobs (verified 25 Aug 2026):
+
+```bash
+cu view update <docId> --name "New Doc Title"   # rename a Doc
+cu view delete <docId> --yes                    # delete a Doc
+```
+
+The doc TITLE lives there; page titles stay on `cu docs update <pageId> --name`.
+
 **Never write a markdown table into a Doc page.** ClickUp renders it as a real table
 block that is unreadable on mobile; use a bulleted list with a bold lead-in.
 See `references/doc-authoring.md`.
@@ -272,3 +367,95 @@ body with `net show` first.
 
 **The captured bearer is the ~48h frontdoor JWT.** `net auth` prints its true `exp`
 and `net replay` stops once it passes. Re-record to refresh; nothing auto-renews.
+
+## Sharing a private object with a member
+
+The v2 API cannot do it: there is no `POST /list/{id}/member`, and the guest endpoint needs
+Enterprise. The **v3 ACL endpoint** can, with an ordinary personal `pk_` token, and it is wrapped:
+
+```bash
+cu acl set <objectId> --team <wsId> --object-type list --user <id> --permission edit
+```
+
+Underneath: `PATCH /api/v3/workspaces/{ws}/{object_type}/{object_id}/acls` with
+`{"entries":[{"kind":"user","id":"<userId>","permission_level":4}]}`.
+
+- **`kind` is required** (`"user"` or `"group"`). Omitting it returns the misleading
+  `ACL_029 "Invalid group or user ID"`.
+- `id` is a string. `permission_level` is 1 read, 3 comment, 4 edit, 5 create, and **null removes
+  access**.
+- `object_type` covers `list`, `folder`, `space`, `doc`, `view`, `task`, `dashboard` and more.
+- PATCH **merges** entries rather than replacing them. Assigning a user to a task requires that they
+  already have list access, or v2 answers `ITEM_087`.
+
+**Making a list `private: true` drops workspace admins' implicit access**, the owner included, and
+each one has to be re-granted explicitly. Read effective viewers with v2 `GET /list/{id}/member`;
+the v3 `/acls` path is PATCH-only and GETs 405. A list showing nearly every workspace member is not
+private.
+
+Two shell notes for zsh: `UID` is read-only, and an unquoted `$VAR` does not word-split, so use
+`${=VAR}`.
+
+**Recurring tasks are UI-only.** The API exposes no `recurring` field on a task, and there is no
+bulk-recurrence UI either.
+
+## Reading a task back without being lied to
+
+- **`cu task get <id>` truncates the description** in pretty mode, ending in `... (truncated)`.
+  `--markdown` gives the full raw body, and it is the only reliable way to verify a description
+  write.
+- **ClickUp strips literal `#` and `###` heading markers on markdown ingest**, so grepping a
+  readback for `### Acceptance criteria` gives a false negative. Verify by `--markdown` round-trip
+  and length, not by header grep.
+- **Pipe auto-detection is unreliable**: a piped `task get` or `tasks` still prints the pretty
+  table. Pass `--json` or `--markdown` explicitly when scripting.
+- **`--json` omits `checklists`, subtasks and some relations.** Read those from
+  `GET /api/v2/task/{id}` directly, where `checklists[].resolved` and `.unresolved` are integer
+  counts and the items are in `checklists[].items[]`.
+- Bulk-create a checklist with
+  `cu task checklist create <id> --name "..." --items-json "$(... | jq -R -s 'split("\n")|map(select(length>0))')"`.
+
+## Editing a view's filters
+
+`PUT /api/v2/view/{id}` must echo back `name`, `type`, `grouping`, `divide`, `sorting`, `filters`,
+`columns` and `settings`, or the omitted fields reset.
+
+A filter entry takes the exact shape
+`{"field":"assignee","op":"ANY","determinor":null,"idx":0,"values":[<userId int>]}`. **`values` must
+be integers**: string values are silently dropped and the `fields` array comes back empty.
+`determinor` and `idx` are required keys. Scalar props like `show_closed` persist fine; only
+`fields` is picky.
+
+**`GET /api/v2/view/{id}/task` does not reliably honour multiple AND'ed filter fields.** One
+assignee filter works and returns the correct reduced count, but adding a second field makes the
+endpoint ignore the first and return nearly everything. Apply one filter through the API and add the
+rest in the UI. The endpoint paginates 30 per page, so loop until `last_page: true`.
+
+The v3 view endpoints (`/api/v3/workspaces/{ws}/views/{id}`) return 404 and do not exist.
+
+## The AI Notetaker's call docs are invisible to `cu`
+
+Each call transcript is written as a **standalone doc named after the calendar event**, not as a
+page appended to the curated calls doc. Those docs are owned by and private to the account that
+sat in the meeting, while `cu` authenticates as the workspace's shared token and has no
+`--token` or env override, so `cu docs list` and `cu docs pages` return a clean "not there" for
+every fresh transcript. **Do not conclude a transcript is missing from a `cu` result.**
+
+```bash
+TOK=$(jq -r '.tokens[1].token' ~/.config/clickup/config.json)
+curl -s -H "Authorization: $TOK" \
+  "https://api.clickup.com/api/v3/workspaces/<team-id>/docs?limit=100" \
+  | jq -r '.docs[] | "\((.date_created/1000|floor|strftime("%Y-%m-%d %H:%M")))  \(.id)  \(.name)"' | sort | tail
+curl -s -H "Authorization: $TOK" \
+  "https://api.clickup.com/api/v3/workspaces/<team-id>/docs/<docId>/pages" \
+  | jq -r '.[] | "\(.name)\n\(.content)"'
+```
+
+Two shapes that produce false negatives: `date_created` is already a number and `strftime` needs an
+integer, so `(.date_created/1000|floor)`; and the pages endpoint returns a **bare array**, not
+`{pages: [...]}`.
+
+The doc body carries Attendees, Overview, Key Takeaways, Next Steps and Key Topics, plus an `.mp4`
+recording link. The attendees listed there are the real participants and can exceed the calendar
+guest list.
+

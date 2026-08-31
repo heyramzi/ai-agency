@@ -1,153 +1,185 @@
 ---
 name: programmatic-seo
-description: |
-  Programmatic SEO tools for keyword research and blog article generation. Use when:
-  - Researching keywords for any niche/product
-  - Generating SEO-optimized blog article drafts
-  - Setting up or extending blog infrastructure on Svelte/SvelteKit websites
-  - Analyzing competitor content and search trends
-  - Creating content briefs for programmatic publishing
-
-  Uses Serper.dev API for real Google data (autocomplete, related searches, PAA).
+description: "The keyword-to-published-page pipeline, run at volume by one person, from Search Console history or from Serper.dev where there is none. Use when deciding what page to write next, when researching keywords for a niche, when judging whether a content cluster is worth entering, when generating article drafts or briefs, or when setting up blog infrastructure on SvelteKit. Holds the data cost policy for every SEO skill."
+tags: [plans, seo]
 ---
 
 # Programmatic SEO
 
-Generate ranking blog content through automated keyword research and article generation using Serper.dev API.
+One person, a keyword file and a loop. The pipeline below produced 28 English articles and
+112 pages across four languages on `getseam.app`, running at 180,000 impressions and 3,400
+clicks over three months.
+
+The order matters more than any single step. Harvest what the site already ranks for, judge
+the cluster before entering it, write the three shapes that do the ranking, then read the
+console and feed the result back in.
+
+## Choosing the cluster before the pipeline runs
+
+Phase 1 below judges a cluster you already have in mind. Deciding which clusters to own in the
+first place, searchable against shareable, pillars and spokes, keyword research by buyer stage and
+how to rank the ideas, belongs to [seo-content-strategy](../seo-content-strategy/SKILL.md).
+
+A comparison or alternatives keyword becomes a page shape rather than an article:
+`seo-competitor-alternatives` holds the four formats.
 
 ## Prerequisites
 
-`SERPER_API_KEY` env var. Get a free key at [serper.dev](https://serper.dev): 2,500 queries, no credit card. Keep one copy of it in your own env file and export it before running the scripts.
+| Need | Where |
+| --- | --- |
+| Search Console access | `gcloud auth application-default login` with the webmasters scope. See the `search-console` skill |
+| OpenSEO MCP | Self-hosted in Docker, free. Gives the console, Analytics and a site crawler through one MCP endpoint. Setup below |
+| `SERPER_API_KEY` | One copy in your own env file, exported before the scripts run. Free tier 2,500 queries at [serper.dev](https://serper.dev) |
+| Volume and difficulty | DataForSEO credits, topped up in $50 increments. Optional, and the pipeline runs without it |
 
-## Quick Start
+## Phase 0. Harvest the console
+
+Skip this only when the site has no Search Console history. Everywhere else it beats keyword
+research, because Google has already told you which queries it associates with the domain.
 
 ```bash
-export SERPER_API_KEY=your_key
-
-# Basic research
-python scripts/keyword-research.py -s "your keyword" --depth 2
-
-# Generate content brief
-python scripts/keyword-research.py -s "your keyword" --brief
+GSC="python3 <search-console-skill>/scripts/gsc.py"
+$GSC orphans <site> --days 90      # queries you rank for with no page targeting them
+$GSC cannibals <site> --days 90    # queries your own pages are splitting
 ```
 
-## Workflow
+A row in `orphans` is a query where the page collecting the impressions is about something
+adjacent. That is the cheapest page you will ever write, because the ranking is half done
+before the draft exists.
 
-### Phase 1: Keyword Research
+What one run found on `getseam.app`, 13 May to 11 August 2026:
 
-**1.1 Seed keywords**. start with 5-10 for your niche:
-- Product category: "mac notch app", "project management tool"
-- Problem-based: "hide macbook notch", "organize tasks"
-- Comparison: "notion vs obsidian", "best productivity apps"
+| Finding | Number |
+| --- | --- |
+| `boring notch` split across three of its own pages | 20,448 impressions, 62 clicks, position 9.1 |
+| `macnotch`, a competitor with no page on the site | 1,700 impressions, 6 clicks, position 8.8 |
+| Atoll, a second competitor with no page, across nine phrasings | 1,102 impressions, 8 clicks |
+| `best notch app for mac` and four variants, no exact page | 1,307 impressions |
 
-**1.2 Expand via Serper.dev:**
+Totals from `orphans` and `cannibals` run a little above the same query pulled on its own,
+because Google aggregates differently once `page` joins the dimensions. Sort on the tool's
+numbers, quote the single-dimension pull.
+
+Fix the splits before adding pages. A new page on a query that already splits three ways makes
+it split four ways.
+
+## Phase 1. Judge the cluster before you enter it
+
+The step that saves the most work is the one that stops a cluster from being written at all.
+Score the candidate against a cluster whose results you have already measured, so the number
+means something.
+
+Three tests, all of which must pass:
+
+1. **Winnable volume, not total volume.** Filter to KD 25 or under, then filter again by
+   intent. On `getwavenote.com` the notes cluster showed 153,320 total volume and 84,160
+   nominally winnable, which collapsed to roughly 4,000 once queries that did not match what
+   the product sells were removed. The dictation cluster held 17,470 after the same filter.
+   The raw total overstated the notes cluster by a factor of twenty.
+2. **Products rank in the top ten.** If every top-ten slot on the head terms belongs to
+   listicles, Reddit and app stores, a product page cannot enter. Indie products holding
+   positions 3 to 5 is the signal that the slot exists.
+3. **A qualifier with volume behind it.** `speech to text mac` returns 1,600. `meeting notes
+   app for mac` returns zero. The qualifier the cluster is built on has to be one people type.
+
+Then check the site serves HTML. `airtabletosheets.com` had a full strategy written against it
+while every path, including `/robots.txt` and `/sitemap.xml`, returned the string `Hello world`
+as `text/plain` with HTTP 200. No amount of keyword work survives that. Curl the homepage and
+the sitemap before anything else.
+
+## Phase 2. Keyword research
+
 ```bash
 python scripts/keyword-research.py -s "your keyword"            # Basic (1 call)
 python scripts/keyword-research.py -s "your keyword" --depth 2  # Deep (~6 calls)
-python scripts/keyword-research.py -s "your keyword" --depth 3 --brief -o keywords.json  # Full + brief (~10 calls)
+python scripts/keyword-research.py -s "your keyword" --depth 3 --brief -o keywords.json
 ```
 
-Output: Google Autocomplete suggestions (high intent), related searches from SERP, People Also Ask questions (FAQ content), deduplicated list.
+Output: Google autocomplete suggestions, related searches from the SERP, People Also Ask
+questions, deduplicated. Supplement through WebSearch for `[keyword] reddit`,
+`[keyword] alternative` and `how to [keyword]`.
 
-**1.3 Supplement via WebSearch:** "[keyword] 2026 best", "[keyword] reddit", "[keyword] alternative", "how to [keyword]".
+Save it to a file, never a chat window. The `getseam.app` research file holds 197 keywords,
+cost 20 API credits to build, and is still what every article is planned against seven months
+later. Structure it in the four buckets that match the four intents below.
 
-**1.4 Document**. save to `content/research/keywords.json`:
-```json
-{
-  "primaryKeywords": [
-    { "keyword": "your keyword", "volume": "estimated", "difficulty": "low/medium/high", "intent": "transactional/informational" }
-  ],
-  "secondaryKeywords": [],
-  "longTailKeywords": [],
-  "questions": []
-}
-```
+Write in the vocabulary of the forum threads, not of the category. Buyers type "sync" and
+"automatically update". Competitor pages say "ETL", "connector" and "data integration", which
+is why they lose the long tail.
 
-### Phase 2: Content Planning
+## Phase 3. Intent, then shape
 
-**Topic clusters:**
-```
-Pillar: "Complete Guide to [Topic]"
-├── Cluster: "Best [Topic] Tools 2026"
-├── Cluster: "How to [Topic]"
-├── Cluster: "[Topic] Alternatives"
-└── Cluster: "[Topic] vs [Competitor]"
-```
+Order the four things a person can be doing, by how close they are to paying.
 
-**Prioritize by:** search volume + low competition · transactional intent (buyers) · informational (awareness).
+| Intent | Example | Read |
+| --- | --- | --- |
+| Deciding | `seam vs voiceink` | Low volume, highest intent there is |
+| Shopping | `best mac transcription app` | Good volume, good intent |
+| Escaping | `noisli alternative` | Underrated. They have already paid for something once |
+| Learning | `how to make the macbook notch useful` | Where the volume is, and the disappointment |
 
-### Phase 3: Article Generation
+The traffic leader on `getseam.app` is `free dynamic island for mac`, and it converts worst on
+the site. The qualifier `free` filtered for people who will not pay, very efficiently. Choose
+the intent before the volume.
 
-**Content brief:** target keyword, 3-5 secondary keywords, search intent, word count (1500-2500), competitors to beat, unique angle.
+Three shapes did the ranking across the 28 articles: 12 comparison pages, 6 alternative pages,
+10 guides and category roundups.
+
+- **Comparison, `You vs Them`.** Table in the first screen, real measured numbers in it, honest
+  in the rows where you lose. One measured row, CPU during dictation at 12 per cent against
+  25.6, outperformed the page around it, because nobody else in the category measured anything.
+- **Alternative, `Them alternative`.** Same reader, one step earlier and angrier. Name the
+  thing that makes people leave.
+- **Roundup, `Best X for Y`.** Has to list tools you do not own, or it reads as an advert.
+
+One page per intent. Write only the shape you can support.
+
+## Phase 4. Draft, illustrate, publish
 
 ```bash
-python scripts/generate-article.py --keyword "your keyword" --title "Your Article Title" --word-count 2000
+python scripts/generate-article.py --keyword "your keyword" --title "Your Title" --word-count 2000
 ```
 
-See [references/article-template.md](references/article-template.md) for the article structure, frontmatter, and image guidance.
+See [references/article-template.md](references/article-template.md) for structure, frontmatter
+and image guidance. Drafts land in `web/content/blog/drafts/`.
 
-### Phase 4: Publishing
+Pre-publish checklist:
 
-**Draft location:** `web/content/blog/drafts/`.
-
-**Checklist:**
-- [ ] Title <60 chars with primary keyword
-- [ ] Meta description 150-160 chars
-- [ ] Primary keyword in H1, first paragraph, URL
-- [ ] 3-5 internal links
-- [ ] 2-3 external links (authoritative)
-- [ ] Images optimized with alt text
-- [ ] Mobile-friendly formatting
+- [ ] Title under 60 chars with the primary keyword
+- [ ] Meta description 150-160 chars, written to be clicked rather than to be complete
+- [ ] Primary keyword in H1, first paragraph and URL
+- [ ] The answer in the first screen, before the scroll
+- [ ] 3-5 internal links, target phrase as the link text
+- [ ] 2-3 external links to authoritative sources
+- [ ] Images with alt text describing the frame, not repeating the keyword
 - [ ] CTA present
 
-## GEO (Generative Engine Optimization)
+Translate last, and only what is working. Translation took 28 articles to 112 pages at close to
+no cost, and it is also the fastest way to multiply a mistake.
 
-For ChatGPT, Perplexity, Google AI Overviews: answer questions directly in first paragraph · structured data (FAQ schema) · statistics and citations · authoritative factual content · build brand mentions across the web.
 
-## Tools Reference
+## Phase 5. Feed the result back
 
-### Primary: Serper.dev API
+Wait for indexing, filter the console to the new URL, record position and impressions. Run
+Phase 0 again before the next batch so the cheapest opportunities enter the queue first.
 
-| Endpoint | Cost | Use Case |
-| --- | --- | --- |
-| `/autocomplete` | 1 credit | Keyword suggestions |
-| `/search` | 1 credit | Related searches, PAA |
-| `/images` | 1 credit | Image search |
-| `/news` | 1 credit | News results |
+Watch for long, machine-shaped queries at position 5 to 9 with exactly zero clicks. Those are
+AI Overview fan-out queries, not a title failure. One pricing page in this workspace carries a
+cluster of them, 719 impressions at position 5.3 with no clicks, and rewriting titles against
+them buys nothing.
+ Answer in the first screen, keep the facts in a liftable table, and
+carry the matching schema. The `search-console` skill covers how to tell them apart.
 
-Free: 2,500 queries. Paid: $50 for 50k ($0.001/query).
+## Tools and what they cost
 
-### Alternatives
+Which tool answers which question, what each call costs, and the rule that the free lane runs first. See [`references/tooling.md`](references/tooling.md).
 
-| Tool | Install | Use Case |
-| --- | --- | --- |
-| seoq | `npx seoq` | Site audit, competitor analysis |
-| Answer Socrates | [answersocrates.com](https://answersocrates.com) | Free PAA research |
-| Ahrefs Free | [ahrefs.com/keyword-generator](https://ahrefs.com/keyword-generator) | Quick ideas |
+## Generative engine optimisation
 
-### Optional: seo-mcp (Ahrefs data)
-
-```json
-// .claude/mcp.json
-{
-  "mcpServers": {
-    "seo-mcp": {
-      "command": "uvx",
-      "args": ["--python", "3.10", "seo-mcp"],
-      "env": { "CAPSOLVER_API_KEY": "CAP-xxx" }
-    }
-  }
-}
-```
-
-## API Credit Usage
-
-| Action | Depth 1 | Depth 2 | Depth 3 |
-| --- | --- | --- | --- |
-| Keyword research | ~2 | ~8 | ~12 |
-| With brief | ~2 | ~8 | ~12 |
-
-At 2,500 free credits: ~300-1,200 keywords depending on depth.
+For ChatGPT, Perplexity and AI Overviews: answer the question directly in the first paragraph,
+carry FAQ schema, cite statistics with their sources, and build brand mentions off-site. The
+pages that get lifted into an answer are the ones whose facts sit in a table with a source
+next to them.
 
 ## Resources
 

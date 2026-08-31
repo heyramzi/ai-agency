@@ -2,7 +2,7 @@
 
 # ai-agency
 
-Forty-one agent skills, five slash commands and one agent, for the three parts of an
+Forty-two agent skills, six slash commands and one agent, for the three parts of an
 agency that repeat every week: search, video production and client delivery. Plus the
 two tools that keep a skills registry from rotting, because everything here has to
 survive being added to.
@@ -56,7 +56,7 @@ that column, so the shelf you read and the folder you install out of say the sam
 | --- | --- | --- |
 | [`skills/search`](skills/search) | The SEO Copywriter | 14 |
 | [`skills/video`](skills/video) | The Video Producer | 11 |
-| [`skills/delivery`](skills/delivery) | The Project Manager | 12 |
+| [`skills/delivery`](skills/delivery) | The Project Manager | 13 |
 | [`skills/design`](skills/design) | The Art Director | 1 |
 | [`skills/content`](skills/content) | The Ghostwriter | 1 |
 | [`skills/quality`](skills/quality) | The QA Lead | 1 |
@@ -177,7 +177,7 @@ re-running on your own channel before you trust it.
 
 ## The ClickUp kit
 
-Twelve skills and one agent that run an agency's delivery on ClickUp: intake,
+Thirteen skills and one agent that run an agency's delivery on ClickUp: intake,
 capacity, approvals and handover. They are the ones behind
 [The Project Manager](https://go.upsys-consulting.com/skool), and they all
 talk to the same `cu` command line rather than to the API by hand.
@@ -194,6 +194,7 @@ talk to the same `cu` command line rather than to the API by hand.
 | [clickup-data-manager](skills/delivery/clickup-data-manager) | Bulk creation, bulk updates and cleanup at a scale nobody clicks through |
 | [clickup-browser](skills/delivery/clickup-browser) | Templates, automations, dashboards and statuses, which have no public API |
 | [clickup-super-agents](skills/delivery/clickup-super-agents) | Building and debugging ClickUp's own agents |
+| [clickup-field-merger](skills/delivery/clickup-field-merger) | Two custom fields that mean the same thing, merged into one without losing a value |
 
 The agent on top is [**project-manager**](agents/delivery/project-manager.md). It reads the
 board, names what is late, names who is over capacity, names what is waiting on a

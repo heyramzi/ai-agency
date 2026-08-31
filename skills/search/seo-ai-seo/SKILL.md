@@ -3,6 +3,7 @@ name: seo-ai-seo
 description: "Optimises content to be cited by AI search engines and surfaced in AI-generated answers. Use when the user mentions AI SEO, AEO, GEO, LLMO, answer engine optimization, AI Overviews, AI citations, zero-click search, or optimising for ChatGPT, Perplexity, Claude or Gemini. For traditional technical and on-page audits see seo-audit, for structured data see seo-schema-markup."
 metadata:
   version: 1.2.0
+tags: [plans, seo]
 ---
 
 # AI SEO

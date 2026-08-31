@@ -19,6 +19,7 @@
     "./skills/delivery/clickup-browser",
     "./skills/delivery/clickup-cli",
     "./skills/delivery/clickup-data-manager",
+    "./skills/delivery/clickup-field-merger",
     "./skills/delivery/clickup-ops",
     "./skills/delivery/clickup-stale-triage",
     "./skills/delivery/clickup-super-agents",

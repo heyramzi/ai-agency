@@ -2,110 +2,23 @@
 
 ## Contents
 
-- X Tweet Formats
+- X post shapes: not here
 - Long-form article
 - Style Guide Quick Reference
 - Example Input/Output
 
-## X Tweet Formats
+## X post shapes: not here
 
-### Value Tweet
+**`x-content` is the single home for every X format**, meaning the value shape, the tool
+shape, threads, quote posts, replies, the character-counting rules and the t.co
+23-character rule. See `x-content`, [references/formats.md](../../x-content/references/formats.md).
 
-One insight, punchy. Arrow notation for steps.
+Those shapes lived in this file until 2026-08-23, which is why X was written from two
+templates while LinkedIn had eight reference files behind it. A format that ships in the
+same output block as a documented one is not itself documented.
 
-```
-[Bold statement]
-
-[How it works]:
-→ Step 1
-→ Step 2
-→ Step 3
-
-[Result]
-```
-
-### Promotional Tweet
-
-Drive to content. Include [VIDEO LINK] placeholder.
-
-```
-[Problem statement]
-[What the video shows]
-
-Watch the full breakdown: [VIDEO LINK]
-```
-
-### Tool post
-
-For anything you built and want people to use: a skill, a script, a repo, a template.
-Four parts, and the order is the template.
-
-```
-[Hook: the reader's pain, in the words they would use for it]
-
-[name]:
-1. [what it does first]
-2. [what it finds]
-3. [what it does about it]
-
-[The outcome for the reader, one line]
-
-[Direct link to the thing itself]
-```
-
-Worked example, 279 characters weighted:
-
-```
-You keep installing skills. They overlap, they fill context, and Claude stops knowing which one to use.
-
-skill-cleaner:
-1. finds every skill on your machine
-2. scores which ones overlap
-3. flags duplicates and clears dead links
-
-One clear skill per job.
-
-github.com/<you>/<your-repo>/tree/main/skills/<skill>
-```
-
-Five rules, each from a rejected draft on 2026-08-05:
-
-**The hook is the reader's pain, not the tool's most interesting fact.** The draft above
-went through two wrong hooks before the right one. First the discovery story: the command
-that failed, "on my machine", "so I scanned", "folders I deleted months ago". Then a
-technically better one that was still about the tool, "your skills fail silently, a broken
-one stops being offered", which is true and describes a problem nobody feels. What people
-feel is the behaviour that got them here: they install a new skill every week, the
-descriptions pile up, they overlap, and the agent picks the wrong one. Start where the
-reader already is, then let the tool answer it.
-
-**The discovery story is research, not copy.** How you found the problem reads as a report
-of what you did, and the reader has to translate every line into their own situation before
-it helps them. Write the finding as *their* problem from the first word.
-
-**Numbered steps, not prose.** Three numbered lines carry what the thing does faster than a
-paragraph, and they survive being skimmed. Keep each one a verb and an object, under about
-50 characters, and make step 3 the one that changes something.
-
-**The outcome line is the payment.** Steps are what it does; one line after them says what
-the reader ends up with. Without it the post is a changelog. It is the last thing before the
-link, so it is the sentence that has to be worth the click.
-
-**Link to the thing, not to its container.** A repo root makes the reader hunt for the item
-you just described. The deep link lands them on it. This overrides the instinct to promote
-the collection: the collection is discovered from the item, never the other way around.
-Verify the URL returns 200 before scheduling, because a moved directory breaks it silently.
-
-### Counting characters for X
-
-The cap is 280 and it is enforced at send, not at schedule time. **Any URL counts as 23
-characters** however long it is, because X wraps everything in `t.co`, so the real budget is
-`length(text without the URL) + 23`. A 63-character deep link costs the same as a bare
-domain and there is no reason to shorten it.
-
-Schedulers do not check this. Buffer accepted a 600-character tweet through its API with no
-error and it sat in the calendar reading `scheduled`; it would have died at send and taken
-the slot with it. Measure before scheduling, every time.
+The X half of this skill's output is drafted by reading that file. This one keeps the
+LinkedIn structure and the worked example below.
 
 ## Long-form article
 
@@ -113,8 +26,8 @@ For an X article, a LinkedIn article or a newsletter issue. This is the surface 
 gets bookmarked rather than liked, and the shape is what earns the save.
 
 The spec is counted off a reference piece that did 1.27M views and 10,769 bookmarks
-against 3,944 likes. Count the same things on your own reference piece before trusting
-these numbers.
+against 3,944 likes on 2026-08-15. `voice-dna/references/measured.md` holds the counts
+and the reason each one is there.
 
 ```
 [Opening: the reader's day in concrete nouns. 3 to 5 fragments, 3 to 6 words each]
@@ -158,7 +71,7 @@ Counted targets, all from the reference piece:
 
 **The named unit is what gets saved.** Seven models with names is seven things a reader
 can carry away and one thing they can file. A piece of the same length with no names is
-read once. The author already owns two named systems and under-uses both as the unit of
+read once. The named products this account already owns are under-used as the unit of
 a piece, which `measured.md` records as a standing gap.
 
 **Three slots decide whether it sounds like everyone else.** The architecture above is
@@ -172,17 +85,18 @@ fill them from our own material instead:
   abstract subject. Anti-voice 14 bans that shape, measured at 0 occurrences in 56,568
   words of his own writing. Close on something measured.
 - **The turn.** The reference gets its reversals from negation pivots, 11 of them in
-  1,005 words. The banned-shape list rules it out in written copy. Get the turn from
+  1,005 words. `ai-doc/skills/content/writing/humanizer/references/slop-list.md` bans the shape in written copy. Get the turn from
   what actually happened instead of from "it is not X, it is Y".
 
 ## Style Guide Quick Reference
 
 ### Voice, hooks, closers, banned language
 
-**Not here.** Your own voice profile is the single home for all of it: register, sentence
-shapes, signature tics, hook mechanisms, closers, and the anti-voice, with counted targets
-rather than adjectives. Read it before drafting and audit the draft against it before
-shipping. Keep the generic banned-word list in exactly one file on top of that.
+**Not here.** The `voice-dna` skill is the single home for all of it: register, sentence
+shapes, signature tics, hook mechanisms, closers, and the anti-voice. Its
+`references/measured.md` holds the counted targets. Read it before drafting and audit the
+draft against it before shipping. `humanizer` and `ai-doc/skills/content/writing/humanizer/references/slop-list.md` own the generic
+banned-word list on top.
 
 What stays below is post *shape*: the structural templates specific to this skill.
 

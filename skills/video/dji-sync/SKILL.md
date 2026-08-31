@@ -1,17 +1,16 @@
 ---
 name: dji-sync
-description: "Pulls DJI Mic takes off the transmitter, waveform-matches a reel take to its iPhone clip and swaps in the lav audio losslessly, or cuts and transcribes a solo take into the vault, then archives and wipes the card. Use when a reel was recorded with a DJI lav, when phone audio needs replacing with the lav take, when a rambled voice memo needs transcribing, or when the DJI card needs clearing. Appends new failure modes to its own pattern list after each run."
-license: MIT
-compatibility: macOS, Python 3.9+, ffmpeg, and a local whisper.cpp build for the transcription half
+description: "Pulls DJI Mic takes off the transmitter, waveform-matches a reel take to its iPhone clip and swaps in the lav audio losslessly, or cuts and transcribes a solo take into the vault, then archives and wipes the card. Use when a reel was recorded with a DJI lav, when phone audio needs replacing with the lav take, when a rambled voice memo needs transcribing, or when the DJI card needs clearing."
+tags: [drives, video]
 ---
 
 # DJI Sync
 
 This skill starts when the recording stops and owns the card until it is empty. It does not
 edit, trim, colour-grade or re-encode video. It swaps one audio track and gets out. Hands off
-to `shorts-production` (encoding, filing and scheduling), `descript-projects` (getting footage
-in), `video-hooks` and `generate-social` (hooks, scripts, captions), and to whatever note system
-turns a filed voicenote into pages.
+to `shorts-production` (encoding, Drive, ClickUp coding and scheduling), `descript-projects`
+(getting footage in), `video-hooks` and `generate-social` (hooks, scripts, captions), and the
+vault's own `CLAUDE.md` ingest contract (filed voicenote to wiki pages).
 
 ## Two paths off the same card
 
@@ -25,9 +24,9 @@ detection and the archive-and-wipe contract and nothing else.
 | Output | `NAME-dji.MOV`, video bit-identical | speech-only `.opus` + a vault voicenote |
 | Ranking rule | the video is the timeline | the transcript is the deliverable |
 
-**Ask which one it is. Do not infer it silently.** The person who recorded it says so in plain
-language ("that's a voice memo", "pair this with the reel") and that always wins. A wrong guess
-either burns 20 minutes of thinking or destroys the audio half of a reel. When they have not said: no clip in
+**Ask which one it is. Do not infer it silently.** The speaker says it in plain language ("that's a
+voice memo", "pair this with the reel") and that always wins. A wrong guess either burns 20
+minutes of thinking or destroys the audio half of a reel. When he has not said: no clip in
 `~/Downloads` near the take's timestamp means solo; a long take that VAD reports as mostly
 silence means solo, a walk with pauses; a take within seconds of a clip's length means reel.
 Run `dji_note.py --dry-run` when unsure. It decides and reports without writing anything.
@@ -115,19 +114,20 @@ clipped, joins de-clicked with a 10 ms fade, and silences shorter than 400 ms le
 
 The transcript is checked before anything is written or deleted. If one normalised sentence
 accounts for 6 or more lines and 40% of the transcript, it is whisper looping, not the speaker
-repeating themselves. The run refuses: no note, no wipe, card untouched, and it says to try a
+repeating himself. The run refuses: no note, no wipe, card untouched, and it says to try a
 lower `--vad-threshold`. Verified against both transcripts above: the trap trips at 38 of 42
 lines, the real one passes at 1 of 11.
 
 ### Where the note lands
 
-`Raw/Voicenotes/YYYY-MM-DD <Title>.md` in your notes vault (`--vault`), with the take id, both
-durations and the audio path in frontmatter.
+`📥 Raw/Voicenotes/YYYY-MM-DD <Title>.md` in the vault, with the take id, both durations and
+the audio path in frontmatter.
 
 **Raw is immutable and the wiki is a separate act.** The script files the transcript and stops.
-Turning it into pages is a separate ingest, one source at a time, with the person who recorded it
-in the loop. Summarise the take back to them and ask what to emphasise before writing a single
-page. Never quietly rewrite a plan from a walk.
+Turning it into `🧠 Wiki/Coaching/2026 North Star.md`, the project pages, `index.md` and
+`log.md` is the vault's ingest, which its own `CLAUDE.md` says runs one source at a time with
+the speaker in the loop. Summarise the take back and ask what to emphasise before writing a
+single wiki page. Never quietly rewrite the North Star from a walk.
 
 Pass `--title` once the transcript has been read. Without it the note is filed under a
 provisional `DJI note HHMM` and has to be renamed during the ingest.
@@ -143,7 +143,7 @@ guard before anything is deleted, so the ordering still holds. When the raw take
 ## Running it
 
 ```bash
-D=scripts
+D=<skill-dir>/scripts
 python3 "$D/dji_sync.py"                     # newest clip in ~/Downloads, detect card, burn, wipe
 python3 "$D/dji_sync.py" --dry-run           # decide and report, touch nothing
 python3 "$D/dji_sync.py" clip1.MOV clip2.MOV # several clips, each take used at most once
@@ -192,22 +192,10 @@ automating this.
 
 - [ ] New failure modes from this run appended to Learned Patterns
 
-## Closing a run
+## Learned patterns
 
-This skill appends new failure modes to its own pattern list after each run. If this run surfaced one not already listed, append it to Learned Patterns before finishing. Keep the
-measured number, not the impression.
 
-## Learned Patterns
-
-Appended when a run surfaces something this skill did not already know. Newest first.
-
-- Whisper locks into a repeat loop when it is fed long near-silence, and the transcript
-  looks plausible while being worthless. Cut to the spoken parts with VAD before
-  transcribing, and refuse the run when one normalised sentence carries 40 per cent of
-  the lines.
-- Nearest duration is not a match. Two takes recorded minutes apart can be within a
-  second of each other, so the waveform is the only honest test.
-- Never re-encode the video to swap the audio. Stream-copy the picture and mux the new
-  track, or a lossless job becomes a generation loss for nothing.
-- Wipe the card only after the archive copy has been checksummed and read back. A
-  successful write is not proof the file is readable.
+This skill appends new failure modes to its own pattern list after each run.
+The pattern list lives in [references/learned-patterns.md](references/learned-patterns.md).
+Read it before a run. If this run surfaced a failure mode not already listed, append it
+there with today's date before finishing. Keep the measured number, not the impression.

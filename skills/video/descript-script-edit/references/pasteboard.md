@@ -71,7 +71,7 @@ video it was 8 words.
 Two classes of typo, and only one is safe to fix. Where the transcriber was wrong and the
 audio is right, correcting the text makes them agree: a glued stutter (`th-them` -> `them`,
 matched by `\b(\w{1,3})-(\1\w*)\b`) and mangled product names (`scripts/typos.example.json`
-holds the product names this kit trips over most). Where the **speaker** misspoke -
+holds ClickUp, Claude Code, DaVinci, Seedance and the rest). Where the **speaker** misspoke -
 "explain you how to export", "it depends on workflow" - correcting the text makes the
 captions disagree with what is heard. Leave those unless the user asks.
 
@@ -156,13 +156,13 @@ script they work from. The legend, one colour to one instruction, in `CUES`:
 
 | colour | means | who executes it |
 |---|---|---|
-| blue | B-ROLL - replace the picture with a full-frame clip | `motion-broll`, full-frame register |
-| purple | FIGURE - draw this as a diagram or an analogy | `motion-broll`, figure register, transparent alpha layer |
-| green | ON-SCREEN TEXT - caption or list keyed over the face | `motion-broll`, caption register |
+| blue | B-ROLL - replace the picture with a full-frame clip | `motion-design`, full-frame register |
+| purple | FIGURE - draw this as a diagram or an analogy | `motion-design`, figure register, transparent alpha layer |
+| green | ON-SCREEN TEXT - caption or list keyed over the face | `motion-design`, caption register |
 | orange | CTA - subscribe / like / book-a-call overlay | `youtube-ctas` |
 | coral | BRAND ASSET - product box, logo, shelf asset | Design Assets shelf |
 | yellow | EMPHASIS - punch in, this line carries the point | editor |
-| red | PROBLEM - needs a retake or a fix before publish | you |
+| red | PROBLEM - needs a retake or a fix before publish | the speaker |
 
 So one paste can hand the editor a script that is already cut, already de-filled, and already
 marked up with where every b-roll, diagram, caption and CTA goes. Write the marks as
@@ -184,3 +184,28 @@ running past the end of its TAU. Both faults are silent otherwise - the paste si
 
 Tell the user not to copy anything else between `apply` and their paste. They will anyway; that is
 what `restore` is for.
+
+## The cut list, and everything `apply` does unasked
+
+Moved out of SKILL.md on 31 Aug 2026 to hold it under the 250-line ceiling.
+
+**Write the cut list in words, never in indices.** `scripts/resolve.py` turns a phrase into the
+token range `apply` wants, prints five words of context on each side of every needle so the landing
+can be read back, and refuses the whole list when a phrase matches nothing, matches twice with no
+`nth`, or overlaps another needle. `"pre"` and `"post"` disambiguate a short needle by what sits
+beside it - a bare `"Then"` with `nth: 1` lands on the first `then` in the whole take, forty
+minutes from the one that was meant. Indices written by hand are unauditable and drift by one the
+moment an earlier needle changes.
+
+`grab` works on a **partial selection** too - the payload carries its own offsets, so a paste
+replaces exactly the region that was selected.
+
+Six things `apply` does without being asked: cuts as **Ignore** (struck through and reversible,
+never deleted), **keeps every Ignore already in the composition**, removes fillers and truncated
+fragments, repairs glued stutters and product names, carries every scene boundary and marker onto
+the TAU that still holds its text, and refuses to write the clipboard unless the payload
+round-trips and every style range resolves inside its TAU. So a second pass is safe and an empty
+cut list is an exact no-op - verify that way whenever the maths looks wrong: `build_ignore([])`
+must return the source `plays` to the millisecond.
+
+`--markers markers.json` names the sections - `[{"phrase": "...", "text": "Why the move"}]` - matched against the surviving text so a marker never lands on an ignored restart.`--typos` is the house glossary and it is what stops a caption saying the wrong product name: 41 entries, and the rule that keeps them safe, in [`references/typos.md`](typos.md).

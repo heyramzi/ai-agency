@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the coaching page: one self-contained HTML file, opened in a browser.
+"""Render the coaching page: one self-contained HTML file, opened in Dia.
 
 Input is a findings JSON built by the skill. Shape:
 
@@ -27,8 +27,8 @@ import argparse
 import html
 import json
 
-# Palette is a neutral token set. Swap the values for your own brand tokens; it is the colour
-# SSOT. Inlined because this file has to open from disk with no network.
+# Palette mirrors the brand's own design tokens, which are the colour SSOT.
+# Inlined because this file has to open from disk with no network.
 CSS = """
 :root{
   --ink:oklch(0.12 0.04 258); --night:oklch(0.18 0.05 262); --veil:oklch(0.28 0.06 264);

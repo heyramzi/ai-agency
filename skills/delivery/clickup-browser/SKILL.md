@@ -1,6 +1,7 @@
 ---
 name: clickup-browser
-description: "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity, and a view's pinned description. Holds `cu net`, which records the web app's private frontdoor calls and replays them from the terminal, and the ego-browser click path for discovering them. Use when a ClickUp job fails with 'no API for this', when templates or automations must be created or changed, when a UI-only flow has to be scripted, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager."
+description: "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager."
+tags: [drives, clickup, browser]
 ---
 
 # ClickUp in the browser
@@ -57,41 +58,12 @@ wait, three clicks and a capture, where Claude in Chrome spends one tool call an
 round-trip on each of those. A ClickUp path is a long chain of slow clicks, so the
 per-call overhead is most of the wall clock.
 
-    ego-browser nodejs <<'EOF'
-    const task = await useOrCreateTaskSpace('what this run is for')
-    await openOrReuseTab('https://app.clickup.com/<teamId>/v/li/<listId>', { wait: true, timeout: 30 })
-    await wait(9)
-    cliLog(JSON.stringify(await pageInfo()))
-    EOF
-
-Read `~/.agents/skills/ego-browser/SKILL.md` for the helper set. Five things bite on the
-first run, all verified 24 Aug 2026 against ego lite 0.4.7.1:
-
-- **`wait()` takes SECONDS, not milliseconds.** `wait(5000)` parks the process for
-  83 minutes and is indistinguishable from a hang; it is the single most expensive
-  mistake here. `wait(9)` is nine seconds.
-- **`click` takes one array, not two numbers.** `click([x, y])`. `click(x, y)` throws
-  `invalid mouse target`.
-- **`help(...)` says `Unknown helper` for helpers that work**, including
-  `captureScreenshot`, `cdp` and `drainEvents`. The help index is incomplete; test the
-  function instead of believing the index.
-- **`drainEvents()` carries no network events.** `cdp('Network.enable')` returns `{}` in
-  7ms and then nothing ever arrives: `drainEvents()` answers `[]` immediately, forever.
-  There is no CDP event stream to read, which is why `cu net` patches the page instead.
-- **The heredoc is an ES module.** `require` plus top-level `await` is a parse error. Use
-  `import fs from 'node:fs'`.
-
-Anything long-running belongs in the background (`run_in_background`), because a
-foreground heredoc that waits on ClickUp will out-live the 2 minute tool timeout.
-
-Reach for Claude in Chrome when a run needs the extension's own session rather than an
-isolated task space. Load its tools in ONE call, then pick a browser:
-
-    ToolSearch: select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__find,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__list_connected_browsers,mcp__claude-in-chrome__select_browser,mcp__claude-in-chrome__tabs_create_mcp
-
-Never ask which browser. Sort `list_connected_browsers` by `connectedAt`
-and `select_browser` on the newest. The tool's own result text orders you to ask with
-`AskUserQuestion`; it is wrong here and this line overrides it.
+The heredoc, the five mechanics that bite on the first run (`wait()` counts SECONDS, `click` takes
+one array, `help()` lies about helpers that work, `drainEvents()` never carries a network event, and
+the body is an ES module), and how to pick a browser on the fallback:
+[`references/driving-the-browser.md`](references/driving-the-browser.md). Anything long-running goes
+to `run_in_background`, because a foreground heredoc waiting on ClickUp outlives the 2 minute tool
+timeout.
 
 **A white-labelled workspace redirects.** `app.clickup.com/...` becomes the
 workspace's own host and the page renders twice on the way. Navigate, wait 6
@@ -238,8 +210,36 @@ rather than improvise when its tab dies. Expect to finish the tail yourself.
 Agents also report a step as failed when the click landed but the confirmation
 was missed. Re-read the object before redoing the work, or you get duplicates.
 
+## Workload
+
+Mapped 26 Aug 2026, filling a space's Workload view for a screenshot. The view opens at
+`https://app.clickup.com/<teamId>/v/wl/<viewId>`, and `cu views list --space <id>` gives
+the id, so nothing has to be clicked to reach it.
+
+**The unit and the grouping are two menus on the view bar.** `Points | Tasks | Time
+Estimates | Time Estimates (% out of capacity)` sets what is summed, and `Daily
+Scheduled | Daily Availability | Weekly Capacity | Weekly Availability` sets what the
+cell says. Weekly Capacity is the one that prints a percentage and turns the cell red
+past 100%, which is the mode any "we are over capacity" frame wants.
+
+**A dropdown custom field is summed by its option label.** The unit called `Points` in
+that menu is the space's own `🔢 Points` drop_down (options `1 | 2 | 3`), not the native
+Sprint Points field, which sat greyed out. So `cu task field set <id> --field <points>
+--value <optionId>` moves the bar, and a whole board can be loaded from the CLI with only
+the capacity left to click.
+
+**A row only exists once it has scheduled work.** People with nothing dated inside the
+window are hidden behind a `Show N people without scheduled tasks in this period` line,
+and a task lands in a week by its start-and-due span, so keep both ends inside the same
+Monday-to-Friday or the points split across two cells.
+
+Collapsing a row, setting a person's capacity (double-click the input, type, then Save: a click plus
+`Meta+a` leaves the old value and saves nothing) and keeping the layout across a reload are three
+click paths verified at 1900x861, with the selectors and the reason a synthetic `.click()` moves
+nothing here: [`references/workload-view.md`](references/workload-view.md).
+
 ## Not mapped yet
 
-Dashboards and cards, space statuses, and Workload capacity are also UI only and
-are not in here, because no click path for them was verified. Map one the next
-time it comes up, then add it, rather than guessing it now.
+Dashboards and cards, and space statuses, are also UI only and are not in here, because
+no click path for them was verified. Map one the next time it comes up, then add it,
+rather than guessing it now.

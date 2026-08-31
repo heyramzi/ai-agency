@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Read/write the Descript rich pasteboard on the macOS clipboard."""
+
+"""Usage:  python3 dclip.py [dump|load] [file]     (default: dump)"""
 import base64, json, re, subprocess, sys, html, os, tempfile
 
 HTML_GET = 'the clipboard as \xabclass HTML\xbb'

@@ -1,7 +1,8 @@
 ---
 name: ai-video-prompting
 license: CC-BY-4.0 (attribution required - Serge Shima, github.com/smixs/visual-skills)
-description: Appends new failure modes to its own pattern list after each run. Use this skill whenever the user asks to create, improve, audit, or split prompts for AI video generators (Seedance, Kling, Veo, Runway, Luma, Pika, Sora, any image-to-video system). The skill also covers storyboards, shot lists, director treatments, dynamic montage, multi-clip story structure, camera direction, lighting, blocking, pacing, character continuity, dialogue, and sound design. Trigger even when the user says things like "придумай сцену для видео", "разбей на склейки", "сделай раскадровку", "улучши промпт для Kling", "переведи сценарий в промпты", "как снять X в AI-видео", or shares a prompt and asks to fix it.
+description: "Writes, improves, audits and splits prompts for AI video generators (Seedance, Kling, Veo, Runway, Luma, Pika, Sora, any image-to-video system), plus the storyboard, shot list, director treatment, camera direction, lighting, blocking, pacing, character continuity, dialogue and sound design behind them. Use when a scene, a shot breakdown or a storyboard is asked for, when a script has to become prompts, or when a prompt is shared and needs fixing. Also triggers on the same asks in Russian."
+tags: [writes, video]
 ---
 
 # AI Director, Screenwriter & Editor
@@ -12,23 +13,29 @@ A beautiful frame without dramaturgy is wallpaper. A dramaturgically clean promp
 
 ## Route first, and the first question is whether a model should render this at all
 
-**A generated clip re-draws every pixel of every frame.** So anything that has to stay identical to
-a source file, land on a named frame, or come out with a true alpha channel belongs in Remotion and
-the `motion-broll` skill, not here. Generation is for the shot that never existed: a place, a face,
-an object in motion, a mood. Everything typographic, diagrammatic or keyed is drawn, not generated.
-
-The one route back to alpha from a generator is a green screen prompted deliberately and keyed
-afterwards, and it is worse than drawing the same thing. Reach for it only when the subject could
-not be drawn.
+**Decide the lane before you write a prompt.** There are three, not two: code draws it, a model
+renders it, or it already exists and gets borrowed. A generated clip re-draws every pixel of every
+frame, so anything that has to stay identical to a source file, land on a named frame, or come out
+with a true alpha channel belongs in a renderer you control, not here. And before either, ask
+whether the shot already exists: a film beat or a meme buys recognition instantly and costs a
+download, and no generated clip competes with a frame the viewer already knows.
 
 Then:
 
+- **The beat is a b-roll cutaway** and an on-brand still exists or can be drawn:
+  `broll`. It animates an approved frame rather than describing a scene, which is what keeps
+  a set of cutaways one film, and it holds the Agnes pacing and the hold clause. Come here only
+  when the beat needs a scene written from nothing.
 - **No idea or script yet** (a concept, a Big Idea, an ad scenario, not a prompt): `video-script` for
   the doctrine and `video-hooks` for the open. Come back once there is something to shoot.
-- **The clip serves a sentence in a video you are cutting**: `motion-broll` owns the clock, the
-  coverage plan and the register. Get the beat and its frame count from there, then come back here
-  for the prompt.
-- **Still keyframes or plates** to feed the pipeline: `youtube-thumbnail` for the image style.
+- **The clip serves a sentence in a video you are cutting**: `motion-design` owns the clock, the coverage plan
+  and the register. Get the beat and its frame count from there, then come back for the prompt. A
+  generated clip is held to the same two questions as a drawn one, so read
+  `motion-design/references/storytelling.md` before writing the prompt: a shot that renders the
+  sentence the read already said is the failure whatever produced it, and a generated shot is the
+  easiest one to spend a fee on.
+- **Still keyframes or plates** to feed the pipeline: `youtube-thumbnail` for the house image style,
+  or the 3D plates already rendered on the design shelf.
 - **A script or scene exists and needs prompts** - this skill. Continue below.
 
 ---
@@ -114,27 +121,6 @@ Prefer: ready-to-copy prompts, clear section labels, production language, motiva
 Avoid: long theory unless asked, academic lectures, vague inspiration, decorative jargon, "cinematic masterpiece" filler, prompts without camera and light, prompts without continuity, stacking more than two director references, abstract emotions without physical translation.
 
 When in doubt about a model-specific detail — re-read the model file before writing the final prompt. It costs nothing and prevents bad output.
-
----
-
-*Author: Serge Shima ([t.me/aimastersme](https://t.me/aimastersme) · [sergeshima.com](https://sergeshima.com) · [aimasters.me](https://aimasters.me)) · License: CC BY 4.0 — attribution required · Source: [smixs/visual-skills](https://github.com/smixs/visual-skills)*
-
-## Closing a run
-
-This skill appends new failure modes to its own pattern list after each run. If this run surfaced one
-that is not already listed, append it to Learned Patterns before finishing.
-
-## Learned Patterns
-
-Appended when a run surfaces something this skill did not already know. Newest first.
-
-- A generated clip re-draws every pixel of every frame, so it can never match a source file, land on
-  a named frame, or carry a true alpha channel. Route those beats to a renderer before writing a
-  prompt for them.
-- Reading this file alone and writing a prompt straight from it produces mush. The process lives in
-  the reference files and the loading order is the process.
-- A green-screen route back to alpha exists and is worse than drawing the same thing. Reach for it
-  only when the subject could not have been drawn.
 
 ---
 

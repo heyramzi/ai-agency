@@ -3,6 +3,7 @@ name: board-move
 description: Move a ClickUp task to a new status (todo, in-progress, in-review, done). Reads the project's .tasks/config.json for the list and status map; resolves the task by ID. Use when changing a board task's status by ID, when /board-move is invoked, or when a task needs moving without the full /board-start or /board-ship workflow.
 argument-hint: <task-id> <status>
 allowed-tools: Bash
+tags: [drives, clickup]
 ---
 
 # /board-move

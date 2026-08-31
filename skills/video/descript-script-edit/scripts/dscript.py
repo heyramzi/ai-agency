@@ -3,7 +3,9 @@
 
     dscript grab [label]           read the clipboard, archive it, print the state
     dscript words                  indexed transcript of the last grab, for the cut list
-    dscript apply cuts.json [opts] rebuild and load the clipboard  (--styles/--typos/--markers/--delete)
+    dscript apply cuts.json [opts] rebuild and load the clipboard
+                                   (--styles/--typos/--markers/--pins/--delete)
+    dscript pins pins.json         place b-roll and zooms only; no cut, no alignment
     dscript history                every payload seen or written, newest first
     dscript restore <id>           put an archived payload back on the clipboard
     dscript check                  read the clipboard back and diff it against the last apply
@@ -15,7 +17,7 @@ import json, os, re, sys, datetime, shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import dclip, recut2
+import dclip, recut2, pins as pinmod
 
 HOME = os.path.expanduser("~/.descript-clip")
 HIST = os.path.join(HOME, "history")
@@ -69,7 +71,7 @@ def words():
     print("\n\n".join(out))
     print("\n-- %d words, %d paragraphs -> %s" % (i, len(out), path))
 
-def apply(cuts_path, styles=None, typos=None, markers=None, delete=False):
+def apply(cuts_path, styles=None, typos=None, markers=None, pins=None, delete=False):
     src = os.path.join(HOME, "current.json")
     cuts = json.load(open(cuts_path))
     fn = recut2.build if delete else recut2.build_ignore
@@ -78,6 +80,8 @@ def apply(cuts_path, styles=None, typos=None, markers=None, delete=False):
         out = recut2.apply_styles(new, out, json.load(open(styles)))
     if markers:
         out = recut2.add_markers(out, new, json.load(open(markers)))
+    if pins:
+        out = pinmod.add_pins(out, new, json.load(open(pins)))
     for t in new:                       # a range must resolve to the phrase it was written for
         for a in (t["text"].get("attributes") or []):
             r = a["range"]
@@ -96,6 +100,26 @@ def apply(cuts_path, styles=None, typos=None, markers=None, delete=False):
     print("  surviving script -> %s (read it as prose; an off-by-N cut list looks fine here)"
           % os.path.join(HOME, "preview.txt"))
     print("  -> Cmd+A, Cmd+V in Descript. Do not copy anything else first.")
+
+def place(pins_path):
+    """Pins with no cut list.
+
+    The rebuild needs a word alignment; placing a clip does not. A composition
+    that is already cut, or whose media carries no alignment, can still take
+    b-roll this way.
+    """
+    p = json.load(open(os.path.join(HOME, "current.json")))
+    out = pinmod.add_pins(p, p["data"][0]["copiedTaus"], json.load(open(pins_path)))
+    dclip.write(out, out["text"][0] if out.get("text") else "")
+    back, _ = dclip.decode()
+    if json.dumps(back, sort_keys=True) != json.dumps(out, sort_keys=True):
+        sys.exit("clipboard did not round-trip - do not paste")
+    name = _archive(out, "pins")
+    json.dump(out, open(os.path.join(HOME, "last_apply.json"), "w"))
+    _show(_stat(out), "ON CLIPBOARD  ")
+    print("  archived as %s" % name)
+    print("  -> Cmd+A, Cmd+V in Descript. Do not copy anything else first.")
+
 
 def history(n=20):
     rows = sorted((f for f in os.listdir(HIST) if f.endswith(".meta.json")), reverse=True)[:n]
@@ -129,14 +153,16 @@ if __name__ == "__main__":
     if c == "grab": grab(a[1] if len(a) > 1 else "")
     elif c == "words": words()
     elif c == "apply":
-        opt = {"styles": None, "typos": None, "markers": None, "delete": False}
+        opt = {"styles": None, "typos": None, "markers": None, "pins": None, "delete": False}
         rest = a[2:]
         for i, x in enumerate(rest):
             if x == "--styles": opt["styles"] = rest[i+1]
             elif x == "--typos": opt["typos"] = rest[i+1]
             elif x == "--markers": opt["markers"] = rest[i+1]
+            elif x == "--pins": opt["pins"] = rest[i+1]
             elif x == "--delete": opt["delete"] = True
         apply(a[1], **opt)
+    elif c == "pins": place(a[1])
     elif c == "history": history(int(a[1]) if len(a) > 1 else 20)
     elif c == "restore": restore(a[1])
     elif c == "check": check()

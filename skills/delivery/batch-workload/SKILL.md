@@ -1,6 +1,7 @@
 ---
 name: batch-workload
 description: The BATCH planning method for ClickUp. Reschedule, assign, and point a workspace into clean one-week batches with a per-person capacity cap. Use when a board looks overloaded or messy, when tasks are overdue or unassigned, when someone asks to "rebalance the workload", "clean up the batch", "plan this week", or "spread the team's tasks", or when setting up the BATCH/Points fields on a new space.
+tags: [plans, clickup]
 ---
 
 # BATCH Workload Planning
@@ -27,7 +28,7 @@ The last bucket is named `Maybe` on some spaces and `Someday` on others. Read th
 
 ### Batch to dates rule
 
-Every task in a batch shares the same start and due dates. A batch is one week of work, Monday through Friday. Set dates date-only (`start_date_time: false`, `due_date_time: false`). This keeps the deadline as the single source of truth and the batch derived from it. The in-app version of this derivation lives in `app/src/components/features/tasks/batch.ts` (`deadlineForBatch`, `batchForDeadline`).
+Every task in a batch shares the same start and due dates. A batch is one week of work, Monday through Friday. Set dates date-only (`start_date_time: false`, `due_date_time: false`). This keeps the deadline as the single source of truth and the batch derived from it. Where an app renders the same board, it needs the same derivation, in one place both sides read.
 
 ### Points field (dropdown)
 
