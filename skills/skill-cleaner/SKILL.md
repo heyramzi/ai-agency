@@ -68,10 +68,15 @@ file is the normal case and not a fault.
 
 Which skill is dead is the one question the files cannot answer, because
 nothing in a SKILL.md records that it ran. The evidence comes from an
-invocation ledger: `~/.claude/skill-usage.jsonl`, one JSON line per run,
-appended by a Claude Code PostToolUse hook on the `Skill` and `Agent` tools
-(`REDACTED/hooks/skill-usage.mjs`). Point somewhere else with
-`--usage <path>`, or turn the check off with `--no-usage`.
+invocation ledger: `~/.claude/skill-usage.jsonl`, one JSON line per run, with an
+`at` timestamp, a `kind` of `skill` or `agent`, and a `name`. Point somewhere
+else with `--usage <path>`, or turn the check off with `--no-usage`.
+
+The ledger is built from the session transcripts (`~/.claude/projects/**/*.jsonl`),
+not by a hook. A PostToolUse hook on the `Skill` and `Agent` tools wrote it until
+26 Aug 2026 and caught 1 run where the transcripts held 1,532, because this
+runtime does not raise PostToolUse for the `Skill` tool. A hook that stops
+firing reads exactly like a skill nobody ran.
 
 **`never-used`** is a skill the ledger has never seen invoked. It is a warning,
 never fixable, because the repair is a judgment: delete it, or repair the
