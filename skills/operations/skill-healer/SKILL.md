@@ -85,8 +85,14 @@ has nowhere to write, and the log with no closing step is never written to.
 Entry format, newest first:
 
 ```
-- YYYY-MM-DD: <what went wrong or was assumed> <what to do instead>.
+- YYYY-MM-DD: <what went wrong or was assumed> <what to do instead>. [ask: <the ask that caused it>]
 ```
+
+**Keep the ask when a prompt caused the failure.** The lesson alone cannot be
+retested: an edited file is believed rather than checked, and the same wording
+that broke the skill once is the only input that proves the edit worked. Ten
+words of the original ask is enough to re-run it later and read the result. Leave
+the bracket off when the failure came from a tool or an API rather than a prompt.
 
 ## Run it
 
