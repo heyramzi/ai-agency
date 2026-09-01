@@ -59,6 +59,67 @@ path publishes it.
    whose title matches exactly, then **Use Template**.
 7. Name the rule, add its one-line description, **Create**.
 
+## What the automation API does and does not let you do
+
+Three private endpoints, verified 1 Sep 2026 on a live space:
+
+    POST /automation/filters/project/{spaceId}/workflow    # space-level rules
+    POST /automation/filters/category/{folderId}/workflow  # folder-level
+    POST /automation/filters/subcategory/{listId}/workflow  # list-level
+    GET  /automation/workflow/{uuid}                        # one rule in full
+
+They are `cu automations --space|--folder|--list` and `cu automations get <uuid>`. The
+vocabulary trips you twice: a space is a **project** here, and `/automation/space/{id}`
+means the WORKSPACE, answering `ACCESS_700` when handed a space id. **A space-level rule
+does not appear in the list-level listing**, so a rule you know exists reading as "no
+automations" usually means it is defined a level up.
+
+**`PUT /automation/workflow/{uuid}` answers 200 and silently ignores `actions`.** Name,
+`active` and `trigger` write; the action array comes back exactly as it was, with a fresh
+`last_updated` to make it look like something happened. Confirmed three ways: bare action
+object, action with a client-generated uuid, and the full workflow object round-tripped.
+So **every action edit is a click path**, and reading the rule first is still worth it: the
+action ids, a `webhook_configuration_id` and the trigger's source flags are all invisible
+in the UI.
+
+## Editing the actions of an existing rule
+
+Open the rule directly with its own deep link rather than hunting it in the panel:
+`https://app.clickup.com/<teamId>/v/o/s/<spaceId>?automation_id=<uuid>&deeplink=automation`.
+
+- **The first action has no trash icon.** ClickUp will not let a rule drop to zero actions,
+  so the delete only appears from the second card down. To remove the first one, retype it:
+  open its own dropdown, pick the replacement, then delete whichever card became the
+  duplicate. Dragging works too and is far more fragile.
+- **Save and Cancel sit a thumb apart** at the bottom right, Cancel left of Save. At 1512
+  wide they were (1260, y) and (1331, y): a click meant for Cancel landed on Save and
+  committed an edit that was only meant to be inspected. Read back with
+  `cu automations get <uuid>` rather than trusting which one you hit, and never open the
+  builder on a live rule with an edit half made.
+- **The modal is taller than the window**, and its inner column does not answer `scroll`.
+  Grow the viewport instead: `cdp('Emulation.setDeviceMetricsOverride', {width: 1512,
+  height: 1500, deviceScaleFactor: 1, mobile: false})` shows all the actions at once.
+  Picking an action from a dropdown resets the override, so re-apply it after each pick.
+- **One `+` click can add two actions.** Count the cards in the footer sentence ("When X
+  then A and B and C") before assuming what you have.
+
+## Call webhook: two actions, and the payload it sends
+
+The action picker offers **Call webhook** (`webhookv2`, takes a saved
+`webhook_configuration_id`) and **Call webhook (Legacy)** (`webhook`, takes a bare
+`endpoint` URL). Prefer v2: the configuration is reusable and named, and the picker can
+create one inline.
+
+The body it POSTs (axios user-agent) is:
+
+    {auto_id, trigger_id, date, payload: { ...the task... }}
+
+`payload` carries `id`, `custom_type`, `subcategory` (the list id), `fields[]`, and dates
+under `time_mgmt.start_date` / `time_mgmt.due_date` as epoch-ms **strings**. It carries
+`users[]` as bare user IDs and **no usernames**, so anything that needs a person's name has
+to re-read the task. Learn the shape from the receiver rather than from here: with Make,
+that is `make hook-logs <hookId> --log <logId>`.
+
 ### Editing rules without reloading anything
 
 The Manage panel has a list switcher at its top left with its own search box.
