@@ -1,7 +1,7 @@
 # AGENTS.md
 
 <!-- vibekit:agents-core:start -->
-<!-- Generated from REDACTED/references/agents-core.md. Edit there, then run: node REDACTED/scripts/sync-agents-core.cjs -->
+<!-- Generated. Edited in the source this repo is projected from, never here. -->
 
 Rules that apply to every prompt. Anything conditional is a skill or a hook, not a line here.
 
