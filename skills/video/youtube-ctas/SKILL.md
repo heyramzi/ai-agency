@@ -1,6 +1,6 @@
 ---
 name: youtube-ctas
-description: Builds the evergreen 1920x1080 transparent overlays a finished YouTube edit is dressed with, in Remotion: subscribe, like, comment, book-a-call and link-in-the-description pills, the channel lower third, and the end-screen bed. Use when a CTA, a lower third or an end card is needed, when an overlay renders without its alpha channel, when an overlay has to land where YouTube's own clickable elements go, or when adding a clip to the Design Assets shelf.
+description: "Builds the evergreen 1920x1080 transparent overlays a finished YouTube edit is dressed with, in Remotion: subscribe, like, comment, book-a-call and link-in-the-description pills, the channel lower third, and the end-screen bed. Use when a CTA, a lower third or an end card is needed, when an overlay renders without its alpha channel, when an overlay has to land where YouTube's own clickable elements go, or when adding a clip to the Design Assets shelf."
 tags: [makes, remotion, youtube]
 ---
 
