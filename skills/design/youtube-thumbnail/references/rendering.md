@@ -48,24 +48,28 @@ Two things are this pipeline's own:
   person identical across a wall of frames.
 
 
-**OpenAI re-renders the person; Gemini keeps the photograph.** Tested twice, and the
-gap between the two tests is the useful part:
+**OpenAI re-rendered the person; Gemini keeps the photograph.** Tested twice, back when
+`gpt-image-1` and `gpt-image-2` were still callable, and the gap between the two tests
+is the useful part:
 
 - **Editing a finished frame**, `gpt-image-2` returned a face that is a lookalike, not
   the subject: narrower jaw, different beard, different mouth. `gpt-image-1` was worse
   and cropped the type off.
 - **Building from the source plate**, handed the same three reference images Gemini
-  gets, it does far better: a convincing likeness, excellent tile lighting and a
-  correctly reproduced card. Still not the photograph, though. The beard fills in, the
-  brow heavies, the face idealises slightly. It is a good painting of him.
+  gets, it did far better: a convincing likeness, excellent tile lighting and a
+  correctly reproduced card. Still not the photograph, though. The beard filled in, the
+  brow heavied, the face idealised slightly. It was a good painting of him.
 
 Gemini's Pro and Flash image models return the photographed face unchanged in both
-cases, because they composite where OpenAI resamples the whole canvas.
+cases, because they composite where OpenAI resampled the whole canvas.
 
-So: OpenAI is not disqualified by one bad output, it is disqualified by what it *is*.
+So: OpenAI was not disqualified by one bad output, it was disqualified by what it *is*.
 On a channel where the same face appears every week, a per-frame re-render drifts, and
-drift across a wall of thumbnails is exactly the thing a recognisable face is for. Use
-it for objects, product shots and illustration with nobody in frame. Never for the face.
+drift across a wall of thumbnails is exactly the thing a recognisable face is for. Every
+OpenAI image model is banned outright in this workspace now (Ramzi, 1 Sep 2026: "We
+should never ever use anywhere GPT image"), so the old carve-out for objects, product
+shots and illustration with nobody in frame is gone too. Route all of it, faces
+included, to `gemini-3.1-flash-image`.
 
 **Seeds do not work.** `generationConfig.seed` is accepted without error by
 `gemini-3.1-flash-image` and ignored: the same seed twice returns two different images
@@ -131,11 +135,12 @@ a quota answer (429, or a 403 naming `RESOURCE_EXHAUSTED`) or a rejected key (40
 400 naming the key). A malformed request is returned as is, because retrying it on the
 next key just spends the next key.
 
-OpenAI takes no lane: it reads `OPENAI_API_KEY`, and **there is deliberately none set**. It
-also bills an image by the tokens it returns rather than at a flat rate ($30 per 1M image
-output tokens, off platform.openai.com/docs/pricing on 26 Aug 2026), so if a key is ever
-added, `generateImage` costs a frame from the usage the response carries and the catalog
-number is only a floor.
+**Every OpenAI image model is banned outright, so OpenAI takes no lane on purpose.**
+`OPENAI_API_KEY` stays unset for good, not merely as a gap to close later: Ramzi, 1 Sep
+2026, "We should never ever use anywhere GPT image." It used to bill an image by the
+tokens it returns rather than at a flat rate ($30 per 1M image output tokens, off
+platform.openai.com/docs/pricing on 26 Aug 2026); that pricing note stays only as the
+record of why a key was never worth adding.
 
 **Known state, 26 Aug 2026: the direct Google key is not in `app/.env.local` either.** Every
 image call in this workspace lands on lane 3, the Cloudflare AI Gateway, which holds its own
