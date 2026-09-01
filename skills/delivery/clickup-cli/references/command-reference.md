@@ -201,6 +201,9 @@ A custom field column needs its ID prefixed `cf_` (matching `groupBy`'s format),
 
 ```bash
 cu fields list --list <id>                          # Fields + their dropdown options
+cu fields list --list <id> --task-types             # + the task types each field is scoped to
+cu fields folder|space <id> --task-types            # same at the folder / space level
+cu fields workspace --task-types
 cu fields create --list <id> --name "X" --type drop_down --options-json '["A","B"]'
 cu fields update <fieldId> --list <id> --name "New name"
 cu fields update <fieldId> --list <id> --add-options "Q3 2026,Q4 2026"
@@ -235,6 +238,16 @@ full array. Reach for raw curl only if you really want options destroyed.
 
 Running out of dropdown options is the usual cause of a half-empty field. Check
 the option list before concluding the values were never filled in.
+
+**A field can be scoped to specific custom task types, and then it is invisible
+on every other type.** `--task-types` asks for the field's `applied_objects` and
+names the types; a field every type carries prints `all`. A scoped field is
+missing from `cu task get <id> --fields` on a task of another type, and
+`task field set` answers 400 rather than saying the field does not apply. So a
+value that will not stick is a task-type mismatch as often as a bad option id:
+read the scope first, and change the type with
+`cu task update <id> --custom-item <typeId>` (`cu workspace task-types` lists
+them) if that is the real fix.
 
 **`fields list` prints option labels, not option ids, and `task field set` will not
 accept a label.** A dropdown takes an option id or its orderindex; a `labels` field

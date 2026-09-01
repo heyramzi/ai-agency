@@ -17,20 +17,22 @@ Announce at start: "I'm using the clickup-browser skill."
 
 ## Check the CLI before you open a browser
 
-Eight surfaces the public API never reached are now plain `cu` commands, built on
-ClickUp's private frontdoor API and verified live on 24 Aug 2026:
+Nine surfaces the public API never reached are now plain `cu` commands, built on
+ClickUp's private frontdoor API (list/get automations re-verified 1 Sep 2026):
 
     cu template center            # every saved template, by kind
     cu dashboards                 # every dashboard in the workspace
     cu statuses                   # every status defined anywhere
     cu agents                     # every Super Agent
     cu agents get <id>            # one agent, agent_config included
-    cu automations --list <id>    # automations on a list (--active ACTIVE|INACTIVE|ALL)
+    cu automations --list|--folder|--space <id>   # rules on that level (--active ACTIVE|INACTIVE|ALL)
+    cu automations get <uuid>     # one rule in full, every action's input included
     cu automations count <listId>
     cu automations catalog        # everything automations can trigger on and do
 
-`automations catalog` settles "is X expressible as a ClickUp automation" without
-opening the builder and looking, which used to be the only way.
+A space-level rule is invisible in the list-level listing, and no endpoint writes an action:
+`PUT /automation/workflow/{uuid}` returns 200 and keeps the ones it had. `automations
+catalog` settles "is X expressible as a ClickUp automation" without opening the builder.
 
 These authenticate with a captured browser session, **not** the `pk_` API token,
 which the frontdoor rejects. They need a live capture:
@@ -99,9 +101,9 @@ clean on camera. Sweep the surfaces the shot will cross, not only the one it lan
 
 ## Templates, automations and the pinned description
 
-The three surfaces with no API at all. Click paths, both label languages and the rule for
-editing an automation without reloading are in
-[`references/templates-and-automations.md`](references/templates-and-automations.md).
+The three surfaces with no API at all. Click paths, both label languages, editing a rule's
+actions (the first has no delete icon; Save sits a thumb from Cancel) and the body a "Call
+webhook" POSTs: [`references/templates-and-automations.md`](references/templates-and-automations.md).
 
 ## Super Agents
 
