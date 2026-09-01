@@ -29,7 +29,7 @@ phrase is not how they load.
 | `video-coach` | Reads the raw take and names one habit | 5 |
 | `descript-script-edit` | The 2-pass cut, through the clipboard | 6 |
 | `youtube-thumbnail` | The bands first, then the frame | 7 |
-| `motion-broll` | Graphics that carry an idea | 8 |
+| `motion-design` | Graphics that carry an idea | 8 |
 | `youtube-ctas` | The evergreen transparent overlays | 8 |
 | `whiteboard` | Boards as code, drawn onto the iPad | 8 |
 | `shorts-production` | Clips out of the long video | 9 |
