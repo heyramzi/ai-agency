@@ -61,3 +61,13 @@ Every Bash call starts a fresh shell at the repo root, and the transcript says s
 Four more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; brace every variable that is followed by a colon, because zsh reads `$FONT:text=...` as the history modifier `:t` and hands ffmpeg a basename plus `ext=...`, which fails as a missing option and never as a bad path; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
 
 <!-- vibekit:agents-core:end -->
+
+The public plugin repo behind the free AI Agency room: agent skills, slash commands and one
+agent for the three parts of an agency that repeat every week, search, video production and
+client delivery, plus the two tools that keep the registry itself honest. `README.md` is the
+reader-facing entry point and `index.json` the marketplace manifest.
+
+- **Everything published here is read by strangers.** No client names, no ClickUp ids, no path
+  inside a private repo, in any file, including this one.
+- Skills, agents and references are authored upstream and projected in. Edit them where they
+  are written, then re-run the projection; a change made here is lost on the next sync.
