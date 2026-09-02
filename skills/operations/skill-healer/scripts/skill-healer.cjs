@@ -26,6 +26,7 @@ const USAGE = `skill-healer - keep the failure log inside a skill honest
 Options
   --apply       Write the change (retrofit and log are dry runs by default)
   --date <ymd>  Date for a logged entry (default: today, local time)
+  --long        Log an entry over 240 characters anyway
   --json        Machine-readable output
   --quiet       Only skills missing something
 
@@ -77,6 +78,14 @@ const ENTRY_UNDATED = /^-\s+(.+)$/;
  * raise the number.
  */
 const LOG_ENTRIES_MAX = 25;
+
+/**
+ * A log is read before a run and paid for in context every time. Past this many
+ * characters an entry has stopped being a rule and started being the story of
+ * the run that found it, which belongs in the archive or in git. 240 is roughly
+ * two printed lines: enough for the law plus one checkable anchor.
+ */
+const ENTRY_CHARS_MAX = 240;
 
 /**
  * An entry this old has either changed how the body describes the work, or it
@@ -313,10 +322,21 @@ function audit(skill, now) {
   // The ceiling is what a reader pays, not how many lines there are. A log split
   // into one-line rules plus an archive can hold 128 entries and still be 130
   // lines, and warning on the count there tells a maintainer to undo the fix.
-  // What makes a log a second body is entries that carry their evidence inline.
-  const inlineEvidence =
-    skill.entries.length > 0 &&
-    skill.entries.reduce((n, e) => n + e.text.length, 0) / skill.entries.length > 400;
+  // What makes a log a second body is entries that carry their evidence inline,
+  // and the split alone does not stop that: 2026-09-02 found logs already split
+  // whose "one line per entry" side still averaged 273 characters.
+  const meanChars =
+    skill.entries.length > 0
+      ? skill.entries.reduce((n, e) => n + e.text.length, 0) / skill.entries.length
+      : 0;
+  const inlineEvidence = meanChars > ENTRY_CHARS_MAX;
+  const overlong = skill.entries.filter((e) => e.text.length > ENTRY_CHARS_MAX);
+  if (overlong.length > 0) {
+    warnings.push(
+      `${overlong.length} entries over ${ENTRY_CHARS_MAX} characters (mean ${Math.round(meanChars)}). ` +
+        `Rewrite them as the rule alone; the run belongs in the archive or in git.`,
+    );
+  }
   if (skill.entries.length > LOG_ENTRIES_MAX && (inlineEvidence || !skill.entriesFile)) {
     warnings.push(
       `${skill.entries.length} entries is a second body. Split the rules from the evidence ` +
@@ -464,13 +484,14 @@ function appendEntry(skill, entry, now) {
 }
 
 function main(argv) {
-  const flags = { apply: false, json: false, quiet: false, date: null };
+  const flags = { apply: false, json: false, quiet: false, date: null, long: false };
   const positionals = [];
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === "--apply") flags.apply = true;
     else if (arg === "--json") flags.json = true;
     else if (arg === "--quiet") flags.quiet = true;
+    else if (arg === "--long") flags.long = true;
     else if (arg === "--date") flags.date = argv[++i];
     else if (arg === "-h" || arg === "--help") return usage(0);
     else if (arg.startsWith("--")) {
@@ -553,6 +574,16 @@ function main(argv) {
     const entry = words.join(" ").trim();
     if (!target || !entry) {
       process.stderr.write('log needs a skill and an entry: skill-healer log ./skills/x "what went wrong, what to do instead"\n');
+      return 2;
+    }
+    // Refuse before reading the skill: the writer has the run in front of them
+    // and is the only one who can say which sentence is the rule. Compressing it
+    // later, from the log alone, is guesswork.
+    if (normalise(entry).length > ENTRY_CHARS_MAX && !flags.long) {
+      process.stderr.write(
+        `Entry is ${normalise(entry).length} characters; the ceiling is ${ENTRY_CHARS_MAX}.\n` +
+          `Lead with the law, keep one checkable anchor, drop the run. --long to override.\n`,
+      );
       return 2;
     }
     const file = skillFile(target);

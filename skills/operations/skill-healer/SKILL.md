@@ -89,6 +89,12 @@ Entry format, newest first:
 - YYYY-MM-DD: <what went wrong or was assumed> <what to do instead>. [ask: <the ask that caused it>]
 ```
 
+**One line, 240 characters, and it opens with the law.** A log is read before a run and paid for
+in context every time, so the entry carries the rule and one checkable anchor - the error string,
+the threshold, the flag - and nothing else. The story of the run belongs in the archive or in git.
+`log` refuses a longer entry, because the only person who can say which sentence is the rule is
+the one holding the run; `--long` overrides it.
+
 **Keep the ask when a prompt caused the failure.** The lesson alone cannot be
 retested: an edited file is believed rather than checked, and the same wording
 that broke the skill once is the only input that proves the edit worked. Ten
@@ -110,7 +116,7 @@ node scripts/skill-healer.cjs check
 | `log <skill> "<entry>" --apply` | Append a dated entry, newest first |
 | `fold <skill>` | Entries old enough to belong in the body instead |
 
-Flags: `--json`, `--quiet`, `--date <YYYY-MM-DD>`. `retrofit` and `log` are dry
+Flags: `--json`, `--quiet`, `--date <YYYY-MM-DD>`, `--long`. `retrofit` and `log` are dry
 runs unless you pass `--apply`. Exit code is 1 when a skill is missing the
 scaffold, so `check` drops into CI.
 
@@ -132,8 +138,11 @@ is the same as undocumented.
   into the body and deleted from the log. The log records what the body does not
   yet say. `fold` lists the candidates; it does not rewrite prose, because which
   sentence absorbs the lesson is a judgment about the work.
-- Past 25 entries the log has become a second body. That is the signal to fold,
-  not to raise the number.
+- Past 25 entries a log still living in the `SKILL.md` has become a second body.
+  That is the signal to fold, not to raise the number. Once the log has moved to
+  `references/`, the count stops being the measure and the character does: 130
+  one-line rules are cheaper to read than 25 paragraphs, and deleting a live rule
+  to hit a number is the expensive mistake.
 - A log lives in `references/learned-patterns.md`, never in the `SKILL.md`. A
   body is read in full on every invocation and a log is read on almost none.
 - Past the ceiling the log splits in two rather than growing: one line per entry
@@ -141,6 +150,10 @@ is the same as undocumented.
   `learned-patterns-archive.md`, and `SKILL.md` links both. `ai-cleaner`'s
   `split_log.py` does it. The rule is what a session needs before a run; the
   evidence is for when the rule is argued with.
+- The split does not dry the log on its own. `split_log.py` moves the paragraph,
+  it does not rewrite it: on 2026-09-02 the "one line per entry" side of six
+  already-split logs still averaged 273 characters. Rewrite each line as the law
+  after splitting, or the file is a second body with newlines in it.
 
 Detail on retrofitting an existing registry, and the SSOT rules that decide which
 file owns a fact: [references/healing.md](references/healing.md).
@@ -177,18 +190,21 @@ node scripts/skill-healer.cjs log . "what was assumed, what to do instead" --app
 
 Appended when a run surfaces something this skill did not already know. Newest first.
 
-- 2026-08-26: `discover` only looked one level under a root, so `check ai-doc/skills` printed "No SKILL.md found" across 191 packaged skills and read as a mistyped path. A registry has more than one layout; walk down until a directory owns a SKILL.md, and stop there so references and vendored children stay out.
-- 2026-08-26: The entry regex matched one date format, so eight logs holding between 8 and 300 entries reported as empty and the 25-entry ceiling never fired on the logs furthest past it. Three formats were in use and none was wrong. Count every shape, keep `raw` so a rebuild does not reformat somebody's log, and write only ISO.
-- 2026-08-26: `log` wrote into the body even when the log had moved to `references/`, which `read` already knew how to follow. A read path and a write path that disagree about where a thing lives will split it across two files in silence.
-- 2026-08-17: Required the self-healing promise in the frontmatter description, which is preloaded into every session for every skill in the registry. Across 20 skills that was about 1,300 characters of text that tells the runtime nothing about when to pick a skill. Scaffold parts that address the session already inside the skill belong in the body; only what drives selection earns a place in the description.
-- 2026-08-17: Reported a fact as having two homes because two paths held it, without resolving either one; the first was a symlink to the second, so the registry was already single-source and the duplication did not exist. Resolve every path with readlink -f before calling anything a duplicate, and note that find -type f hides symlinks while diff and wc follow them.
-- 2026-08-16: A rule was filed under a heading scoped to one repo, so it would only ever be read by sessions taking that path, while two of the three failures it describes came from sessions that never open the file. Check who reads the section, not just which file owns the fact, and place the general form where its audience already loads it.
-- 2026-08-08: A skill can carry all four scaffold parts and still never heal, because the closing step said "consider appending" rather than naming the command. Hedged instructions read as optional and get skipped; the closing step names the exact command to run.
-- 2026-08-08: Retrofitting a description by appending the promise sentence broke a plain YAML scalar whose value already contained `: `, which strict readers then rejected. Preserve the original quoting style when rewriting a frontmatter value, and never introduce a colon-space into an unquoted scalar.
-- 2026-08-08: An append targeting the end of the file landed mid-document on skills where Learned Patterns was not the last section, silently attaching entries to whatever followed. Check that the log is the final section before writing to it, and report it when it is not.
-- 2026-08-08: A lookahead ending in `$` under the /m flag matched end-of-line rather than end-of-string, so the lazy group before it matched nothing and every appended entry landed directly under the heading, above the prose introducing it. Rebuild the section from its parsed parts instead of splicing at a matched offset.
-- 2026-08-08: Dedupe compared the caller's raw entry against stored text that had already been normalised with a trailing period, so the same lesson logged twice. Normalise both sides before comparing.
-- 2026-08-08: Read a skill's description with a regex whose lookahead ended in $ under the /m flag, so a block-scalar description was truncated to its first line and a promise written on line four read as missing. Parse frontmatter values line by line, stopping at the next top-level key.
-- 2026-08-08: Counted only the entries inside the Learned Patterns section, so three skills whose log had outgrown the body and moved to references/learned-patterns.md reported as empty while holding 12, 28 and 62 entries. Follow the link out of the section before calling a log empty.
-- 2026-08-08: Matched the scaffold on exact wording: '## Learned Patterns' case-sensitively, 'if this run surfaced' literally, and 'appends new failure modes' with no room for a quantifier. Five honest skills read as broken. Match the commitment, not the sentence, and keep the strictness for hedges like 'consider appending'.
-- 2026-08-08: retrofit appended its closing step and its Verification fallback to the end of the file, which on a skill that already had a log put both sections after it, so the next check reported the log as no longer last. Insert new sections before the log heading when one exists.
+- 2026-09-02: Grep the implementation before calling a log entry unowned, not only the skill's own references. Two DepthFlow rules read as homeless and were already verbatim in `loop.ts`, which is their real home.
+- 2026-09-02: Splitting a log does not dry it. Six split logs still averaged 273 characters on the rule side; `log` now refuses an entry over 240 and `check` warns on the mean.
+- 2026-09-02: Anchor a section rewrite on the heading at the start of a line. Partitioning on `## Learned Patterns` matched the scaffold list that names the heading and truncated 110 lines of body.
+- 2026-08-26: Walk down until a directory owns a SKILL.md rather than looking one level under a root; `check ai-doc/skills` printed "No SKILL.md found" across 191 packaged skills.
+- 2026-08-26: Count every entry shape and keep `raw` so a rebuild does not reformat somebody's log; a one-format regex reported eight logs holding 8 to 300 entries as empty.
+- 2026-08-26: A read path and a write path that disagree about where the log lives will split it across two files in silence. `log` wrote to the body while `read` followed the link to `references/`.
+- 2026-08-17: Scaffold parts that address the session already inside the skill go in the body; only what drives selection earns a place in the description, which is preloaded for every skill.
+- 2026-08-17: Resolve every path with `readlink -f` before calling anything a duplicate. `find -type f` hides symlinks while `diff` and `wc` follow them.
+- 2026-08-16: Check who reads a section, not just which file owns the fact. A rule filed under a repo-scoped heading was invisible to the sessions that caused two of its three failures.
+- 2026-08-08: The closing step names the exact command to run. "Consider appending" reads as optional and gets skipped, so a skill with all four scaffold parts still never heals.
+- 2026-08-08: Preserve the original quoting style when rewriting a frontmatter value, and never introduce a colon-space into an unquoted scalar.
+- 2026-08-08: Check the log is the final section before appending to it, and report it when it is not, or entries attach to whatever follows.
+- 2026-08-08: Rebuild a section from its parsed parts instead of splicing at a matched offset; a lookahead ending in `$` under `/m` matches end-of-line, not end-of-string.
+- 2026-08-08: Normalise both sides before comparing a new entry to a stored one, or the same lesson logs twice on punctuation alone.
+- 2026-08-08: Parse frontmatter values line by line, stopping at the next top-level key; a regex truncated a block-scalar description to its first line.
+- 2026-08-08: Follow the link out of the Learned Patterns section before calling a log empty; three skills reported empty while holding 12, 28 and 62 entries.
+- 2026-08-08: Match the commitment, not the sentence. Exact-wording checks on the scaffold read five honest skills as broken; keep the strictness for hedges like "consider appending".
+- 2026-08-08: Insert new sections before the log heading when one exists, or `retrofit` pushes the log out of the last place it just checked for.
