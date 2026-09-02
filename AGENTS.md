@@ -49,15 +49,15 @@ Confirm these four, and nothing else:
 
 - a message sent to another person under the user's name
 - a payment or a refund
-- deleting data that has no backup
+- deleting somebody else's data that has no backup
 - pushing into a client's live production system
 
-The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
+Ramzi's own files, repos and machines are never on that list. 29 Aug 2026: "Don't ever worry about deleting files." Delete it, say what went, carry on. The list does not grow by analogy. "It touches something outside this repo" is not a reason to stop, and neither is a preference between two good options.
 
 ## 7. The shell a Bash call actually gets
 
 Every Bash call starts a fresh shell at the repo root, and the transcript says so out loud: `Shell cwd was reset to ...` after any call that changed directory. So write absolute paths, or `cd` inside the same call. A `cd` on one line and the work on the next is the commonest wasted call in this workspace: it appeared in five of the six sessions a 2026-08-28 review scored as inefficient.
 
-Three more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
+Four more, each of which costs a round trip: quote a `--include` glob, because zsh expands it first and the call dies with `no matches found`; `timeout` is not installed on macOS, so use the Bash tool's own `timeout` parameter; brace every variable that is followed by a colon, because zsh reads `$FONT:text=...` as the history modifier `:t` and hands ffmpeg a basename plus `ext=...`, which fails as a missing option and never as a bad path; and edit source with the Edit tool, never a python heredoc doing string replacement, because a heredoc replace cannot see the syntax it is breaking. Reach for a script only when the same change repeats across many files, and typecheck immediately after.
 
 <!-- vibekit:agents-core:end -->
