@@ -5,10 +5,10 @@ import { str } from "./parse.js";
 import type { Finding, Skill } from "./types.js";
 
 /**
- * The invocation ledger a Claude Code PostToolUse hook appends to, one JSON
- * line per skill or subagent run. A registry cannot tell a dead skill from a
- * rarely-needed one by reading files, because nothing in a SKILL.md records
- * that it ran; the ledger is the only evidence, and this is where it is read.
+ * The invocation ledger, one JSON line per skill or subagent run. A registry
+ * cannot tell a dead skill from a rarely-needed one by reading files, because
+ * nothing in a SKILL.md records that it ran; the ledger is the only evidence,
+ * and this is where it is read.
  *
  * Something outside this tool writes it, and the honest writer is the session
  * transcripts rather than a PostToolUse hook: a hook that stops firing is
