@@ -20,8 +20,8 @@ Phase 1 below judges a cluster you already have in mind. Deciding which clusters
 first place, searchable against shareable, pillars and spokes, keyword research by buyer stage and
 how to rank the ideas, belongs to [seo-content-strategy](../seo-content-strategy/SKILL.md).
 
-A comparison or alternatives keyword becomes a page shape rather than an article:
-`seo-competitor-alternatives` holds the four formats.
+A comparison or alternatives keyword becomes a page shape rather than an article, not a standalone
+skill: see the three shapes in Phase 3 below.
 
 ## Prerequisites
 

@@ -82,7 +82,7 @@ const LOG_ENTRIES_MAX = 25;
 /**
  * A log is read before a run and paid for in context every time. Past this many
  * characters an entry has stopped being a rule and started being the story of
- * the run that found it, which belongs in the archive or in git. 240 is roughly
+ * the run that found it, which belongs in git. 240 is roughly
  * two printed lines: enough for the law plus one checkable anchor.
  */
 const ENTRY_CHARS_MAX = 240;
@@ -319,12 +319,10 @@ function audit(skill, now) {
   if (skill.hasLog && skill.entries.length === 0) {
     warnings.push("Learned Patterns is empty. Seed it from the run that motivated the skill.");
   }
-  // The ceiling is what a reader pays, not how many lines there are. A log split
-  // into one-line rules plus an archive can hold 128 entries and still be 130
-  // lines, and warning on the count there tells a maintainer to undo the fix.
-  // What makes a log a second body is entries that carry their evidence inline,
-  // and the split alone does not stop that: 2026-09-02 found logs already split
-  // whose "one line per entry" side still averaged 273 characters.
+  // The ceiling is what a reader pays, not how many lines there are. A log of
+  // one-line rules can hold 128 entries and still be 130 lines, and warning on
+  // the count there tells a maintainer to undo the fix. What makes a log a
+  // second body is entries that carry their evidence inline.
   const meanChars =
     skill.entries.length > 0
       ? skill.entries.reduce((n, e) => n + e.text.length, 0) / skill.entries.length
@@ -334,13 +332,13 @@ function audit(skill, now) {
   if (overlong.length > 0) {
     warnings.push(
       `${overlong.length} entries over ${ENTRY_CHARS_MAX} characters (mean ${Math.round(meanChars)}). ` +
-        `Rewrite them as the rule alone; the run belongs in the archive or in git.`,
+        `Rewrite them as the rule alone; the run belongs in git.`,
     );
   }
   if (skill.entries.length > LOG_ENTRIES_MAX && (inlineEvidence || !skill.entriesFile)) {
     warnings.push(
-      `${skill.entries.length} entries is a second body. Split the rules from the evidence ` +
-        `with ai-cleaner's split_log.py, or fold the hardened ones into the prose.`,
+      `${skill.entries.length} entries is a second body. Compress each entry to its rule ` +
+        `with ai-cleaner's compress_log.py, or fold the hardened ones into the prose.`,
     );
   }
   const stale = skill.entries.filter((e) => e.date && daysBetween(e.date, now) > FOLD_AFTER_DAYS);
