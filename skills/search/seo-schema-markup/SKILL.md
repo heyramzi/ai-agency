@@ -1,6 +1,6 @@
 ---
 name: seo-schema-markup
-description: When the user wants to add, fix, or optimize schema markup and structured data on their site. Also use when the user mentions "schema markup," "structured data," "JSON-LD," "rich snippets," "schema.org," "FAQ schema," "product schema," "review schema," or "breadcrumb schema." For broader SEO issues, see seo-audit.
+description: When the user wants to add, fix, or optimize schema markup and structured data on their site. Also use when the user mentions "schema markup," "structured data," "JSON-LD," "rich snippets," "schema.org," "FAQ schema," "product schema," "review schema," or "breadcrumb schema."
 metadata:
   version: "1.0.0"
 tags: [makes, seo, code]
@@ -45,6 +45,13 @@ If `.claude/product-marketing-context.md` exists, read first. Only ask for what'
 - Test before deploying
 - Monitor Search Console
 - Fix errors promptly
+
+### 5. It also drives AI citations, not just rich results
+
+Schema is the single biggest lever for Google AI Overviews: pages carrying Article, FAQPage,
+HowTo or Product schema see a 30-40% visibility boost over pages without it. FAQPage specifically
+correlates with more frequent Perplexity citations, since it hands the model an already-extracted
+question-answer pair. Weigh a schema backlog against this, not only against rich-result eligibility.
 
 ---
 
@@ -159,5 +166,4 @@ You can combine multiple schema types on one page using `@graph`:
 
 ## Related Skills
 
-- **seo-audit**: For overall SEO including schema review
 - **programmatic-seo**: For templated schema at scale

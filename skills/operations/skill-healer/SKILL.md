@@ -91,7 +91,7 @@ Entry format, newest first:
 
 **One line, 240 characters, and it opens with the law.** A log is read before a run and paid for
 in context every time, so the entry carries the rule and one checkable anchor - the error string,
-the threshold, the flag - and nothing else. The story of the run belongs in the archive or in git.
+the threshold, the flag - and nothing else. The story of the run belongs in git.
 `log` refuses a longer entry, because the only person who can say which sentence is the rule is
 the one holding the run; `--long` overrides it.
 
@@ -145,15 +145,16 @@ is the same as undocumented.
   to hit a number is the expensive mistake.
 - A log lives in `references/learned-patterns.md`, never in the `SKILL.md`. A
   body is read in full on every invocation and a log is read on almost none.
-- Past the ceiling the log splits in two rather than growing: one line per entry
-  in `learned-patterns.md`, the entry as its run wrote it in
-  `learned-patterns-archive.md`, and `SKILL.md` links both. `ai-cleaner`'s
-  `split_log.py` does it. The rule is what a session needs before a run; the
-  evidence is for when the rule is argued with.
-- The split does not dry the log on its own. `split_log.py` moves the paragraph,
-  it does not rewrite it: on 2026-09-02 the "one line per entry" side of six
-  already-split logs still averaged 273 characters. Rewrite each line as the law
-  after splitting, or the file is a second body with newlines in it.
+- Past the ceiling the log comes down to its rules rather than growing:
+  `ai-cleaner`'s `compress_log.py` takes each entry to one line and the run goes
+  to git, which already holds it and charges no reader for it. Commit first.
+- Compressing does not dry the log on its own: it moves the sentence, it does not
+  rewrite it, and six logs treated that way still averaged 273 characters a line.
+  Rewrite each one as the law plus one anchor, or the file is a second body with
+  newlines in it.
+- **There is no `learned-patterns-archive.md`.** A second log beside the first is
+  a body nobody opens: fifteen of them reached 5,296 lines, and 67 rules inside
+  them had never been folded into any log at all. `review_skill.py` errors on one.
 
 Detail on retrofitting an existing registry, and the SSOT rules that decide which
 file owns a fact: [references/healing.md](references/healing.md).
