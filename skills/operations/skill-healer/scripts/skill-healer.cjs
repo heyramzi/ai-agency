@@ -87,6 +87,9 @@ const LOG_ENTRIES_MAX = 25;
  */
 const ENTRY_CHARS_MAX = 240;
 
+/** Entries a log needs before "no replayable ask anywhere" reads as a dropped convention. */
+const ASK_COVERAGE_FLOOR = 5;
+
 /**
  * An entry this old has either changed how the body describes the work, or it
  * never mattered. Either way it stops earning its line.
@@ -339,6 +342,20 @@ function audit(skill, now) {
     warnings.push(
       `${skill.entries.length} entries is a second body. Compress each entry to its rule ` +
         `with ai-cleaner's compress_log.py, or fold the hardened ones into the prose.`,
+    );
+  }
+  // WHY count the asks: `[ask: ...]` is the only thing in an entry that can be
+  // re-run, and replay is the gap self-healing.md has named open since
+  // 2026-08-31. Nothing checked it, so on 5 Sep 2026 the field was dead in all
+  // 34 logs: 0 asks across 758 entries, the last of them stripped by the
+  // compression pass. A prompt failure with no ask is a lesson that can only be
+  // believed. Zero in a long log means the convention stopped being followed,
+  // not that every failure came from a tool.
+  const asks = skill.entries.filter((e) => /\[ask:/i.test(e.text));
+  if (skill.entries.length >= ASK_COVERAGE_FLOOR && asks.length === 0) {
+    warnings.push(
+      `No entry carries an \`[ask: ...]\`, so none of these ${skill.entries.length} can be replayed. ` +
+        `Add it when a prompt caused the failure.`,
     );
   }
   const stale = skill.entries.filter((e) => e.date && daysBetween(e.date, now) > FOLD_AFTER_DAYS);
