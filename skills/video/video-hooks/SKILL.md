@@ -244,4 +244,4 @@ works, what it suits and how it fails: [references/mechanisms.md](references/mec
 
 ## Learned Patterns
 
-What this skill's own runs have taught it, newest first, kept out of the body so the rules above carry the cost and the evidence does not. Append with `skill-healer log`. See [`references/learned-patterns.md`](references/learned-patterns.md).
+What this skill's own runs have taught it, newest first, kept out of the body so the rules above carry the cost and the evidence does not. Append with `skill-creator log`. See [`references/learned-patterns.md`](references/learned-patterns.md).

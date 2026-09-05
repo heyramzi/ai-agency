@@ -6,6 +6,7 @@
 - Retrofitting a registry
 - What not to heal
 - Worked examples
+- Healing is not accretion
 - Cadence
 
 Loaded when a learning does not have an obvious home, or when retrofitting a
@@ -97,6 +98,24 @@ cannot make the mistake.
 
 Records the assumption, not just the fix, so a reader recognises the situation
 before repeating it.
+
+## Healing is not accretion
+
+- An edit should leave the file no longer than it found it, unless the learning is a really new
+  case.
+- A learning that repeats across three or more files becomes one rule, and the three copies become
+  pointers to it.
+- An entry that has hardened into how the body describes the work gets folded into the body and
+  deleted from the log. `fold` lists the candidates; it does not rewrite prose, because which
+  sentence absorbs the lesson is a judgment about the work.
+- Past 25 entries a log still living in the `SKILL.md` has become a second body. That is the signal
+  to fold, not to raise the number. Once it has moved to `references/`, the character count is the
+  measure and not the entry count: 130 one-line rules are cheaper to read than 25 paragraphs.
+- **There is no `learned-patterns-archive.md`.** A second log beside the first is a body nobody
+  opens: fifteen of them reached 5,296 lines, and 67 rules inside them had never been folded into
+  any log at all. `review_skill.py` errors on one.
+
+The short form is in `SKILL.md`.
 
 ## Cadence
 

@@ -54,9 +54,9 @@ that column, so the shelf you read and the folder you install out of say the sam
 
 | Folder | The role it adds up to | Skills |
 | --- | --- | --- |
-| [`skills/search`](skills/search) | The SEO Copywriter | 14 |
+| [`skills/search`](skills/search) | The SEO Copywriter | 4 |
 | [`skills/video`](skills/video) | The Video Producer | 11 |
-| [`skills/delivery`](skills/delivery) | The Project Manager | 13 |
+| [`skills/delivery`](skills/delivery) | The Project Manager | 8 |
 | [`skills/design`](skills/design) | The Art Director | 1 |
 | [`skills/content`](skills/content) | The Ghostwriter | 1 |
 | [`skills/quality`](skills/quality) | The QA Lead | 1 |
@@ -255,7 +255,7 @@ other. Keeping them as separate skills on separate cadences is the point.
 | Skill | Direction | Cadence | Use when |
 | --- | --- | --- | --- |
 | [**skill-cleaner**](skills/quality/skill-cleaner) | Subtractive | Scheduled | Duplicates and overlapping skills compete for the same task, a skill works some days and not others, skills are scattered across projects and home directories, or links are dead |
-| [**skill-healer**](skills/operations/skill-healer) | Additive | Per session | A session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
+| [**skill-creator**](skills/operations/skill-creator) | Additive | Per session | A skill needs writing or its description fires on the wrong prompts, a session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
 
 **It accumulates.** Every skill you add competes with the others for the same
 triggers. Past a certain size the model is not choosing the right skill, it is
@@ -264,7 +264,7 @@ picked. `skill-cleaner` merges those down to one survivor each, behind a git
 guard so a bad merge is one command to undo.
 
 **It goes stale.** A file keeps giving an instruction that stopped being true,
-and every session pays again for the same wrong turn. `skill-healer` writes the
+and every session pays again for the same wrong turn. `skill-creator` writes the
 lesson into the file that should have known it, in the session that learned it,
 and deletes what the lesson contradicts.
 
@@ -311,7 +311,7 @@ way to use them on your own:
 
 ```bash
 node skills/quality/skill-cleaner/scripts/skill-cleaner.cjs audit skills
-node skills/operations/skill-healer/scripts/skill-healer.cjs check skills
+node skills/operations/skill-creator/scripts/heal.cjs check skills
 ```
 
 Both exit non-zero when something is wrong, so they drop into CI as-is.

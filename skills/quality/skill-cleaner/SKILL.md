@@ -136,7 +136,7 @@ Neither command writes the prose. `consolidate` moves sections and marks them;
 deciding what the merged skill should say is the judgment it exists to set up.
 
 Keeping a registry current as it teaches you things is a different job, and it
-belongs to the `skill-healer` skill in this repo.
+belongs to the `skill-creator` skill in this repo.
 
 ## Three things that surprise people
 
@@ -172,7 +172,7 @@ If this run surfaced a failure mode not already listed, append it to Learned
 Patterns with today's date before finishing:
 
 ```bash
-node ../skill-healer/scripts/skill-healer.cjs log . "what was assumed, what to do instead" --apply
+node skill-creator/scripts/heal.cjs log . "what was assumed, what to do instead" --apply
 ```
 
 ## Verification

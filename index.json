@@ -89,14 +89,6 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board-start.zip"
     },
     {
-      "name": "clickup-audit",
-      "area": "delivery",
-      "description": "Audits a client ClickUp workspace: hierarchy, views, custom fields, permissions, workflows, automations, integration mapping and custom field schema. Use on 'audit this workspace', 'ClickUp audit', 'review workspace', 'workspace health check'. For internal day-to-day work see clickup-ops, for scripted bulk CRUD clickup-data-manager.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-audit/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-audit",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-audit.zip"
-    },
-    {
       "name": "clickup-browser",
       "area": "delivery",
       "description": "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager.",
@@ -121,38 +113,6 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-data-manager.zip"
     },
     {
-      "name": "clickup-field-merger",
-      "area": "delivery",
-      "description": "Cleans up redundant ClickUp custom fields: inventories every field in a workspace with its locations, groups the near-twins that differ only by an emoji or a capital, merges each group into one field and carries the task values of the merged-away fields onto the kept one. Use on 'merge custom fields', 'clean up custom fields', 'we have four Department fields', field sprawl found by clickup-audit, or before an integration that needs one field ID per concept.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-field-merger/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-field-merger",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-field-merger.zip"
-    },
-    {
-      "name": "clickup-ops",
-      "area": "delivery",
-      "description": "Runs day-to-day ClickUp operations for your own workspace through the cu CLI. Use when planning the week, when turning a meeting or call into tasks, when triaging the board, when running batch updates, or on 'plan the week', 'operationalize this meeting', 'team workload'. For client workspace assessment see clickup-audit, for scripted bulk CRUD clickup-data-manager.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-ops/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-ops",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-ops.zip"
-    },
-    {
-      "name": "clickup-stale-triage",
-      "area": "delivery",
-      "description": "Finds ClickUp tasks that stopped moving and marks the dead ones with a delete tag for one human pass, holding the line between boards that can be triaged and registries that cannot. Use when a list is full of tasks nobody has touched in months, before a quarterly cleanup, or on 'clean up ClickUp', 'stale tasks', 'what can I delete', 'triage the workspace'. For planning the coming week from live tasks see clickup-ops.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-stale-triage/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-stale-triage",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-stale-triage.zip"
-    },
-    {
-      "name": "clickup-super-agents",
-      "area": "delivery",
-      "description": "Builds, edits and verifies ClickUp Super Agents, including the MCP tools they call and the Docs they read as knowledge. Use when an agent has to be created, re-scoped, given tools, pointed at a doc, or debugged for answering from the wrong place. The click paths for App Center and the builder form live in clickup-browser; this skill is what to put in the form and why.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-super-agents/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-super-agents",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-super-agents.zip"
-    },
-    {
       "name": "youtube-thumbnail",
       "area": "design",
       "description": "Designs YouTube thumbnails for the founder, systems and AI-tooling niche off 270 measured frames, from a template library that grows out of what has already shipped. Ships a build order a designer can execute or a finished render. Use when a video needs a thumbnail or cover, when CTR needs improving, when thumbnails come out inconsistent, or on 'thumbnail', 'YouTube cover', 'thumbnail A/B', 'thumbnail template'.",
@@ -161,12 +121,12 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/youtube-thumbnail.zip"
     },
     {
-      "name": "skill-healer",
+      "name": "skill-creator",
       "area": "operations",
-      "description": "Use when a session teaches you something an instruction file should have known: a correction, a step that turned out to be stale, an approach that beat the documented one, or a failure that cost real time. Also use when a skill keeps repeating a mistake it already made, when setting up a registry so its skills learn from their own runs, or at the end of a session to write down what it taught. Appends new failure modes to its own pattern list after each run.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/operations/skill-healer/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/operations/skill-healer",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/skill-healer.zip"
+      "description": "Writes, repairs and reviews skills and agents: the shape one takes, the description that makes it fire, the quality floor, and the failure log that stops it repeating a mistake. Use when writing or editing one, when it fires wrong, before it ships, or when a session teaches you what a file missed.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/operations/skill-creator/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/operations/skill-creator",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/skill-creator.zip"
     },
     {
       "name": "skill-cleaner",
@@ -193,100 +153,20 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/search-console.zip"
     },
     {
-      "name": "seo-ai-seo",
-      "area": "search",
-      "description": "Optimises content to be cited by AI search engines and surfaced in AI-generated answers. Use when the user mentions AI SEO, AEO, GEO, LLMO, answer engine optimization, AI Overviews, AI citations, zero-click search, or optimising for ChatGPT, Perplexity, Claude or Gemini. For traditional technical and on-page audits see seo-audit, for structured data see seo-schema-markup.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-ai-seo/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-ai-seo",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-ai-seo.zip"
-    },
-    {
-      "name": "seo-analytics-tracking",
-      "area": "search",
-      "description": "When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions \"set up tracking,\" \"GA4,\" \"Google Analytics,\" \"conversion tracking,\" \"event tracking,\" \"UTM parameters,\" \"tag manager,\" \"GTM,\" \"analytics implementation,\" or \"tracking plan.\" For A/B test measurement, see ab-test-setup.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-analytics-tracking/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-analytics-tracking",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-analytics-tracking.zip"
-    },
-    {
-      "name": "seo-audit",
-      "area": "search",
-      "description": "Full-site SEO diagnosis and remediation, covering crawl, indexation, on-page and content quality, then keyword strategy, rewrites and topic clusters. Use on 'SEO audit', 'technical SEO', 'why am I not ranking', 'SEO health check', 'fix my SEO', 'keyword research'. For a single URL use seo-page-audit, for pages at scale programmatic-seo, for structured data seo-schema-markup, for 404s seo-broken-links.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-audit/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-audit",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-audit.zip"
-    },
-    {
-      "name": "seo-broken-links",
-      "area": "search",
-      "description": "Finds broken links on a site (404s and 5xx), checks redirect chains and audits internal and external link health, returning a prioritised list with source pages. Use when hunting broken or dead links or auditing redirects. Triggers on \\\"broken links,\\\" \\\"link checker,\\\" \\\"404 audit,\\\" \\\"check links,\\\" \\\"find dead links,\\\" \\\"redirect chain audit.\\\" For broader SEO diagnostics see seo-audit.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-broken-links/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-broken-links",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-broken-links.zip"
-    },
-    {
-      "name": "seo-competitor-alternatives",
-      "area": "search",
-      "description": "Builds competitor comparison and alternative pages in four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. Use on 'alternative page', 'vs page', 'competitor comparison', '[Product] vs [Product]', '[Product] alternative'. Run seo-competitor-profiling first for the upstream research.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-competitor-alternatives/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-competitor-alternatives",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-competitor-alternatives.zip"
-    },
-    {
-      "name": "seo-competitor-profiling",
-      "area": "search",
-      "description": "Researches competitors from a list of URLs and writes structured competitor profile markdown files. Use on 'competitor research', 'competitor analysis', 'profile this competitor', 'competitive intelligence', 'competitor dossier', 'who are my competitors'. For comparison pages built from the profiles see seo-competitor-alternatives, for sales battle cards sales-enablement.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-competitor-profiling/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-competitor-profiling",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-competitor-profiling.zip"
-    },
-    {
       "name": "seo-content-strategy",
       "area": "search",
-      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions \"content strategy,\" \"what should I write about,\" \"content ideas,\" \"blog strategy,\" \"topic clusters,\" or \"content planning.\" For writing individual pieces, see seo-copywriting. For SEO-specific audits, see seo-audit.",
+      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions \"content strategy,\" \"what should I write about,\" \"content ideas,\" \"blog strategy,\" \"topic clusters,\" or \"content planning.\" For writing individual pieces, see seo-copywriting.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-content-strategy/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-content-strategy",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-content-strategy.zip"
     },
     {
-      "name": "seo-keyword-research",
-      "area": "search",
-      "description": "Discovers, analyses and prioritises keywords for SEO and GEO content strategies, scoring them on volume, competition, intent and business relevance, then grouping them into topic clusters and a content calendar. Use when asked to find keywords, run keyword research, judge keyword difficulty or search volume, or decide what to write about next.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-keyword-research/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-keyword-research",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-keyword-research.zip"
-    },
-    {
-      "name": "seo-meta-tags-optimizer",
-      "area": "search",
-      "description": "Rewrites a page title tag, meta description, Open Graph and Twitter card markup directly in the repo, tuned to SvelteKit sites and wired into the seo-audit family. Use when editing meta tags in website or app code, when a SERP snippet or social preview needs fixing at the source, or as the remediation step after seo-audit or seo-page-audit flags weak titles and descriptions.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-meta-tags-optimizer/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-meta-tags-optimizer",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-meta-tags-optimizer.zip"
-    },
-    {
-      "name": "seo-page-audit",
-      "area": "search",
-      "description": "Deep-dive SEO audit of one URL, scoring E-E-A-T, Helpful Content, search intent, on-page factors, depth and technical signals into a report with prioritised fixes. Requires an explicit page URL. Use when auditing one specific page, and on 'audit this URL', 'how is this page doing', 'is this page good enough', 'what's wrong with this page'. For domain-level or full-site requests use seo-audit instead.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-page-audit/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-page-audit",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-page-audit.zip"
-    },
-    {
       "name": "seo-schema-markup",
       "area": "search",
-      "description": "When the user wants to add, fix, or optimize schema markup and structured data on their site. Also use when the user mentions \"schema markup,\" \"structured data,\" \"JSON-LD,\" \"rich snippets,\" \"schema.org,\" \"FAQ schema,\" \"product schema,\" \"review schema,\" or \"breadcrumb schema.\" For broader SEO issues, see seo-audit.",
+      "description": "When the user wants to add, fix, or optimize schema markup and structured data on their site. Also use when the user mentions \"schema markup,\" \"structured data,\" \"JSON-LD,\" \"rich snippets,\" \"schema.org,\" \"FAQ schema,\" \"product schema,\" \"review schema,\" or \"breadcrumb schema.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-schema-markup/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-schema-markup",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-schema-markup.zip"
-    },
-    {
-      "name": "seo-site-architecture",
-      "area": "search",
-      "description": "Plans and restructures a site's page hierarchy, navigation, URL structure and internal linking. Use on 'sitemap', 'site structure', 'page hierarchy', 'information architecture', 'navigation design', 'breadcrumbs', 'internal linking', 'what pages do I need', 'how should I organize my site'. Not for XML sitemaps or site audits (seo-audit), not for structured data (seo-schema-markup).",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-site-architecture/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-site-architecture",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-site-architecture.zip"
     },
     {
       "name": "ai-video-prompting",
