@@ -101,6 +101,12 @@ that broke the skill once is the only input that proves the edit worked. Ten
 words of the original ask is enough to re-run it later and read the result. Leave
 the bracket off when the failure came from a tool or an API rather than a prompt.
 
+**`check` counts the asks, because this field died once already.** On 5 Sep 2026
+it was absent from all 758 entries in all 34 logs: written as optional, enforced
+by nothing, and stripped from what remained by the compression pass. A log of 5
+or more entries with no ask anywhere now warns. Replay is the whole reason the
+bracket exists, and an entry without one can only be believed.
+
 ## Run it
 
 No dependencies. Node 20 or later, nothing installed.
@@ -191,6 +197,7 @@ node scripts/skill-healer.cjs log . "what was assumed, what to do instead" --app
 
 Appended when a run surfaces something this skill did not already know. Newest first.
 
+- 2026-09-05: A format field nothing counts is a dead field: `[ask:` was mandated for replay and absent from all 758 entries in 34 logs. `check` warns at 5 entries with none. [ask: do we have a similar system like Claudeception].
 - 2026-09-02: Grep the implementation before calling a log entry unowned, not only the skill's own references. Two DepthFlow rules read as homeless and were already verbatim in `loop.ts`, which is their real home.
 - 2026-09-02: Splitting a log does not dry it. Six split logs still averaged 273 characters on the rule side; `log` now refuses an entry over 240 and `check` warns on the mean.
 - 2026-09-02: Anchor a section rewrite on the heading at the start of a line. Partitioning on `## Learned Patterns` matched the scaffold list that names the heading and truncated 110 lines of body.
