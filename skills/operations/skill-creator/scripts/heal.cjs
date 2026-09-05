@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * skill-healer - keep the failure log inside a skill honest.
+ * heal.cjs - keep the failure log inside a skill honest.
  *
  * A skill that repeats a mistake it already made is a bug. The fix is not a
  * better model, it is a log that lives inside the skill, because the next run
@@ -16,12 +16,12 @@
 const { readFileSync, writeFileSync, existsSync, readdirSync, statSync } = require("node:fs");
 const { join, basename, dirname, resolve, relative } = require("node:path");
 
-const USAGE = `skill-healer - keep the failure log inside a skill honest
+const USAGE = `heal.cjs - keep the failure log inside a skill honest
 
-  skill-healer check [paths...]              Which skills carry the scaffold, which do not
-  skill-healer retrofit <skill> [--apply]    Add the missing parts of the scaffold
-  skill-healer log <skill> <entry> [--apply] Append a dated entry, newest first
-  skill-healer fold <skill>                  Entries old enough to belong in the body
+  heal.cjs check [paths...]              Which skills carry the scaffold, which do not
+  heal.cjs retrofit <skill> [--apply]    Add the missing parts of the scaffold
+  heal.cjs log <skill> <entry> [--apply] Append a dated entry, newest first
+  heal.cjs fold <skill>                  Entries old enough to belong in the body
 
 Options
   --apply       Write the change (retrofit and log are dry runs by default)
@@ -419,7 +419,7 @@ function retrofit(skill, missing, now) {
   }
 
   if (missing.includes("learned-patterns")) {
-    text = `${text.replace(/\s*$/, "")}\n\n${LOG_HEADING}\n\nAppended when a run surfaces something this skill did not already know. Newest first.\n\n- ${now}: Scaffold added by \`skill-healer retrofit\`. Replace this line with the first real failure mode; an empty log trains the reader to skip the section.\n`;
+    text = `${text.replace(/\s*$/, "")}\n\n${LOG_HEADING}\n\nAppended when a run surfaces something this skill did not already know. Newest first.\n\n- ${now}: Scaffold added by \`heal.cjs retrofit\`. Replace this line with the first real failure mode; an empty log trains the reader to skip the section.\n`;
   }
 
   return text;
@@ -557,7 +557,7 @@ function main(argv) {
       }
       const broken = results.filter((r) => r.missing.length > 0);
       if (broken.length > 0) {
-        process.stdout.write(`\nRetrofit one with \`skill-healer retrofit <skill> --apply\`.\n`);
+        process.stdout.write(`\nRetrofit one with \`heal.cjs retrofit <skill> --apply\`.\n`);
       }
     }
     return results.some((r) => r.missing.length > 0) ? 1 : 0;
@@ -588,7 +588,7 @@ function main(argv) {
     const [target, ...words] = rest;
     const entry = words.join(" ").trim();
     if (!target || !entry) {
-      process.stderr.write('log needs a skill and an entry: skill-healer log ./skills/x "what went wrong, what to do instead"\n');
+      process.stderr.write('log needs a skill and an entry: heal.cjs log ./skills/x "what went wrong, what to do instead"\n');
       return 2;
     }
     // Refuse before reading the skill: the writer has the run in front of them
