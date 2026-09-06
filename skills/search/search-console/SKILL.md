@@ -1,6 +1,6 @@
 ---
 name: search-console
-description: "Queries Google Search Console for keyword performance, content gaps, cannibalisation and ranking analysis. Use when checking search performance, when deciding what page to write next, when finding queries that rank with no page behind them, when comparing periods, or on 'GSC', 'check rankings', 'low-hanging fruit', 'what am I ranking for'."
+description: "Queries Google Search Console for keyword performance, content gaps, cannibalisation and ranking analysis. Use when checking search performance, deciding what page to write next, finding queries that rank with no page behind them, or on 'GSC', 'check rankings', 'what am I ranking for'."
 tags: [drives, seo, analytics]
 ---
 
@@ -106,7 +106,8 @@ for that, read `references/indexed-url-audit.md` and check what links to the pag
 
 ## Workflows
 
-Every workflow, from the orphan sweep to the cannibalisation check: [`references/workflows.md`](references/workflows.md).
+Every workflow, from the orphan sweep to the cannibalisation check to the organic/paid gap matrix
+when Google Ads is also in play: [`references/workflows.md`](references/workflows.md).
 
 Auditing which URLs Google actually has indexed against the routes that exist, and fixing the
 difference in `hooks.server.ts` and `vercel.json`: [`references/indexed-url-audit.md`](references/indexed-url-audit.md).
