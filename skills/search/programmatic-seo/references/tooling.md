@@ -74,13 +74,13 @@ metered tools first. Install them only alongside this cost policy, which overrid
 Each of these costs a session to rediscover, because none of them sits in the repo being
 worked on.
 
-**Serper.dev** is `SERPER_API_KEY` in `~/Studio/r-hub/app/.env.local`, the only copy. It
+**Serper.dev** is `SERPER_API_KEY`, kept in one env file and exported before the scripts run. It
 drives `scripts/keyword-research.py`, and it returns **intent shape only**: autocomplete,
 related searches, People Also Ask. No volume, no difficulty. Picking article targets from
 Serper alone over-indexes on ultra-long-tail phrasings.
 
-**DataForSEO**, which is where volume and competition come from, is in
-`~/Studio/client-glance/.env.local` as `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD` and
+**DataForSEO**, which is where volume and competition come from, needs `DATAFORSEO_LOGIN`,
+`DATAFORSEO_PASSWORD` and
 `DATAFORSEO_AUTH_BASE64`. Use the base64 one directly as `Authorization: Basic <value>`.
 
 - Volume: `POST /v3/keywords_data/google_ads/search_volume/live`

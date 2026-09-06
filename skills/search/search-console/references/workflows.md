@@ -5,6 +5,8 @@
 - Rebuild the index coverage report
 - Harvest before you write
 - Weekly Review
+- Cross-channel: landing page relevance
+- The organic/paid gap matrix
 - SEO Performance Audit
 - Keyword Analysis for a Specific Topic
 - Content Gap Identification
@@ -96,6 +98,52 @@ Report back in three buckets:
 2. **What's down**: pages and queries with the biggest click drop. Diagnose: did position drop, did impressions drop, or did CTR drop?
 3. **Quick wins**: gap rows sorted by potential clicks. Recommend a meta-rewrite sprint for the top 5.
 
+**Score every change before reporting it**, folded in from the retired `toprank` skill:
+
+| Score | Criteria |
+| --- | --- |
+| Win | Measurable positive movement vs. prior period, sustained 3+ days |
+| Loss | Measurable negative movement vs. prior period, sustained 3+ days |
+| Too new | Changed in the last 48 hours. Not enough data to score yet |
+| Noise | Within ±5% of the prior period. Not significant |
+
+A single-day spike is not a win and a single-day dip is not a loss. Hold it in "too new" until
+the 3-day bar is met, and never report a ±5% wobble as either.
+
+### Cross-channel: landing page relevance, folded in from `toprank`
+
+Only runs when the account also runs Google Ads. Score a landing page against both its organic
+and its paid traffic before writing a single new sentence for it.
+
+Pull the organic queries sending traffic to the URL (`$GSC query <site> --page-filter <url>
+--dimensions query`) and the ad groups and keywords Google Ads is bidding on that same URL, then
+score each dimension 0-10:
+
+- **Query match.** Do the organic queries sending traffic actually appear in the page copy?
+- **Ad relevance.** Does the page match the ad copy and keyword themes pointed at it?
+- **Intent match.** Does the page deliver what the searcher wants (informational, commercial,
+  transactional), or is the format wrong for the query?
+- **E-E-A-T signals.** Author credentials, source citations, freshness, depth.
+
+A low query-match or intent-match score is an editing job on the page. A low ad-relevance score is
+a mismatch between the landing page and the ad copy pointing at it, not a content gap, so fix the
+ad account or the page, never both on the strength of one score.
+
+### The organic/paid gap matrix
+
+For a query or cluster, cross whether it ranks organically against whether the account bids on it:
+
+- **Ranks organically, not paying for it.** Consider bidding. Organic performance already proves
+  the query converts, so paid is low-risk incremental volume, not a bet.
+- **Does not rank organically, paying for it.** A content opportunity. The ad account has already
+  proven the query converts; build the page to capture the same demand for free.
+- **Ranks organically and paying for it.** Check for cannibalization, then confirm the ad copy and
+  the organic snippet say the same thing. Two channels competing for one click is only worth it
+  when the paid slot is defensive (a competitor bidding on the brand) or the organic position is
+  unstable.
+- **Neither ranks nor pays.** Not a priority unless a strategic reason says otherwise (a launch, a
+  competitor move).
+
 ### SEO Performance Audit
 
 Run the full set for a complete search performance picture:
@@ -139,6 +187,23 @@ Interpret results:
 - **Position 4-10**: On page 1 but below fold; content quality or on-page SEO needs work
 - **Position 11-20**: Page 2; a better article could push to page 1
 - **"Potential Clicks"** column estimates traffic if CTR matched the average for that position
+
+**"Low" means below this, not below a guess.** Folded in from the retired `seo-page-audit`
+skill, expected CTR by position and query type:
+
+| Position | Informational | Transactional | Branded |
+| --- | --- | --- | --- |
+| 1 | 25-30% | 20-25% | 40-50% |
+| 2 | 13-17% | 12-15% | 15-20% |
+| 3 | 9-12% | 8-11% | 8-12% |
+| 4-5 | 5-8% | 5-7% | 4-6% |
+| 6-7 | 3-5% | 3-4% | 2-4% |
+| 8-10 | 1.5-3% | 1.5-3% | 1-2% |
+| 11-20 | 0.5-1.5% | 0.5-1% | <1% |
+
+A SERP feature (featured snippet, ads, knowledge panel) on the query suppresses organic CTR by
+30-50%. Discount the expected number by ~30% before calling a page underperforming when one is
+present.
 
 `gaps` finds pages that are shown and not clicked. `orphans` finds queries with no page at all.
 They are different jobs and the fixes do not overlap: one is a title rewrite, the other is a new

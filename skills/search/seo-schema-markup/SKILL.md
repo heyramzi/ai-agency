@@ -46,12 +46,14 @@ If `.claude/product-marketing-context.md` exists, read first. Only ask for what'
 - Monitor Search Console
 - Fix errors promptly
 
-### 5. It also drives AI citations, not just rich results
+### 5. Its effect on AI citations is contested, so do not sell it as one
 
-Schema is the single biggest lever for Google AI Overviews: pages carrying Article, FAQPage,
-HowTo or Product schema see a 30-40% visibility boost over pages without it. FAQPage specifically
-correlates with more frequent Perplexity citations, since it hands the model an already-extracted
-question-answer pair. Weigh a schema backlog against this, not only against rich-result eligibility.
+SE Ranking measured a 30-40% AI Overviews lift for pages carrying Article, FAQPage, HowTo or
+Product schema; Ahrefs found no confirmed link and treats schema as general hygiene. Both readings
+agree it does not hurt, and Perplexity does favour FAQ pages because they hand it an
+already-extracted question and answer. Justify a schema backlog on rich-result eligibility, which
+is measurable, and take any AI-visibility gain as a bonus. The evidence on both sides is owned by
+`programmatic-seo`, in its `references/geo-signals.md`.
 
 ---
 

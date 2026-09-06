@@ -1,245 +1,81 @@
-# SEO Pre-Publish Checklist
+# The pre-publish gate
 
-## Contents
+Run this on every page before it goes live. It is a gate, not a tutorial: each line is checkable in
+seconds and fails loudly. The evidence behind the content rules is in
+[geo-signals.md](geo-signals.md); nothing here restates it.
 
-- On-Page SEO
-- Content Quality
-- Links
-- Images
-- Technical SEO
-- User Experience
-- Pre-Publish Final Check
-- Post-Publish
-- Quick Reference
+## Before you write
 
-Use this checklist before publishing any blog article to ensure maximum SEO impact.
+- [ ] The target keyword was Googled and the top five results were read, not skimmed
+- [ ] You can name what all five cover (the table stakes) and what none of them covers (your angle)
+- [ ] The page carries at least one thing a model cannot generate: your measurement, your customer's
+      words, your screenshot, your number. **Without this the page is a duplicate of the consensus,
+      and the consensus is what gets summarised and discarded**
+- [ ] The AI filter passed: you Googled the query, read the AI Overview, and either it does not
+      satisfy the searcher, or you are targeting the query for a mention rather than a click
 
-## On-Page SEO
+## Title, meta, URL
 
-### Title Tag
+- [ ] Title tag under 60 characters, keyword front-loaded, and it promises something
+- [ ] Meta description 150-160 characters. Not a ranking factor; it decides the click. Write it as
+      ad copy
+- [ ] URL is lowercase, hyphenated, keyword-bearing, three to five words. No CMS-generated ids
+- [ ] Title, H1 and URL agree with each other and with what the page actually delivers
 
-- [ ] Under 60 characters
-- [ ] Primary keyword near the beginning
-- [ ] Compelling and click-worthy
-- [ ] Unique (not duplicated elsewhere on site)
-- [ ] Includes current year if relevant (2026)
+## Structure
 
-**Template**: `{Primary Keyword}: {Benefit/Promise} | Seam`
-
-**Examples**:
-
-- ✅ "Best Mac Notch Apps in 2026: Transform Your MacBook Pro"
-- ❌ "Mac Notch Apps" (too short, no benefit)
-- ❌ "The Ultimate Complete Comprehensive Guide to Mac Notch Apps for MacBook Pro Users" (too long)
-
-### Meta Description
-
-- [ ] 150-160 characters
-- [ ] Includes primary keyword
-- [ ] Has clear value proposition
-- [ ] Contains call-to-action
-- [ ] Unique for this page
-
-**Template**: `{What you'll learn}. {Value prop}. {CTA}.`
-
-### URL Structure
-
-- [ ] Contains primary keyword
-- [ ] Lowercase letters only
-- [ ] Hyphens between words (no underscores)
-- [ ] Short and descriptive
-- [ ] No special characters or numbers (except year)
-
-**Examples**:
-
-- ✅ `/blog/best-mac-notch-apps-2026`
-- ❌ `/blog/post_123`
-- ❌ `/blog/the-best-mac-notch-apps-for-your-macbook-pro-in-2026`
-
-## Content Quality
-
-### Header Structure
-
-- [ ] Single H1 tag with primary keyword
-- [ ] Logical H2/H3 hierarchy
-- [ ] Keywords in subheadings (naturally)
-- [ ] FAQ section with question-format H3s
-
-### Primary Keyword
-
-- [ ] In H1 title
-- [ ] In first paragraph (first 100 words)
-- [ ] In at least one H2
-- [ ] In image alt text
-- [ ] In meta description
-- [ ] Natural density (1-2%, not stuffed)
-
-### Content Length
-
-- [ ] Minimum 1,500 words for competitive keywords
-- [ ] Comprehensive coverage of topic
-- [ ] Longer than top-ranking competitors (if applicable)
-- [ ] No fluff or filler content
-
-### Readability
-
-- [ ] Short paragraphs (2-4 sentences)
-- [ ] Bullet points and lists where appropriate
-- [ ] Table for comparisons
-- [ ] TL;DR summary at top
-- [ ] Clear section breaks
+- [ ] Exactly one H1. H2s for sections, H3s nested under them, no level skipped
+- [ ] **Every H2 section reads correctly with nothing around it.** Take one and read it cold; if it
+      needs three earlier paragraphs, rewrite it
+- [ ] Every section opens with its conclusion, not its background
+- [ ] Keyword appears in the H1, in the first 100 words, and in at least one H2. Placed, not dosed.
+      There is no density target and stuffing measurably *reduces* AI visibility
+- [ ] Entities are named: products, people, places, versions, numbers. Not "this tool" and "the platform"
+- [ ] A comparison on the page is a table
+- [ ] Four to eight real questions answered, phrased as somebody would ask them
+- [ ] **Length is whatever the answer needs.** Word count does not correlate with citation and over
+      half of cited pages run under 1,000 words. Match the depth the top results reach, then add the
+      angle; do not pad to a target
 
 ## Links
 
-### Internal Links
-
-- [ ] 3-5 internal links to relevant pages
-- [ ] Link to homepage (if natural)
-- [ ] Link to product/download page
-- [ ] Link to related blog articles
-- [ ] Descriptive anchor text (not "click here")
-
-### External Links
-
-- [ ] 2-3 links to authoritative sources
-- [ ] No broken links
-- [ ] Opens in new tab (rel="noopener")
-- [ ] Links support claims/statistics
+- [ ] Three to five internal links with descriptive anchors, and at least one to a money page
+- [ ] The relevant money page or cluster hub links *back* to this page. An orphan is not discovered
+- [ ] Two to three external links to authoritative sources, supporting specific claims
+- [ ] Every link target returns 200. A route that exists in the working tree may not be deployed
 
 ## Images
 
-### Image Optimization
+- [ ] WebP or AVIF, under 200KB, correct dimensions, lazy-loaded below the fold
+- [ ] Filenames describe the image. `IMG_1234.jpg` tells nothing to anyone
+- [ ] Alt text describes the picture to somebody who cannot see it; that is the job, and the
+      keyword only appears if it genuinely belongs. The same alt text repeated across every image is
+      a wasted field
+- [ ] Social share image present, 1200x630
 
-- [ ] Compressed (WebP format preferred)
-- [ ] Under 200KB per image
-- [ ] Proper dimensions (not scaled in browser)
-- [ ] Lazy loading enabled
+## Technical
 
-### Image SEO
+- [ ] Server-rendered or statically generated. **ChatGPT's crawler does not run JavaScript**;
+      disable JS in the browser and confirm the content is still there
+- [ ] Article schema with author, published and modified dates; FAQPage schema if there is a real
+      FAQ. Mechanics belong to the `seo-schema-markup` skill
+- [ ] Lighthouse: 100 on SEO, best practices and accessibility; performance as close as the stack
+      allows. Paste the failing audits straight into the agent rather than reading them yourself
+- [ ] Page is in `sitemap.xml`, and `robots.txt` blocks nothing you want crawled, including
+      `GPTBot`, `OAI-SearchBot`, `ClaudeBot` and `Google-Extended`
+- [ ] Mobile: readable without zoom, no horizontal scroll, touch targets sized
 
-- [ ] Descriptive filename with keyword
-- [ ] Alt text with keyword (naturally)
-- [ ] Caption if it adds value
-- [ ] Hero image for social sharing (1200x630)
+## Ship
 
-**Filename Examples**:
+- [ ] Facts verified, links tested, preview checked on a phone
+- [ ] Schema validated in Google's Rich Results Test
+- [ ] Sitemap submitted, then the URL itself submitted for indexing in Search Console, which turns
+      weeks into about a day. The daily quota is roughly ten
+- [ ] **Cadence respected.** Publishing a hundred pages in a day is a spike Google reads as what it
+      is. Ramp: one a day, then two, then more, over weeks
 
-- ✅ `macbook-pro-notch-seam-app.webp`
-- ❌ `IMG_1234.jpg`
-- ❌ `screenshot.png`
+## Afterwards
 
-## Technical SEO
-
-### Schema Markup
-
-- [ ] Article schema implemented
-- [ ] Author information included
-- [ ] Published/modified dates
-- [ ] Image specified
-- [ ] FAQ schema for FAQ section
-
-### Mobile Friendly
-
-- [ ] Responsive layout
-- [ ] Readable on mobile without zoom
-- [ ] Touch targets adequately sized
-- [ ] No horizontal scrolling
-
-### Performance
-
-- [ ] Page loads under 3 seconds
-- [ ] No render-blocking resources
-- [ ] Images lazy loaded
-- [ ] Fonts optimized
-
-## User Experience
-
-### Call to Action
-
-- [ ] Clear primary CTA (download Seam)
-- [ ] CTA above the fold
-- [ ] CTA repeated at end of article
-- [ ] Links are functional
-
-### Engagement
-
-- [ ] Compelling introduction
-- [ ] Visual elements break up text
-- [ ] Scannable with headers/bullets
-- [ ] Value delivered early in article
-
-## Pre-Publish Final Check
-
-### Quality
-
-- [ ] Spell-checked
-- [ ] Grammar checked
-- [ ] Facts verified
-- [ ] Links tested
-- [ ] Images display correctly
-
-### Metadata
-
-- [ ] Frontmatter complete
-- [ ] Publish date set
-- [ ] Author credited
-- [ ] Tags assigned
-- [ ] Draft flag removed
-
-### Preview
-
-- [ ] Preview in browser
-- [ ] Test on mobile
-- [ ] Social share preview checked
-- [ ] Schema validated (Google Rich Results Test)
-
-## Post-Publish
-
-### Indexing
-
-- [ ] Submit to Google Search Console
-- [ ] Check indexing after 24-48 hours
-- [ ] Add to sitemap
-- [ ] Share on social media
-
-### Monitoring
-
-- [ ] Track in analytics
-- [ ] Monitor Search Console for issues
-- [ ] Check ranking progress weekly
-- [ ] Update content if needed
-
----
-
-## Quick Reference
-
-### Optimal Lengths
-
-| Element          | Optimal Length     |
-| ---------------- | ------------------ |
-| Title tag        | 50-60 characters   |
-| Meta description | 150-160 characters |
-| URL slug         | 3-5 words          |
-| H1               | 20-70 characters   |
-| Article          | 1,500-2,500 words  |
-| Paragraph        | 2-4 sentences      |
-
-### Keyword Density
-
-| Location         | Frequency  |
-| ---------------- | ---------- |
-| Title            | 1x         |
-| Meta description | 1x         |
-| H1               | 1x         |
-| First paragraph  | 1x         |
-| H2 headings      | 1-2x       |
-| Body content     | 1-2% total |
-| Image alt        | 1-2x       |
-
-### Link Targets
-
-| Link Type   | Target          |
-| ----------- | --------------- |
-| Internal    | 3-5 per article |
-| External    | 2-3 per article |
-| Product/CTA | 2-3 per article |
+- [ ] Diarised for a refresh. Freshness is a measured citation signal and a stale page stops being
+      recommended; a real update, not a touched date
+- [ ] Position and impressions recorded once indexed, so the next batch is planned against a number
