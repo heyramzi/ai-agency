@@ -53,11 +53,11 @@ not exist.
 ## Prerequisites
 
 Search Console access (`gcloud auth application-default login` with the webmasters scope, per the
-`search-console` skill). Nothing else: autocomplete is keyless from Google, volume comes from the
-Keyword Planner and domain authority from Open PageRank, all free. `SERPER_API_KEY` is optional.
+`search-console` skill). Nothing else: autocomplete is keyless from Google and volume comes from
+the Keyword Planner, both free. `SERPER_API_KEY` is optional.
 Keep one copy in your own env file and export it before the scripts run.
-**Before writing against a paid SEO endpoint, check what it resells:** volume, autocomplete and
-domain rating are free at the source. Costs and the rule: [references/tooling.md](references/tooling.md).
+**Before writing against a paid SEO endpoint, check what it resells:** volume and autocomplete are
+free at the source. Costs, coverage limits and the rule: [references/tooling.md](references/tooling.md).
 
 ## Phase 0. Harvest the console
 
