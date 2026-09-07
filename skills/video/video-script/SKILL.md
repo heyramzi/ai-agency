@@ -38,16 +38,21 @@ It says what the feed rewards, never what is good. The bans in `@heyramzi/lint` 
 `idea-mining` chooses what the piece is about. This is the measurement that says whether it is
 worth a recording day, and it runs before the hook.
 
-Two reads, both cheap, and the second is the one that decides.
+One read, and it is free.
 
-- **Demand.** vidIQ `keyword_research`, mode `research`, on the head term. What matters is the
-  estimated monthly searches next to the competition score, not the volume band on its own. The app
-  has the same instrument at `POST /api/youtube/keyword-research`, which stores the report so a
-  concept can point at it.
-- **The SERP.** vidIQ `youtube_search` on the exact phrase a buyer types, 20 results. **Read the
-  view counts, not the titles.** A first page of 2-to-5-minute clips under 150 views each is an
-  unserved query whatever its volume says, and it is the only condition that justifies entering a
-  keyword a bigger channel already has content on.
+- **The SERP, and it decides alone.** `yt-dlp` on the exact phrase a buyer types, then a second
+  pass for the counts, because `--flat-playlist` returns `NA` for them:
+
+  ```bash
+  yt-dlp --flat-playlist --skip-download "ytsearch20:<phrase>" --print "%(id)s" > ids.txt
+  yt-dlp --skip-download --no-warnings -a ids.txt --print "%(id)s|%(view_count)s|%(title)s"
+  ```
+
+  **Read the view counts, not the titles.** A first page of 2-to-5-minute clips under 150 views
+  each is an unserved query, and the only condition that justifies entering a keyword a bigger
+  channel already holds.
+- **Demand is no longer measurable, so do not fake it.** `yt-dlp` returns no search volume or
+  competition score. Decide on the SERP, and say in one line that volume was not measured.
 
 Worked example, 28 Aug 2026, EC52. `clickup pricing` returned 3,541 monthly searches at competition
 21.3, a middling row, and the SERP returned 11, 7, 27, 118 and 16 views on its top five. The second
