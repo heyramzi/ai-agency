@@ -103,7 +103,6 @@
 | Typical range | $0.01-$0.07 (finance: up to $0.30) |
 
 - **1M views ~ $10-$70** (finance: up to $300)
-- `[2025]` vidIQ: **150% RPM increase** in 2025
 - `[2025]` Shorts = **22% of YouTube total ad revenue** (up from 15% in 2024)
 
 ## View Counting (March 2025)
