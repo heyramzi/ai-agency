@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """
-Keyword Research Tool using Serper.dev API
+Keyword Research Tool, free lane first
 
-Expands seed keywords into related keywords using:
-- Google Autocomplete suggestions
-- Related searches
-- People Also Ask questions
+Expands seed keywords using:
+- Google Autocomplete, straight from Google. Free, keyless, and branched across
+  the alphabet so one seed reaches the tail rather than five phrasings.
+- Related searches and People Also Ask, through Serper. Only these two need a
+  key, and the run skips them when there is none.
 
 Usage:
     python keyword-research.py --seed "mac notch app"
     python keyword-research.py -s "dynamic island mac" -o keywords.json
     python keyword-research.py -s "macbook productivity" --depth 2
+    python keyword-research.py -s "mac notch app" --no-serper   # free only
 
 Environment:
-    SERPER_API_KEY - Your Serper.dev API key (get free at https://serper.dev)
+    SERPER_API_KEY - optional. Without it you lose related searches and PAA,
+                     nothing else. https://serper.dev
 """
 
 import argparse
@@ -22,20 +25,22 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 
 SERPER_API_KEY = os.environ.get("SERPER_API_KEY")
 SERPER_BASE_URL = "https://google.serper.dev"
+SUGGEST_URL = "https://suggestqueries.google.com/complete/search"
+ALPHABET = "abcdefghijklmnopqrstuvwxyz"
+USE_SERPER = True
 
 
 def serper_request(endpoint: str, payload: dict) -> dict:
-    """Make a request to the Serper.dev API."""
-    if not SERPER_API_KEY:
-        print("Error: SERPER_API_KEY environment variable not set")
-        print("Get your free API key at https://serper.dev")
-        sys.exit(1)
+    """Make a request to the Serper.dev API. Returns {} when no key is set."""
+    if not SERPER_API_KEY or not USE_SERPER:
+        return {}
 
     url = f"{SERPER_BASE_URL}/{endpoint}"
     data = json.dumps(payload).encode("utf-8")
@@ -57,13 +62,38 @@ def serper_request(endpoint: str, payload: dict) -> dict:
         sys.exit(1)
 
 
-def get_autocomplete(query: str, country: str = "us") -> list[str]:
-    """Get Google Autocomplete suggestions for a query."""
-    payload = {"q": query, "gl": country}
-    result = serper_request("autocomplete", payload)
-    suggestions = result.get("suggestions", [])
-    # Extract 'value' from each suggestion object
-    return [s.get("value", s) if isinstance(s, dict) else s for s in suggestions]
+def google_suggest(query: str, country: str = "us", language: str = "en") -> list[str]:
+    """One Google Autocomplete call. Free, keyless, no account."""
+    params = urlencode(
+        {"client": "firefox", "hl": language, "gl": country, "q": query}
+    )
+    req = Request(f"{SUGGEST_URL}?{params}")
+    # Google answers an empty list to the default urllib agent.
+    req.add_header("User-Agent", "Mozilla/5.0")
+    try:
+        with urlopen(req, timeout=15) as response:
+            data = json.loads(response.read().decode("utf-8"))
+    except (HTTPError, URLError, json.JSONDecodeError):
+        return []
+    return data[1] if len(data) > 1 and isinstance(data[1], list) else []
+
+
+def get_autocomplete(query: str, country: str = "us", language: str = "en") -> list[str]:
+    """
+    The seed plus every 'seed <letter>' branch.
+
+    Appending a letter makes Google branch, so 27 free calls reach far more of
+    the tail than the single call a paid autocomplete endpoint bills for.
+    """
+    found = []
+    seen = set()
+    for probe in [query] + [f"{query} {letter}" for letter in ALPHABET]:
+        for suggestion in google_suggest(probe, country, language):
+            normalized = suggestion.lower().strip()
+            if normalized and normalized not in seen:
+                seen.add(normalized)
+                found.append(normalized)
+    return found
 
 
 def get_related_searches(query: str, country: str = "us") -> list[str]:
@@ -230,11 +260,21 @@ def main():
         default="us",
         help="Country code for localized results (default: us)"
     )
+    parser.add_argument(
+        "--no-serper",
+        action="store_true",
+        help="Free lane only: autocomplete without related searches or PAA"
+    )
 
     args = parser.parse_args()
 
+    global USE_SERPER
+    USE_SERPER = not args.no_serper
+
     print("=" * 60)
-    print("SERPER.DEV KEYWORD RESEARCH")
+    print("KEYWORD RESEARCH")
+    serper_state = "on" if (USE_SERPER and SERPER_API_KEY) else "off"
+    print(f"Google Autocomplete: free  |  Serper (related + PAA): {serper_state}")
     print("=" * 60)
 
     # Expand the keyword
@@ -287,7 +327,8 @@ def main():
 4. Run article generator:
    python generate-article.py -k "{args.seed}" -t "Your Title"
 
-API Credits Used: ~{1 + (3 if args.depth >= 2 else 0) + (2 if args.depth >= 3 else 0)} requests
+Serper credits used: {0 if serper_state == "off" else 1 + (3 if args.depth >= 2 else 0) + (2 if args.depth >= 3 else 0)}
+Autocomplete calls (free): {27 * (1 + (3 if args.depth >= 2 else 0) + (2 if args.depth >= 3 else 0))}
 """)
 
 

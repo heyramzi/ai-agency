@@ -12,15 +12,23 @@ a decision turns on that number.
 | Source | What it gives |
 | --- | --- |
 | Search Console, through `gsc.py` or OpenSEO `get_search_console_performance` | Your own queries, positions, clicks and CTR. Always the first call |
+| Google Ads Keyword Planner, `generateKeywordHistoricalMetrics` | **Search volume, competition and top-of-page bids, free.** This is where volume comes from; every paid tool resells this service |
+| Google Autocomplete, `suggestqueries.google.com/complete/search?client=firefox` | Autocomplete, keyless and with no account. Branch it across the alphabet: 27 free calls beat one paid one |
+| Open PageRank, `openpagerank.keywordseverywhere.com` | Domain authority, 0-10 over the Common Crawl link graph. Free to 30,000 domains a month, 100 per request |
 | OpenSEO `get_search_opportunities`, `inspect_urls` | Striking-distance queries, and index, crawl and canonical state for up to 10 URLs per call |
 | OpenSEO `run_site_audit` with `runLighthouse: false`, then `get_audit_status`, `get_audit_issues`, `get_audit_pages` | Its own crawler over `robots.txt` and the sitemap. Typed issues carrying severity and fix, with thresholds at title 10-60, meta description 70-160, thin content under 150 words, response over 1500ms, and crawl depth over 5 |
 | OpenSEO Google Analytics tools | Organic landing pages, traffic acquisition, key events, measurement health |
-| Serper.dev | Autocomplete, related searches, PAA. Free to 2,500 queries, then $0.001 each. No volume or difficulty |
+| Serper.dev | Related searches and PAA only, now that autocomplete comes free from Google. Free to 2,500 queries, then $0.001 each |
 | WebSearch, or the browser | Read the SERP you want to enter |
 | Ahrefs free keyword generator | Sanity check on a single phrase |
 
 That lane answers what to write next, what is broken, what is cannibalised and what sits close
 to page one. On a site that already has console history, it covers the work.
+
+**Volume, autocomplete and domain authority all moved into this table on 7 Sep 2026.** Each of
+the three had been a paid call for a number Google or Common Crawl gives away. Before writing
+a new integration against a paid endpoint, check whether the vendor is reselling a free source:
+DataForSEO's whole `keywords_data/google_ads/*` family is Keyword Planner with a bill attached.
 
 ### Metered lane, DataForSEO per call
 
@@ -28,6 +36,12 @@ These OpenSEO tools bill DataForSEO on every call: `research_keywords`, `get_key
 `get_ranked_keywords`, `get_domain_overview`, `get_domain_keyword_suggestions`,
 `get_serp_results`, `find_serp_competitors`, `get_backlinks_overview`, `get_backlinks_profile`,
 the local SERP and Business tools, `run_rank_tracker`, and Lighthouse inside a site audit.
+
+Three of those now have a free equivalent above and should not be the first call: keyword
+metrics (Keyword Planner), keyword research (Keyword Planner ideas plus autocomplete), and a
+domain rating read (Open PageRank). What genuinely has no free source is a SERP position for a
+domain you do not own, a backlink profile beyond a single authority score, and the LLM-mention
+index.
 
 Spend there in four cases, and name the case before you spend:
 
@@ -74,14 +88,39 @@ metered tools first. Install them only alongside this cost policy, which overrid
 Each of these costs a session to rediscover, because none of them sits in the repo being
 worked on.
 
+**Google Ads Keyword Planner** is the free source of volume. It needs a Google Ads account, an
+OAuth refresh token, and `GOOGLE_ADS_DEVELOPER_TOKEN` with **Basic access**. A fresh developer
+token is test-account-only and every call against a real account fails with
+`DEVELOPER_TOKEN_NOT_APPROVED` (403), which is an application in the API Center, not a code
+fix. Endpoint:
+`POST https://googleads.googleapis.com/v25/customers/{id}:generateKeywordHistoricalMetrics`,
+body `{keywords, language: "languageConstants/1000", geoTargetConstants: ["geoTargetConstants/2840"]}`.
+Those geo numbers are the same ones DataForSEO calls `location_code`, because it copies them
+from here. `generateKeywordIdeas` expands up to 20 seeds and returns each idea with its volume,
+which is keyword research and volume in one free call.
+
+**Google Autocomplete** needs nothing at all:
+`https://suggestqueries.google.com/complete/search?client=firefox&hl=en&gl=us&q=...`.
+`client=firefox` returns JSON rather than JSONP, and the suggestions are element `[1]`. Send a
+browser `User-Agent` or Google answers an empty list.
+
+**Open PageRank** is `OPENPAGERANK_API_KEY`, a free key from
+`openpagerank.keywordseverywhere.com`. `POST /v1/domains/bulk` with
+`Authorization: Bearer <key>` and `{"domains": [...]}`, up to 100 unique domains, 60 requests a
+minute, 30,000 domains a month. The score is 0-10; multiply by ten to read it beside any other
+domain rating.
+
 **Serper.dev** is `SERPER_API_KEY`, kept in one env file and exported before the scripts run. It
-drives `scripts/keyword-research.py`, and it returns **intent shape only**: autocomplete,
-related searches, People Also Ask. No volume, no difficulty. Picking article targets from
-Serper alone over-indexes on ultra-long-tail phrasings.
+is now optional in `scripts/keyword-research.py`, which takes autocomplete from Google directly
+and calls Serper only for **related searches and People Also Ask**. No volume, no difficulty.
+Picking article targets from Serper alone over-indexes on ultra-long-tail phrasings. Run it with
+`--no-serper` to stay entirely on the free lane.
 
 **DataForSEO**, which is where volume and competition come from, needs `DATAFORSEO_LOGIN`,
 `DATAFORSEO_PASSWORD` and
-`DATAFORSEO_AUTH_BASE64`. Use the base64 one directly as `Authorization: Basic <value>`.
+`DATAFORSEO_AUTH_BASE64`. Use the base64 one directly as `Authorization: Basic <value>`. Both
+endpoints below are Keyword Planner with a bill on top, so reach for them only when the Ads
+developer token is not approved.
 
 - Volume: `POST /v3/keywords_data/google_ads/search_volume/live`
 - Expansion with volume: `POST /v3/keywords_data/google_ads/keywords_for_keywords/live`

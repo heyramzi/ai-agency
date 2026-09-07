@@ -95,7 +95,26 @@ single-touch precision is not.
 ## The AI share-of-voice audit
 
 Quarterly, on the brand and on the top three competitors. Any of the AI visibility trackers do
-this; the free lane is running the prompts by hand in an incognito window and tallying who is named.
+this; the free lane is running the prompts by hand and tallying who is named.
+
+**Every prompt runs signed out, with history, memory and custom instructions off, or the number is
+fiction.** An assistant returns what the asking account already believes, and the effect is not
+subtle: the same prompt, asked in the same words from two accounts, returns opposing answers on
+questions of fact, because each one has learned what its user wants to hear. Practically that means
+an incognito window, a signed-out session or a temporary chat, and a different IP where the answer
+still looks suspiciously friendly.
+
+Three consequences worth stating to a client before the audit, not after:
+
+- **A client's own screenshot is not evidence.** Someone who has asked ChatGPT about his category
+  twenty times has trained it to agree with him, and will arrive convinced that reviews are the
+  only thing that matters because the machine said so. Reproduce it cold before accepting it or
+  arguing with it.
+- **Reporting from a personalised session is reporting fake data**, and the client will eventually
+  reproduce it and find a different answer.
+- **The API is not a clean substitute.** It answers from a different model version and a different
+  retrieval path than the product a buyer actually uses, so it measures subject well and standing
+  badly. The same caveat, measured: [fan-out.md](fan-out.md).
 
 Map the gaps in six buckets, because the fix differs by bucket:
 
@@ -111,6 +130,40 @@ Map the gaps in six buckets, because the fix differs by bucket:
 Then pick one of three actions per gap (**fix** an existing page, **build** a missing one, or
 **influence** an off-site source) and start with the fix. A page that already ranks and only needs
 a refresh is the cheapest win available, and freshness is a measured citation signal.
+
+## The advisor report, for a tracked site
+
+Tracked sites are measured in the app's own `/admin/seo` dashboard, and the report it draws is
+written in the session, never generated: the agent that used to write it was deleted on
+6 Sep 2026 under the words rule. The loop is three commands from the app CLI:
+
+```bash
+pnpm cli seo snapshot --site <id>          # only when the latest snapshot is stale
+pnpm cli seo context  --site <id>          # the numbers: ranks, movement, GSC rows, YouTube
+pnpm cli seo write    --site <id> --file report.json
+```
+
+**Write against the latest web snapshot.** The report is keyed to it, so one written against an
+older snapshot is stored and never surfaces on the card.
+
+Write the JSON against the report schema the dashboard reads: a 0-100 health score and five
+sub-scores, a headline and summary, wins and losses **against the previous snapshot only**, first
+appearances under `tooNewToJudge`, up to five actions each carrying its own evidence string, GEO
+opportunities and risks. **Every text field is one plain string, not `{ en, fr }`.**
+A one-reader report written in two languages is work with no reader: an action about the pages in
+the second language says so in the sentence instead.
+Every evidence line names a measured number, because the
+reader's next question is always "says who". A site whose previous snapshot is missing gets empty
+wins and losses, not invented movement.
+
+Two paid reads carry the GEO half of the report, and both are worth pulling before writing:
+`seo ai-visibility` for the ChatGPT and Google AI mention index, and `seo ai-answers --run` for
+Claude, Gemini and Perplexity, which have no index and are asked the prompts in
+the tracked-site config instead. The two disagree often.
+On 6 Sep 2026 the index held zero mentions for one product domain while Claude and Perplexity both
+named it when asked, and a second domain was named in three French answers of four and none of five
+in English.
+Report both, and say which one you are quoting.
 
 ## Cadence
 

@@ -1,6 +1,6 @@
 ---
 name: programmatic-seo
-description: "The SEO pipeline one person can run end to end: what page to write next, keyword research, the page itself, and the off-site mentions that decide whether an assistant names you. Use on 'SEO', 'AEO', 'GEO', 'rank on Google', keyword research, or local search visibility."
+description: "The SEO and AI-search pipeline for one person: what page to write next, keyword and prompt research, the page itself, and the off-site mentions that decide whether an assistant names you. Use on 'SEO', 'AEO', 'GEO', 'rank on Google', 'get cited by ChatGPT', or keyword research."
 tags: [plans, seo]
 ---
 
@@ -8,7 +8,7 @@ tags: [plans, seo]
 
 One person, a keyword file and a loop. The pipeline below produced 28 English articles and 112
 pages across four languages on `getseam.app`, running at 180,000 impressions and 3,400 clicks over
-three months. The order matters more than any single step: harvest what the site already ranks for,
+three months. The order matters more than any single step: read where the brand already stands,
 judge the cluster before entering it, write the three shapes that rank, then feed the result back.
 
 ## The split that reorders everything
@@ -21,48 +21,48 @@ the HubSpot case that settles the traffic-versus-revenue argument:
 
 So every target sorts into one of two jobs, on one question: **can an assistant fully satisfy this
 searcher on the results page?** Answer it against a real SERP, never from the keyword's shape. That
-is the AI filter, and it runs in Phase 1 and Phase 2 below.
+is the AI filter, and it runs in Phases 2 and 3.
 
 - **No, so earn the click.** Anything the searcher has to *do* rather than know: tools and
-  calculators, transactional and commercial queries, and everything local. Overviews appear on
-  about 21% of keywords and 99.9% of the ones that trigger them are informational, so this lane is
-  intact and traditional SEO works in it exactly as it always did.
+  calculators, transactional and commercial queries, and everything local. This lane is intact and
+  traditional SEO works in it exactly as it always did.
 - **Yes, so earn the mention.** Informational queries, question phrasings, long multi-clause asks.
   You will not get the click. You can be the brand named inside the answer, and that is won off
   your own site more than on it.
 
-**AEO, GEO and LLMO are the same work under three labels, and traditional SEO is its foundation.**
-76% of AI Overview citations started as top-ten rankings, ChatGPT runs on Bing's index, and
-Google's own line is that generative responses need nothing special. Buying "AI SEO" as a separate
-discipline with a separate budget is buying a rebrand. What changed is the weighting: off-site
-mentions are now the strongest measured signal there is.
+## Ranking and being cited are two scoreboards, and the gap is widening
 
-## Choosing the cluster before the pipeline runs
+**Do not plan the mention lane by planning to rank.** Traditional SEO is the foundation and is no
+longer close to sufficient: ranking first gives roughly a 31% chance of appearing in an AI answer,
+and most AI citations go to pages outside Google's top ten. One controlled split test moved LLM
+traffic up and Google traffic down from the same single change. Six independent readings of the
+overlap: [references/geo-signals.md](references/geo-signals.md).
 
-Phase 1 below judges a cluster you already have in mind. Deciding which clusters to own in the
-first place, searchable against shareable, pillars and spokes, keyword research by buyer stage and
-how to rank the ideas, is in [references/content-strategy.md](references/content-strategy.md).
+Two consequences the whole pipeline runs on:
 
-**Rank the audience segments before you open a keyword tool.** Topic first and audience later
-produces traffic that is not attached to revenue. Score each segment on search demand, ranking
-difficulty and business value, then take the overlap. One financial-services program chose a
-222,000-search segment over a 2.7M-search one, passed a full prior year of organic leads in six
-months, and held total lead volume at 71% of pace. That gap is the point. A comparison or
-alternatives keyword becomes a page shape rather than an article: see Phase 3.
+- **The unit is the brand, not the URL.** A model is deciding which company to name, not ordering
+  pages. Ranking is an ingredient, and a site can hold position one and never be named.
+- **Citation is probabilistic.** Ask the same question five times and you may be named three, so
+  the metric is share of voice across many runs and a rank tracker aimed at prompts measures
+  nothing.
+
+AEO, GEO and LLMO name the same work. Sell it under the label the buyer already budgets for: a
+client with a separate GEO line item does not hand it to the supplier who says the category does
+not exist.
 
 ## Prerequisites
 
 Search Console access (`gcloud auth application-default login` with the webmasters scope, per the
-`search-console` skill), and `SERPER_API_KEY` for the research scripts.
+`search-console` skill). Nothing else: autocomplete is keyless from Google, volume comes from the
+Keyword Planner and domain authority from Open PageRank, all free. `SERPER_API_KEY` is optional.
 Keep one copy in your own env file and export it before the scripts run.
-OpenSEO in Docker is free and optional; DataForSEO credits buy volume and difficulty and the
-pipeline runs without them. Every tool, what each call costs, and the rule that the free lane runs
-first: [references/tooling.md](references/tooling.md).
+**Before writing against a paid SEO endpoint, check what it resells:** volume, autocomplete and
+domain rating are free at the source. Costs and the rule: [references/tooling.md](references/tooling.md).
 
 ## Phase 0. Harvest the console
 
-Skip this only when the site has no Search Console history. Everywhere else it beats keyword
-research, because Google has already told you which queries it associates with the domain.
+Skip only when the site has no Search Console history. Everywhere else it beats keyword research:
+Google has already told you which queries it associates with the domain.
 
 ```bash
 GSC="python3 <search-console-skill>/scripts/gsc.py"
@@ -71,94 +71,95 @@ $GSC cannibals <site> --days 90    # queries your own pages are splitting
 ```
 
 One run on `getseam.app` surfaced a query split across three of its own pages at 20,448 impressions
-and position 9.1, two competitors with no page on the site at all, and five variants of `best notch
-app for mac` with no exact page. Each is a page that pays for itself before a tool is opened.
+and position 9.1, plus five variants with no exact page. It pays for itself before a tool is opened.
 
-The read order for that output, why to fix a split before adding a page, and why these totals run
-slightly above the same query pulled on its own:
-[`search-console/references/workflows.md`](../search-console/references/workflows.md). Sort on the
-tool's numbers, quote the single-dimension pull.
+**Run `cannibals` before Phase 2: a site can be losing the head query to itself, and no new page
+fixes that.** `airtabletosheets.com` held position 66 to 71 on every head query while its own blog
+posts held 7 to 31, because three pages split each one and the largest was `/setup`. A utility page
+must never carry the head phrase in its title. The read order and why to fix a split before adding
+a page: [`workflows.md`](../search-console/references/workflows.md).
 
-## Phase 1. Judge the cluster before you enter it
+## Phase 1. Read where the brand already stands
+
+Diagnosis before production. Ask the assistants the questions a buyer would ask, tally who gets
+named, and sort what is missing into the six gap kinds (visibility, narrative, topic, format, web
+mentions, demand), because the fix differs by kind and only one of them is a writing job. The
+buckets, the fix-build-influence choice and the cadence:
+[references/measurement.md](references/measurement.md).
+
+**Run every prompt signed out, with history and custom instructions off, or the reading is
+fiction.** An assistant tells the account what that account already believes, and the same prompt
+from two accounts returns opposing answers on questions of fact. A client who has asked ChatGPT
+about his category twenty times has trained it to agree with him, and will bring that screenshot to
+the meeting; reproduce it cold before accepting it or arguing with it.
+
+Read three things and none of them is a rank: whether the brand is **named**, whether the naming is
+**accurate** (a confident wrong description is a loss, not a neutral), and **which sources the
+answer cited**, because those pages are the real target list for Phase 6.
+
+## Phase 2. Judge the cluster before you enter it
 
 The step that saves the most work is the one that stops a cluster from being written at all. Four
-tests, all of which must pass:
+tests, all of which must pass, and each of them has cost a real cluster when it was skipped:
+winnable volume rather than total, **which** slots are winnable rather than whether any are, a
+qualifier people actually type, and the AI filter. The four with their worked failures, which
+clusters to own at all, ranking the audience segments before a keyword tool opens, and the prompt
+research that replaces keyword research in the mention lane:
+[references/content-strategy.md](references/content-strategy.md).
 
-1. **Winnable volume, not total volume.** Filter to KD 25 or under, then again by intent.
-   `getwavenote.com`'s notes cluster showed 153,320 total and 84,160 nominally winnable, which
-   collapsed to roughly 4,000 once off-product queries came out, overstated twentyfold.
-2. **Products rank in the top ten.** If every top-ten slot belongs to listicles, Reddit and app
-   stores, a product page cannot enter. Indie products at positions 3 to 5 says the slot exists.
-3. **A qualifier with volume behind it.** `speech to text mac` returns 1,600, `meeting notes app
-   for mac` returns zero. The qualifier the cluster is built on has to be one people type.
-4. **The AI filter.** Google the head terms. If the Overview finishes the job, this is a mention
-   play, not a traffic play, and gets planned as one.
-
-Then check the site serves HTML. `airtabletosheets.com` had a full strategy written against it
-while every path, including `/robots.txt` and `/sitemap.xml`, returned the string `Hello world` as
-`text/plain` with HTTP 200. No amount of keyword work survives that. Curl the homepage and the
-sitemap before anything else.
-
-## Phase 2. Keyword research
+## Phase 3. Keyword research
 
 ```bash
 python scripts/keyword-research.py -s "your keyword" --depth 3 --brief -o keywords.json
 ```
 
-`--depth` costs one call at 1 and about six at 2. Output is Google autocomplete, related searches
-and People Also Ask, deduplicated. Supplement through WebSearch for `[keyword] reddit`,
-`[keyword] alternative` and `how to [keyword]`.
+Autocomplete is free, keyless and branched across the alphabet, so a seed returns the tail rather
+than five phrasings; `--no-serper` drops related searches and PAA, and the run costs nothing.
+Supplement through WebSearch for `[keyword] reddit`, `[keyword] alternative` and
+`how to [keyword]`. Save it to a file: the `getseam.app` file holds 197 keywords and still plans
+every article seven months later.
 
-Save it to a file, never a chat window. The `getseam.app` research file holds 197 keywords, cost 20
-API credits, and is still what every article is planned against seven months later.
+Vet each candidate on business potential, intent and difficulty, then apply the AI filter. To find
+the click-lane survivors in bulk, filter for transactional intent and include modifiers naming an
+action: `calculator`, `checker`, `generator`, `tool`, `template`, `finder`, `planner`, `maker`.
+Write in the vocabulary of the forum threads, not of the category: buyers type "sync" and
+"automatically update" where competitor pages say "ETL", which is why they lose the long tail.
 
-Vet each candidate on **business potential** (does ranking first change anything), **intent**
-(Google it; if every top result is a product page, a blog post will not enter) and **difficulty**
-(referring domains and DR of the incumbents), then apply the AI filter above. To find in bulk the
-queries that survive it, filter for transactional intent and include modifiers naming an action:
-`calculator`, `checker`, `generator`, `tool`, `template`, `finder`, `planner`, `maker`.
+**Query length is the cleanest signal of which lane a term sits in**, and long qualified questions
+are mention-lane targets by default; the trigger rates by word count are in
+[references/geo-signals.md](references/geo-signals.md).
 
-Write in the vocabulary of the forum threads, not of the category. Buyers type "sync" and
-"automatically update"; competitor pages say "ETL" and "data integration", which is why they lose
-the long tail.
+## Phase 4. Intent, then shape
 
-## Phase 3. Intent, then shape
-
-Order the four things a person can be doing, by how close they are to paying.
-
-| Intent | Example | Read |
-| --- | --- | --- |
-| Deciding | `seam vs voiceink` | Low volume, highest intent there is |
-| Shopping | `best mac transcription app` | Good volume, good intent |
-| Escaping | `noisli alternative` | Underrated. They have already paid for something once |
-| Learning | `how to make the macbook notch useful` | Where the volume is, and the disappointment |
-
-The traffic leader on `getseam.app` is `free dynamic island for mac`, and it converts worst on the
-site: the qualifier `free` filtered for people who will not pay, very efficiently. Choose the
-intent before the volume.
+Order the four things a person can be doing by how close they are to paying, deciding then shopping
+then escaping then learning, and choose the intent before the volume: the four with examples, and
+why `getseam.app`'s traffic leader converts worst on the site, are in
+[references/content-strategy.md](references/content-strategy.md).
 
 Three shapes did the ranking across the 28 articles: 12 comparisons, 6 alternative pages, 10 guides
 and roundups. **The same three are what assistants cite**, because a list hands the model a
-ready-made consensus, the one place where the click lane and the mention lane want the identical
-artefact.
+ready-made consensus: 43.8% of pages ChatGPT cites are listicles, and it is the one artefact both
+lanes want.
 
 - **Comparison, `You vs Them`.** Table in the first screen, real measured numbers in it, honest
   where you lose. One row, CPU during dictation at 12 per cent against 25.6, outperformed the
   page around it, because nobody else in the category measured anything.
 - **Alternative, `Them alternative`.** Same reader, one step earlier and angrier.
 - **Roundup, `Best X for Y`.** Has to list tools you do not own, or it reads as an advert.
+- **Case study, `How we did X for a Y`.** The shape with no competition. A buyer describes their
+  own situation to an assistant in a sentence no keyword tool has ever seen, and a page carrying
+  that situation with numbers on it is the only thing that matches.
 
 One page per intent. Write only the shape you can support.
 
-## Phase 4. Draft, illustrate, publish
+## Phase 5. Draft, illustrate, publish
 
 ```bash
 python scripts/generate-article.py --keyword "your keyword" --title "Your Title" --word-count 2000
 ```
 
-Drafts land in `web/content/blog/drafts/`. Structure and frontmatter:
-[assets/article-template.md](assets/article-template.md); brief inputs and image guidance:
-[references/article-template.md](references/article-template.md).
+Drafts land in `web/content/blog/drafts/`. Structure, frontmatter, brief inputs and image guidance:
+[assets/article-template.md](assets/article-template.md).
 
 **The draft is the input, never the output.** A generated page agrees with everything already
 ranking, which is exactly what a summariser replaces with one paragraph. The test is whether the
@@ -167,45 +168,42 @@ that none of them does, your measurement, your customer's words, your screenshot
 Without that, do not publish. Nothing else here matters more; 96% of the web gets zero Google
 traffic mostly for failing it.
 
-Then structure it so it survives being chunked: answer first in every section, sections that read
-correctly out of context, named entities rather than "this tool", one idea per sentence. **Length
-follows the answer**: word count does not correlate with citation and half of cited pages run
-under 1,000 words. Reasoning and numbers: [references/geo-signals.md](references/geo-signals.md).
+Then rewrite it so a machine can lift a paragraph out and have that paragraph still be true and
+still name you. That craft, with the worked before-and-afters, is where most of the measurable
+citation lift sits: [references/write-like-a-source.md](references/write-like-a-source.md). Run
+[references/seo-checklist.md](references/seo-checklist.md) before anything goes live.
 
-Run [references/seo-checklist.md](references/seo-checklist.md) before anything goes live, and ramp
-the cadence; a hundred pages in a day is a spike Google reads as one. Translate last, and only what
-is working, translation took 28 articles to 112 pages at close to no cost, and it is also the
-fastest way to multiply a mistake.
+**Do not answer a thin site with volume.** Authority divides across the pages it has to cover, so a
+small site publishing hundreds of generated pages dilutes what little it has and cannibalises
+itself; the programmatic lane is for sites with authority to spend. Ramp the cadence, and translate
+last and only what works: it took 28 articles to 112 pages at almost no cost, and multiplies a
+mistake as fast.
 
 
-## Phase 5. The off-site half, which is now the larger half
+## Phase 6. The off-site half, which is now the larger half
 
 **Branded mentions on other people's pages correlate with AI visibility above backlinks, referring
 domains and domain rating**, and most of what a model knows about a brand sits off the brand's own
-domain. A page nobody else talks about is invisible to the mention lane however good it is.
-
-Three tiers in order of value, editorial third parties, then Reddit and forums, then your own
-other properties, with YouTube as the strongest single factor anyone has measured. The
-correlations, how to work each tier, and the platform-by-platform citation differences that decide
-which two to prioritise: [references/geo-signals.md](references/geo-signals.md).
+domain. A page nobody else talks about is invisible to the mention lane however good it is. Three
+tiers in order of value, editorial third parties, then Reddit and forums, then your own other
+properties, with YouTube as the strongest single factor anyone has measured and a budget line of
+its own. The tier playbook, the YouTube checklist, the digital-PR campaign that bought 60 national
+links for about $100, the Reddit dispute, and why a pile of spam links you did not build is left
+alone: [references/earning-mentions.md](references/earning-mentions.md). **Buying links in volume is
+still the fastest way to lose a site**, and white-hat and black-hat practitioners agree on it.
 
 Before it writes, an assistant runs searches of its own. Those fan-out queries brief the page that
 wins, and the pages it retrieved and *did not* cite are the sharper half. Read them from a
 logged-in conversation, never from the paid API, which scored an incumbent at zero in a category it
 appears in nine times of 24: [references/fan-out.md](references/fan-out.md).
 
-Link building has not changed and has not stopped mattering: be the source worth citing, answer
-journalist queries, build a linkable tool. **Buying links in volume is still the fastest way to
-lose a site**: white-hat and black-hat practitioners agree on that one.
-
-## Phase 6. Feed the result back
+## Phase 7. Feed the result back
 
 Wait for indexing, filter the console to the new URL, record position and impressions, and run
-Phase 0 again before the next batch so the cheapest opportunities enter the queue first.
-
-Rank tracking alone no longer describes the outcome. What replaces it, the three trackable AI
-signals, the four-layer correlation report, and the quarterly share-of-voice audit that sorts gaps
-into six kinds, is [references/measurement.md](references/measurement.md).
+Phase 0 again before the next batch so the cheapest opportunities enter the queue first. Rank
+tracking alone no longer describes the outcome: the scored per-site advisor report, the three
+trackable AI signals and the four-layer correlation report are in
+[references/measurement.md](references/measurement.md).
 
 **When the target is local, the playbook diverges completely** and the zero-click argument above
 does not apply: [references/local.md](references/local.md).
@@ -213,27 +211,29 @@ does not apply: [references/local.md](references/local.md).
 ## Boundaries
 
 Structured data mechanics: `seo-schema-markup`. Console queries and index state: `search-console`.
-App stores: `aso`. Page copy: `seo-copywriting`, with `humanizer` for the voice. Auditing an
-existing brand's citation gaps prompt by prompt is the `ai-citation-strategist` agent, this skill
-builds and places pages, that agent diagnoses why a competitor is named instead. Tool costs:
-[references/tooling.md](references/tooling.md). SvelteKit blog infrastructure:
-[references/blog-setup.md](references/blog-setup.md).
-
-This skill appends new failure modes to its own pattern list after each run. When a run surfaces
-one that is not already listed, append it to Learned Patterns with today's date before finishing.
+App stores: `aso`. Page copy: `page-copy`, with `humanizer` for the voice. SvelteKit blog
+infrastructure: [references/blog-setup.md](references/blog-setup.md). Auditing an existing brand's
+citation gaps prompt by prompt is the `ai-citation-strategist` agent: this skill builds and places
+pages, that agent diagnoses why a competitor is named instead.
 
 ## Verification
 
-- [ ] Every target sorted into the click lane or the mention lane, with the AI filter run against a
-      real SERP rather than guessed from the keyword's shape
+- [ ] Every target sorted into a lane, with the AI filter run against a real SERP rather than
+      guessed from the keyword's shape
+- [ ] Any claim about AI visibility read from a signed-out session with history off
 - [ ] The page carries something the top three results do not
-- [ ] `seo-checklist.md` passed, and no AI crawler is blocked in `robots.txt`
+- [ ] `write-like-a-source.md` applied, `seo-checklist.md` passed, no AI crawler blocked
 - [ ] Off-site mention targets named, not just on-site work
-- [ ] New failure modes from this run appended below
+- [ ] Each failure mode folded into the phase that would have caught it
+
+## Closing a run
+
+This skill appends new failure modes to its own pattern list after each run. A failure mode goes
+into the phase that would have caught it; if no phase owns it, append it to Learned Patterns with
+today's date before finishing.
 
 ## Learned Patterns
 
-- 2026-09-06: This skill's own checklist carried "minimum 1,500 words for competitive keywords" as inherited doctrine; word count correlates with AI citation at r=0.04 across 174,000 pages and 53.4% of cited pages are under 1,000. Length follows the answer. [ask: consolidate SEO learnings into one skill]
-- 2026-09-06: `geo-signals.md` stated SE Ranking's 30-40% schema lift as settled while Ahrefs finds no confirmed link. Where two studies disagree, carry both and say so; a contested number quoted flat becomes a client promise. [ask: consolidate SEO learnings into one skill]
-- 2026-09-01: DataForSEO's fan-out endpoint reported an incumbent as absent from a category it appears in 9 times of 24. Read fan-out from a logged-in ChatGPT session; the API is a proxy for subject, not for standing. [ask: fan-out research for a client's category]
-- 2026-08-11: A full keyword strategy was written against `airtabletosheets.com` while every path returned `Hello world` as `text/plain`. Curl the homepage and the sitemap before any research. [ask: build an SEO strategy for this domain]
+- 2026-09-06: Plan the mention lane separately from the ranking lane. Ranking first gives about a 31% chance of an AI citation, and most citations sit outside the top ten. [ask: consolidate GEO/AEO learnings into one skill]
+- 2026-09-06: Read AI visibility signed out, history and memory off. A signed-in account returns what it has already been trained to agree with. [ask: consolidate GEO/AEO learnings into one skill]
+- 2026-09-06: Where two studies disagree, carry both and say so. A contested number quoted flat becomes a client promise: schema's AI lift is one study for, two against. [ask: consolidate SEO learnings into one skill]
