@@ -4,11 +4,22 @@ The evidence file for the AI-search half of `SKILL.md`. Every number here is som
 study, attributed, because the field is full of confident claims with nothing under them. Where two
 studies disagree, both are here and the disagreement is the finding.
 
-Sources: Ahrefs' AEO research (75,000 brands, 174,000 cited pages, 140M robots.txt files),
-Princeton's GEO paper (KDD 2024, run against Perplexity), SE Ranking, ZipTie (400,000 pages),
-Seer Interactive with Nectaf, SparkToro with Datos.
+**Weight follows independent agreement.** A finding that four unconnected studies reach is worth
+building a quarter on; a finding one vendor reports about its own customers is worth a test. Each
+section says which it is.
+
+Sources: Ahrefs' AEO research (75,000 brands, 174,000 cited pages, 140M robots.txt files), NP
+Digital (500 commercial keywords, 4,300 prompts), SearchPilot's controlled split tests, Google's
+own AI mode usage report, Princeton's GEO paper (KDD 2024, run against Perplexity), SE Ranking,
+ZipTie (400,000 pages), Seer Interactive with Nectaf, SparkToro with Datos, Conductor.
 
 ## How the machine assembles an answer
+
+Two sources feed a response and they are influenced by different work. **Training data** is a
+frozen snapshot refreshed on the order of months, and you reach it only by being mentioned widely
+enough, for long enough, that the brand is baked in. **Retrieval** is a live search fired at answer
+time, and you reach it with ordinary SEO plus the technical checks below. A brand that launched
+last week can win retrieval this week and cannot win training for a year.
 
 **One prompt becomes many searches.** The assistant does not look up what the buyer typed. It fans
 the prompt out into sub-queries and runs them at once: 9 to 11 on average (Seer/Nectaf), as high as
@@ -22,33 +33,76 @@ Three consequences, and they are the whole strategy:
    generated in the moment, and the same prompt fans out differently on the next run. Read them as
    a brief, never as targets. Harvesting them from a real session: [fan-out.md](fan-out.md).
 3. **Citation is probabilistic, not a ranking.** Ask the same question five times and you may be
-   named three times. There is no position to hold, so the metric is share of voice across many
-   runs, never a rank.
+   named three times. Roughly 40% of prompts return the same answer on a second run. There is no
+   position to hold, so the metric is share of voice across many runs, never a rank, and a rank
+   tracker aimed at prompts is measuring an object that does not exist.
+
+## Ranking is the foundation and it is not the mechanism
+
+This is the finding that moved most, and it moved in one direction across every independent
+reading. Treat the old "rank first and citations follow" line as retired.
+
+| Reading | Overlap between ranking and being cited | Source |
+| --- | --- | --- |
+| AI Overview citations that came from Google's top 10 | 76%, and a later measurement puts it near 38% | Ahrefs, twice |
+| AI Overview citations from pages not in Google's top 100 at all | 14% | Ahrefs |
+| Chance of appearing in an AI answer when you rank #1 | **31%**, falling to 2.6% by rank 4 | NP Digital, 4,300 prompts |
+| AI citations going to sources outside Google's top 10 | **75%** | NP Digital |
+| Sources cited inside AI mode answers that rank top 10 for the same query | **under 10%** | Google's own AI mode report |
+| ChatGPT-cited pages that do not rank in Google's top 100 | 80% | Ryan Robinson, citing platform data |
+| ChatGPT's own overlap with Google's top 10 | 8 to 10% | Ahrefs |
+
+The readings disagree on the number and agree on the shape: **the two scoreboards have separated,
+and a site can hold position one in its category and never be named.** When that happens the
+missing input is almost always off-page validation rather than anything on the page.
+
+**And the two can actively conflict.** SearchPilot ran controlled split tests on a travel site,
+same template, one change at a time, with a control group to factor out seasonality and algorithm
+updates. Adding a brand-USP module was positive for LLM traffic and inconclusive for Google, so it
+shipped. Adding substantial extra explanatory copy was **statistically positive for LLM traffic and
+statistically negative for Google**, both bounds clear of zero. Google was 10 to 100 times larger
+for that site, so the change was not shipped. Two things follow: the lanes are not one lane, and a
+change that helps one can be a real cost in the other. Where the trade-off appears, iterate for the
+version that keeps the LLM gain without the Google loss rather than picking a side once.
+
+Statistical testing at that grade needs enterprise traffic. A small site's edge is pace of
+execution and quality of ideas, not a significance threshold it can never reach; read the published
+results from large sites instead of running underpowered tests of your own.
+
+## Query length decides which lane a term is in
+
+Overviews fire on 23% of one-to-three word queries, 48% at four or five, and 77% at six or more,
+and separately on nearly 58% of question-phrased queries. So the long, qualified, multi-clause
+questions that carry the most buying intent are almost always answered by a machine: they are
+mention-lane targets by default, and depth of topic coverage is what wins them rather than a page
+aimed at the phrase.
+
+The inverse is the click lane's boundary. Overviews appear on about 21% of all keywords and 99.9%
+of the ones that trigger them are informational, so anything the searcher has to *do* rather than
+know is intact.
 
 ## The strongest signal is a mention on somebody else's page
+
+Four independent sources reach this, and one of them is the CMO of the company that measured it.
 
 In the 75,000-brand study, **branded web mentions correlate with AI Overview visibility at 0.664,
 above backlinks, referring domains and domain rating.** Mentions on heavily linked pages reach
 0.70. A German link-building agency puts the same finding the blunt way: about **85% of what an LLM
-knows about a brand sits on third-party sites, not on the brand's own domain.**
+knows about a brand sits on third-party sites, not on the brand's own domain.** A separate reading
+attributes about 84% of AI citations to user-generated and community sources.
 
-So the off-site half of the work is now the larger half. Three tiers, in order of value:
+Ahrefs' own line for the mechanism: links were how Google saw that other people vouched for a
+site, and brand mentions are how a model sees it. The playbook that follows, the three tiers and
+the campaigns that earn them: [earning-mentions.md](earning-mentions.md).
 
-- **Editorial third parties.** Industry publications, review sites, listicles and comparison posts
-  on authoritative blogs. Hardest to earn, and exactly the page shape assistants cite.
-- **User-generated.** Reddit, Quora, niche forums. Reddit is among ChatGPT's most-cited domains and
-  a foundational training source. Answer threads your product genuinely fits; a brand-name drop
-  backfires. One analysis of B2B SaaS SERPs found Reddit outranking every vendor on 50-66% of
-  shared keywords, and 77% of the search volume it won came from plain category terms rather than
-  "best" or "review" phrasings; buyers form the opinion in the thread before they reach any vendor.
-- **Your own other properties.** YouTube, podcast, LinkedIn. All crawled, all quotable.
+**Being mentioned and being linked are different outcomes.** Only about 28% of AI mentions carry a
+link: Perplexity 51.6%, AI mode 36.8%, ChatGPT 26.9%, AI Overviews 10.7%. The unlinked seven in ten
+still work: each one is another training example binding the brand to the topic. But they will
+never appear in analytics. This is why [measurement.md](measurement.md) exists.
 
-**YouTube is the outlier and deserves its own budget line.** It is the most-cited domain in Google
-AI Overviews (~5.6% of citations), and YouTube mentions correlate with ChatGPT visibility at
-**0.737, the strongest single factor Ahrefs measured**, because GPT-4 trained on over a million
-hours of transcripts. Target search hits, not viral hits: a video ranking in Google for an evergreen
-query keeps earning citations, and a spike does not. Put the keyword in the title, in the first two
-lines of the description, and **say it out loud in the video**: Google parses the audio.
+Weighted by search volume the picture improves: on Perplexity, links appear in 51% of mentions but
+78% of impressions, and on Gemini in 16.8% of mentions but 71% of impressions. Citations are rare
+and they cluster on the queries with the most eyeballs.
 
 ## What the cited page looks like
 
@@ -58,23 +112,17 @@ lines of the description, and **say it out loud in the video**: Google parses th
 | Freshness | AI-cited pages are 25.7% fresher than pages ranking organically | For ChatGPT's top-cited pages, 89.7% were updated within the year and 76% within 30 days |
 | Format | 43.8% of ChatGPT-cited pages are listicles | Best-X, top-X, versus and review pages. They hand the model a ready-made consensus |
 | Churn | Over 45% of AI Overview citations change on refresh, roughly every two days | A citation audit is a standing job, not a project |
+| Factual density | Content carrying statistics, data points and attributable claims measured 30-50% higher visibility | Conductor benchmarks; the Princeton table below agrees |
+| Structure | Question-based headings, comparison tables and FAQ blocks measured 73-89% higher citation probability | Vendor-reported, so treat the direction as settled and the magnitude as unproven |
 
-Four writing rules follow from how the text is chunked before it is read. They are the same four
-that make a page skimmable for a person, which is the tell that this is not a separate craft:
+**Freshness is the cheapest lever on this list and the one with the shortest half-life.** Three
+independent readings put the decay window between 30 and 90 days, and a fourth finds pages
+untouched for 18 months losing citations they used to win even with their backlinks intact. A page
+that used to rank and has gone stale is the fastest win available: it already has the authority, it
+needs a real update rather than a touched date, which Google detects.
 
-- **Answer first.** Open every section with the conclusion, then the support. Both readers and
-  models weight the start and end of a passage over the middle.
-- **Atomic sections.** Take any H2 and read it with nothing around it. If it needs three earlier
-  paragraphs to make sense, rewrite it: you do not control where the chunk boundary falls.
-- **Name the entities.** "This tool finds low-difficulty keywords" carries nothing. "Ahrefs
-  Keywords Explorer finds keywords with low difficulty and high traffic potential" carries a
-  product, a capability and two attributes.
-- **One idea per sentence.** If a sentence needs two reads, it is too long for the chunker and for
-  the reader.
-
-**Label your own frameworks with your brand name**, or the model absorbs the idea as general
-knowledge and credits nobody. "The <brand> content scoring matrix", defined explicitly, repeated
-across the blog, the social posts and the podcast, survives; "a content scoring matrix" does not.
+How to write the page so a chunk of it survives being lifted out, with the before-and-afters:
+[write-like-a-source.md](write-like-a-source.md).
 
 ## The platforms do not overlap, so pick two
 
@@ -85,15 +133,14 @@ all three.** Google's own AI Overviews and AI mode share just 13.7% of their cit
 | Platform | Pulls from | Traditional-SEO overlap |
 | --- | --- | --- |
 | Google AI Overviews | YouTube, Reddit, Quora, encyclopedic and Google-owned properties | Was 76% of citations from Google's top 10; a later study puts it near 38% and falling |
-| Google AI mode | YouTube by a wide margin, then Google and Wikipedia; cites Quora 3.5x more than AI Overviews, and pulls from Facebook and Instagram | Low |
+| Google AI mode | YouTube by a wide margin, then Google and Wikipedia; cites Quora 3.5x more than AI Overviews, and pulls from Facebook and Instagram | Low. Under 10% of its cited sources rank top 10 for the same query |
 | ChatGPT | Publishers and media: Reddit, Wikipedia, Amazon, Forbes. Median domain rating of its top-cited pages is 90 | 8-10%. Runs on Bing's index, so Bing visibility is the gate |
 | Perplexity | Niche and regional sites, FAQ-schema pages, ungated PDFs | 28.6%, the most Google-aligned of the four, so the fastest win if you already rank |
 | Claude | Brave Search when web search is on | Low and selective; factual density tips it |
 
-**Being mentioned and being linked are different outcomes.** Only about 28% of AI mentions carry a
-link: Perplexity 51.6%, AI mode 36.8%, ChatGPT 26.9%, AI Overviews 10.7%. The unlinked seven in ten
-still work: each one is another training example binding the brand to the topic. But they will
-never appear in analytics. This is why [measurement.md](measurement.md) exists.
+Market share decides the order: Google's AI surfaces and ChatGPT hold the large majority of AI
+search volume, so they are the two unless the niche says otherwise. If the site already ranks well,
+Perplexity converts that into AI visibility with no extra work and is the cheapest first win.
 
 ## The Princeton technique table, still the best per-edit guide
 
@@ -112,6 +159,10 @@ Percentage visibility lift per rewrite technique, measured against Perplexity:
 Best measured pair: fluency plus statistics. A low-ranking site gains more than a high-ranking one,
 up to 115% with citations, because it has more headroom. SE Ranking's separate AI Overviews numbers
 put cited sources at +132% and authoritative tone at +89%.
+
+Note the shape of the winner: **citing other people's sources is what makes a model cite you.**
+That is counterintuitive enough that people skip it, and it is the largest single lift on the
+table.
 
 ## Misinformation is the risk nobody budgets for
 
@@ -136,16 +187,21 @@ official content, and re-publish it on a schedule rather than once.
   training and citation, so blocking it forfeits the citation too.
 - **ChatGPT's crawler does not render JavaScript.** Gemini and Copilot do. A client-rendered page
   is an empty shell to the largest assistant, so server-render or statically generate. Test by
-  disabling JS and loading your own page.
+  disabling JS and loading your own page, or by reading view-source and looking for the body copy.
 - **Speed matters more here than for ranking.** Retrieval fetches, parses and chunks in real time,
   and a slow page is dropped before it is ever scored.
 - **`llms.txt` is not supported by any major provider.** Not OpenAI, not Google; Anthropic publishes
-  one without confirming its crawlers read it. Harmless, not a priority.
-- **Schema's effect on AI citation is contested.** SE Ranking measured a 30-40% AI Overviews lift
-  for pages carrying Article, FAQPage, HowTo or Product markup; Ahrefs found no confirmed link and
-  recommends it only as general hygiene. Both readings agree it does not hurt and that rich-result
-  eligibility justifies it on its own, so implement it for that and do not sell it as an AI play.
-  Mechanics belong to the `seo-schema-markup` skill.
+  one without confirming its crawlers read it. Harmless, not a priority, and no substitute for the
+  off-site work people reach for it to avoid.
+- **Schema is hygiene, not an AI lever.** SE Ranking measured a 30-40% AI Overviews lift for pages
+  carrying Article, FAQPage, HowTo or Product markup, and it is the only study that finds an
+  effect; Ahrefs finds no confirmed link and recommends against spending time on it for AEO
+  specifically, and a separate published test found no need to restructure content into
+  question-answer shapes for a model to read it. Implement it for rich-result eligibility, which
+  justifies it on its own, and do not sell it as an AI play. Mechanics belong to the
+  `seo-schema-markup` skill. The one exception worth the effort is `Organization` schema with
+  `sameAs` pointing at every profile the brand owns, because that is entity resolution rather than
+  markup: it tells a model the site, the LinkedIn page and the YouTube channel are one company.
 - **Redirect the URLs the assistants invent.** They send visitors to 404s **2.87 times more often
   than Google does**, ChatGPT worst at about 1% of its clicked URLs. Any hallucinated path taking
   repeat traffic gets a redirect to the nearest real page.
@@ -153,9 +209,15 @@ official content, and re-publish it on a schedule rather than once.
 ## Google's own position, and why it is not the last word
 
 John Mueller's line is that there is nothing special to do for generative responses beyond ordinary
-SEO. Take it as a floor rather than a ceiling: it is consistent with 76% of AI Overview citations
-starting as top-10 rankings, and it says nothing about the off-site mention work above, which is
-where the measured correlation actually sits. Bing's public stance differs.
+SEO. Take it as a floor rather than a ceiling: it says nothing about the off-site mention work
+above, which is where the measured correlation actually sits, and the ranking-to-citation table
+above shows ordinary SEO is not carrying the mention lane on its own.
+
+Treat vendor guidance as a hypothesis with an interest. SearchPilot, which runs controlled tests
+for enterprise retailers, names "listening to Google" as the practice to stop following blindly,
+having run tests Google has not and found published advice to be neutral at best on real sites. The
+same scepticism applies to the tool vendors selling AI-visibility trackers, whose infographics
+outrun the data underneath them.
 
 **AI-written content is not itself a ranking liability.** Google's documented position permits
 automation and judges the output. The strongest available evidence is the image case: SynthID has
