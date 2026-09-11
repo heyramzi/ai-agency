@@ -121,25 +121,17 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/youtube-thumbnail.zip"
     },
     {
-      "name": "skill-creator",
+      "name": "skill-manager",
       "area": "operations",
-      "description": "Writes, repairs and reviews skills and agents: the shape one takes, the description that makes it fire, the quality floor, and the failure log that stops it repeating a mistake. Use when writing or editing one, when it fires wrong, before it ships, or when a session teaches you what a file missed.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/operations/skill-creator/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/operations/skill-creator",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/skill-creator.zip"
-    },
-    {
-      "name": "skill-cleaner",
-      "area": "quality",
-      "description": "Use when a skills registry feels messy or untrustworthy: a skill that seems to work some days and not others, a skill you wrote that never gets picked, duplicate or overlapping skills competing for the same task, skills scattered across projects and home directories, dead symlinks, or before publishing a skills repo. Also use when merging redundant skills down to one survivor, or when auditing SKILL.md frontmatter for spec compliance. Appends new failure modes to its own pattern list after each run.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/quality/skill-cleaner/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/quality/skill-cleaner",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/skill-cleaner.zip"
+      "description": "Writes, repairs, reviews and cleans skills and agents: the shape one takes, the description that makes it fire, the quality floor, the failure log, and the pass that cuts a bloated registry back. Use when writing or editing one, when it fires wrong, before it ships, or when a registry has grown.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/operations/skill-manager/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/operations/skill-manager",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/skill-manager.zip"
     },
     {
       "name": "programmatic-seo",
       "area": "search",
-      "description": "The keyword-to-published-page pipeline, run at volume by one person, from Search Console history or from Serper.dev where there is none. Use when deciding what page to write next, when researching keywords for a niche, when judging whether a content cluster is worth entering, when generating article drafts or briefs, or when setting up blog infrastructure on SvelteKit. Holds the data cost policy for every SEO skill.",
+      "description": "The SEO and AI-search pipeline for one person: what page to write next, keyword and prompt research, the page itself, and the off-site mentions that decide whether an assistant names you. Use on 'SEO', 'AEO', 'GEO', 'rank on Google', 'get cited by ChatGPT', or keyword research.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/programmatic-seo/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/programmatic-seo",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/programmatic-seo.zip"
@@ -147,7 +139,7 @@
     {
       "name": "search-console",
       "area": "search",
-      "description": "Queries Google Search Console for keyword performance, content gaps, cannibalisation and ranking analysis. Use when checking search performance, when deciding what page to write next, when finding queries that rank with no page behind them, when comparing periods, or on 'GSC', 'check rankings', 'low-hanging fruit', 'what am I ranking for'.",
+      "description": "Queries Google Search Console for keyword performance, content gaps, cannibalisation and ranking analysis. Use when checking search performance, deciding what page to write next, finding queries that rank with no page behind them, or on 'GSC', 'check rankings', 'what am I ranking for'.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/search-console/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/search-console",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/search-console.zip"

@@ -20,7 +20,9 @@ and answer with the line that satisfies the check, or with the edit that will.
   name. An invented example teaches the reader to trust none of them.
 - **Altitude.** The body routes; the references do. If a section can be lifted whole into a
   reference with a one-line pointer left behind, it belongs there. Under 250 lines is the budget,
-  and a body that is mostly reference material is failing at 120.
+  and a body that is mostly reference material is failing at 120. A dozen references is the other
+  ceiling: `humanizer` ran 247 lines pointing at 21 files totalling 330 KB, and a session read the
+  body, opened none of them, and shipped the slop the skill exists to stop.
 - **Disclosure.** Every reference link carries the condition that opens it: "read `api-errors.md`
   when the call returns a non-200". A pointer with no condition is loaded always or never, and
   which one is a coin toss.
@@ -30,6 +32,20 @@ and answer with the line that satisfies the check, or with the edit that will.
 - **Verdict.** Every check has a pass condition a reader can answer. "Improve the hierarchy" has
   none. "Blur the detail and name the primary element, the secondary, and the groups in order" has
   one. A named test that returns an answer beats a paragraph describing quality.
+- **Enforcement.** A skill that sets a standard ships the standard as an eval: numbered checks,
+  each answered pass or fail on the finished output in a fresh read, looped until all pass, with a
+  stated round ceiling and an exit for the draft that cannot pass without inventing facts. Prose
+  describing an audit is not an audit, and that sentence sat in `humanizer` from the day it was
+  written while every session skipped the pass it named. The eval lives in its own reference, not
+  in the body: the body is read before the work and the eval after it.
+- **Shape.** Every rule carries something the reader can apply: a before and an after, a string to
+  grep, a number to measure. A rule that names a category is a description of the failure, not a
+  removal of it. The comparison worth holding is `no-ai-slop`, 97 lines where every line is a rule
+  with a rewrite beside it, routing nowhere.
+- **Coherence.** Read the skill's own rules against each other before shipping, and read any gate
+  it ships against the rule the gate claims to enforce. Two first-party rules contradicted each
+  other in `humanizer`, and its pronoun lint failed a ledger at parity while the rule it cited
+  asks only that the first person outnumber the second.
 - **Cost.** The skill states its own ceiling where a loop could open: how many passes, how many
   reads, when to stop. Work with no stated ceiling runs until the context does.
 - **Boundaries.** The skill names what it does not own and names the skill that does. Name the
@@ -39,8 +55,8 @@ and answer with the line that satisfies the check, or with the edit that will.
 - **Frontmatter.** `name` equals the directory. `description` under 300 characters and free of
   angle brackets. `allowed-tools` only where it removes a prompt the skill hits every run.
   `disable-model-invocation: true` on anything that should only ever be typed.
-- **Self-healing.** The four parts, seeded with real entries, or the section is absent. `skill-creator`
-  owns the format and `skill-creator check <dir>` owns the verdict.
+- **Self-healing.** The four parts, seeded with real entries, or the section is absent.
+  `skill-manager` owns the format and `heal.cjs check <dir>` owns the verdict.
 
 ## Refuse
 

@@ -81,5 +81,5 @@ instead of the intent.
 ## When a description will not separate
 
 Two skills whose descriptions keep matching the same prompts are usually one skill with two
-branches. Merging is the fix, and it belongs to `ai-cleaner`. Rewriting both descriptions to be
+branches. Merging is the fix, and it is the clean path of this skill. Rewriting both descriptions to be
 more specific about the same territory produces two narrower descriptions that still overlap.

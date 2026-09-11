@@ -152,7 +152,7 @@ function discover(roots) {
       try {
         stats = statSync(child);
       } catch {
-        continue; // a dangling symlink is skill-cleaner's finding, not this one's
+        continue; // a dangling symlink is the clean pass's finding, not this one's
       }
       if (!stats.isDirectory()) continue;
       const file = join(child, "SKILL.md");
@@ -199,14 +199,16 @@ function read(file) {
   // body when the section is missing.
   if (entries.length === 0) {
     const searched = logBlock || text;
-    const link = /\(([^)]*learn[^)]*\.md)\)|`([^`]*learn[^`]*\.md)`/i.exec(searched);
-    const target = link && (link[1] || link[2]);
-    if (target) {
-      const resolved = join(dirname(file), target);
-      if (existsSync(resolved)) {
-        entries = parseEntries(readFileSync(resolved, "utf8"), { inBody: false });
-        entriesFile = resolved;
-      }
+    // Every candidate, not the first. A pointer written as ``[`x.md`](references/x.md)`` puts the
+    // bare filename leftmost, and taking that one alone resolved to a path that does not exist, so
+    // `log` fell through and appended into the body the section had just delegated away.
+    const targets = [...searched.matchAll(/\(([^)]*learn[^)]*\.md)\)|`([^`]*learn[^`]*\.md)`/gi)]
+      .map((m) => m[1] || m[2])
+      .flatMap((t) => [join(dirname(file), t), join(dirname(file), "references", t)]);
+    const resolved = targets.find((t) => existsSync(t));
+    if (resolved) {
+      entries = parseEntries(readFileSync(resolved, "utf8"), { inBody: false });
+      entriesFile = resolved;
     }
   }
 
@@ -234,7 +236,7 @@ function read(file) {
  */
 function readDescription(frontmatter) {
   const lines = frontmatter.split("\n");
-  const start = lines.findIndex((l) => /^description:/.test(l));
+  const start = lines.findIndex((l) => l.startsWith('description:'));
   if (start === -1) return "";
 
   const collected = [lines[start].replace(/^description:\s*/, "")];
@@ -296,7 +298,18 @@ function parseEntries(logBlock, { inBody = true } = {}) {
       add(date, dated[4], trimmed);
     }
     const undated = ENTRY_UNDATED.exec(trimmed);
-    if (undated) add(null, undated[1], trimmed);
+    if (undated) {
+      add(null, undated[1], trimmed);
+      continue;
+    }
+    // An indented line under an entry is that entry continuing. Reading only first lines reported
+    // every wrapped log as carrying no `[ask: ...]` at all and measured its entries at a fraction
+    // of their length, which is the one field this tool exists to enforce.
+    const last = entries[entries.length - 1];
+    if (last && trimmed !== "" && /^\s+\S/.test(line)) {
+      last.text = `${last.text} ${trimmed}`;
+      last.raw = `${last.raw}\n${line}`;
+    }
   }
   return entries;
 }
@@ -341,7 +354,7 @@ function audit(skill, now) {
   if (skill.entries.length > LOG_ENTRIES_MAX && (inlineEvidence || !skill.entriesFile)) {
     warnings.push(
       `${skill.entries.length} entries is a second body. Compress each entry to its rule ` +
-        `with ai-cleaner's compress_log.py, or fold the hardened ones into the prose.`,
+        `with compress_log.py, or fold the hardened ones into the prose.`,
     );
   }
   // WHY count the asks: `[ask: ...]` is the only thing in an entry that can be
