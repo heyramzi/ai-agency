@@ -245,26 +245,27 @@ you have not measured, and every one of them stops when the module ends.
 
 Agent configuration rots in a specific way: it never fails loudly. A broken skill
 is not reported, it is simply never offered. A duplicated name does not conflict,
-one side just stops existing. The two skills below exist to make that class of
-silent failure visible, and to repair the parts of it that have exactly one
-correct answer.
+one side just stops existing. The skill below exists to make that class of silent
+failure visible, and to repair the parts of it that have exactly one correct
+answer.
 
-A registry decays in two directions at once, and the fixes pull against each
-other. Keeping them as separate skills on separate cadences is the point.
+A registry decays in two directions at once, and one skill owns both, because
+both are judged against the same quality floor. Two files holding one standard
+become two standards inside a quarter.
 
-| Skill | Direction | Cadence | Use when |
+| Path | Direction | Cadence | Use when |
 | --- | --- | --- | --- |
-| [**skill-cleaner**](skills/quality/skill-cleaner) | Subtractive | Scheduled | Duplicates and overlapping skills compete for the same task, a skill works some days and not others, skills are scattered across projects and home directories, or links are dead |
-| [**skill-creator**](skills/operations/skill-creator) | Additive | Per session | A skill needs writing or its description fires on the wrong prompts, a session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
+| [**skill-manager**](skills/operations/skill-manager) `new` / `heal` | Additive | Per session | A skill needs writing or its description fires on the wrong prompts, a session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
+| [**skill-manager**](skills/operations/skill-manager) `clean` | Subtractive | Scheduled | Duplicates and overlapping skills compete for the same task, a skill works some days and not others, skills are scattered across projects and home directories, or links are dead |
 
 **It accumulates.** Every skill you add competes with the others for the same
 triggers. Past a certain size the model is not choosing the right skill, it is
 choosing between four that all look right, and you cannot tell which one it
-picked. `skill-cleaner` merges those down to one survivor each, behind a git
+picked. The clean path merges those down to one survivor each, behind a git
 guard so a bad merge is one command to undo.
 
 **It goes stale.** A file keeps giving an instruction that stopped being true,
-and every session pays again for the same wrong turn. `skill-creator` writes the
+and every session pays again for the same wrong turn. The heal path writes the
 lesson into the file that should have known it, in the session that learned it,
 and deletes what the lesson contradicts.
 
@@ -306,15 +307,16 @@ installed. `whiteboard` is the one exception and says so: its `tool/` wants
 
 ## Checking your own fork
 
-Both tools run against this repo, and against each other. That is the intended
+The tools run against this repo, and against each other. That is the intended
 way to use them on your own:
 
 ```bash
-node skills/quality/skill-cleaner/scripts/skill-cleaner.cjs audit skills
-node skills/operations/skill-creator/scripts/heal.cjs check skills
+node skills/operations/skill-manager/scripts/heal.cjs check skills
+python3 skills/operations/skill-manager/scripts/review_skill.py skills
+python3 skills/operations/skill-manager/scripts/context_cost.py skills
 ```
 
-Both exit non-zero when something is wrong, so they drop into CI as-is.
+They exit non-zero when something is wrong, so they drop into CI as-is.
 
 ## Where the rest of it is
 

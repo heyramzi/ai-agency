@@ -113,7 +113,7 @@ Does the skill belong where it sits, and does it need to exist?
 | 2 | Duplicates an existing skill, or sits loose in an area with no family. |
 | 1 | Should be a paragraph in an existing skill, not a file. |
 
-The registry-wide version of this is `ai-cleaner`. Run it when D6 scores 3 or
+The registry-wide version of this is the clean path. Run it when D6 scores 3 or
 below across several skills at once.
 
 ## D7: Provenance
@@ -137,11 +137,11 @@ Does the skill learn from its own failures?
 
 | Score | Criteria |
 | --- | --- |
-| 5 | `skill-creator check` passes: stated promise in the body, a closing step, a verification item, and a `## Learned Patterns` section seeded with real entries. |
+| 5 | `heal.cjs check` passes: stated promise in the body, a closing step, a verification item, and a `## Learned Patterns` section seeded with real entries. |
 | 4 | Scaffold present, log thin. |
 | 3 | Scaffold present, log empty. An empty log is worse than none. |
 | 2 | Promise made, nowhere to write it. |
 | 1 | The skill has repeated a mistake and nothing records it. |
 
 Score N/A for a skill with no failures to seed it. Do not ship an empty section
-to score the point; see `skill-creator`.
+to score the point; see the failure log section in `SKILL.md`.

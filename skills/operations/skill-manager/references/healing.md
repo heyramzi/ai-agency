@@ -7,6 +7,7 @@
 - What not to heal
 - Worked examples
 - Healing is not accretion
+- The failure log scaffold
 - Cadence
 
 Loaded when a learning does not have an obvious home, or when retrofitting a
@@ -50,7 +51,7 @@ The order that works:
 2. Retrofit the skills you actually use, when you next use them, seeding each
    log with the failure that made you open the file.
 3. Leave the rest. A skill nobody runs has no failure modes to record, and it is
-   `skill-cleaner`'s problem rather than this one's.
+   the clean pass's problem rather than this one's.
 
 The exception is a skill that has just cost you time. Retrofit that one now,
 while you still remember precisely what it got wrong.
@@ -116,6 +117,37 @@ before repeating it.
   any log at all. `review_skill.py` errors on one.
 
 The short form is in `SKILL.md`.
+
+## The failure log scaffold
+
+Moved out of the body 11 Sep 2026; `SKILL.md` states the four parts and points here.
+
+1. **A stated promise** in the body that the skill appends new failure modes after each run. Not in
+   the description: every description is preloaded into every session, and this sentence tells the
+   runtime nothing about when to pick the skill.
+2. **The closing step of the flow** reads: if this run surfaced a failure mode not already listed,
+   append it to Learned Patterns with today's date.
+3. **A verification item** confirming new patterns were appended.
+4. **`## Learned Patterns`** last in the file, seeded with real entries. Never ship it empty; an
+   empty log teaches the reader to skip the section. Past a handful it moves to
+   `references/learned-patterns.md`, because a body is read in full on every invocation and a log
+   is read on almost none.
+
+Entry format, newest first:
+
+```
+- YYYY-MM-DD: <what went wrong or was assumed> <what to do instead>. [ask: <the ask that caused it>]
+```
+
+**One line, 240 characters, opening with the law.** A log is paid for in context on every run, so
+the entry carries the rule and one checkable anchor (the error string, the threshold, the flag) and
+nothing else. The story belongs in git. `heal.cjs log` refuses a longer entry; `--long` overrides.
+
+**Keep the ask when a prompt caused the failure**, and `check` counts them, because this field died
+once already: on 5 Sep 2026 it was absent from all 758 entries in all 34 logs, written as optional
+and enforced by nothing. The wording that broke the skill is the only input that proves the edit
+worked, so a log of 5 or more entries with no ask now warns. Ship the scaffold only when the run
+that motivated the skill already produced real failures to seed it with.
 
 ## Cadence
 

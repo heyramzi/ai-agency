@@ -306,7 +306,7 @@ def check_bundled(skill_dir, linked, body, add):
                 add("error", f"references/{rel}: the run belongs in git, not in a second log.")
                 continue
             # Failure logs are append-only and dated, not documents. Their shape
-            # and their ceiling belong to skill-creator.
+            # and their ceiling belong to skill-manager.
             if path.stem.startswith("learned-patterns"):
                 continue
             text = path.read_text(errors="replace")

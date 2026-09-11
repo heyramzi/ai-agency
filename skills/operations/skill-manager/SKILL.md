@@ -1,39 +1,46 @@
 ---
-name: skill-creator
-description: "Writes, repairs and reviews skills and agents: the shape one takes, the description that makes it fire, the quality floor, and the failure log that stops it repeating a mistake. Use when writing or editing one, when it fires wrong, before it ships, or when a session teaches you what a file missed."
+name: skill-manager
+description: "Writes, repairs, reviews and cleans skills and agents: the shape one takes, the description that makes it fire, the quality floor, the failure log, and the pass that cuts a bloated registry back. Use when writing or editing one, when it fires wrong, before it ships, or when a registry has grown."
 license: Complete terms in LICENSE.txt
-argument-hint: "[new|agent · trigger|improve · heal|log · review|package] [target]"
+argument-hint: "[new|agent · trigger|improve · heal|log · clean · review|package] [target]"
 tags: [makes, agents]
 ---
 
-# Skill Creator
+# Skill Manager
 
-Every skill and every agent in this workspace is written through this file, and repaired through
-it. A skill is a slot in a registry that every session pays for before the user asks anything, so
-the bar is not "is this useful" but "does this earn its place against everything already here".
+Every skill and every agent in this workspace is written through this file, repaired through it,
+and cut back through it. A skill is a slot in a registry that every session pays for before the
+user asks anything, so the bar is not "is this useful" but "does this earn its place against
+everything already here".
 
-**Writing one and healing one are the same skill.** They were two until 5 Sep 2026, and the split
-cost more than it bought: both wrote against the same floor, each opened by routing to the other,
-and the closing step of one was a command in the other. One file, one log, one CLI.
+**Writing one, healing one and cleaning the shelf are the same skill.** They were three until
+11 Sep 2026, and each split cost more than it bought: all three wrote against the same floor,
+each opened by routing to another, and the cleaner's closing step was a command in the creator.
+ One file, one log, one CLI.
 
-Three principles carry the rest.
+Four principles carry the rest.
 
 - **Extraction, not design.** A skill comes out of work already done twice. That run is the spec
   and its transcript is the first draft. A planning session that asks what skills should exist
   produces files nobody triggers. The same rule governs a repair: a learning comes out of a
   failure that cost real time, not out of a review of what a file might say better.
-- **The floor is shared.** [references/skill-floor.md](references/skill-floor.md) holds the quality
-  bar, and `ai-cleaner` writes against the same one. A standard restated in three places is three
-  standards by the end of the quarter.
+- **Enforcement, not description.** A file that describes a standard ships the failure it names.
+  Prose saying "audit it as a separate pass" is not an audit; a numbered list of binary checks run
+  on the finished output is. Where a skill sets a bar, it carries the eval that holds the bar.
+- **The floor is shared.** [references/skill-floor.md](references/skill-floor.md) holds the
+  quality bar for every path here. A standard restated in three places is three standards by the
+  end of the quarter.
 - **Verified by outcome in a cleared session.** A skill is proven by running the task again with
   the context cleared, not by reading the file back. Everything else is a proxy, and a heal that
   works only in the session that wrote it has not landed.
 
-## The two paths
+## The three paths
 
 **Write** when nothing covers the request. **Repair** when something does and it is wrong, stale,
-or silent about what it just cost you. Repair is the common one, and reaching for a new file when
-an existing one was wrong is how a registry doubles without getting better.
+or silent about what it just cost you. **Clean** when the shelf itself is the problem: overlap,
+duplicate names, a registry over budget, a body that has doubled. Repair is the common one, and
+reaching for a new file when an existing one was wrong is how a registry doubles without getting
+better.
 
 | Command | Path | Does | Reference |
 |---|---|---|---|
@@ -43,28 +50,32 @@ an existing one was wrong is how a registry doubles without getting better.
 | `log [skill]` | Repair | Append one dated failure mode to a skill's own log | below |
 | `trigger [skill]` | Repair | A description that fires on the wrong prompts or not at all | [triggering.md](references/triggering.md) |
 | `improve [skill]` | Repair | Run it, judge the output, correct the file, retest cleared | [evaluating.md](references/evaluating.md) |
+| `clean [folder]` | Clean | Measure the registry, merge, delete, simplify what stays | [cleaning.md](references/cleaning.md) |
 | `review [target]` | Judge | The mechanical script, then the eight-dimension rubric | [review-rubric.md](references/review-rubric.md) |
 | `package [skill]` | Ship | Validate and zip for distribution outside this workspace | `scripts/package_skill.py` |
 
-With no argument, pick the path from what the conversation already shows: a correction or a cost
-is `heal`, a request for something that does not exist is `new`. Never start writing a skill on an
-implied request.
+The clean path owns three further references, opened from `cleaning.md` when its step reaches
+them: [context-budget.md](references/context-budget.md) for the descriptions pass,
+[skill-merging.md](references/skill-merging.md) for an overlapping pair, and
+[memory-triage.md](references/memory-triage.md) for an auto-memory store.
 
-**Overlap, duplicate names, a registry over budget, a body to split: that is `ai-cleaner`.**
-Cleaning removes files and shrinks the ones that stay; this skill adds truth to one file and
-writes new ones. Heal continuously, clean on a schedule.
+With no argument, pick the path from what the conversation already shows: a correction or a cost
+is `heal`, a request for something that does not exist is `new`, a complaint about the shelf is
+`clean`. Never start writing a skill on an implied request.
+
+**Heal continuously, clean on a schedule.** A repair adds truth to one file the moment a session
+learns it. A clean removes files and shrinks the ones that stay, and it needs the whole tree in
+front of it, so it runs as a pass and not as a reflex.
 
 ## Setup, before writing anything
 
 1. **Search first.** Read [references/contract.md](references/contract.md), then grep the skill and
    agent descriptions for the topic. If something covers 70% of the request, strengthen it instead.
-   Search `scripts/` directories too: a capability already shipped as a script reads as a missing
-   skill.
-2. **Load the one reference that owns the request** from the table above. For anything else, this
-   file is enough.
+   Search `scripts/` too: a capability already shipped as a script reads as a missing skill.
+2. **Load the one reference that owns the request** from the table above, and nothing else.
 3. **Load [references/skill-floor.md](references/skill-floor.md) immediately before writing or
    rewriting a body.** It carries the quality bar, the shapes to refuse, and the reflexes no script
-   catches. Do not load it for planning-only work.
+   catches. Not for planning-only work.
 
 ## The four kinds
 
@@ -89,7 +100,8 @@ the failure instead of describing it.
 When a skill is still the answer, name in one line why levels 1 and 2 cannot hold it.
 
 Then: start with the reusable parts (`scripts/`, `references/`, `assets/`), because they decide
-what the body has to say. Write the body last, as a router. Initialise with
+what the body has to say. A Judgment skill writes its eval here, before the body, because the eval
+is the standard and the body is the route to it. Write the body last, as a router. Initialise with
 `scripts/init_skill.py <name> --path <dir>` and delete the example files it leaves behind.
 Placement, naming and the reconcilers belong to [references/contract.md](references/contract.md).
 The one thing worth carrying here: the directory name is the slash command, so name the directory
@@ -116,7 +128,8 @@ consequence. "Check dates carefully" teaches nothing. "Buffer accepts a 600-char
 lets it die at send, so measure before scheduling" prevents a repeat.
 
 **4. Read it back.** Confirm the frontmatter still parses, the links still resolve, and nothing
-else in the file now contradicts the edit.
+else in the file now contradicts the edit, including any gate the skill ships: `humanizer` held two
+first-party rules that disagreed, and a pronoun lint stricter than the rule it cited.
 
 **5. Retest in a cleared session.** Reading the edit back proves the file says the right thing. It
 does not prove the file *changes what happens*, because this session already knows the lesson and
@@ -127,8 +140,25 @@ produce, without leaning on the conversation.
 **What counts as a learning:** a correction from the user, an instruction that turned out to be
 wrong or stale, an approach that clearly beat the documented one, or a failure that cost real time.
 Not a detail that only mattered to this conversation. The test is whether the next session would do
-better for knowing it. Which file owns a fact, what not to heal, and worked entries good and bad:
+better for knowing it. An edit also leaves the file no longer than it found it: healing that only
+adds is accretion, and nothing in the file stays load-bearing. Which file owns a fact, what not to
+heal, the five rules against accretion, and worked entries good and bad:
 [references/healing.md](references/healing.md).
+
+## Cleaning a registry
+
+One command starts it, and nothing below it is decided by reading files by eye:
+
+```bash
+python3 scripts/context_cost.py <folder>    # counts, metadata cost, every violation
+python3 scripts/dead_pointers.py <folder>   # routes into assets that no longer exist
+```
+
+The measurement names the work: a descriptions pass widest first, an agent triage, a merge of
+every overlapping pair, then the simplification pass on the bodies that stay. Every run ends with
+the registry smaller or equal, and the metadata figure is reported before and after. Budgets, the
+five waste classes, memory stores and the checklist:
+[references/cleaning.md](references/cleaning.md).
 
 ## The failure log
 
@@ -136,38 +166,11 @@ Every skill keeps an append-only log about itself. A skill that repeats a mistak
 is a bug, and the fix is not a better model. It works because the log lives inside the skill, so
 the next run reads it as instructions.
 
-Four parts, all required. Three of them heal by accident: the promise with no log has nowhere to
-write, and the log with no closing step is never written to.
-
-1. **A stated promise** in the body that the skill appends new failure modes after each run. Not in
-   the description: every description is preloaded into every session, and this sentence tells the
-   runtime nothing about when to pick the skill.
-2. **The closing step of the flow** reads: if this run surfaced a failure mode not already listed,
-   append it to Learned Patterns with today's date.
-3. **A verification item** confirming new patterns were appended.
-4. **`## Learned Patterns`** last in the file, seeded with real entries. Never ship it empty; an
-   empty log teaches the reader to skip the section. Past a handful it moves to
-   `references/learned-patterns.md`, because a body is read in full on every invocation and a log
-   is read on almost none.
-
-Entry format, newest first:
-
-```
-- YYYY-MM-DD: <what went wrong or was assumed> <what to do instead>. [ask: <the ask that caused it>]
-```
-
-**One line, 240 characters, opening with the law.** A log is paid for in context on every run, so
-the entry carries the rule and one checkable anchor (the error string, the threshold, the flag) and
-nothing else. The story belongs in git. `heal.cjs log` refuses a longer entry; `--long` overrides.
-
-**Keep the ask when a prompt caused the failure**, and `check` counts them, because this field died
-once already: on 5 Sep 2026 it was absent from all 758 entries in all 34 logs, written as optional
-and enforced by nothing. An edited file is believed rather than checked, and the wording that broke
-the skill is the only input that proves the edit worked. A log of 5 or more entries with no ask
-anywhere now warns.
-
-Ship the scaffold only when the run that motivated the skill already produced real failures to seed
-it with.
+Four parts, all required, and three of them heal by accident: the promise with no log has nowhere
+to write, and the log with no closing step is never written to. The stated promise in the body, the
+closing step of the flow, a verification item, and `## Learned Patterns` last in the file, seeded
+with real entries. `heal.cjs retrofit` adds what is missing. The entry format, the 240-character
+law, the `[ask:` field and why each exists: [references/healing.md](references/healing.md).
 
 ## Run it
 
@@ -179,6 +182,7 @@ node scripts/heal.cjs retrofit <skill> --apply # add the missing parts to one
 node scripts/heal.cjs log <skill> "<entry>" --apply
 node scripts/heal.cjs fold <skill>             # entries that belong in the body now
 python3 scripts/review_skill.py <dir-or-tree>  # the mechanical pass
+python3 scripts/context_cost.py <folder>       # the clean pass measurement
 ```
 
 `retrofit` and `log` are dry runs without `--apply`. `log` refuses an entry the log already holds,
@@ -199,16 +203,9 @@ dimensions a script cannot. Read it when a skill is about to ship, when one keep
 for the wrong prompt, or when its output changes between sessions.
 
 Neither replaces the cleared-session retest. A skill can score 40 and still fail the only test that
-matters.
+matters, and the cold run is what finds the breakages a reread cannot: one Sonnet session on the
+rewritten `humanizer`, with no other context, broke it on four points in a single pass.
 
-
-## Healing is not accretion
-
-The failure mode of this skill is instruction files that only ever grow until nothing in them is
-load-bearing. An edit should leave the file no longer than it found it, a learning repeated across
-three files becomes one rule and two pointers, and an entry that has hardened into the body gets
-folded out of the log. The five rules that hold that line, including why there is no
-`learned-patterns-archive.md`, are in [references/healing.md](references/healing.md).
 
 ## Closing a run
 
@@ -224,7 +221,9 @@ node scripts/heal.cjs log . "what was assumed, what to do instead" --apply
 
 - [ ] Nothing existing covered 70% of it, and the search that established that was run
 - [ ] For a repair: what the learning contradicts was deleted, not left below the new text
+- [ ] For a clean: the metadata figure went down, and `dead_pointers.py` reports none
 - [ ] The floor was loaded before the body was written, and every check answers
+- [ ] A skill that sets a standard ships the eval that holds it, not prose describing one
 - [ ] `review_skill.py` reports no errors
 - [ ] Retested in a cleared session, rather than read back
 - [ ] Synced, and the lead tables reconcile

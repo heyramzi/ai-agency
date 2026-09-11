@@ -1,6 +1,6 @@
 # The asset contract
 
-**Every skill and every agent is written through the `skill-creator` skill.** Invoke it before writing or editing one, including a small edit to an existing body: it owns the three kinds, the description contract, `references/skill-floor.md` (the quality bar `skill-creator` and `ai-cleaner` also write against) and the review that gates the ship. Editing a `SKILL.md` by hand is how two standards end up in one registry. This file holds the placement, the naming and the reconcilers; it does not restate the floor.
+**Every skill and every agent is written through the `skill-manager` skill.** Invoke it before writing or editing one, including a small edit to an existing body: it owns the four kinds, the description contract, `references/skill-floor.md` (the quality bar its write, repair and clean paths all use) and the review that gates the ship. Editing a `SKILL.md` by hand is how two standards end up in one registry. This file holds the placement, the naming and the reconcilers; it does not restate the floor.
 
 Before creating any new skill, agent or reference under `ai-doc/` or `.claude/`, search for existing ones that cover the same ground. Extend what exists rather than duplicating.
 
@@ -175,7 +175,7 @@ skills they depend on, which is why the command does not need to: naming
 
 Every instruction file updates itself when a session teaches it something. The protocol (the
 four-part failure log, the entry format, the delete-first loop, the SSOT rules) lives in the
-`skill-creator` skill; `ai-doc/references/self-healing.md` holds what is specific to this workspace.
+`skill-manager` skill; `ai-doc/references/self-healing.md` holds what is specific to this workspace.
 
 A new skill ships the scaffold only when it already has real failures to seed the log with. An empty
 `## Learned Patterns` is worse than none.
@@ -209,7 +209,7 @@ checkers below are what say so before a push.
 | `scripts/check-prose.mjs [--all] [--fix]` | The corpus against the punctuation rule it teaches: em and en dashes, invisible characters. Staged runs judge added lines only, so a file is cleaned the next time somebody edits it | a dash or an invisible character on a line you wrote |
 | `ai-doc/scripts/publish-public.mjs [--check]` | The 17 skills this registry publishes into the public `heyramzi/ai-agency` repo, written there scrubbed | a public copy that is stale, a file in the public tree with no source here, or a name, id, private path or monorepo-only command surviving the scrub |
 | `clickup-utils/scripts/skills.mjs check` | The ClickUp and board skills, which `clickup-utils` owns and publishes itself, plus the symlinks that give vibe-kit one copy of each | a broken link, or the same leak list, which lives there and both publishers read |
-| `skills/content/social/linkedin-content/scripts/copy-score.py --check --corpus <posts.json>` | The copy scorer against the corpus it was built from | the score no longer separating each creator's best posts from their worst |
+| `skills/content/social/linkedin-growth/scripts/copy-score.py --check --corpus <posts.json>` | The copy scorer against the corpus it was built from | the score no longer separating each creator's best posts from their worst |
 
 The description contract is gated twice, at write time and at sync time:
 `ai-doc/hooks/extensions/description-gate.sh` runs as a `PostToolUse` hook on `Write|Edit`
@@ -233,12 +233,12 @@ still deliberate.
 
 | Skill | Owns | Reach for it when |
 | --- | --- | --- |
-| `skill-creator` | The floor, the four kinds, the description contract, the review | Anything is about to be written or edited |
-| `skill-creator` | The failure log, and the delete-first edit that lands a learning | A session taught something a file should have known |
-| `ai-cleaner` | Registry budgets, merging, deleting, splitting a body | The registry is wide, deep, or picking the wrong asset |
+| `skill-manager new` | The floor, the four kinds, the description contract, the review | Anything is about to be written or edited |
+| `skill-manager heal` | The failure log, and the delete-first edit that lands a learning | A session taught something a file should have known |
+| `skill-manager clean` | Registry budgets, merging, deleting, splitting a body | The registry is wide, deep, or picking the wrong asset |
 
-They share `skill-floor.md`, which `skill-creator` owns. A quality bar restated in three files is three bars by the end of the quarter.
+All three read `skill-floor.md`, which is why they are one skill. A quality bar restated in three files is three bars by the end of the quarter.
 
 ## Remediation
 
-When redundancy is found, run the `ai-cleaner` skill against the target folder (`.claude/`, `ai-doc/`, or any plugin folder). It enforces registry budgets, merges duplicates, prunes dead weight, and tightens bodies against the fluff list (repeated content, filler, vague phrasings).
+When redundancy is found, run `skill-manager clean` against the target folder (`.claude/`, `ai-doc/`, or any plugin folder). It enforces registry budgets, merges duplicates, prunes dead weight, and tightens bodies against the fluff list (repeated content, filler, vague phrasings).
