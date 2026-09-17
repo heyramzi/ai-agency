@@ -4,6 +4,7 @@ description: When the user wants to add, fix, or optimize schema markup and stru
 metadata:
   version: "1.0.0"
 tags: [makes, seo, code]
+lane: general
 ---
 
 # Schema Markup

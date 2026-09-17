@@ -58,11 +58,10 @@ that column, so the shelf you read and the folder you install out of say the sam
 | [`skills/delivery`](skills/delivery) | The Project Manager | 8 |
 | [`skills/design`](skills/design) | The Art Director | 1 |
 | [`skills/content`](skills/content) | The Ghostwriter | 1 |
-| [`skills/quality`](skills/quality) | The QA Lead | 1 |
 | [`skills/operations`](skills/operations) | The Chief of Staff | 1 |
 
-The other 5 areas (strategy, demand, sales, engineering and finance) are rows on
-the classroom shelf with no public skills yet, and they get a folder the day 1 lands.
+The other 6 areas (strategy, demand, sales, engineering, finance and quality) are rows
+on the classroom shelf with no public skills yet, and they get a folder the day 1 lands.
 
 **A kit is a workflow.** The SEO kit is `skills/search` from start to finish, but the
 YouTube kit crosses 3 areas. The thumbnail is art direction and the posts cut out of a video
