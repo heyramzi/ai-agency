@@ -28,7 +28,7 @@ KNOWN_ELSEWHERE = {
     "board-spec", "board-start", "board-ship", "board-move", "clickup-cli", "clickup-browser",
     "clickup-data-manager", "batch-workload", "impeccable", "ship", "release", "verify",
     "claude-api", "dataviz", "artifact-design", "update-config", "code-review", "run",
-    "security-review", "superpowers", "voice-dna", "heyramzi-prose", "pass-cli",
+    "security-review", "superpowers", "voice-dna", "heyramzi-slop", "pass-cli",
     "claude-in-chrome", "chrome-devtools", "yt-dlp", "gws-workspace",
 }
 

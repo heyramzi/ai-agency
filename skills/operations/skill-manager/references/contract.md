@@ -46,7 +46,7 @@ line why levels 1 and 2 cannot hold it.
 
 **Measured on this registry, 2 to 3 Sep 2026.** The corpus that bans em dashes held 2,208 of
 them across 248 files, because the rule was written into 28 skills and checked in none.
-`publishGate` never looked at emoji or hashtags at all, so 13 skills wrote that ban out again
+`slopGate` never looked at emoji or hashtags at all, so 13 skills wrote that ban out again
 as a checklist bullet to cover for a gate that reported the draft clean. 15 files pointed at
 `copy.md`, deleted months earlier, and called it auto-loaded, which nothing has ever been. A
 thumbnail word cap lived in a doc comment, so the skill drifted into reporting the wrong number
@@ -206,7 +206,7 @@ checkers below are what say so before a push.
 | --- | --- | --- |
 | `ai-doc/scripts/check-lead-tables.py [--fix]` | Each `<area>-lead` agent's skill and specialist tables, their counts, and the master table in `agents/README.md`, against the filesystem | drift in membership **or in row text** |
 | `ai-doc/scripts/check-descriptions.py [--files ...]` | Every skill and agent description against the contract above: a `Use when` trigger, the 300-char ceiling, no em dash, no banned word or phrase from `packages/lint/data/slop-words.js`, and an explicit non-Opus `model:` on an agent | a description the registry cannot route on |
-| `scripts/check-prose.mjs [--all] [--fix]` | The corpus against the punctuation rule it teaches: em and en dashes, invisible characters. Staged runs judge added lines only, so a file is cleaned the next time somebody edits it | a dash or an invisible character on a line you wrote |
+| `scripts/check-slop.mjs [--all] [--fix]` | The corpus against the punctuation rule it teaches: em and en dashes, invisible characters. Staged runs judge added lines only, so a file is cleaned the next time somebody edits it | a dash or an invisible character on a line you wrote |
 | `ai-doc/scripts/publish-public.mjs [--check]` | The 17 skills this registry publishes into the public `heyramzi/ai-agency` repo, written there scrubbed | a public copy that is stale, a file in the public tree with no source here, or a name, id, private path or monorepo-only command surviving the scrub |
 | `clickup-utils/scripts/skills.mjs check` | The ClickUp and board skills, which `clickup-utils` owns and publishes itself, plus the symlinks that give vibe-kit one copy of each | a broken link, or the same leak list, which lives there and both publishers read |
 | `skills/content/social/linkedin-growth/scripts/copy-score.py --check --corpus <posts.json>` | The copy scorer against the corpus it was built from | the score no longer separating each creator's best posts from their worst |
