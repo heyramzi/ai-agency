@@ -29,7 +29,7 @@ It says what the feed rewards, never what is good. The bans in `@heyramzi/lint` 
 ## Nothing goes out unless it has been through the gate
 
 ```bash
-npx heyramzi-prose <file> --fix
+npx heyramzi-slop <file> --fix
 ```
 
 Invisible characters removed, banned words, phrases and sentence patterns reported. The rule,
