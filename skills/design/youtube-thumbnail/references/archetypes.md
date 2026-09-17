@@ -5,7 +5,8 @@ derived.
 
 **In the founder, systems and AI-tooling niche it was measured and found partly
 backwards.** [`niche-evidence.md`](niche-evidence.md) is the source of truth for this
-skill: 270 frames across ten channels, each split into a winner band and a control band.
+skill. It measures 270 frames from ten channels, and splits each channel into a winner
+band and a control band.
 Where the two disagree, the evidence file wins. This page is kept because the vocabulary
 is useful and because two of the seven do survive the control.
 

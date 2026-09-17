@@ -141,7 +141,7 @@ logos drops it to control.
 The live face plates are the iPhone set, browsable in the app at **`/design/shelves/faces`**,
 served from `youtube/{faces,broll,portrait}/<expression>/`. Copying a tile
 puts the picture itself on the clipboard, so it pastes straight into a composition or a
-model call. 86 face plates across 26 expressions, plus 15 desk b-roll frames and 10
+model call. The set holds 86 face plates in 26 expressions, 15 desk b-roll frames and 10
 seated portraits. The older 39-frame webcam set at `~/Pictures/thumbnails-2026-08-19/`
 is superseded and nothing reads it programmatically.
 

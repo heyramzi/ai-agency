@@ -177,7 +177,7 @@ turns prompting from writing into talking, and it removes the largest unspoken
 objection in the room. Production note rather than a script rule, but the script is
 where it gets planned.
 
-**A guide is navigated, not watched.** 35 chapters across four hours. Ship one chapter
+**A guide is navigated, not watched.** A four-hour guide carries about 35 chapters. Ship one chapter
 per block, named for the state the viewer reaches rather than the feature being shown:
 "the Project that stops the re-explaining", never "Projects".
 
