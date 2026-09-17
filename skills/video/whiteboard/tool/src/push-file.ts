@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
-import { broadcast, join, parseRoomLink } from "./room.ts";
-import { encodeFile, fetchFile, uploadFile, type SceneFile } from "./files.ts";
+import { broadcast, join, parseRoomLink } from "#src/room.ts";
+import { encodeFile, fetchFile, uploadFile, type SceneFile } from "#src/files.ts";
 
 /**
  * Draws an existing `.excalidraw` file into a room, images included.

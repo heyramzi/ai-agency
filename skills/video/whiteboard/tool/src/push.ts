@@ -1,5 +1,5 @@
-import { boards, pieces, resolve } from "./boards.ts";
-import { broadcast, join, parseRoomLink } from "./room.ts";
+import { boards, pieces, resolve } from "#src/boards.ts";
+import { broadcast, join, parseRoomLink } from "#src/room.ts";
 
 // WHY: the room link carries the encryption key, so it lives in a gitignored
 // .env rather than in the repo or in shell history.
