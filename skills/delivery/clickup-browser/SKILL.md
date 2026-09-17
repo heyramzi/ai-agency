@@ -1,6 +1,6 @@
 ---
 name: clickup-browser
-description: "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager."
+description: "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli or clickup-data-manager."
 tags: [drives, clickup, browser]
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: seo-content-strategy
-description: When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions "content strategy," "what should I write about," "content ideas," "blog strategy," "topic clusters," or "content planning." For writing individual pieces, see seo-copywriting.
+description: When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions "content strategy," "what should I write about," "content ideas," "blog strategy," "topic clusters," or "content planning." For writing the individual pages, see programmatic-seo.
 metadata:
   version: "1.0.0"
 ---
@@ -143,7 +143,7 @@ Score on four factors:
 
 ## Related Skills
 
-- **seo-copywriting**. writing individual pieces
-- **programmatic-seo**. scaled generation
-- **email-marketer**. email content
+- **programmatic-seo**. the research, the page itself and scaled generation
+- **seo-schema-markup**. the structured data once a page is written
+- **search-console**. what the plan actually earned
 - **generate-social**. social media
