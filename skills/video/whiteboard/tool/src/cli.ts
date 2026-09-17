@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { boards, resolve } from "./boards.ts";
-import { scene, type El } from "./scene.ts";
+import { boards, resolve } from "#src/boards.ts";
+import { scene, type El } from "#src/scene.ts";
 
 const only = process.argv[2];
 

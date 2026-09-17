@@ -1,5 +1,5 @@
-import { boards } from "./boards.ts";
-import { decrypt, join, parseRoomLink } from "./room.ts";
+import { boards } from "#src/boards.ts";
+import { decrypt, join, parseRoomLink } from "#src/room.ts";
 
 /**
  * Reports which boards are actually on the canvas in the room.

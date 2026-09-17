@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
-import { boards, pieces, resolve } from "./boards.ts";
-import type { El } from "./scene.ts";
+import { boards, pieces, resolve } from "#src/boards.ts";
+import type { El } from "#src/scene.ts";
 
 /**
  * Puts a board, or a whole piece of content, on the clipboard in Excalidraw's

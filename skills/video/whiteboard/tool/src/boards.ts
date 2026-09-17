@@ -1,5 +1,5 @@
-import { oldWayNewWay } from "./boards/old-way-new-way.ts";
-import type { El } from "./scene.ts";
+import { oldWayNewWay } from "#src/boards/old-way-new-way.ts";
+import type { El } from "#src/scene.ts";
 
 /**
  * Every board, by name.
