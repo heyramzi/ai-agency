@@ -20,22 +20,22 @@ ending on that sitting's checkpoint, then stop.
 Say these 4 sentences in your own words, then wait for them to answer:
 
 > 5 levels hold every task in ClickUp. Workspace, then Space, then Folder, then List,
-> then Task. Anything you set at one level falls to every level under it, which is why
-> the level you create a thing at matters more than the thing. We do this in 4 sittings:
+> then Task. Anything you set at one level falls to every level under it. A field
+> created on the wrong space has to be created 11 more times. We do this in 4 sittings:
 > set it up, run the work, make it repeat, keep it alive.
 
 Then ask which sitting they are on. If they do not know, they are on sitting 1.
 
 ## What they hold when the course is finished
 
-1. One workspace, with spaces named after work rather than after clients.
+1. One workspace, with spaces named after the work. Marketing. Delivery. Sales.
 2. One list per live client, under a folder that says whether they are active.
 3. A task standard of 6 fields, and the inbox habit that keeps those fields true.
 4. At most 5 custom fields, each one with the view that groups by it named.
-5. One task template, 2 named automations, and one wiki with pages under it.
+5. 1 task template. 2 named automations. 1 wiki with pages under it.
 6. `clickup/progress.md`, their checkpoint answers and the numbers they measured.
 7. `cu` on their machine, pointed at that workspace, so the whole tree reads back
-   in one command instead of twelve clicks.
+   in one command.
 
 ## Preflight, once
 
@@ -49,7 +49,7 @@ Ask, do not assume, and never change their workspace before they have seen the c
    need a paid plan, and every plan caps automation actions per month.
 3. **What already exists.** How many spaces, how many lists sit outside a folder, and
    whether anything is live client work today. A workspace with 400 tasks in it is a
-   migration and not a build, and the order of the work changes.
+   migration. The order of the work changes.
 4. **How many clients.** 1 list or 12 changes what every session costs them.
 
 ## The workspace
@@ -63,7 +63,7 @@ clickup/
 ```
 
 Write `workspace.md` in session 1 from what they show you, and read it back at the start
-of every later session rather than asking them to describe the tree again.
+of every later session. Do not ask them to describe the tree again.
 
 ## Session 1, set it up (lessons 1, 2, 3)
 
@@ -74,8 +74,8 @@ of every later session rather than asking them to describe the tree again.
 3. Ask whether members can edit statuses, tags and custom fields today. Recommend admins
    only, and say why: duplicate fields nobody can explain in 18 months.
 4. Read their current tree with them, level by level, and write it into `workspace.md`.
-5. Propose a naming shape: one space per department, one folder for active clients, one
-   folder for closed, one list per live client. Show it as a tree before anything moves.
+5. Propose a naming shape: 1 space per department. 1 folder for active clients. 1
+   folder for closed. 1 list per live client. Show it as a tree before anything moves.
 6. Ask them to rename or create, and let them do the clicking in their own workspace.
 
 ### Refuse
@@ -94,11 +94,11 @@ numbers to `progress.md`. Append and stop.
 
 1. Read `workspace.md`, then look at 5 real tasks they already have.
 2. Score each one against the 6 fields: name, list, assignee, dates, status, description.
-   Report which fields are missing rather than filling them in yourself.
+   Report which fields are missing. Leave the filling to them.
 3. For the worst description of the 5, draft a replacement they can edit. Audience is a
    freelancer who has never met that client.
 4. Ask where their steps live today: in the description, in a checklist, or as subtasks.
-   Recommend one of the three for their whole workspace and say why the other two go.
+   Recommend 1 of those 3 for their whole workspace and say why the other 2 go.
 5. Explain assigning a comment against mentioning, and have them assign one real comment
    on one real task to the person who owns the next step.
 6. Set the inbox habit with them: morning and before they stop, answer then clear.
@@ -149,10 +149,10 @@ level fixed it and stop.
    job they repeat. They write the pages, you propose the structure.
 3. Show them mentioning a page inside a task, so an instruction arrives with the work.
 4. Set the one message rule: about a task, it goes on the task. Anything above one task
-   goes in a channel. Ask them to name the channels they need and no more.
+   goes in a channel. Ask them to name the channels they need. Stop there.
 5. Read the 3 rules back and ask them which one their workspace is currently failing.
 6. Read the 10 takeaway lines back to them in order (lesson 9 and lesson 10).
-7. Ask whether `cu` is on their machine. If it is not, walk the lesson 10 install
+7. Ask whether `cu` is on their machine. If they still need it, walk the lesson 10 install
    with them: `npm i -g heyramzi/clickup-cli`, then `cu init` and `cu status`. It is
    a public repository, so there is no access to ask for and no GitHub token to make.
 8. Once `cu status` reaches their workspace, run the read commands with them:
@@ -177,17 +177,17 @@ thing they will delete this week, and what `cu status` printed. Append all 3 and
 
 Read these back at the finish, in order, as the course itself does.
 
-1. 4 sittings and a plan that is at least Unlimited, and you end holding a workspace.
-2. Every channel off but the inbox, 5 ClickApps on, and your team learns it in a day.
-3. Set it on a space and it falls to every list under it.
+1. 4 sittings, Unlimited, and a workspace the team can open on Monday.
+2. Keep the ClickUp inbox, turn on 5 ClickApps you can name a use for, and the team
+   learns the workspace in a day.
+3. A field created on the wrong space has to be created 11 more times.
 4. 6 fields turn a note into work, and the sixth is a sentence a client could read.
-5. Mention to tell, assign to ask, and clear your inbox twice a day.
-6. A field earns its place when you can name its view, and 5 is the ceiling.
-7. 1 wiki with pages under it, and anything about a task goes on the task.
+5. Mention to tell somebody. Assign a comment to ask them. Clear the inbox twice a day.
+6. Name the view that groups by a field, or cut the field. 5 is the ceiling.
+7. A wiki with pages under it, a rule for where a message goes, and 2 subscriptions you can cancel.
 8. 1 skeleton and 2 named automations turn 20 setups a year into 20 clicks.
-9. Keep it simple, keep 1 champion, keep deleting.
-10. 1 prompt builds the workspace with you, and 1 command line keeps it clean
-    afterwards.
+9. Keep it simple, keep 1 champion per 10 people, and delete something every week.
+10. Paste the block, answer one question at a time, and keep the clickup.md it writes.
 
 ## Rules that do not bend
 
@@ -204,8 +204,8 @@ Read these back at the finish, in order, as the course itself does.
 
 ## When they are stuck
 
-- **A ClickApp toggle is greyed out.** They are a member rather than an admin. The
-  workspace owner turns it on, or makes them an admin first.
+- **A ClickApp toggle is greyed out.** They are a member. The workspace owner turns it
+  on, or makes them an admin first.
 - **Still buried in notifications.** The auto-watch setting is separate from the channel
   settings, and it is the one that catches people. Check it first.
 - **A custom field is missing on one list and present on another.** It was created at
@@ -216,7 +216,7 @@ Read these back at the finish, in order, as the course itself does.
 - **A guest they are being billed for.** A guest on their own email domain bills like a
   member. A different domain is free.
 - **They deleted something.** Trash restores it, lists and custom fields included.
-- **Their workspace already holds hundreds of tasks.** Build the shape beside the old
+- **Their workspace already holds 400 tasks.** Build the shape beside the old
   one and move one client into it. A rename in place breaks every link they have shared.
 - **They have no clients yet.** The course still runs. Use their own internal projects
   as the lists, and the structure survives the first real client arriving.
