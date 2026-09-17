@@ -2,7 +2,7 @@
 
 # ai-agency
 
-You get 42 agent skills with 6 slash commands and 1 agent for the 3 parts of an
+You get 26 agent skills with 6 slash commands and 1 agent for the 3 parts of an
 agency that repeat each week: search, video production and client delivery. Another 2
 tools keep a skills registry from rotting, because everything here has to
 survive being added to.
@@ -33,7 +33,7 @@ Or clone it and point Claude Code at the directory.
 > Read https://raw.githubusercontent.com/heyramzi/ai-agency/main/index.json and tell me which skill fits.
 
 [`index.json`](index.json) is generated beside the zips and carries every skill's
-name, area and description with the raw URL of its `SKILL.md`, plus the 5
+name, area and description with the raw URL of its `SKILL.md`, plus the 6
 commands and the agent. No agent lists a directory over HTTP and guessing raw
 URLs off a README table is where a run goes wrong, so they are written out. Point any
 Claude at a `skill_md` URL and it runs that skill without installing anything.
@@ -47,7 +47,7 @@ way.
 ## A folder per role
 
 Skills sit in `skills/<area>/<skill>/`, and the areas are the same 12 the
-[AI Agency](https://go.upsys-consulting.com/skool) classroom is built from. Each
+[AI Agency](https://go.upsys-consulting.com/skool) classroom is built from. An
 area is 1 column of an agency, and the course named beside it teaches a person to run
 that column, so the shelf you read and the folder you install out of say the same thing.
 
@@ -74,24 +74,20 @@ fork is 1 folder plus 1 run of the script.
 
 ## The SEO kit
 
-14 skills that take a site from a blank keyword file to published pages
+4 skills that take a site from a blank keyword file to published pages
 that rank, plus the read of the scoreboard afterwards. They are the ones behind
-[The SEO Copywriter](https://go.upsys-consulting.com/skool), and the 5
-marked below are the whole workflow in order.
+[The SEO Copywriter](https://go.upsys-consulting.com/skool), and they run in this order.
 
 | Skill | Does |
 | --- | --- |
-| [seo-keyword-research](skills/search/seo-keyword-research) | ① Seeds to a saved keyword file with volume, difficulty and intent |
-| [seo-content-strategy](skills/search/seo-content-strategy) | ② That file to an ordered plan, pillars and clusters |
-| [seo-competitor-alternatives](skills/search/seo-competitor-alternatives) | ③ The vs and alternative pages, which are the ones that convert |
-| [seo-meta-tags-optimizer](skills/search/seo-meta-tags-optimizer) | ④ Title, description and social cards, written in the repo |
-| [search-console](skills/search/search-console) | ⑤ Real GSC data: pages on page 2, dead click rates, pages competing with each other |
-| [seo-audit](skills/search/seo-audit) · [seo-page-audit](skills/search/seo-page-audit) | Whole-site and single-page technical passes |
-| [seo-site-architecture](skills/search/seo-site-architecture) · [seo-broken-links](skills/search/seo-broken-links) | Structure, internal linking, and what is 404ing |
-| [seo-competitor-profiling](skills/search/seo-competitor-profiling) | The research that feeds the comparison pages |
-| [seo-schema-markup](skills/search/seo-schema-markup) · [seo-analytics-tracking](skills/search/seo-analytics-tracking) | Structured data, and measuring what lands |
-| [seo-ai-seo](skills/search/seo-ai-seo) | Getting cited by ChatGPT, Perplexity and AI Overviews |
-| [programmatic-seo](skills/search/programmatic-seo) | The pipeline from research to draft, with Serper scripts for research and drafting |
+| [programmatic-seo](skills/search/programmatic-seo) | ① The whole pipeline: what page to write next, keyword and prompt research, the draft, and the off-site mentions that decide whether an assistant names you. Serper scripts at each step |
+| [seo-content-strategy](skills/search/seo-content-strategy) | ② That research to an ordered plan, pillars and clusters |
+| [seo-schema-markup](skills/search/seo-schema-markup) | ③ JSON-LD on the page once it is written, and the rich results it buys |
+| [search-console](skills/search/search-console) | ④ Real GSC data: pages on page 2, dead click rates, pages competing with each other |
+
+It was 14 skills until [`ca64ef2`](https://github.com/heyramzi/ai-agency/commit/ca64ef2)
+retired the 10 nobody ever invoked and folded what they knew into `programmatic-seo`. A
+skill that never fires is a skill the model picks between, and that is a cost with no return.
 
 Once a skill is installed you do not summon it with a magic phrase. Describe the
 job and Claude picks it up:
@@ -102,7 +98,7 @@ job and Claude picks it up:
 
 > Write the comparison page for us against VoiceInk. Here are my numbers.
 
-`seo-keyword-research` and `programmatic-seo` want a key from
+`programmatic-seo` wants a key from
 [serper.dev](https://serper.dev), free for 2,500 queries. `search-console` uses
 your own Google account through `gcloud`, and reads only.
 
@@ -124,7 +120,7 @@ Producer](https://go.upsys-consulting.com/skool), and they run in this order.
 | [motion-broll](skills/video/motion-broll) · [youtube-ctas](skills/video/youtube-ctas) | Motion graphics cut against the read, and the transparent overlays an edit is dressed with |
 | [whiteboard](skills/video/whiteboard) | Concept boards written as code and drawn onto the tablet live, on camera. Ships the engine and 1 worked board |
 | [ai-video-prompting](skills/video/ai-video-prompting) | Prompts for Veo, Kling, Seedance and the rest, and when a model should not render a beat at all |
-| [shorts-production](skills/video/shorts-production) | A finished Short coded, filed and scheduled, with the rule that an export ships untouched |
+| [shorts-production](skills/video/shorts-production) | A finished Short taken to a scheduled task with its pillar code, and the rule that an export ships untouched |
 | [generate-social](skills/content/generate-social) | The transcript turned back into LinkedIn and X posts |
 
 Nothing in it is summoned with a magic phrase either. Describe the job:
@@ -174,7 +170,7 @@ re-running on your own channel before you trust it.
 
 ## The ClickUp kit
 
-Delivery on ClickUp runs on 13 skills and 1 agent: intake,
+Delivery on ClickUp runs on 8 skills and 1 agent: intake,
 capacity, approvals and handover. They are the ones behind
 [The Project Manager](https://go.upsys-consulting.com/skool), and they all
 talk to the same `cu` command line.
@@ -182,16 +178,11 @@ talk to the same `cu` command line.
 | Skill | Does |
 | --- | --- |
 | [clickup-cli](skills/delivery/clickup-cli) | ① Every read and write: tasks, lists, docs, views, fields, time |
-| [clickup-ops](skills/delivery/clickup-ops) | ② The week: triage, a meeting turned into tasks, the ad-hoc pass |
-| [batch-workload](skills/delivery/batch-workload) | ③ Points, a per-person cap, and a week that fits inside it |
-| [clickup-audit](skills/delivery/clickup-audit) | ④ A workspace assessed before you agree to run anything in it |
-| [clickup-stale-triage](skills/delivery/clickup-stale-triage) | ⑤ What stopped moving, ruled on 1 list at a time |
+| [batch-workload](skills/delivery/batch-workload) | ② Points, a per-person cap, and a week that fits inside it |
 | [board-spec](skills/delivery/board-spec) · [board-start](skills/delivery/board-start) | A task specced into a brief, then built in its own worktree |
 | [board-ship](skills/delivery/board-ship) · [board-move](skills/delivery/board-move) | The merge gate, and a status change on its own |
 | [clickup-data-manager](skills/delivery/clickup-data-manager) | Bulk creation, bulk updates and cleanup at a scale nobody clicks through |
 | [clickup-browser](skills/delivery/clickup-browser) | Templates, automations, dashboards and statuses, which have no public API |
-| [clickup-super-agents](skills/delivery/clickup-super-agents) | Building and debugging ClickUp's own agents |
-| [clickup-field-merger](skills/delivery/clickup-field-merger) | 2 custom fields that mean the same thing, merged into 1 without losing a value |
 
 The agent on top is [project-manager](agents/delivery/project-manager.md). It reads the
 board, names what is late, names who is over capacity, names what is waiting on a
@@ -221,7 +212,7 @@ instructions your own Claude can execute, so the reading and the building happen
 | `/youtube-engine` | The Video Producer | The 4 numbers off your own channel, from the runtime table to the ledger |
 | `/the-project-manager` | The Project Manager | Your board, your capacity number, and the 4 gates the work passes |
 
-Install the plugin and type the command. Each one runs a module a sitting, asks you the
+Install the plugin and type the command. It runs a module a sitting, asks you the
 decisions that are yours, stops at the checkpoint, and names the lesson you read next.
 It runs beside the course and it will send you back to it.
 
@@ -296,7 +287,7 @@ anything under `skills/`, run `./scripts/build-zips.sh` and commit what it write
 zip is flat inside, `<skill>/SKILL.md`. The area describes this repo, while the skill
 stands alone.
 
-Each skill is self-contained, carries its own reference material, and ships a
+A skill is self-contained, carries its own reference material, and ships a
 dependency-free script so it works on a fresh clone. Node 20 or later, nothing
 installed. `whiteboard` is the one exception and says so: its `tool/` wants
 `pnpm install` once, because the collaboration protocol it speaks is socket.io.

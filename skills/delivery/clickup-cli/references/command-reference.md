@@ -224,8 +224,7 @@ cu fields delete <fieldId> --list <id>              # or --folder / --space
 ```
 
 The merge moves every task value onto the kept field server-side and cannot be
-undone. Workflow, refusal codes and what a merge breaks: the
-`clickup-field-merger` skill.
+undone. Read both fields first, and run `--dry-run` before the write.
 
 Fields ARE editable: `PATCH /api/v2/field/{id}` is the only verb the route
 allows (`PUT`/`POST` return 405, which reads like "not supported" and is why

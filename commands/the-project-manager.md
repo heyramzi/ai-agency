@@ -47,7 +47,7 @@ Ask, do not assume, and never write to their board before they have seen the cha
    write one into a repo.
 3. **The skills.** In Claude Code: `/plugin marketplace add heyramzi/ai-agency`, then
    `/plugin install ai-agency@ai-agency`. The ones that run this course are
-   `clickup-cli`, `clickup-ops`, `batch-workload`, `clickup-stale-triage` and
+   `clickup-cli`, `batch-workload`, `clickup-data-manager` and
    `clickup-browser`. Never name a skill at them as a magic phrase. Describe the job.
 4. **How many clients.** 1 list or 12 changes what every session costs them. Ask before
    you propose a shape.

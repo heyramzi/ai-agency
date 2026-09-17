@@ -49,7 +49,7 @@ Extract every acceptance criterion from the task description (and any linked Git
 
 ### 3. Verify acceptance criteria (the AC gate)
 
-For each criterion, prove it from the diff and the current code (the same discipline the `clickup-pm` agent applies when it verifies without merging):
+For each criterion, prove it from the diff and the current code:
 - "query no longer returns field X" → grep to confirm it's gone.
 - "page is paginated" → check the server logic for offset/limit/total.
 - "test exists" → find it and run it.
@@ -110,7 +110,7 @@ Output: the verdict, what the review covered, the merge result (commit on the in
 
 ## Notes
 
-- This is a code-quality gate, not just an AC checker. That is the difference from a plain AC verification, which `clickup-pm` does without merging.
+- This is a code-quality gate, not just an AC checker. A plain AC verification reads the criteria; this one also reads the code that met them, and it merges.
 - **Watch for duplicate tickets.** If resolving the PR reveals another open ticket covering the same work (a DAW-PRD restatement, a sub-scope, an accidental clone), close it as a duplicate with a comment pointing at this one rather than leaving the board with two live tickets for one change.
 - Never merge with failing checks, unmet AC, or unresolved review findings. Honesty over a green status.
 - The ClickUp task is the source of truth; the squash commit carries the `CU-` id so GitHub activity links back. Default merge strategy is squash unless the project documents otherwise.

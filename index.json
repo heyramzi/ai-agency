@@ -91,7 +91,7 @@
     {
       "name": "clickup-browser",
       "area": "delivery",
-      "description": "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli, clickup-ops or clickup-data-manager.",
+      "description": "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli or clickup-data-manager.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-browser/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-browser",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-browser.zip"
@@ -107,7 +107,7 @@
     {
       "name": "clickup-data-manager",
       "area": "delivery",
-      "description": "Manages ClickUp data programmatically: stale task and view cleanup, demo workspace enrichment, bulk task creation and updates, and doc page name standardisation to 'Company - Type - Date'. Use when running bulk updates, deleting views, or when doc pages have messy names. For interactive CLI work see clickup-cli, for a read-only audit clickup-audit.",
+      "description": "Manages ClickUp data programmatically: stale task and view cleanup, demo workspace enrichment, bulk task creation and updates, and doc page name standardisation to 'Company - Type - Date'. Use when running bulk updates, deleting views, or when doc pages have messy names. For interactive CLI work, and for a read-only pass over a workspace, see clickup-cli.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-data-manager/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-data-manager",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-data-manager.zip"
@@ -147,7 +147,7 @@
     {
       "name": "seo-content-strategy",
       "area": "search",
-      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions \"content strategy,\" \"what should I write about,\" \"content ideas,\" \"blog strategy,\" \"topic clusters,\" or \"content planning.\" For writing individual pieces, see seo-copywriting.",
+      "description": "When the user wants to plan a content strategy, decide what content to create, or figure out what topics to cover. Also use when the user mentions \"content strategy,\" \"what should I write about,\" \"content ideas,\" \"blog strategy,\" \"topic clusters,\" or \"content planning.\" For writing the individual pages, see programmatic-seo.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/search/seo-content-strategy/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/search/seo-content-strategy",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/seo-content-strategy.zip"
