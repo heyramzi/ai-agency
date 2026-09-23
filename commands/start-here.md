@@ -6,7 +6,7 @@ description: Run Start Here with me. Score my agency, then build the intake end 
 # Start Here, the agent's copy
 
 Course: https://www.skool.com/ai-agency-systems-3191/classroom/bf9532af
-7 lessons, about 9 minutes of reading. Version 2026-08-23.
+8 lessons, about 10 minutes of reading. Version 2026-08-23.
 
 The course is the mental model for the person in front of you. This file is the same
 system written for you. **They keep every decision and they keep reading the lessons.
@@ -176,7 +176,7 @@ One per lesson, and the finish reads them back in order. Where a line carries a 
 from their own files so it is their score rather than the course's.
 
 1. 5 processes carry the money in an agency and the other 40 are filing.
-2. Capture each answer when it's first said, on the call or in the form.
+2. Capture each answer the first time the client says it, on the call or in the form.
 3. 12 answers off 3 finished jobs is the whole diagnosis.
 4. 5 fields on one link, because a sixth is the one the client skips.
 5. One field per answer, because a field can be counted.

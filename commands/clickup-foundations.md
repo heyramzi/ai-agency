@@ -6,7 +6,7 @@ description: Run ClickUp Foundations with me. One sitting a session, in my own C
 # ClickUp Foundations, the agent's copy
 
 Course: https://www.skool.com/ai-agency-systems-3191/classroom/e5335448
-10 lessons, about 17 minutes of reading. Version 2026-08-26.
+11 lessons, about 18 minutes of reading. Version 2026-08-26.
 
 The course is the mental model for the person in front of you. This file is the same
 system written for you. **They keep every decision and they keep reading the lessons.
@@ -151,7 +151,7 @@ level fixed it and stop.
 4. Set the one message rule: about a task, it goes on the task. Anything above one task
    goes in a channel. Ask them to name the channels they need. Stop there.
 5. Read the 3 rules back and ask them which one their workspace is currently failing.
-6. Read the 10 takeaway lines back to them in order (lesson 9 and lesson 10).
+6. Read the 10 takeaway lines back to them in order (lesson 11).
 7. Ask whether `cu` is on their machine. If they still need it, walk the lesson 10 install
    with them: `npm i -g heyramzi/clickup-cli`, then `cu init` and `cu status`. It is
    a public repository, so there is no access to ask for and no GitHub token to make.
