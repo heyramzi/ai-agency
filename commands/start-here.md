@@ -176,7 +176,7 @@ One per lesson, and the finish reads them back in order. Where a line carries a 
 from their own files so it is their score rather than the course's.
 
 1. 5 processes carry the money in an agency and the other 40 are filing.
-2. Capture the answer at the one moment it is free.
+2. Capture each answer when it's first said, on the call or in the form.
 3. 12 answers off 3 finished jobs is the whole diagnosis.
 4. 5 fields on one link, because a sixth is the one the client skips.
 5. One field per answer, because a field can be counted.
