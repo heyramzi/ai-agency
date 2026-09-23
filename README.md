@@ -39,7 +39,7 @@ URLs off a README table is where a run goes wrong, so they are written out. Poin
 Claude at a `skill_md` URL and it runs that skill without installing anything.
 
 **Not in a terminal?** Claude Cowork and claude.ai take 1 skill at a time as a
-zip. The [`zips/`](zips) folder holds each skill prebuilt as a zip: download the zip you
+zip. You get every skill prebuilt as a zip in [`zips/`](zips): download the zip you
 want, then go to Customize, Skills, the plus button, Create skill, Upload a
 skill, and pick it. About a minute per skill, and it is the same skill either
 way.
@@ -83,10 +83,10 @@ that rank, plus the read of the scoreboard afterwards. They are the ones behind
 | [programmatic-seo](skills/search/programmatic-seo) | ① The whole pipeline: what page to write next, keyword and prompt research, the draft, and the off-site mentions that decide whether an assistant names you. Serper scripts at each step |
 | [seo-content-strategy](skills/search/seo-content-strategy) | ② That research to an ordered plan, pillars and clusters |
 | [seo-schema-markup](skills/search/seo-schema-markup) | ③ JSON-LD on the page once it is written, and the rich results it buys |
-| [search-console](skills/search/search-console) | ④ Real GSC data: pages on page 2, dead click rates, pages competing with each other |
+| [search-console](skills/search/search-console) | ④ Real GSC data: pages stuck on page 2, dead click rates and pages competing with each other |
 
 It was 14 skills until [`ca64ef2`](https://github.com/heyramzi/ai-agency/commit/ca64ef2)
-retired the 10 nobody ever invoked and folded what they knew into `programmatic-seo`. A
+retired the 10 that were never invoked and folded what they knew into `programmatic-seo`. A
 skill that never fires is a skill the model picks between, and that is a cost with no return.
 
 Once a skill is installed you do not summon it with a magic phrase. Describe the
@@ -154,7 +154,7 @@ separate the bands.
 Run it on a real niche and the usual advice starts falling over. A face tends to appear in
 both bands, so its presence counts as house style and a close-up filling the frame often
 marks a control. Somebody else's revenue is a control marker. Adjectives with no object are
-control markers. What separates, reliably, is a bounded promise in 2 to 4 words.
+control markers. A bounded promise in 2 to 4 words is the one reliable difference.
 
 The skill carries the method from start to finish: how to build the bands, how to choose between the
 face and faceless variants, 6 copy formulas with the ban list, and the composite rules
@@ -170,15 +170,15 @@ re-running on your own channel before you trust it.
 
 ## The ClickUp kit
 
-Delivery on ClickUp runs on 8 skills and 1 agent: intake,
-capacity, approvals and handover. They are the ones behind
+Delivery on ClickUp runs on 8 skills and 1 agent.
+They cover intake, capacity, approvals and handover. They are the ones behind
 [The Project Manager](https://go.upsys-consulting.com/skool), and they all
 talk to the same `cu` command line.
 
 | Skill | Does |
 | --- | --- |
 | [clickup-cli](skills/delivery/clickup-cli) | ① Every read and write: tasks, lists, docs, views, fields, time |
-| [batch-workload](skills/delivery/batch-workload) | ② Points, a per-person cap, and a week that fits inside it |
+| [batch-workload](skills/delivery/batch-workload) | ② Points and a per-person cap, so each week holds only what the team can finish |
 | [board-spec](skills/delivery/board-spec) · [board-start](skills/delivery/board-start) | A task specced into a brief, then built in its own worktree |
 | [board-ship](skills/delivery/board-ship) · [board-move](skills/delivery/board-move) | The merge gate, and a status change on its own |
 | [clickup-data-manager](skills/delivery/clickup-data-manager) | Bulk creation, bulk updates and cleanup at a scale nobody clicks through |
@@ -311,5 +311,3 @@ The classrooms these skills came out of, the builds run in a real workspace 1 a
 week, and the room where you can ask about your own setup:
 
 **[go.upsys-consulting.com/skool][skool]**. The room is free, and each request is read by hand.
-
-MIT.
