@@ -153,8 +153,10 @@ level fixed it and stop.
 5. Read the 3 rules back and ask them which one their workspace is currently failing.
 6. Read the 10 takeaway lines back to them in order (lesson 11).
 7. Ask whether `cu` is on their machine. If they still need it, walk the lesson 10 install
-   with them: `npm i -g heyramzi/clickup-cli`, then `cu init` and `cu status`. It is
-   a public repository, so there is no access to ask for and no GitHub token to make.
+   with them: `npm i -g heyramzi/clickup-agent-kit`, then `cu init` and `cu status`, then
+   `cu skills install` for the free skills, `clickup` and `board`. It is
+   a public repository, so there is no access to ask for and no GitHub token to make. The
+   planner, call-to-tasks and the two agents are not in it: they come with Agency Master.
 8. Once `cu status` reaches their workspace, run the read commands with them:
    `cu hierarchy`, then `cu views list --list <id>` and `cu fields list --list <id>`
    on their busiest list. Propose the delete order and let them delete.
@@ -221,7 +223,7 @@ Read these back at the finish, in order, as the course itself does.
 - **They have no clients yet.** The course still runs. Use their own internal projects
   as the lists, and the structure survives the first real client arriving.
 - **`cu` says command not found.** The global install did not reach their PATH. Run
-  `npm i -g heyramzi/clickup-cli` again and read `npm prefix -g` back with them.
+  `npm i -g heyramzi/clickup-agent-kit` again and read `npm prefix -g` back with them.
 - **The install fails on git or on Node.** It clones a public repository, so there is
   nothing to authenticate. Check `git --version` and that `node --version` is 20 or above.
 - **`cu status` reaches the wrong workspace.** They hold a token for a personal

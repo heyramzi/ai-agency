@@ -1,71 +1,6 @@
-# Super Agents and their MCP servers
+# Building a Super Agent
 
-Connecting a server and building an agent are the longest click paths in this skill and the ones most likely to move under a redesign. Read them here rather than from memory.
-
-## Connect an MCP server, and give its tools to a Super Agent
-
-Shipped in release 4.07 on 18 Aug 2026. There is no API for it; the whole surface
-is App Center.
-
-From `/<teamId>/settings/apps`, click **App Center** in the left sidebar. The row
-highlights on the first click and the modal opens on the second, and the modal
-fades in over about four seconds, so a click aimed at it during the fade lands on
-the page behind and dismisses it. Wait, screenshot, then click.
-
-In the modal's left rail, under **AI**, pick **MCP Servers**. Two doors:
-
-- **The catalogue**, eighteen apps on 20 and 21 Aug 2026 (Amplitude, Atlassian,
-  Canny, Canva, Clay, Dropbox, GitHub, Hex, HubSpot, Intercom, Linear, Mixpanel,
-  Notion, Sentry, Slack, Stripe, Supabase, ZoomInfo). Each is OAuth into that
-  account, so connecting one puts whatever it holds in front of the agent. Never
-  complete one on a live account for a recording.
-- **Add Custom MCP Server**, which takes any URL.
-
-**Which workspace am I in?** The rail carries a **Custom MCP** category only
-where a custom server is connected, so that entry is the fastest proof. The
-catalogue also holds ClickUp's own card, **MCP Servers**: its Personal tab with
-nothing connected reads "Couldn't load tools", the empty state, not a fault.
-
-The custom path is: permissions (**For all members** or **Just for me**) →
-**Next** → Name, URL, Description, Authentication Method → **Next**. Auth offers
-OAuth, **Authorization header** (a static token, pasted as `Bearer <token>`), or
-**No Authentication**; the last two also take Custom Headers. On success ClickUp
-calls the server's `tools/list` itself and shows the discovered tools, which is
-the proof the connection works.
-
-ClickUp's own help page calls the middle option "API key". The live UI says
-**Authorization header** (re-read 21 Aug 2026). Trust the UI, and expect the doc
-to lag the release.
-
-**Pick the permission scope first, not last.** A personal connection has no
-credentials when the person is not logged in, so a scheduled agent using one does
-not error, it silently reports only what it could reach. Anything an agent runs on
-a schedule needs the workspace connection.
-
-**Giving an already-connected server's tools to an agent is a different screen,
-and it has a trap.** In the agent's Skills panel, **Add tools** opens a modal whose
-top right carries **Custom MCP Server**. That button is not a picker: it starts the
-connect-a-new-server flow again, and following it all the way through would stand up
-a second copy of a server that is already connected. Cancel out of it. The connected
-servers are further down the same modal, under a **Custom MCP Servers** heading below
-the eighteen catalogue apps: scroll to it, click the server, then **Add all** or pick
-tools one by one.
-
-**That modal paints late.** A click on it registers and the result appears four to
-six seconds later, so a second click aimed at the same place lands on whatever has
-since moved under the cursor. Click once, wait, screenshot.
-
-**Searching it returns tool groups, not tools.** Typing `status` returns one row,
-**Tasks and subtasks** (8 tools), and adding that group is how an agent gets the
-ability to change a status. Individual tool names mostly do not match; search by the
-thing you want done. A custom server's own tools do match by name.
-
-Then give the tools to the agent through the form below, not through the builder
-chat.
-
-A **Finish Setup** banner naming the server in Skills as **Unavailable** paints
-on some loads and clears on others while the tools still work. It settles
-nothing either way: ask the agent the question and read the answer.
+Filling the form from scratch and editing it afterward, both verified end to end. Setup: [`references/super-agents.md`](super-agents.md).
 
 ## Build a Super Agent from scratch
 
@@ -75,17 +10,17 @@ Verified 21 Aug 2026 in a demo workspace.
 ("Describe tasks or workflows that need automating") answered a 2.3k brief with
 *Whoops! Looks like we stumbled upon a hiccup in the matrix*, and a 700-character
 one by clearing the box and returning to the start page with no error at all.
-Neither attempt created anything, so there is nothing to clean up, but neither
-told the truth about that either. An earlier note here said the chat was more
-reliable than the form; that is now wrong, and the form path below is what works.
+Neither attempt created anything — and neither told the truth about that either.
+An earlier note here said the chat was more reliable than the form; that is now
+wrong, and the form path below is what works.
 
 **An agent id you find in a network call is probably not the one you just made.**
 An open agent page polls `.../agents/<id>/summary` for whatever agent it is
-showing, and a workspace usually holds several. Read the `name` in that response
-before acting on the id: in one workspace `8cbypq9-109195` looked like a fresh draft
+showing, and a workspace usually holds several. Read the `name` back before
+acting on the id: in one workspace `8cbypq9-109195` looked like a fresh draft
 and was a long-standing **Client Profitability** agent. Confirm against
-**AI → All Agents** in the left rail, which is the only place the full list lives;
-`/ai/agents` is the create screen, not the list.
+**AI → All Agents**, the only place the full list lives; `/ai/agents` is the
+create screen, not the list.
 
 **Start from scratch**, top right, opens `/<teamId>/ai/agents/<agentViewId>` with
 the full form on the right and the builder chat on the left. Fill the form. Every
@@ -108,16 +43,16 @@ field needs its own click to enter edit mode, and the clicks are not the same:
 **Editing an agent that already has instructions is a different job from filling an
 empty one, and it works.** Open the field full screen with the ⤢ icon beside
 **Instructions**, click anywhere in the body, `cmd+Down` to reach the very end. If
-the last thing in the document is a bullet, press `Return` twice: the first makes a
-new bullet, the second exits the list so a plain paragraph follows. Then type the new
-sections, one `type` call per paragraph with a `Return` between them. Verified 21 Aug
-2026 appending six sections to Client Profitability, all of which landed intact.
-Close with the modal's **X**; the **Save changes** banner is waiting behind it and
-still has to be clicked.
+the last thing is a bullet, press `Return` twice: the first makes a new bullet,
+the second exits the list so a plain paragraph follows. Type the new sections,
+one `type` call per paragraph with a `Return` between them — verified 21 Aug 2026
+appending six sections to Client Profitability, all landed intact. Close with the
+modal's **X**; the **Save changes** banner is waiting behind it and still needs
+its own click.
 
 **Re-screenshot before every click in this form.** Saving is a banner, not a
 button: the moment a field changes, a **Save changes** bar appears between the
-header and Instructions and pushes everything below it down by about 65px. A
+header and Instructions and pushes everything below it down by about 65px, so a
 coordinate read before the bar appeared now lands one row too high. `Save` gives
 the toast **Agent saved successfully**.
 
@@ -150,15 +85,38 @@ exact line carries one, never reuse a date from another line. Re-testing after
 that edit produced clean citations naming two sections and no date.
 
 `Activate Super Agent` turns `Run` on. `Run` offers **Send DM** and a preview of
-the scheduled run. The DM is the fastest end-to-end check, and its reply lands in
-a thread, so open the thread rather than expecting it in the main pane. A DM that
-makes the agent create something takes **50 to 60 seconds**, and the task card
-paints in the thread before the sentence does, so a thread showing a card and "No
-replies" is still working, not stuck.
+the scheduled run. The DM is the fastest end-to-end check, and its reply lands
+in a thread, so open the thread rather than expecting it in the main pane. A DM
+that makes the agent create something takes **50 to 60 seconds**, and the task
+card paints in the thread before the sentence does, so a thread showing a card
+and "No replies" is still working, not stuck.
 
 **Then verify from the CLI.** The card in the chat is the agent's own claim.
-`CU_TEAM_ID=<teamId> cu tasks --list <listId>` is the proof, and the same command
-deletes the test artefacts before a live demo.
+`CU_TEAM_ID=<teamId> cu tasks --list <listId>` is the proof, and the same
+command deletes the test artefacts before a live demo.
+
+**Two agents whose names share a first word make the mention picker a coin
+toss.** Typing `@Upsell` in a task comment box returned both `Upsell
+Intelligence` and `Upsell Agent` under the Agents tab. Name a demo agent so its
+first word is unique in the workspace, or rename the other one before
+recording. Measured 18 Sep 2026 building the generic Upsell Agent beside the
+Upcut copy.
+
+**A mention on a task is the cheapest run, and its answer is a threaded reply,
+not a comment.** Type `@` plus the first word of the agent's name in the task's
+comment box, `Enter` to take the suggestion, then the sentence, then
+`cmd+Enter`. The answer lands about 90 seconds later **under that comment**, so
+`GET /api/v2/task/<id>/comment` still returns the same count and reads as
+failed: the reply is at `GET /api/v2/comment/<commentId>/reply`, and the thread
+stays closed until somebody clicks `1 reply`. Measured 18 Sep 2026 building
+Upsell Intelligence in the Upcut demo.
+
+**The form's fields answer to different tools.** The description is a real
+`input[placeholder="Add description..."]`, so `fill()` writes it in one call;
+the name takes a click then `cmd+a` and typing; the instructions box is the
+second `contenteditable` on the page (the first is the builder chat), so
+`document.querySelector('[contenteditable="true"]')` reports the instructions
+empty when they are fine.
 
 ## The Super Agent Builder edits the prompt, never the Knowledge
 

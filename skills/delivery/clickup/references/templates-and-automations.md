@@ -1,6 +1,20 @@
 # Task templates, Task-created automations, and the pinned description
 
-The three surfaces ClickUp exposes no API for at all. Every click path below was walked on the live workspace; the labels are given in both languages because the UI flips between them mid-session, and every coordinate is a hint rather than a target.
+The public API writes none of these. The web app's own frontdoor writes two of them, and `cu` wraps that, so start there:
+
+    cu template save <taskId> --replace        # save, or re-save over the same t- id
+    cu automations apply-template <listId> --template t-… --name "Member created → Apply the member template"
+
+Both read the workspace off the `cu net capture` session, so capture the target workspace first. The traps they already handle, verified 29 Sep 2026:
+
+- Every save moves the template's `original_id`, and an update must send the current one as `template_id` or it 404s `ACCESS_031`. The `t-` id stays put, and a rule points at that one. `--replace` looks up the current `original_id` by name.
+- The save body is the dialog's checkboxes (`old_due_date`, `old_statuses`, `custom_type` and so on), stored as the template's `options`. `old_statuses: false` is the one that matters: it's "Copy settings for Statuses", which would drag list statuses into wherever the template lands.
+- The rule is created with template-made and API-made tasks switched off as sources, so it can't fire on its own output and a builder's inserts keep their content. `--from-api` turns the API source back on, which is also the only way to test a rule from a script: create a task, wait ~20s, read the description, delete it, then recreate the rule without the flag.
+- A rule is replaced, never edited: `apply-template` deletes a rule of the same name first, because PUT ignores `actions` (below). `DELETE /automation/workflow/{uuid}` answers 200 with an empty body.
+- The applied template leaves the task's name, status and type alone, even on a list with its own statuses.
+
+A demo builder can run all of it from a content file.
+The click paths below are the fallback, and still the only route for space, folder and list templates and every other kind of rule. They were walked on the live workspace; the labels are given in both languages because the UI flips between them mid-session, and every coordinate is a hint rather than a target.
 
 ## Save a task as a workspace task template
 
@@ -78,7 +92,7 @@ automations" usually means it is defined a level up.
 `active` and `trigger` write; the action array comes back exactly as it was, with a fresh
 `last_updated` to make it look like something happened. Confirmed three ways: bare action
 object, action with a client-generated uuid, and the full workflow object round-tripped.
-So **every action edit is a click path**, and reading the rule first is still worth it: the
+So **every action edit is a delete and a create** (`POST /automation/subcategory/{listId}/workflow` takes the full rule; `cu automations apply-template` is the one kind wrapped) or a click path, and reading the rule first is still worth it: the
 action ids, a `webhook_configuration_id` and the trigger's source flags are all invisible
 in the UI.
 
@@ -115,7 +129,9 @@ The body it POSTs (axios user-agent) is:
     {auto_id, trigger_id, date, payload: { ...the task... }}
 
 `payload` carries `id`, `custom_type`, `subcategory` (the list id), `fields[]`, and dates
-under `time_mgmt.start_date` / `time_mgmt.due_date` as epoch-ms **strings**. It carries
+under `time_mgmt.start_date` / `time_mgmt.due_date` as epoch-ms **strings**. Each entry in
+`fields[]` is `{field_id, value}`, and a dropdown's `value` is the option **orderindex**,
+never the label or the option id, matching how `cu task field set` takes it. It carries
 `users[]` as bare user IDs and **no usernames**, so anything that needs a person's name has
 to re-read the task. Learn the shape from the receiver rather than from here: with Make,
 that is `make hook-logs <hookId> --log <logId>`.

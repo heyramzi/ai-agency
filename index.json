@@ -49,68 +49,20 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/generate-social.zip"
     },
     {
-      "name": "batch-workload",
+      "name": "board",
       "area": "delivery",
-      "description": "The BATCH planning method for ClickUp. Reschedule, assign, and point a workspace into clean one-week batches with a per-person capacity cap. Use when a board looks overloaded or messy, when tasks are overdue or unassigned, when someone asks to \"rebalance the workload\", \"clean up the batch\", \"plan this week\", or \"spread the team's tasks\", or when setting up the BATCH/Points fields on a new space.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/batch-workload/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/batch-workload",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/batch-workload.zip"
+      "description": "Runs the ClickUp board lifecycle: move changes a task's status, spec turns an Open idea into a PRD, start implements a Ready task into a reviewed PR, ship merges a PR and closes the task. Use on /board-move, /board-spec, /board-start, /board-ship, or picking up, speccing or shipping a task.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/board/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/board",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board.zip"
     },
     {
-      "name": "board-move",
+      "name": "clickup",
       "area": "delivery",
-      "description": "Move a ClickUp task to a new status (todo, in-progress, in-review, done). Reads the project's .tasks/config.json for the list and status map; resolves the task by ID. Use when changing a board task's status by ID, when /board-move is invoked, or when a task needs moving without the full /board-start or /board-ship workflow.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/board-move/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/board-move",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board-move.zip"
-    },
-    {
-      "name": "board-ship",
-      "area": "delivery",
-      "description": "Review and ship a ClickUp task's PR in one prompt. Verifies it against the task's acceptance criteria, runs a thermonuclear (clean / DRY / elegant-integration) review, merges into the integration branch, moves the task to Done, and cleans up. Use when a board task's PR is ready to review and merge, when /board-ship is invoked, or when an In Review task should be verified and closed out.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/board-ship/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/board-ship",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board-ship.zip"
-    },
-    {
-      "name": "board-spec",
-      "area": "delivery",
-      "description": "Turn a raw Open ClickUp task into a build-ready PRD. Investigates the codebase, writes problem/goals/acceptance criteria into the task description, then moves it to Ready for /board-start. Use when an Open board task lacks a spec, when /board-spec is invoked, or when a task needs acceptance criteria written before implementation starts.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/board-spec/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/board-spec",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board-spec.zip"
-    },
-    {
-      "name": "board-start",
-      "area": "delivery",
-      "description": "Pick up a ClickUp task and do the work. Moves it to In Progress, implements in an isolated worktree with tests, opens a PR whose branch/title carry the CU- id, self-reviews, then moves the task to In Review. Use when starting work on a board task by ID, when /board-start is invoked, or when a Ready task should be taken through implementation to In Review.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/board-start/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/board-start",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board-start.zip"
-    },
-    {
-      "name": "clickup-browser",
-      "area": "delivery",
-      "description": "Drives the parts of ClickUp the public API does not reach: workspace task templates, Task-created automations, dashboards, space statuses, Workload capacity and a view's pinned description. Use when a ClickUp job has no API, when templates or automations must be created or changed, or when the cu CLI has no command for what is asked. Everything else belongs to clickup-cli or clickup-data-manager.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-browser/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-browser",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-browser.zip"
-    },
-    {
-      "name": "clickup-cli",
-      "area": "delivery",
-      "description": "Use when interacting with ClickUp: reading tasks, updating statuses, managing docs, browsing hierarchy, or any ClickUp API operation via the CLI. Triggers on any ClickUp task or doc work.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-cli/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-cli",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-cli.zip"
-    },
-    {
-      "name": "clickup-data-manager",
-      "area": "delivery",
-      "description": "Manages ClickUp data programmatically: stale task and view cleanup, demo workspace enrichment, bulk task creation and updates, and doc page name standardisation to 'Company - Type - Date'. Use when running bulk updates, deleting views, or when doc pages have messy names. For interactive CLI work, and for a read-only pass over a workspace, see clickup-cli.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup-data-manager/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup-data-manager",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup-data-manager.zip"
+      "description": "Runs ClickUp: the cu CLI for tasks, docs and hierarchy (default), scripted bulk work (cleanup, demo enrichment, doc-name standardizing), and the browser for what has no API (templates, automations, dashboards, statuses, Workload). Use for any ClickUp task, doc, bulk-update or browser-only job.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup.zip"
     },
     {
       "name": "youtube-thumbnail",

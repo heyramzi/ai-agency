@@ -1,7 +1,6 @@
 # Driving the browser: the heredoc, the five gotchas, the fallback
 
-Moved out of SKILL.md on 31 Aug 2026 to hold it under the 250-line ceiling. That ego-browser is
-the route and Claude in Chrome the fallback stays in the skill; this is how each one is driven.
+ego-browser is the route and Claude in Chrome the fallback; this is how each one is driven.
 
     ego-browser nodejs <<'EOF'
     const task = await useOrCreateTaskSpace('what this run is for')

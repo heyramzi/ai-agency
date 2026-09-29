@@ -170,27 +170,25 @@ re-running on your own channel before you trust it.
 
 ## The ClickUp kit
 
-Delivery on ClickUp runs on 8 skills and 1 agent.
-They cover intake, capacity, approvals and handover. They are the ones behind
-[The Project Manager](https://go.upsys-consulting.com/skool), and they all
-talk to the same `cu` command line.
+Delivery on ClickUp runs on 2 free skills and 1 agent. They're the ones behind
+[The Project Manager](https://go.upsys-consulting.com/skool), and they both talk to the
+same `cu` command line.
 
 | Skill | Does |
 | --- | --- |
-| [clickup-cli](skills/delivery/clickup-cli) | ① Every read and write: tasks, lists, docs, views, fields, time |
-| [batch-workload](skills/delivery/batch-workload) | ② Points and a per-person cap, so each week holds only what the team can finish |
-| [board-spec](skills/delivery/board-spec) · [board-start](skills/delivery/board-start) | A task specced into a brief, then built in its own worktree |
-| [board-ship](skills/delivery/board-ship) · [board-move](skills/delivery/board-move) | The merge gate, and a status change on its own |
-| [clickup-data-manager](skills/delivery/clickup-data-manager) | Bulk creation, bulk updates and cleanup at a scale nobody clicks through |
-| [clickup-browser](skills/delivery/clickup-browser) | Templates, automations, dashboards and statuses, which have no public API |
+| [clickup](skills/delivery/clickup) | Every read and write: tasks, lists, docs, views, fields and time, bulk cleanup, and the browser path for templates, automations and dashboards |
+| [board](skills/delivery/board) | A task specced into a brief, built in its own worktree, shipped through the merge gate, or just moved to a new status |
+
+Planning the week in batches with points and a per-person cap, and turning a call into
+tasks, come with [Agency Master](https://www.upsys-consulting.com/en/agency-master).
 
 The agent on top is [project-manager](agents/delivery/project-manager.md). It reads the
-board, names what is late, names who is over capacity, names what is waiting on a
-client, and proposes 1 move per problem. It never presses the button itself.
+board, names what is late, names what is waiting on a client, and proposes 1 move
+per problem. It never presses the button itself.
 
-> What is late on the delivery board, and who is over capacity this week?
+> What is late on the delivery board, and what is waiting on a client?
 
-> Turn yesterday's client call into tasks, then tell me what has to move to make room.
+> Write the brief for the oldest open task, then start it.
 
 **These need the `cu` command line.** Its install line is handed out in The Project
 Manager, lesson 2. The skills read as documentation without it, and run with it.

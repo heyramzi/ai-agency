@@ -1,6 +1,6 @@
 # Network capture and the UI's own API
 
-Reference for `clickup-browser`. Both halves are about the same thing: reading what the
+Reference for the `clickup` skill's browser mode. Both halves are about the same thing: reading what the
 ClickUp web app calls, then re-issuing it from a terminal instead of clicking it again.
 
 ## Record the call once, script it forever
