@@ -7,7 +7,7 @@ What to do when the extension is unavailable and a view still has to be captured
 A screenshot of a view for a deck or a report does not need Claude in Chrome, and
 should not wait for it. Copy the signed-in Chrome profile, run a second Chrome
 headless against the copy on a port of your own, and speak CDP to it. The
-`presentations` skill holds the profile copy recipe and the two traps in it (the
+`proposal` skill (`references/slide-images.md`) holds the profile copy recipe and the two traps in it (the
 zero-byte `Cookies` race, and `IndexedDB` carrying ClickUp's stale offline cache
 into every screenshot). What matters here is what to point it at.
 
@@ -31,7 +31,7 @@ the chrome:
   the screenshot says. A `Recommendation` column at `"width":520` reads; at 420 it
   ellipses mid sentence.
 - **Grouping that comes back all in one bucket is a ClickApp, not a view.** See
-  the ClickApps note in `clickup-cli`: the API stores a priority on a space that
+  the ClickApps note in the `clickup` skill: the API stores a priority on a space that
   has Priorities switched off, and the UI then draws every task under
   "No Priority".
 - **The hover row is a different row.** Whatever the cursor sits on renders its
@@ -72,7 +72,7 @@ not want and cropping cannot remove, because they sit between the parts that mat
 `Fields from <type> type` header with its `Create field` button. Hide those three with
 `el.style.display='none'` from `js()` first, then capture, then crop the content pane. The
 virtualised-rows warning above is about list views; a task detail is not virtualised, so hiding is
-safe there. An empty custom field (a `BATCH` row reading `–`) is worth hiding for the same reason.
+safe there. An empty custom field (a row reading `–`) is worth hiding for the same reason.
 Then crop out the black sidebar on the left, the Activity panel on the right and the icon rail at
 the pane's right edge, and stop the frame on the last field rather than on `Add subtask`. Measured
 26 Aug 2026 shooting a freelancer invoice task for the Clic Tempo carousel.
@@ -83,6 +83,30 @@ which is the whole reason the copy route above fails and this one does not. Capt
 `cdp('Emulation.setDeviceMetricsOverride', {deviceScaleFactor: 2})` then
 `cdp('Page.captureScreenshot')`, and write the file with `await import('node:fs')`, because the
 heredoc is an ES module. See the ego lite section of `chrome-devtools`.
+
+**Orca does not reach ClickUp, so do not spend a turn on it.** `orca tab create` on an
+`app.clickup.com` URL lands on `/login`, whatever `chrome-devtools` says about trying Orca
+first: that profile is signed out. Measured 5 Sep 2026 shooting a demo workspace build for the
+agency blueprint. For ClickUp, ego lite is the first thing to try and the only one that worked.
+
+**`openOrReuseTab` goes in every ego script, not only the first.** Without it `js()` runs
+against whatever tab is active, and `document.elementFromPoint` answers with the browser's own
+`NTP-APP` host element rather than anything on the page, which reads exactly like a broken
+selector. The same run also learned that hiding only the node carrying the AI-credits banner's
+text leaves its black bar behind: walk three ancestors up and hide each one.
+
+**The sidebar is pinned collapsed, and a JS click does not hold it open.** `.click()` on
+`[data-test="simple-bar__expand-sidebar-button"]` expands the rail and it is collapsed again
+before the capture fires, twice in a row. Drive it through CDP and then park the pointer inside
+the rail, so the hover state survives the shot:
+
+    const [x, y] = /* the button's rect centre, read through js() */
+    await cdp('Input.dispatchMouseEvent', {type:'mouseMoved', x, y, buttons:0})
+    await cdp('Input.dispatchMouseEvent', {type:'mousePressed', x, y, button:'left', clickCount:1, buttons:1})
+    await cdp('Input.dispatchMouseEvent', {type:'mouseReleased', x, y, button:'left', clickCount:1, buttons:0})
+    await cdp('Input.dispatchMouseEvent', {type:'mouseMoved', x:150, y:520, buttons:0})
+
+That is what got all 5 spaces plus DELIVERY's folders and its standing list into one frame.
 
 The extension is the fallback. When `tabs_context_mcp` answers
 `Failed to query tabs: Tab not found for session ID`, that browser's pairing is stale and **another

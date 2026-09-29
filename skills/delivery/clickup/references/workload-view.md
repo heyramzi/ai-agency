@@ -1,7 +1,6 @@
 # The Workload view: the three click paths, and why a synthetic click does nothing
 
-Moved out of SKILL.md on 31 Aug 2026 to hold it under the 250-line ceiling. What the two view-bar
-menus do, and which field the bar actually sums, stay in the skill.
+What the two view-bar menus do, and which field the bar actually sums, stay in the skill.
 
 Three click paths, all verified at 1900x861:
 
