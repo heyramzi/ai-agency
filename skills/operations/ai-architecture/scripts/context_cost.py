@@ -26,7 +26,7 @@ import sys
 
 DESC_TARGET = 500  # chars; soft budget, one sentence of what + one of when
 DESC_HARD = 1024  # chars; platform maximum
-BODY_MAX = 250  # lines; SKILL.md and agent bodies
+BODY_MAX = 200  # lines; every skill .md and agent bodies, as scripts/check-skill-length.mjs
 REF_TOC = 100  # lines; reference files past this need a table of contents
 CHARS_PER_TOKEN = 4
 LOG_ENTRIES_MAX = 25  # entries; past this a failure log has become a second body

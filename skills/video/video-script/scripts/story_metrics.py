@@ -7,10 +7,10 @@ time. This puts one number on each of them, with the offending sentence attached
 argues with a measurement instead of with an impression.
 
 What it does NOT do is judge. It counts. A high hedge count on a provenance-heavy script is
-correct; the thresholds that turn a count into a verdict live in `video-coach`,
+correct; the thresholds that turn a count into a verdict live in `video-edit`,
 `references/checks.md`, calibrated against the 627-video corpus.
 
-Pronouns are deliberately absent: `video-coach/scripts/take-stats.py` owns first and second
+Pronouns are deliberately absent: `video-edit/scripts/take-stats.py` owns first and second
 person and this would be the second copy of that count.
 
     python3 story_metrics.py transcript.txt --duration 1140

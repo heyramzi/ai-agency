@@ -28,23 +28,21 @@ KNOWN_ELSEWHERE = {
     "board-spec", "board-start", "board-ship", "board-move", "clickup-cli", "clickup-browser",
     "clickup-data-manager", "batch-workload", "impeccable", "ship", "release", "verify",
     "claude-api", "dataviz", "artifact-design", "update-config", "code-review", "run",
-    "security-review", "superpowers", "voice-dna", "heyramzi-slop", "pass-cli",
-    "claude-in-chrome", "chrome-devtools", "yt-dlp", "gws-workspace",
+    "security-review", "voice-dna", "heyramzi-slop", "pass-cli",
+    "claude-in-chrome", "chrome-devtools", "yt-dlp", "gws-workspace", "dokploy-network",
 }
 
-real = {f.parent.name for f in root.glob("skills/*/*/*/SKILL.md")}
+real = {f.parent.name for f in root.glob("skills/**/SKILL.md")}
 real |= {f.stem for f in root.glob("agents/*/*.md") if f.name.lower() != "readme.md"}
 real |= KNOWN_ELSEWHERE | {n for n in extra.split(",") if n}
 
 # Only prose that hands work to a named asset. The verb has to sit next to the token, because a
 # weak trigger ("is the", "owns") matches ordinary sentences and buries the real hits: a first
 # cut on those reported 13 CSS classes, folder slugs and CLI names against one true positive.
-# A line that reads as history ("folded from", "retired") is provenance and is left alone.
 NEAR = r"(?:[^`\n]{0,40})"
 VERB = r"(?:invoke|invoked|route|routes|routed|belongs? to|dispatch(?:es|ed)? to|hand(?:s|ed)? (?:it |the |work )?(?:to|off to))"
 ROUTING = re.compile(rf"(?:{VERB}{NEAR}`TOK`|`TOK`{NEAR}{VERB})", re.I)
 SKILL_WORD = re.compile(r"`TOK`(?:\s+(?:skill|agent))|(?:the\s+)`TOK`\s+(?:skill|agent)", re.I)
-RETIRED = re.compile(r"\b(retired|folded|deleted|used to|renamed|no longer|shipped|until it)\b", re.I)
 TOKEN = re.compile(r"`([a-z][a-z0-9]+(?:-[a-z0-9]+){1,3})`")
 
 dead = []
@@ -57,12 +55,10 @@ for f in sorted(files):
         if name in real:
             continue
         line = text[text.rfind("\n", 0, m.start()) + 1 : text.find("\n", m.end())]
-        # A retirement note wraps: "...held part of this\nuntil 9 Sep and was deleted."
-        window = text[max(0, m.start() - 160) : m.end() + 160]
         tok = re.escape(f"`{name}`")
         routes = re.search(ROUTING.pattern.replace("`TOK`", tok), line, re.I)
         named = re.search(SKILL_WORD.pattern.replace("`TOK`", tok), line, re.I)
-        if (routes or named) and not RETIRED.search(window):
+        if routes or named:
             n = text.count("\n", 0, m.start()) + 1
             dead.append((f.relative_to(root), n, name, line.strip()[:90]))
 
