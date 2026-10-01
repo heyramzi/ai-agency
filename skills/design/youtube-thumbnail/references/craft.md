@@ -1,40 +1,31 @@
 # The craft layer: depth, light and the floating object
 
-Step 5 of the workflow, and the half the skill used to leave unwritten.
-
-Everything in [`niche-evidence.md`](niche-evidence.md) answers **what goes in the
-frame**. None of it answers **why two frames holding the same things look one
-professional and one homemade**. That gap is real, it is where most rejected drafts die,
-and it has its own rules.
+Step 5 of the workflow: [`niche-evidence.md`](niche-evidence.md) answers **what goes in the
+frame**, never **why two frames holding the same things look one professional and one
+homemade**. That gap is where most rejected drafts die.
 
 The read behind this file: **Higgsfield AI** (`@HiggsfieldAI`, 133 uploads), banded top
 24 against bottom 24 on the same channel and period, 19 August 2026. A different niche
-from ours, deliberately, for the reason in the next section.
-
----
+from ours, deliberately (below).
 
 ## 0. Evidence transfers by layer, never wholesale
 
-This is the rule that governs every other line in this file, so it comes first.
-
-A thumbnail carries two independent layers, and they generalise differently.
+The rule that governs every other line in this file. A thumbnail carries two independent
+layers, and they generalise differently:
 
 | Layer | What it holds | Does it transfer between niches? |
 | --- | --- | --- |
 | **Claim** | subject, expression, words, what is promised | **No.** Audience-specific. |
 | **Craft** | depth, light, lens, type placement, how objects sit in space | **Yes.** Physics and perception. |
 
-Higgsfield's winners run shocked faces, `$1280/day` on the frame and `INSANE` in the
-copy. Every one of those is a **measured control marker in our niche**. Import them and
-the frame gets worse. Their *lighting and layering*, on the other hand, is the same
-lighting and layering that makes any photograph read as made rather than assembled, and
-it costs nothing to take.
+Higgsfield's winners run shocked faces, `$1280/day` on the frame and `INSANE` in the copy:
+every one a **measured control marker in our niche**, importing them makes the frame
+worse. Their *lighting and layering* is the same lighting and layering that makes any
+photograph read as made rather than assembled, and it costs nothing to take.
 
 So: **borrow craft from the best-produced channel you can find, in any niche. Borrow
 claim only from your own banded evidence.** Reading a foreign channel for its claims is
 how a skill talks itself out of its own 270 frames.
-
----
 
 ## 1. Clean means depth, not fewer things
 
@@ -51,14 +42,11 @@ The stack, and every winner has all three:
 2. **Mid** — the subject. The only genuinely sharp thing in the frame.
 3. **Near / behind** — one floating object, crossing the subject's silhouette.
 
-A control puts a person and a logo side by side, both sharp, both on the wall. Two
-elements, and it reads busier than a winner holding four, because the eye has no order
-to read them in. **Depth is what "well balanced" actually means when someone says it
-about a thumbnail.** Flatness is the fault; element count is usually innocent.
-
-This does not loosen the one-thing rule in step 2. One **subject**, three **planes**.
-
----
+A control puts a person and a logo side by side, both sharp, both on the wall: two elements,
+and it reads busier than a winner holding four, because the eye has no order to read them
+in. **Depth is what "well balanced" actually means when someone says it about a thumbnail.**
+Flatness is the fault, element count is usually innocent. This does not loosen the
+one-thing rule in step 2: one **subject**, three **planes**.
 
 ## 2. Separation is light, never a cutout
 
@@ -79,18 +67,15 @@ Three lights, and that is the whole recipe:
 The dark background is not a black fill either. It carries one soft bloom so the subject
 is not sitting on nothing.
 
-### The corollary about skin
-
+The corollary about skin:
 The note on the frame that was kept: *"the quality of my face and skin looks enhanced
 without feeling too much like AI."* Nothing touched the face. What produced that read
 was the dark defocused ground plus the rim, which is exactly what a portrait
 photographer does to a real person.
 
-So the instruction is **grade, never regenerate**. Re-light the photograph and colour it;
-do not let the model resample the face. The moment a model redraws skin it goes plastic,
-and skin is the feature a viewer checks first.
-
----
+So the instruction is **grade, never regenerate**: re-light the photograph and colour it, do
+not let the model resample the face. The moment it redraws skin it goes plastic, and skin is
+the feature a viewer checks first.
 
 ## 3. A floating object has four properties, and needs all four
 
@@ -110,27 +95,15 @@ An object floats when, and only when, it:
 
 Miss one and it reads pasted. Miss all four and you have built the control frame.
 
-Size it at **30 to 60% of frame height**. Below 25% it is decoration and the viewer's
-eye never goes there; the timid version is the one that looks cheap, not the bold one.
-At the top of the range, let it run off the top of the frame. A cropped object reads as
-being in the room; a fully contained one reads as placed on the picture.
+Size it at **30 to 60% of frame height**: below 25% it is decoration the eye never goes to, the timid version is what looks cheap, not the bold one. At the top of the range, let it run off the top of the frame: cropped reads as being in the room, fully contained reads as placed on the picture.
 
-**Size is not what breaks it, contact is.** A tile level with the head and touching
-nothing is a logo bug at 20% and at 60%. A tile whose edge disappears behind the head,
-lit and casting, is an object at both. Check occlusion, not percentage.
+**Size is not what breaks it, contact is.** A tile level with the head and touching nothing is a logo bug at 20% and at 60%; a tile whose edge disappears behind the head, lit and casting, is an object at both. Check occlusion, not percentage.
 
-**Mirror it when its perspective fights the subject.** A 3D asset is rendered at one
-fixed three-quarter angle. Behind a head turned the other way, two vanishing points
-disagree and the frame reads wrong before anyone can say why. `magick <tile> -flop`, and
-keep the mirrored copy in the run's scratchpad rather than overwriting the owned asset.
+**Mirror it when its perspective fights the subject.** A 3D asset is rendered at one fixed three-quarter angle; behind a head turned the other way, two vanishing points disagree and the frame reads wrong before anyone can say why. `magick <tile> -flop`, kept in the run's scratchpad rather than over the owned asset.
 
-### Where it goes
-
-Behind the shoulder, or behind the head. **Not** beside the head at the same scale as
+Where it goes: behind the shoulder, or behind the head. **Not** beside the head at the same scale as
 the head, which is the arrangement that reads as a logo bug, and not centred behind the
 head symmetrically, which reads as a halo.
-
----
 
 ## 4. Type sits in the plane too
 
@@ -146,8 +119,6 @@ lockup above it. Nine of twenty-four controls; zero winners.
 Placement is the opposite third from the subject, vertically centred or high. One
 accent colour touches one word at most.
 
----
-
 ## 5. Consistency is in the treatment, not the layout
 
 The Higgsfield wall reads as one channel at a glance because the palette, the rim light
@@ -158,8 +129,6 @@ This qualifies the anti-pattern about template reuse. Reusing a *layout* decays 
 through pattern fatigue. Reusing a *treatment* is what builds the recognisable wall that
 makes a subscriber stop. Hold the light recipe and the two working colours constant;
 change what is in the frame every time.
-
----
 
 ## 6. The prompt block
 
@@ -184,8 +153,6 @@ Add to the `Avoid` line, alongside the claim-level bans:
 a flat cut-out pasted look, an object square-on to camera, a logo bug beside the head
 ```
 
----
-
 ## 7. Checking it
 
 Three checks, all at full resolution, all cheap:
@@ -204,13 +171,7 @@ depths, each spilling a soft prismatic bloom onto him. Near-black ground, one ke
 down the jaw. The verdict: "I do like this concept. It could be used in the future, just not this
 time, but I like the rotating things around me. It looks cool."
 
-It is a **treatment**, so it is the thing worth reusing across a wall; the composition under
-it must still change per video ([`anti-patterns.md`](anti-patterns.md)). Two conditions it
-only works under: the panels carry no glyphs at all, which is what keeps them a texture
-rather than a document, and there are three or four of them, because the two-element law
-counts the orbit as one element only while it reads as one motion. It is a generated
-treatment and the subject is still his photograph, so it is a background job: generate the
-orbit and the room, composite him in.
+It is a **treatment**, so it is the thing worth reusing across a wall; the composition under it must still change per video (the anti-patterns list in [`production.md`](production.md)). Two conditions it only works under: the panels carry no glyphs at all, which keeps them a texture rather than a document, and there are three or four of them, because the two-element law counts the orbit as one element while it reads as one motion. It is a generated treatment and the subject is still his photograph, so it is a background job: generate the orbit and the room, composite him in.
 
 ## Setting the plate: contrast, type, safe area
 

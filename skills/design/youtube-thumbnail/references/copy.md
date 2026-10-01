@@ -17,18 +17,13 @@ diagram across two pages. The picture cannot be the lever because it does not va
 | `BUILD THESE 3 SYSTEMS` | `the CEO Dashboard` |
 | `finish everything by 10:00am` | *(no label at all)* |
 
-Every winner carries a number or a clock. Every control names a category or states a
-sentiment.
+Every winner carries a number or a clock. Every control names a category or states a sentiment.
 
-## The law
+## The default
 
-**Two to four words. Make a claim. Bound it. Say what the title does not.**
+**Make a claim. Bound it. Say what the title does not.** Two to four words is where winners sit; go longer when the claim needs it. The title carries the specifics.
 
-Five words is the ceiling and only when the five are a sentence with a full stop
-(`YOUR IPAD. BUT BETTER.`). The title carries the specifics; the frame carries the one
-thing that makes the specifics worth a click.
-
-**The title obeys the same law.** The ban list below was written for four words and used
+**The title obeys the same rules.** The ban list below was written for four words and used
 to be waved through on the sixty characters sitting next to them, because step 1 took the
 title as a given. A title that names a category or states a topic leaves the frame
 spending its four words on repair: `Why Your Agency Hits the Ops Ceiling` beside
@@ -49,8 +44,6 @@ Names the whole of the thing, so the viewer knows nothing is missing.
 Works when the video really is the complete version. Burns trust fast if it is not.
 Winner band on Liam Ottley, Michele Torti, and this channel.
 
-**Worked, for an agency operating system:** `the whole delivery system` · `every automation, one board` · `full ClickUp CRM, 40 min`
-
 ### 2. The exact cost
 
 Names what it costs the viewer in time or effort, low enough to be worth trying.
@@ -60,8 +53,6 @@ Names what it costs the viewer in time or effort, low enough to be worth trying.
 
 The strongest single family in the set. Winner band on Matt Gray, Ross Harkness,
 Michele Torti, Nick Puru, and this channel.
-
-**Worked:** `one afternoon` · `no new tools` · `4 fields, that's it`
 
 ### 3. The count
 
@@ -75,8 +66,6 @@ the two** (0.86x its channel against 1.58x for a duration promise, 3,573 videos,
 26 Aug 2026), so when a frame can only carry one number, make it the cost in
 formula 2 rather than the count.
 
-**Worked:** `an agency has 5 systems` · `3 boards, no more` · `2 automations do 80%`
-
 ### 4. The deadline
 
 A wall-clock time, which is more concrete than a duration.
@@ -84,8 +73,6 @@ A wall-clock time, which is more concrete than a duration.
 > `DO IT ALL BY 10AM` · `finish everything by 10:00am`
 
 Rare but clean, and it is the only formula that puts the viewer's own day in the frame.
-
-**Worked:** `client update, sent by 9am` · `invoiced before Friday`
 
 ### 5. The negation
 
@@ -97,8 +84,6 @@ A row of crossed-out options and one survivor. The frame does the arguing.
 Winner band on Nick Puru (four of fifteen), Michele Torti, Liam Ottley. Needs the
 picture to carry the crossed-out set, so it is a copy-and-composition pair, not a label.
 
-**Worked:** `stop paying for seats` · `not another tool` · `delete the tracker`
-
 ### 6. The statement with a full stop
 
 A short declarative that sounds like a verdict. The full stop is doing work.
@@ -108,8 +93,6 @@ A short declarative that sounds like a verdict. The full stop is doing work.
 
 Faceless variant only, in practice. Winner band on Systems Made Better, which is the
 faceless channel.
-
-**Worked:** `your ClickUp. finally quiet.` · `one board. every client.`
 
 ## The ban list
 
@@ -146,7 +129,7 @@ viewer with nothing to take.
 **Somebody else's number.** `ADDED $60,000 IN 8 MONTHS`, `$30K MRR TO $250K MRR`.
 Control band on four channels. Your own zero-to-X ladder is the one exception.
 
-**Any word past the fourth**, unless the whole thing is one short sentence.
+**Words that add nothing.**
 
 ## Case, colour and plate
 
@@ -169,23 +152,14 @@ most common way our own frames end up at eight elements.
    is none, the title is a candidate for rewriting, not a constraint to write around.
 2. Write the one sentence from step 2 of the skill: what the eye lands on, and what it
    tells the viewer.
-3. Generate one candidate per formula. Six candidates, two to four words each.
+3. Generate one candidate per formula. Six candidates.
 4. Delete every candidate that restates the title, names a category, or carries an
    adjective you could remove.
 5. Read the survivors at arm's length from a phone. Keep the two that still make a claim.
 6. The best one goes on the frame. The second becomes A/B variant B, words changed and
    nothing else.
 
-## Writing the words, step 4 in full
-
-- **Two to four words.** Five is the ceiling and it has to be a sentence.
-- **Name the job, not the feature.** "a CEO only has 3 jobs" beats "CEO Dashboard". Saying
-  the product's name is fine and often required; saying only the product's name is the fault.
-  `CLICKUP CRM MADE EASY` is a winner, `EISENHOWER MATRIX` is a control.
-- **Bound it.** A count, a duration, a deadline, or the whole scope: "3 systems",
-  "2 minutes a day", "by 10am", "full guide", "only 1 prompt".
-- **Say what the title does not.** The frame and the title are two sentences, not one.
-- **No adjective without an object.** Delete "insane", "ultimate", "game changer".
+## Why the frame beats the title
 
 **The frame opens the loop on its own, and the title is read second or not at all.** Thumbnails
 have grown and title type has shrunk in every surface YouTube ships: on the current suggested

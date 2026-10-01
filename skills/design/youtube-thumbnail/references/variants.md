@@ -65,9 +65,8 @@ list; they are for a timeline, not a still.
 
 ## Face variant
 
-One person. Never two. **1 winner in 135 has a second person against 12 controls in
-108**, and it never runs the other way. No guest, no client, no team, no testimonial
-face beside yours.
+One person. Never two, and it never runs the other way. No guest, no client, no team, no
+testimonial face beside yours. In [`niche-evidence.md`](niche-evidence.md), the count.
 
 Three shapes work, all measured. Pick one.
 
@@ -151,9 +150,8 @@ the words go on, so `confident-left-07` has the subject on the right.
 Given the finding above, prefer `confident`, `smile-confident`, `deadpan`, `thinking`,
 `explaining`, `arms-crossed` and `offer-smile`. The loud plates exist (`mindblown`,
 `gasp`, `shock-arms`, `angry-shout`, `shout`, `facepalm`) and **nothing in the evidence
-supports them in this niche**: no shocked face appears in any winner band on any of the
-ten channels. The desk b-roll frames are the better raw material for the faceless
-variant than a face plate is for this one.
+supports them in this niche**, see above. The desk b-roll frames are the better raw
+material for the faceless variant than a face plate is for this one.
 
 The face is always a **composite, never a generation**: hand the real photograph to the
 model and let it build the environment, the separation and the type around it. Asking a

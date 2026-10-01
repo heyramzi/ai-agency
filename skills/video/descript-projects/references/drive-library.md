@@ -36,7 +36,7 @@ files the upload; without it a `Folder/Name.wav` key creates the folder, which i
 ## The eight-folder standard, on any drive
 
 **A shelf is eight top-level folders and no more** (2026-08-30). It is the same shape on a client
-drive as on this one, it is what Video Master teaches, and it is short on purpose: each folder
+drive as on this one, it is what Editor OS teaches, and it is short on purpose: each folder
 answers a question an editor asks mid-edit, and a ninth folder is almost always one of these eight
 under a private name.
 
@@ -80,7 +80,7 @@ the layout pack's Files panel exactly.
 
 ## Teaching it to somebody else
 
-`CLIs/descript/connect.html` is the Video Master setup-day page, and `pnpm descript connect` opens
+`CLIs/descript/connect.html` is the Editor OS setup-day page, and `pnpm descript connect` opens
 it. **It is a face over the terminal, not a manual** (2026-08-30): it names the three things only a
 person can do - sign in, copy the session, make a token - and then shows a real screenshot of the
 finished shelf, because nobody is going to type `library mkdir` forty times. As it was put: *"nobody
