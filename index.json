@@ -65,20 +65,28 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup.zip"
     },
     {
+      "name": "boards",
+      "area": "design",
+      "description": "Builds video boards: a compiled document, or hand-drawn Excalidraw elements drawn live on the iPad. Use when a video needs a board, a diagram from the terminal, or an .excalidraw file to write, change or read.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/design/boards/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/design/boards",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/boards.zip"
+    },
+    {
       "name": "youtube-thumbnail",
       "area": "design",
-      "description": "Designs YouTube thumbnails for the founder, systems and AI-tooling niche off 270 measured frames, from a template library that grows out of what has already shipped. Ships a build order a designer can execute or a finished render. Use when a video needs a thumbnail or cover, when CTR needs improving, when thumbnails come out inconsistent, or on 'thumbnail', 'YouTube cover', 'thumbnail A/B', 'thumbnail template'.",
+      "description": "Designs YouTube thumbnails: for the founder, systems and AI-tooling niche off 270 measured frames, from a growing template library. Ships a build order or a finished render. Use when a video needs a thumbnail, CTR needs improving, or on 'thumbnail', 'YouTube cover', 'thumbnail A/B'.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/design/youtube-thumbnail/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/design/youtube-thumbnail",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/youtube-thumbnail.zip"
     },
     {
-      "name": "skill-manager",
+      "name": "ai-architecture",
       "area": "operations",
-      "description": "Writes, repairs, reviews and cleans skills and agents: the shape one takes, the description that makes it fire, the quality floor, the failure log, and the pass that cuts a bloated registry back. Use when writing or editing one, when it fires wrong, before it ships, or when a registry has grown.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/operations/skill-manager/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/operations/skill-manager",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/skill-manager.zip"
+      "description": "Owns the AI architecture: every skill, every agent and the wiring between them. Writes, repairs, reviews and cleans each one, and runs the gate that fails a broken agent-to-skill link. Use when writing or editing a skill or agent, when one fires wrong, before it ships, or when context has grown.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/operations/ai-architecture/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/operations/ai-architecture",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/ai-architecture.zip"
     },
     {
       "name": "programmatic-seo",
@@ -169,6 +177,14 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-coach.zip"
     },
     {
+      "name": "video-edit",
+      "area": "video",
+      "description": "Runs a take from card to composition. In Descript: DJI lav sync, project setup, pre-cut coaching, the script cut, long-form or the tighter 5-pass Short. Use when a reel used a lav, footage needs to land in Descript, a take needs coaching before cutting, or a raw take or Short needs cutting.",
+      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/video-edit/SKILL.md",
+      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/video-edit",
+      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-edit.zip"
+    },
+    {
       "name": "video-hooks",
       "area": "video",
       "description": "Writes the opening of a video and the full structure of a Short, for both the 1-to-3-second Shorts window and the 30-second long-form open. Generates competing hook variants by named mechanism, rates each for drop-off risk, and holds every factual claim to something measured. Use when writing or fixing a hook, when restructuring a Short script, when a Short is being swiped away, or when a script opens weakly.",
@@ -179,7 +195,7 @@
     {
       "name": "video-script",
       "area": "video",
-      "description": "Writes the body of a long-form YouTube script: the teach blocks, the demo choreography, the retention beats and the one commercial ask. Holds the measured findings on runtime, the beat budget, ask placement and which promise number to use. Use when a recorded video needs a script, when a long-form script runs long or asks too early, or when a script has to sell a product without turning into a pitch. The opening 30 seconds belong to video-hooks, not here.",
+      "description": "Writes a video's words: the long-form body, the opening hook, or a whole Short filed in Apple Notes. Use when a video needs a script or a hook, when a script runs long or asks too early, when an open reads weak, or on create a short, script a short, make a TikTok about.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/video-script/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/video-script",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-script.zip"

@@ -1,6 +1,6 @@
 {
   "name": "ai-agency",
-  "description": "A 4-skill SEO kit, an 11-skill YouTube video-production kit, an 8-skill ClickUp delivery kit with the project-manager agent on top, six slash commands that run the free courses at go.upsys-consulting.com/skool on your own business, plus the one tool that keeps the registry honest: skill-manager writes a skill, repairs it when a session proves it wrong, and cleans the shelf back down when it has grown.",
+  "description": "A 4-skill SEO kit, an 11-skill YouTube video-production kit, an 8-skill ClickUp delivery kit with the project-manager agent on top, six slash commands that run the free courses at go.upsys-consulting.com/skool on your own business, plus the one tool that keeps the registry honest: ai-architecture writes a skill, repairs it when a session proves it wrong, and cleans the shelf back down when it has grown.",
   "version": "0.7.0",
   "author": {
     "name": "Ramzi",
@@ -12,8 +12,9 @@
     "./skills/content/generate-social",
     "./skills/delivery/board",
     "./skills/delivery/clickup",
+    "./skills/design/boards",
     "./skills/design/youtube-thumbnail",
-    "./skills/operations/skill-manager",
+    "./skills/operations/ai-architecture",
     "./skills/search/programmatic-seo",
     "./skills/search/search-console",
     "./skills/search/seo-content-strategy",
@@ -25,6 +26,7 @@
     "./skills/video/motion-broll",
     "./skills/video/shorts-production",
     "./skills/video/video-coach",
+    "./skills/video/video-edit",
     "./skills/video/video-hooks",
     "./skills/video/video-script",
     "./skills/video/whiteboard",
