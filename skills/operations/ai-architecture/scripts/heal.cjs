@@ -2,15 +2,8 @@
 "use strict";
 
 /**
- * heal.cjs - keep the failure log inside a skill honest.
- *
- * A skill that repeats a mistake it already made is a bug. The fix is not a
- * better model, it is a log that lives inside the skill, because the next run
- * reads it as instructions. This checks that the log scaffold is present,
- * retrofits it where it is not, and appends entries without letting the log
- * grow into a second body.
- *
- * No dependencies. Node 20 or later.
+ * This checks that the log scaffold is present, retrofits it where it is not, and appends entries
+ * without letting the log grow into a second body.
  */
 
 const { readFileSync, writeFileSync, existsSync, readdirSync, statSync } = require("node:fs");
@@ -37,53 +30,38 @@ is missing the scaffold.`;
 const LOG_HEADING = "## Learned Patterns";
 
 /**
- * The phrase that tells a reader that this skill rewrites itself.
- *
- * Matched against the whole file, not the description. The description is
- * preloaded into every session for every skill in the registry, and this
- * sentence does nothing for the choice of which skill to load, so it is the
- * one part of the scaffold that must not live there. A skill that still
- * carries it in the description passes either way.
+ * The description is preloaded into every session for every skill in the registry, and this sentence
+ * does nothing for the choice of which skill to load...
  */
-// The quantifier between the verb and the noun is free: "appends new failure
-// modes", "appends every new failure mode", "appends any failure it hits" all
-// make the same promise, and pinning it to "new" reported four honest skills as
-// missing it.
-const HEAL_PROMISE = /appends?\s+(?:\w+\s+){0,3}(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
+// The quantifier between the verb and the noun is free: "appends new failure modes", "appends every
+// new failure mode", "appends any failure it hits" all make the same promise...
+const HEAL_PROMISE =
+  /appends?\s+(?:\w+\s+){0,3}(?:failure\s+modes?|patterns?)[^.]*\bafter each run\b/i;
 
 /** An entry: `- YYYY-MM-DD: what went wrong, what to do instead.` */
 const ENTRY = /^-\s+\*{0,2}(\d{4}-\d{2}-\d{2})\s*(?:\([^)]*\))?\s*[,.:\u2013\u2014-]\s*(.+)$/;
 
 /**
- * The same entry written the way a human dates a line: `- 26 Aug 2026 - ...`,
- * `- **24 Aug 2026, ...**`. Reading only the ISO form reported eight logs as
- * empty while they held between 8 and 300 entries, so the 25-entry ceiling never
- * fired on the logs furthest past it. Counting is what the ceiling runs on, so
- * it counts every shape; only what this tool writes is ISO.
+ * Reading only the ISO form reported eight logs as empty while they held between 8 and 300 entries,
+ * so the 25-entry ceiling never fired on the logs furthest past it.
  */
-const ENTRY_DATED = /^-\s+\*{0,2}(\d{1,2})\s+([A-Z][a-z]{2})[a-z]*\.?\s+(\d{4})\s*[,.:\u2014\u2013-]*\s*(.+)$/;
+const ENTRY_DATED =
+  /^-\s+\*{0,2}(\d{1,2})\s+([A-Z][a-z]{2})[a-z]*\.?\s+(\d{4})\s*[,.:\u2014\u2013-]*\s*(.+)$/;
 const MONTHS = "jan feb mar apr may jun jul aug sep oct nov dec".split(" ");
 
 /**
- * A bullet with no date at all, read last so a dated line is never mistaken for
- * one. A skill published for other people to fork carries its lessons without
- * the author's calendar, and a log that reads as empty because of a formatting
- * choice is worse than one with no dates in it.
+ * A skill published for other people to fork carries its lessons without the author's calendar...
  */
 const ENTRY_UNDATED = /^-\s+(.+)$/;
 
 /**
- * Past this many entries the log has stopped being a log and become a second
- * body. That is the signal to fold the hardened ones into the prose, not to
- * raise the number.
+ * That is the signal to fold the hardened ones into the prose, not to raise the number.
  */
 const LOG_ENTRIES_MAX = 25;
 
 /**
- * A log is read before a run and paid for in context every time. Past this many
- * characters an entry has stopped being a rule and started being the story of
- * the run that found it, which belongs in git. 240 is roughly
- * two printed lines: enough for the law plus one checkable anchor.
+ * Past this many characters an entry has stopped being a rule and started being the story of the run
+ * that found it, which belongs in git.
  */
 const ENTRY_CHARS_MAX = 240;
 
@@ -121,19 +99,14 @@ function skillFile(target) {
     return path;
   }
   const file = join(path, "SKILL.md");
-  if (!existsSync(file)) throw new Error(`${path} has no SKILL.md, so it is not a skill directory.`);
+  if (!existsSync(file))
+    throw new Error(`${path} has no SKILL.md, so it is not a skill directory.`);
   return file;
 }
 
 /**
- * Every SKILL.md under the given roots, at any depth.
- *
- * A flat registry (`.claude/skills/<name>/`) and a packaged source
- * (`ai-doc/skills/<area>/<name>/`) are both real layouts, and a one-level scan
- * reads the packaged one as empty: `check ai-doc/skills` reported "No SKILL.md
- * found" across 191 skills, which reads as a mistyped path rather than as a
- * layout the tool cannot see. Descending stops at a directory that owns a
- * SKILL.md, so a vendored pack's children and every `references/` stay out.
+ * A flat registry (`.claude/skills/<name>/`) and a packaged source (`ai-doc/skills/<area>/<name>/`)
+ * are both real layouts, and a one-level scan reads the packaged one as empty...
  */
 function discover(roots) {
   const found = [];
@@ -164,15 +137,12 @@ function discover(roots) {
     if (!existsSync(root)) continue;
     walk(root, 0);
   }
-  return found.sort();
+  return found.toSorted();
 }
 
 /**
- * Split a SKILL.md into the parts this tool reasons about.
- *
- * The body is read as text rather than parsed as YAML on purpose: the only
- * frontmatter facts needed here are the name and whether the description makes
- * the promise, and a regex over two lines does not justify a dependency.
+ * The body is read as text rather than parsed as YAML on purpose: the only frontmatter facts needed
+ * here are the name and whether the description makes the promise...
  */
 function read(file) {
   const text = readFileSync(file, "utf8");
@@ -187,21 +157,16 @@ function read(file) {
   const headingAt = headingMatch ? headingMatch.index : -1;
   const logBlock = headingAt === -1 ? null : text.slice(headingAt + 1);
 
-  // A log that outgrew the body moves to references/ and leaves the section as a
-  // pointer. Reading only the section then reports a 60-entry log as empty, so
-  // follow the link and count the entries where they actually live.
+  // Reading only the section then reports a 60-entry log as empty, so follow the link and count the
+  // entries where they actually live.
   let entries = logBlock ? parseEntries(logBlock) : [];
   let entriesFile = null;
-  // Follow the link out of the section. A skill that points at its log from a
-  // `Closing a run` step instead of from a `Learned Patterns` heading is still a
-  // skill with a log: three of them held 75 KB, 68 KB and 54 KB of entries and
-  // were reported as having no log at all, so the search widens to the whole
-  // body when the section is missing.
+  // A skill that points at its log from a `Closing a run` step instead of from a `Learned Patterns`
+  // heading is still a skill with a log...
   if (entries.length === 0) {
     const searched = logBlock || text;
-    // Every candidate, not the first. A pointer written as ``[`x.md`](references/x.md)`` puts the
-    // bare filename leftmost, and taking that one alone resolved to a path that does not exist, so
-    // `log` fell through and appended into the body the section had just delegated away.
+    // A pointer written as ``[`x.md`](references/x.md)`` puts the bare filename leftmost, and
+    // taking that one alone resolved to a path that does not exist...
     const targets = [...searched.matchAll(/\(([^)]*learn[^)]*\.md)\)|`([^`]*learn[^`]*\.md)`/gi)]
       .map((m) => m[1] || m[2])
       .flatMap((t) => [join(dirname(file), t), join(dirname(file), "references", t)]);
@@ -228,15 +193,12 @@ function read(file) {
 }
 
 /**
- * The description, flattened to one line.
- *
- * Read line by line rather than by regex: a lookahead ending in `$` under /m
- * stops at the first end-of-line, which silently truncates a block scalar to its
- * first line and hides a promise written on line four.
+ * Read line by line rather than by regex: a lookahead ending in `$` under /m stops at the first
+ * end-of-line...
  */
 function readDescription(frontmatter) {
   const lines = frontmatter.split("\n");
-  const start = lines.findIndex((l) => l.startsWith('description:'));
+  const start = lines.findIndex((l) => l.startsWith("description:"));
   if (start === -1) return "";
 
   const collected = [lines[start].replace(/^description:\s*/, "")];
@@ -253,10 +215,6 @@ function readDescription(frontmatter) {
 
 /**
  * Every entry in a log block.
- *
- * `raw` is kept so a rebuild puts the line back exactly as its author wrote it.
- * Rebuilding from `date` and `text` reformats a whole hand-dated log on the next
- * append, which is a diff nobody asked for over a log nobody was editing.
  */
 function parseEntries(logBlock, { inBody = true } = {}) {
   const entries = [];
@@ -269,10 +227,8 @@ function parseEntries(logBlock, { inBody = true } = {}) {
   };
   for (const line of logBlock.split("\n")) {
     const trimmed = line.trim();
-    // Outside a body an entry can be a heading rather than a bullet, and the
-    // file often carries both: a Contents list of every entry, then the entries
-    // as H2s. Reading one shape only lost a whole log; reading both without
-    // deduping counted every entry twice.
+    // Reading one shape only lost a whole log; reading both without deduping counted every entry
+    // twice.
     if (!inBody) {
       const head = /^#{2,3}\s+(.+)$/.exec(trimmed);
       if (head) {
@@ -281,9 +237,7 @@ function parseEntries(logBlock, { inBody = true } = {}) {
         continue;
       }
     }
-    // A `## ` heading ends the section, but only inside a body. A log that moved
-    // to references/ uses H2 for its own structure (a Contents list, an entry
-    // per heading), and stopping at the first one read a 54-entry log as empty.
+    // A `## ` heading ends the section, but only inside a body.
     if (inBody && /^##\s/.test(line) && !line.startsWith(LOG_HEADING)) break;
     const iso = ENTRY.exec(trimmed);
     if (iso) {
@@ -302,9 +256,8 @@ function parseEntries(logBlock, { inBody = true } = {}) {
       add(null, undated[1], trimmed);
       continue;
     }
-    // An indented line under an entry is that entry continuing. Reading only first lines reported
-    // every wrapped log as carrying no `[ask: ...]` at all and measured its entries at a fraction
-    // of their length, which is the one field this tool exists to enforce.
+    // Reading only first lines reported every wrapped log as carrying no `[ask: ...]` at all and
+    // measured its entries at a fraction of their length...
     const last = entries[entries.length - 1];
     if (last && trimmed !== "" && /^\s+\S/.test(line)) {
       last.text = `${last.text} ${trimmed}`;
@@ -315,9 +268,8 @@ function parseEntries(logBlock, { inBody = true } = {}) {
 }
 
 /**
- * The four parts, all required. A skill with three of them heals by accident:
- * the promise without the log has nowhere to write, and the log without the
- * final step is never written to.
+ * A skill with three of them heals by accident: the promise without the log has nowhere to write,
+ * and the log without the final step is never written to.
  */
 function audit(skill, now) {
   const missing = [];
@@ -335,10 +287,8 @@ function audit(skill, now) {
   if (skill.hasLog && skill.entries.length === 0) {
     warnings.push("Learned Patterns is empty. Seed it from the run that motivated the skill.");
   }
-  // The ceiling is what a reader pays, not how many lines there are. A log of
-  // one-line rules can hold 128 entries and still be 130 lines, and warning on
-  // the count there tells a maintainer to undo the fix. What makes a log a
-  // second body is entries that carry their evidence inline.
+  // A log of one-line rules can hold 128 entries and still be 130 lines, and warning on the count
+  // there tells a maintainer to undo the fix.
   const meanChars =
     skill.entries.length > 0
       ? skill.entries.reduce((n, e) => n + e.text.length, 0) / skill.entries.length
@@ -357,13 +307,8 @@ function audit(skill, now) {
         `with compress_log.py, or fold the hardened ones into the prose.`,
     );
   }
-  // WHY count the asks: `[ask: ...]` is the only thing in an entry that can be
-  // re-run, and replay is the gap self-healing.md has named open since
-  // 2026-08-31. Nothing checked it, so on 5 Sep 2026 the field was dead in all
-  // 34 logs: 0 asks across 758 entries, the last of them stripped by the
-  // compression pass. A prompt failure with no ask is a lesson that can only be
-  // believed. Zero in a long log means the convention stopped being followed,
-  // not that every failure came from a tool.
+  // WHY count the asks: `[ask: ...]` is the only thing in an entry that can be re-run, and replay
+  // is the gap self-healing.md has named open since 2026-08-31.
   const asks = skill.entries.filter((e) => /\[ask:/i.test(e.text));
   if (skill.entries.length >= ASK_COVERAGE_FLOOR && asks.length === 0) {
     warnings.push(
@@ -383,18 +328,11 @@ function audit(skill, now) {
 }
 
 /**
- * Add only the parts that are absent, and put each where it is read.
- *
- * The log goes last because appends target the end of the file, and the
- * execution step goes into the existing flow rather than a new section, so a
- * retrofitted skill reads like one that was written with the scaffold.
+ * The log goes last because appends target the end of the file, and the execution step goes into the
+ * existing flow rather than a new section...
  */
 /**
- * Add a section, keeping the log last.
- *
  * Appending to the end of the file is only correct when there is no log yet.
- * Once there is one, the end of the file is inside it, and a new section there
- * pushes the log out of last place, which the next `check` then reports.
  */
 function appendSection(text, section) {
   const heading = /\n##\s+learned\s+patterns\s*$/im.exec(text);
@@ -449,14 +387,8 @@ function sameEntry(a, b) {
 }
 
 /**
- * Rebuild the log section with the new entry in date order.
- *
- * The section is rewritten rather than spliced because the log has three parts
- * that a positional insert keeps confusing: the heading, an optional line of
- * prose introducing it, and the entries. Splicing after the heading buries the
- * prose under the newest entry; splicing after the prose has to find where the
- * prose ends. Reading the parts and re-emitting them is shorter than either and
- * cannot land an entry outside the section.
+ * The section is rewritten rather than spliced because the log has three parts that a positional
+ * insert keeps confusing: the heading, an optional line of prose introducing it...
  */
 function appendEntry(skill, entry, now) {
   const line = `- ${now}: ${normalise(entry)}`;
@@ -467,10 +399,11 @@ function appendEntry(skill, entry, now) {
     // entries yet it goes at the end, under whatever prose introduces the file.
     const at = lines.findIndex((l) => ENTRY.test(l.trim()));
     if (at === -1) return `${text.replace(/\s*$/, "")}\n\n${line}\n`;
-    // Match the file's own spacing. An index of one-line rules runs them
-    // together; a log of paragraphs separates them, and mixing the two makes
-    // every append visible as a formatting change.
-    const spaced = lines.slice(at + 1).some((l, i) => l.trim() === "" && ENTRY.test((lines[at + i + 2] || "").trim()));
+    // An index of one-line rules runs them together; a log of paragraphs separates them, and mixing
+    // the two makes every append visible as a formatting change.
+    const spaced = lines
+      .slice(at + 1)
+      .some((l, i) => l.trim() === "" && ENTRY.test((lines[at + i + 2] || "").trim()));
     lines.splice(at, 0, ...(spaced ? [line, ""] : [line]));
     return lines.join("\n");
   }
@@ -505,8 +438,12 @@ function appendEntry(skill, entry, now) {
   });
 
   const rebuilt =
-    [LOG_HEADING, "", ...(intro.length > 0 ? [...intro, ""] : []), ...entries.map((e) => e.raw || (e.date ? `- ${e.date}: ${e.text}` : `- ${e.text}`))]
-      .join("\n") + "\n";
+    [
+      LOG_HEADING,
+      "",
+      ...(intro.length > 0 ? [...intro, ""] : []),
+      ...entries.map((e) => e.raw || (e.date ? `- ${e.date}: ${e.text}` : `- ${e.text}`)),
+    ].join("\n") + "\n";
 
   return skill.text.slice(0, start) + rebuilt + skill.text.slice(end);
 }
@@ -538,7 +475,10 @@ function main(argv) {
   };
 
   if (command === "check") {
-    const roots = rest.length > 0 ? rest.map((r) => resolve(r)) : [resolve("skills"), resolve(".claude/skills")];
+    const roots =
+      rest.length > 0
+        ? rest.map((r) => resolve(r))
+        : [resolve("skills"), resolve(".claude/skills")];
     // A root that is itself a skill is the single-skill case, not a registry.
     const files = roots.flatMap((root) =>
       existsSync(join(root, "SKILL.md")) ? [join(root, "SKILL.md")] : discover([root]),
@@ -599,14 +539,19 @@ function main(argv) {
 
   if (command === "log") {
     const [target, ...words] = rest;
-    const entry = words.join(" ").trim();
+    // Strip it before the ceiling and the duplicate check, so both judge the rule alone.
+    const entry = words
+      .join(" ")
+      .trim()
+      .replace(/^\d{4}-\d{2}-\d{2}\s*:\s*/, "");
     if (!target || !entry) {
-      process.stderr.write('log needs a skill and an entry: heal.cjs log ./skills/x "what went wrong, what to do instead"\n');
+      process.stderr.write(
+        'log needs a skill and an entry: heal.cjs log ./skills/x "what went wrong, what to do instead"\n',
+      );
       return 2;
     }
-    // Refuse before reading the skill: the writer has the run in front of them
-    // and is the only one who can say which sentence is the rule. Compressing it
-    // later, from the log alone, is guesswork.
+    // Refuse before reading the skill: the writer has the run in front of them and is the only one
+    // who can say which sentence is the rule.
     if (normalise(entry).length > ENTRY_CHARS_MAX && !flags.long) {
       process.stderr.write(
         `Entry is ${normalise(entry).length} characters; the ceiling is ${ENTRY_CHARS_MAX}.\n` +
@@ -642,7 +587,9 @@ function main(argv) {
       return 0;
     }
     if (stale.length === 0) {
-      process.stdout.write(`Nothing has hardened yet. ${skill.entries.length} entries, all recent.\n`);
+      process.stdout.write(
+        `Nothing has hardened yet. ${skill.entries.length} entries, all recent.\n`,
+      );
       return 0;
     }
     process.stdout.write(
