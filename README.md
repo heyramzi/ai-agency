@@ -240,8 +240,8 @@ become 2 standards inside a quarter.
 
 | Path | Direction | Cadence | Use when |
 | --- | --- | --- | --- |
-| [skill-manager](skills/operations/skill-manager) `new` / `heal` | Additive | Per session | A skill needs writing or its description fires on the wrong prompts, a session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
-| [skill-manager](skills/operations/skill-manager) `clean` | Subtractive | Scheduled | Duplicates and overlapping skills compete for the same task, a skill works some days and not others, skills are scattered across projects and home directories, or links are dead |
+| [ai-architecture](skills/operations/ai-architecture) `new` / `heal` | Additive | Per session | A skill needs writing or its description fires on the wrong prompts, a session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
+| [ai-architecture](skills/operations/ai-architecture) `clean` | Subtractive | Scheduled | Duplicates and overlapping skills compete for the same task, a skill works some days and not others, skills are scattered across projects and home directories, or links are dead |
 
 **It accumulates.** Each skill you add competes with the others for the same
 triggers. Past a certain size the model picks between 4 skills that all look right,
@@ -296,9 +296,9 @@ The tools run against this repo, and against each other. That is the intended
 way to use them on your own:
 
 ```bash
-node skills/operations/skill-manager/scripts/heal.cjs check skills
-python3 skills/operations/skill-manager/scripts/review_skill.py skills
-python3 skills/operations/skill-manager/scripts/context_cost.py skills
+node skills/operations/ai-architecture/scripts/heal.cjs check skills
+python3 skills/operations/ai-architecture/scripts/review_skill.py skills
+python3 skills/operations/ai-architecture/scripts/context_cost.py skills
 ```
 
 They exit non-zero when something is wrong, so they drop into CI as-is.

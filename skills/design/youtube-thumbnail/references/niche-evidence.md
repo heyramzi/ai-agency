@@ -1,49 +1,32 @@
 # What separates a winner from a control in this niche
 
 Read on 19 August 2026 over **270 thumbnails**: ten channels, each contributing 15
-winners and 12 controls sampled from the same channel, format and period. Nine
-competitors (135 winners / 108 controls) plus the channel being worked on (15 / 12).
-
-The banding is what makes this usable. Production budget, photographer, house palette
-and brand are all held constant inside a channel, so **a trait that appears in both
-bands is house style and copying it buys nothing.** Only a trait that separates the
-bands is a lever. This is the step that gets skipped, and skipping it is how four
-earlier conclusions in the dossier series turned out backwards.
-
-Counts are one reader's pass over 270 images: directional, not statistical. Nothing is
-written up here unless it runs the same direction on five or more independent channels,
-or unless it is flagged as a single-channel lever.
-
-Rebuild any sheet with:
+winners and 12 controls from the same channel, format and period. Nine competitors
+(135 winners / 108 controls) plus the channel being worked on (15 / 12).
+Banding holds budget, photographer and palette constant, so **a trait in both bands is
+house style and copying it buys nothing**; only what separates the bands is a lever.
+Counts are directional: nothing runs unless it holds on five or more channels, or is
+flagged single-channel. Rebuild any sheet with:
 
 ```bash
-# build one contact sheet per channel: its 15 winners and its 12 controls
-# writes data/<slug>/thumbnails/sheet-winner.jpg and sheet-control.jpg
+npx tsx scripts/competitor-intel/thumbnails.ts <slug>
 ```
 
 Slugs: `matt-gray`, `ali-abdaal`, `chase-ai`, `liam-ottley`, `systems-made-better`,
-`nick-puru`, `ross-harkness`, `michele-torti`, `jordan-ross`, and your own.
-
-The same findings live in `vibe-kit/ai-doc/references/competitor-evidence.md`, which is
-the shared home cited by `video-hooks`, `shorts-production` and `generate-social`. This
-file is the design-side reading of them.
-
----
+`nick-puru`, `ross-harkness`, `michele-torti`, `jordan-ross`, and your own. Same
+findings, shared with `video-script`, `social`'s `references/shorts-production.md` and `social`'s `references/writing-posts.md`:
+`vibe-kit/ai-doc/references/competitor-evidence.md`.
 
 ## Single-channel lever: the type sits in the top half
 
-**Our own channel only, re-read 28 Aug 2026, and it agrees with a cause found separately.** Across our
-own 15 winners and 12 controls, the winners set their words across the top of the frame
-(`ADVANCED TUTORIAL`, `TUTO COMPLET 2025`, `HOW TO CLICKUP FORMS`, `CLICKUP CRM MADE EASY`,
-`LEARN IN 30 MINUTES`) while the controls hang them low over a screenshot
-(`CLICKUP FEATURES FOR REMOTE TEAMS` bottom-left, `ContentFlow` bottom-left,
-`La meilleure méthode de travail` bottom-right).
-
-It is filed as a single-channel lever because it was not counted on the other nine. It is
-worth acting on anyway, because the mechanism was found independently: the TV app shows only
-the top portion of a frame until the viewer presses down on the remote, and TV has passed
-mobile as the primary device in this market. Two unrelated reads pointing the same way is
-better evidence than either alone. The check is the 50% test in `SKILL.md` step 5.
+**Our own channel only**, re-read 28 Aug 2026, agreeing with a cause found separately: across our
+15 winners and 12 controls, winners set words across the top (`ADVANCED TUTORIAL`, `TUTO
+COMPLET 2025`, `HOW TO CLICKUP FORMS`, `CLICKUP CRM MADE EASY`, `LEARN IN 30 MINUTES`);
+controls hang them low over a screenshot (`CLICKUP FEATURES FOR REMOTE TEAMS`
+bottom-left, `ContentFlow` bottom-left, `La meilleure méthode de travail` bottom-right).
+Not counted on the other nine, but found independently: TV shows only a frame's top
+until the viewer presses down, and has passed mobile as the primary device. Check: the
+50% test in `SKILL.md` step 5.
 
 ## Six findings that replicate across five or more channels
 
@@ -59,11 +42,8 @@ better evidence than either alone. The check is the 50% test in `SKILL.md` step 
 | Nick Puru | 0 | 1 |
 | Ross Harkness | 0 | 1 |
 
-This is the strongest single count in the set. The reading: a picture of something
-happening between other people reads as something you are outside of. One person alone
-reads as a position you could occupy. It kills the obvious ideas first, so say it out
-loud: no guest, no client, no team shot, no two-founders-at-a-whiteboard, no testimonial
-face beside yours.
+Strongest single count in the set. No guest, no client, no team shot, no
+two-founders-at-a-whiteboard, no testimonial face beside yours.
 
 ### 2. Somebody else's money, shown as a receipt, is a control marker
 
@@ -76,91 +56,85 @@ Client MRR quotes, Stripe and PayPal notifications, revenue curves, fans of cash
 | Nick Puru | 0 | 4 |
 | Michele Torti | 1 | 2 |
 
-Jordan Ross's control band is the clearest case: four of his twelve controls are a
-client's face beside a number they hit. `"ADDED $60,000 IN 8 MONTHS"`,
-`"WE WENT FROM $30K MRR TO $250K MRR"`, `"I WENT FROM $20K TO $60K MRR"`, `"$0K -> $13M"`.
+Jordan Ross's control band is clearest: four of twelve controls are a client's face
+beside a number they hit. `"ADDED $60,000 IN 8 MONTHS"`, `"WE WENT FROM $30K MRR TO
+$250K MRR"`, `"I WENT FROM $20K TO $60K MRR"`, `"$0K -> $13M"`.
 
-**The exception is exact and worth keeping.** Your own zero-to-X ladder wins on the two
-channels that run it, because it is a transformation and not a proof. Ali Abdaal runs
-`$0 -> $1M` in two of fifteen winners. Matt Gray runs `$0 | $10K | $1M` as three
-photographs of the same man in three different rooms: the money is the axis, the change
-in the person is the subject.
+**The exception is exact.** Your own zero-to-X ladder wins, a transformation not a
+proof: Ali Abdaal's `$0 -> $1M` in two winners, Matt Gray's `$0 | $10K | $1M` as one man
+in three rooms, money as the axis, his change as the subject.
 
 ### 3. A numbered ramp of generic icons is a control marker
 
-`PHASE 1..5`, `STEP 1..4`, `Stage 1 / 2 / 3`, `#1 .. #4`, each step an abstract glyph on
-a curve. Control band on Ali Abdaal, Liam Ottley, Nick Puru, Jordan Ross and Michele
-Torti. Not one appears in a winner band.
+`PHASE 1..5`, `STEP 1..4`, `Stage 1 / 2 / 3`, `#1 .. #4`, each step an abstract glyph.
+Control band on Ali Abdaal, Liam Ottley, Nick Puru, Jordan Ross, Michele Torti; not one
+appears in a winner band.
 
-**A numbered strip where every cell is a different real thing wins**, and it is not the
-same device. Matt Gray's `1 LEVEL ... 7 LEVEL` is seven photographs of seven different
-people. Chase's is seven different screenshots. The number is only worth drawing when
-there is something different to look at in each cell.
+**A numbered strip where every cell is a different real thing wins**: Matt Gray's
+`1 LEVEL ... 7 LEVEL` is seven photographs of seven different people, Chase's is seven
+different screenshots.
 
 ### 4. A bounded promise in the copy is a winner marker
 
 Winner band on Liam Ottley, Michele Torti, Ross Harkness, Matt Gray and our own.
-
-Verbatim from winner bands: `full guide` / `FULL COURSE 4 HOURS` / `LEARN NO-CODE
-CHATBOTS IN 3 HOURS` / `LEARN IN 30 MINUTES` / `10 minutes/day` / `2 MINUTES A DAY` /
-`finish everything by 10:00am` / `ONLY 1 PROMPT` / `A CEO ONLY HAS 3 JOBS` / `BUILD
-THESE 3 SYSTEMS` / `MASTER THESE N8N NODES` / `2026 FULL TOUR`.
-
-The promise names either the whole scope or the exact cost. Either way the viewer can
-tell, before clicking, whether it is worth it. Full formulas in
-[`copy.md`](copy.md).
+Verbatim: `full guide` / `FULL COURSE 4 HOURS` / `LEARN NO-CODE CHATBOTS IN 3 HOURS` /
+`LEARN IN 30 MINUTES` / `10 minutes/day` / `2 MINUTES A DAY` / `finish everything by
+10:00am` / `ONLY 1 PROMPT` / `A CEO ONLY HAS 3 JOBS` / `BUILD THESE 3 SYSTEMS` / `MASTER
+THESE N8N NODES` / `2026 FULL TOUR`. The promise names the whole scope or the exact
+cost. Full formulas in [`copy.md`](copy.md).
 
 ### 5. An adjective with no object is a control marker
 
 Control band on Michele Torti, Nick Puru, Ross Harkness, Jordan Ross and Matt Gray.
-
-Verbatim from control bands: `INSANE AGENTS` / `UNLIMITED CONTENT` / `THE NEW AI ERA` /
-`GAMECHANGER` / `ADAPT OR DIE` / `Thank Me Later` / `SET KPIs LIKE A PRO` / `BUSINESS
-SHOULDN'T BE STRESSFUL` / `AIR TIME?` / `it does everything`.
-
-Hype is the copy you write when you have not found the specific thing yet.
+Verbatim: `INSANE AGENTS` / `UNLIMITED CONTENT` / `THE NEW AI ERA` / `GAMECHANGER` /
+`ADAPT OR DIE` / `Thank Me Later` / `SET KPIs LIKE A PRO` / `BUSINESS SHOULDN'T BE
+STRESSFUL` / `AIR TIME?` / `it does everything`.
 
 ### 6. A readable screenshot as the subject is a control marker
 
-A dashboard, chart, spreadsheet or app window the viewer is being asked to read:
-control on Chase (a SWE-bench chart and two dashboards), Systems Made Better, Michele
-Torti, Jordan Ross and Liam Ottley.
-
-Winners use the same screenshots **as texture**: blurred, cropped hard, or dimmed to
-30% behind three big words. Nick Puru's and Michele Torti's winners are full of n8n
-canvases treated exactly that way. Nothing readable survives 320px anyway, so a legible
-screenshot only costs contrast.
-
----
+A dashboard, chart, spreadsheet or app window the viewer is asked to read: control on
+Chase (a SWE-bench chart and two dashboards), Systems Made Better, Michele Torti, Jordan
+Ross and Liam Ottley. Winners use the same screenshots **as texture**: blurred, cropped
+hard, or dimmed to 30% behind three big words, as in Nick Puru's and Michele Torti's n8n
+canvases. Nothing readable survives 320px anyway.
 
 ## Faces: the rule is size and role, not presence
 
-A face appears in both bands on eight of nine channels, so **a face is not a lever
-anywhere in this niche.** Adding one buys nothing. Cutting one buys nothing. What
-separates is how big it is and what job it is doing.
+A face appears in both bands on eight of nine channels: **not a lever anywhere in this niche**. What separates is size and job.
 
-**Systems Made Better is the faceless case, and it is the channel closest to "systems"
-as a subject.** 12 of 15 winners have no person at all: a real desk photographed
-cleanly, one white label block of two to five words. 10 of 12 controls are his face
-beside a floating app screenshot he is pointing at. Strongest faceless result in the set.
+**Systems Made Better is the faceless case**, closest to "systems" as a subject: 12 of
+15 winners have no person, a real desk shot cleanly, one white label block; 10 of 12
+controls are his face beside a floating app screenshot. Strongest faceless result here.
 
-**Matt Gray is the small-figure case.** Face close up to camera: 1 winner, 3 controls.
-His winners put him small inside a real room, a lake, a desert. The environment is the
-subject; he is the scale reference and the proof a human is in it.
+**Matt Gray is the small-figure case**: face close up, 1 winner, 3 controls. Winners put
+him small in a real room, a lake, a desert: the environment is the subject, he is the
+scale reference.
 
-**Ali Abdaal is the holding case.** The person is present and mid-sized, but the winner
-frames give him something he made to hold up: a filled notebook, a hand-drawn framework
-poster, a book. The artifact is the subject; the hands prove it is real.
+**Ali Abdaal is the holding case**, present and mid-sized, given something he made to
+hold: a filled notebook, a hand-drawn poster, a book. The hands prove it is real.
+Everywhere else the face is house style and changes nothing.
 
-**Everywhere else the face is house style**, sits at the same size in both bands, and
-changes nothing either way.
+## Seven general archetypes, and where this niche departs from them
 
----
+The general-YouTube catalogue, measured against the ten-channel bands rather than taken
+on faith: kept because two of the seven survive the control.
+
+| Archetype | Composition | Status in this niche |
+| --- | --- | --- |
+| Reaction face | Face left/right, eyes to focal object, mouth open | **Refuted.** No shocked face appears in any winner band, on any of the ten channels. |
+| Juxtaposition | Split frame, two contrasting halves | **Holds**, as negation: crossed-out options and one survivor. Nick Puru, Michele Torti, Liam Ottley. |
+| Single hero object | Object centre-right, clean background | **Holds, and is the strongest.** The faceless variant. Systems Made Better, Ross Harkness, Jordan Ross. |
+| Before / after | Left bad, right good | **Holds**, as `OLD -> NEW` and `SLOP -> FIXED`. |
+| Numbered stakes | Giant number, face reacting | **Split.** A strip where every cell is a different real thing wins; a ramp of generic step icons is a control marker on five channels. |
+| Mystery / question | Object partly hidden, hand reaching | Not observed either way. Untested here. |
+| Forbidden / danger | Red tint, caution tape, hazard | Not observed. The niche's version is the negation, above. |
+
+Pick exactly one and name it in the build order: blending two is the most common way a
+thumbnail says nothing, and no max-saturation MrBeast palette appears in any winner band.
 
 ## Per-channel lever
 
-Where a finding does not generalise, it still tells you what that channel's audience
-rewards. Ordered by channel median, highest first.
+What does not generalise still tells you what that channel's audience rewards, ordered by median, highest first.
 
 | Channel | Median (long) | What separates its winners |
 | --- | --- | --- |
@@ -176,60 +150,31 @@ rewards. Ordered by channel median, highest first.
 | Ours | 715 |
  Completeness promises win the little we win (`TUTO COMPLET 2025`, `LEARN IN 30 MINUTES`, `2026 FULL TOUR`). Series numbering (`MINI COURSE DAY 1`), scolding (`NE FAITES PAS ÇA!`) and category labels (`Tout sur les Docs`) sit in the control band. |
 
-Ross Harkness is the most instructive channel in the set precisely because his
-composition is constant. When the picture cannot be the lever, the words are, and they
-are measurably the lever.
-
----
-
 ## What our own wall says about us
 
-Read against the nine, our 27 frames share three faults **on both bands**, which means
-they are house style and not bad luck:
+Read against the nine, our 27 frames share three faults **on both bands**, which makes
+them house style and not bad luck, and not what is holding the channel at a 715 median:
 
-1. **Five to eight elements** where a winner carries one or two. A cut-out face, a
-   gradient plate, a floating app window, a logo badge, two text blocks in two colours,
-   an arrow and a sticker, all in one frame.
-2. **A cut-out face at a constant size and saturation on almost every frame.** It is
-   not doing a different job in the winners than in the controls, so it is costing
-   space and buying nothing.
+1. **Five to eight elements** where a winner carries one or two: a cut-out face, a
+   gradient plate, a floating app window, a logo badge, two text blocks, an arrow, a
+   sticker, all in one frame.
+2. **A cut-out face at constant size and saturation on every frame**: no different job
+   in the winners than the controls, so it costs space and buys nothing.
 3. **Copy that names a category where a winner makes a claim.** `CLICKUP CRM`,
    `Tout sur les Docs`, `DOCS`, `MINI COURSE DAY 1`.
 
-The style is legible and consistent. It is not what is holding the channel at a 715
-median. The three fixes, in order of expected effect: cut to one focal element, replace
-category labels with bounded claims, and take the faceless variant whenever a board, a
-workflow or a document can be the subject.
+Fixes, in order: cut to one focal element, replace category labels with bounded claims,
+take the faceless variant whenever a board, a workflow or a document can be the subject.
 
----
-
-## Reading a channel outside this niche
-
-Sometimes the frame you admire belongs to a channel this study never sampled. That is
-allowed, and it has one rule.
-
-**Take craft from it. Never take claims from it.** Lighting, depth, lens and type
-placement are perception and physics, and they hold whoever is watching. Subject,
-expression, promise and words are audience-specific, and they invert across niches.
-
-The worked example is **Higgsfield AI** (`@HiggsfieldAI`), banded top 24 against bottom
-24 on 19 August 2026 and written up in [`craft.md`](craft.md). Their winner band runs
-shocked faces, `$1280/day` on the frame and `INSANE` in the copy. All three are measured
-control markers here. Their three-plane depth, rim light and floating-object treatment
-are the best in any wall read for this skill, and cost nothing to adopt.
-
-So a foreign channel answers *how is this lit and layered*. This file, and only this
-file, answers *what goes in the frame and what the words say*.
-
----
+Craft (not claims) transfers from a channel this study never sampled: the rule and the
+Higgsfield AI worked example are in [`craft.md`](craft.md).
 
 ## Method notes, so this can be argued with
 
 - Bands come from `scripts/competitor-intel/sample.ts`: views against that channel's own
   median for the same format, never raw views. Shorts are scored separately.
-- 15 winners against 12 controls per channel is the sample the sheets are built at. It
-  is small. Five-channel replication is the bar used here to compensate.
-- Nine of ten channels are English. Our own French uploads sit inside our 27 and
-  nothing here has been tested for a language split.
-- One reader, one sitting, no second coder. Counts in the tables are exact for what was
-  seen; the classification of a borderline frame is a judgement call.
+- 15 against 12 per channel is a small sample; five-channel replication compensates.
+- Nine of ten channels are English; our own French uploads sit inside our 27,
+  untested for a language split.
+- One reader, one sitting: counts are exact for what was seen; a borderline frame is a
+  judgement call.

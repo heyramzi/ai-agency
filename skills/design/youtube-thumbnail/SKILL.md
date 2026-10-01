@@ -1,8 +1,9 @@
 ---
 name: youtube-thumbnail
-description: "Designs YouTube thumbnails for the founder, systems and AI-tooling niche off 270 measured frames, from a template library that grows out of what has already shipped. Ships a build order a designer can execute or a finished render. Use when a video needs a thumbnail or cover, when CTR needs improving, when thumbnails come out inconsistent, or on 'thumbnail', 'YouTube cover', 'thumbnail A/B', 'thumbnail template'."
+description: "Designs YouTube thumbnails: for the founder, systems and AI-tooling niche off 270 measured frames, from a growing template library. Ships a build order or a finished render. Use when a video needs a thumbnail, CTR needs improving, or on 'thumbnail', 'YouTube cover', 'thumbnail A/B'."
 allowed-tools: Read, Write, Edit, Bash, WebFetch
 tags: [makes, design, youtube]
+lane: visual
 ---
 
 # YouTube Thumbnail
@@ -39,43 +40,32 @@ after the build order is approved.
 
 ## The evidence this skill runs on
 
-Everything below comes from 270 thumbnails, ten channels, each one split into a
-winner band and a control band from the same channel and period, so house style and
-production budget are held constant. **A trait that appears in both bands is that
-channel's house style, and copying it buys nothing.** Only traits that separate the
-bands are levers.
+270 thumbnails, ten channels, each split into a winner band and a control band from the
+same channel and period, so house style and production budget are held constant. A trait
+in both bands is house style, not a lever. Findings, counts, per-channel table:
+[`references/niche-evidence.md`](references/niche-evidence.md). Read it before designing
+anything: it is the source of truth for this skill and overrides general "viral
+thumbnail" advice.
 
-The findings, the counts and the per-channel table:
-[`references/niche-evidence.md`](references/niche-evidence.md). Read it before
-designing anything. It is the source of truth for this skill and it overrides any
-general "viral thumbnail" advice you already believe.
+**His face is never drawn.** A generated frame contains zero photographed pixels of him
+and reads as AI at a glance. A face variant is always composited from the real plate:
+`--photo` for a full-frame plate, or a real-pixel composite when the background is a real
+artifact worth keeping ([`references/composites.md`](references/composites.md)). Handing
+the plate to the model as a reference is not compositing; it redraws him. See
+[`references/variants.md`](references/variants.md).
 
-The three that overturn common advice, so they are repeated here:
+## Where the concepts go
 
-- **A face is not a lever.** It appears in both bands on eight of nine channels.
-  Presence buys nothing; a face-forward close-up filling the frame is a control marker.
-- **His face is never drawn.** A generated frame contains zero photographed pixels of
-  him, and it reads as AI at a glance. A face variant is always composited from the real
-  plate: `--photo` for a full-frame plate, or a real-pixel composite when the background is
-  a real artifact worth keeping (see [`references/composites.md`](references/composites.md)).
-  Handing the plate to the model as a reference is not compositing; it redraws him. See
-  [`references/variants.md`](references/variants.md).
-- **Somebody else's money is a control marker.** Client MRR, Stripe receipts, cash.
-  Your own zero-to-X ladder is the one exception.
-- **Hype adjectives are a control marker.** "INSANE", "UNLIMITED", "GAME CHANGER".
+The concepts are written against the rules below and stored on the video's record; the
+compositions to pick from are a file beside it, and the render path is a second copy of the
+execution rules. **Change one and change the others in the same session.**
 
-## Part of this skill runs in code
-
-Where an app writes the concepts rather than a person, its instructions are a runtime copy of
-the rules below, the compositions it picks from are a second file beside it, and the render path
-is a third copy of the execution rules. **Change one and change the others in the same session.**
-
-Drift here is expensive and it is silent, because a generated concept looks finished.
-On 23 Aug 2026 the generator held the asset rules and the type rules and **none of the
-composition evidence**, so it wrote a frame carrying a face plus five vendor marks:
-six elements, which is the control-band shape this skill exists to avoid, arriving
-through the skill's own pipeline. It also named a shelved product. Both rules were in
-this file and neither was in the code.
+Until 6 Sep 2026 an agent in the app wrote these instead, and the drift was silent because a
+generated concept looks finished. On 23 Aug 2026 it held the asset rules and the type rules and
+**none of the composition evidence**, so it shipped a frame carrying a face plus five vendor
+marks: six elements, the control-band shape this skill exists to avoid, arriving through the
+skill's own pipeline. It also named a shelved product. Both rules were in this file and neither
+was in the code. That is the failure mode the split created, and why there is one writer now.
 
 ## When to use
 
@@ -86,7 +76,7 @@ this file and neither was in the code.
 ## Non-goals
 
 - Channel banners, end screens, Shorts vertical covers (different aspect, different rules)
-- Ad creatives and posters (use `ad-copywriter`)
+- Ad creatives and posters (use `conversion`)
 - Long-form copy on the image
 
 ## Workflow
@@ -102,46 +92,26 @@ Get three things. Ask once, batched, and only for what context does not already 
 The title is what the pipeline currently holds, not what has to ship. Step 1b decides
 whether it stays.
 
-**Do not ask for reference thumbnails.** They exist on disk, already banded:
+**Do not ask for reference thumbnails.** They exist on disk, already banded: one contact
+sheet per channel, its winners and its controls. **Read both.**
 
 ```bash
-# build one contact sheet per channel: its 15 winners, its 12 controls
+npx tsx scripts/competitor-intel/thumbnails.ts <slug>
 ```
 
-Ten channels are banded: `matt-gray`, `ali-abdaal`, `chase-ai`, `liam-ottley`,
-`systems-made-better`, `nick-puru`, `ross-harkness`, `michele-torti`, `jordan-ross`,
-and your own. Each writes `sheet-winner.jpg` and `sheet-control.jpg`. **Read both.** The
-read is already written up in `references/niche-evidence.md`; re-run the script only
+The ten slugs and the read are in `references/niche-evidence.md`; re-run the script only
 when the catalogues have been refreshed.
 
-**When the sheets leave the concept shapeless, or a set starts repeating the last set**, read
-[`references/sourcing.md`](references/sourcing.md): the five reference sources beyond these nine
-channels, and how to take a reference's mechanism instead of its picture.
+**When the sheets leave the concept shapeless, or a set starts repeating the last set**, read the
+sourcing section of [`references/angle.md`](references/angle.md): the five reference sources
+beyond these nine channels, and how to take a reference's mechanism instead of its picture.
 
 ### 1b. Contest the angle
 
-The claim, the beat that proves it, and the title it wants. Full doctrine, and why it is
-a step: [`references/angle.md`](references/angle.md).
-
-- **The claim** is what a viewer believes the second the frame is read, in their words.
-- **The payoff** is the beat that proves it, **quoted** from the script or the take. A
-  claim nothing pays off is bait, and bait costs more than a weak frame: the click lands
-  and the watch time does not.
-- **The title** is held to the same law as the words on the frame. `copy.md` bans a
-  category name and a sentiment on four words and used to wave them through on the sixty
-  characters beside them.
-
-This step runs **before** the script, which is the reason it is here and not at render
-time. A claim the video cannot pay off is either cut, or it is a beat the video gains
-while a beat still costs one bullet. The three concepts make three different claims about
-three different beats; three compositions of one claim is one concept drawn three times.
-
-Where a take or a script exists, lift the claim out of it verbatim. A line he already
-says is a promise already paid.
-
-**The pick is recorded.** `Run with this angle` on the thumbnails stage writes `chosen`
-onto the concept, and the script generator reads it as the debt the script has to settle
-in its first block.
+The claim, the payoff that proves it (quoted, never summarised) and the title it wants,
+decided **before** the script so a claim with no payoff is caught while a beat still
+costs one bullet rather than a pickup. Full doctrine, why it is a step, and where the
+pick gets recorded: [`references/angle.md`](references/angle.md).
 
 ### 2. Name the one thing in the frame
 
@@ -162,14 +132,14 @@ rules for each: [`references/variants.md`](references/variants.md).
 | Evidence | Systems Made Better: 12 of 15 winners have no person at all | Matt Gray, Ali Abdaal: the person is present but small, or holding the artifact |
 | Rule | The artifact fills the frame. One label block. | One person, never two. Small in a real place, or holding one object. Never a head filling the frame. |
 
-Both variants obey the same law: **one person maximum, and never a second face.**
-1 winner in 135 has a second person; 12 of 108 controls do.
+Both variants obey the same law: **one person maximum, and never a second face.** In
+[`niche-evidence.md`](references/niche-evidence.md), the count behind that law.
 
 ### 4. Write the words on the frame
 
 Most of the CTR in this niche is won here, and it is the step that gets treated as a caption.
-**Two to four words**, naming the job rather than the feature, bounded by a count or a duration,
-and saying what the title does not. No adjective without an object.
+In [`copy.md`](references/copy.md), the word-count law, naming the job rather than the
+feature, bounding by a count or a duration, and saying what the title does not.
 
 **The frame opens the loop on its own and the title is read second or not at all**, so ask what
 the viewer should wonder and what they should feel before asking what the frame should show.
@@ -196,8 +166,8 @@ that keeps the library honest (an empty `shipped` list means a proposal, not a t
 ### 5b to 8. Build, produce, execute, critique
 
 The depth-and-light plate, the assets the frame is composited from, the designer handoff or the
-programmatic render, and the critique that runs before delivery are in
-[`references/production.md`](references/production.md).
+programmatic render ([`references/rendering.md`](references/rendering.md)), and the critique that
+runs before delivery are in [`references/production.md`](references/production.md).
 
 ## After it is published: the repackage loop
 
@@ -205,27 +175,15 @@ The title and the frame are the only two things a shipped video can still change
 procedure for "my CTR is low". It runs on the video's rank in the channel's last ten by views, not
 on CTR: 1 to 3 leave it, 4 to 6 check the subject before blaming the frame, 7 to 10 repackage title
 and frame together and **say the guess out loud first**. The bands, the A/B margin that means
-anything, and why reviving a dead video means deleting it first:
-[`references/repackage.md`](references/repackage.md).
+anything, and why reviving a dead video means deleting it first: the repackage section of
+[`references/angle.md`](references/angle.md).
+
+Before delivery, and before any repackage goes live, the title and frame together grade 8 or
+more on `pnpm jev loop packaging title.txt --thumb frame.jpg`. The loop is in
+`vibe-kit/ai-doc/references/content-grade.md`.
 
 The repair order across the whole video is subject, then title, then thumbnail, then hook.
 `idea-mining` owns the first, and it is the one that moves the number.
-
-## Reference
-
-- [`references/angle.md`](references/angle.md) - the claim, the payoff and the title, decided before the picture
-- [`references/niche-evidence.md`](references/niche-evidence.md) - what separates the bands, per channel and across channels
-- [`references/sourcing.md`](references/sourcing.md) - the five reference sources, and taking a mechanism rather than a look
-- [`references/craft.md`](references/craft.md) - depth, light and the floating object: why two frames holding the same things look different
-- [`references/templates.md`](references/templates.md) - the five templates, the slots they ask for, and how the library learns from a frame that shipped
-- [`references/composites.md`](references/composites.md) - producing the 3D tiles and artwork a frame is built from, and why prose never pins them
-- [`references/anti-patterns.md`](references/anti-patterns.md) - every measured control marker in one list, plus the three craft faults. Read it at step 8
-- [`references/copy.md`](references/copy.md) - the words on the frame
-- [`references/repackage.md`](references/repackage.md) - the bands, the A/B margin, and reviving a dead video
-- [`references/variants.md`](references/variants.md) - face and faceless composition rules
-- [`references/designer-handoff.md`](references/designer-handoff.md) - the spec a designer builds from
-- [`references/rendering.md`](references/rendering.md) - Nano Banana 2, models, keys, reference images
-- [`references/archetypes.md`](references/archetypes.md) - the seven general archetypes, and where this niche departs from them, plus [`references/viral-thumbnail-playbook.md`](references/viral-thumbnail-playbook.md) for the general-YouTube background
 
 ## Closing a run
 
@@ -241,5 +199,3 @@ This skill appends new failure modes to its own pattern list after each run. The
 [`references/learned-patterns.md`](references/learned-patterns.md), newest first. **Read that file
 before a run**, and append to it after one whenever a run surfaces something not already there. A
 learning that stays in the conversation is lost when the conversation ends.
-
-The run each line came from, with its quotes and numbers, is in [`references/learned-patterns-archive.md`](references/learned-patterns-archive.md).

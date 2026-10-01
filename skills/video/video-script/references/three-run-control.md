@@ -60,7 +60,7 @@ Five rules come straight off it.
    subject was client follow-up and the corpus holds no failure of the speaker's about it, so the
    block became the first client the viewer ever landed and the six months of silence after
    the project shipped. That is still this block doing its job, because what it is for is
-   the buyer recognising their own life, and `voice-dna`'s tone target is already written in
+   the buyer recognising their own life, and `humanizer`'s tone target is already written in
    exactly that grammar: "Three weeks later, nothing is where you expect it to be."
    The failure of the block is a borrowed one. The reference this rule is derived from is
    Tom Youngs telling his own story, and putting *his* margins and *his* Zoom call in
@@ -79,9 +79,31 @@ Five rules come straight off it.
    aspirant outnumbers them. Matt Gray found the same thing independently when
    one script addressed to "your 20s or 30s" beat "your 30s or 40s" by 11x.
 
+## The ask rule, three categories
+
+- **An in-platform ask** (subscribe, like, comment) costs the viewer nothing and never breaks the
+  teach. One around the one-minute mark, after the first thing of value lands, one more later, each
+  paired with something on screen, since embedded beats spoken-only by a wide margin.
+- **An outbound ask** (buy this, book a call, go to this page) spends the viewer's attention and
+  trust at once. Exactly one, in the last twenty seconds. A second does not add a second
+  conversion, it converts the video into an ad in the viewer's memory.
+- **A native embed is not an ask, and it is the only free mention in the script.** A real thing
+  named inside the teach because the argument arrived at it: the tool that solved the step, the
+  artefact the viewer needs to do this themselves, the community the example came from. It sends
+  them nowhere, so the one-ask rule has never counted it. **The test is whether the mention breaks
+  the frame**: a viewer twelve minutes in has stopped noticing they are watching a video, and a cut
+  to a different scene, shirt or tone wakes them up where a sentence continuing the argument does
+  not. So build the block until the thing named is the answer to the question it just raised.
+  Embeds may come early and may repeat; the outbound ask may not.
+
+A video that exists to sell argues for a complete teach, never an earlier ask: the winning run
+teaches for nineteen minutes and asks once with 21 seconds left. **A sponsor read that cannot be
+made native** goes after the channel's average view duration, so the interruption lands on viewers
+who were leaving anyway (Kallaway corpus, not control-tested). `storytelling` records the collision
+and why the one-ask rule survives it.
+
 ## What corroborates the ask rule, and what cannot
 
-Moved out of `SKILL.md` on 29 Aug 2026 so the rule carries the page and the evidence carries this
 one. The rule itself is unchanged: exactly one outbound ask, in the last twenty seconds.
 
 **Corroborated at scale, on a channel that owes us nothing.** Saraev's four-hour course carries no

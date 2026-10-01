@@ -1,171 +1,121 @@
 ---
 name: video-script
-description: "Writes the body of a long-form YouTube script: the teach blocks, the demo choreography, the retention beats and the one commercial ask. Holds the measured findings on runtime, the beat budget, ask placement and which promise number to use. Use when a recorded video needs a script, when a long-form script runs long or asks too early, or when a script has to sell a product without turning into a pitch. The opening 30 seconds belong to video-hooks, not here."
+description: "Writes a video's words: the long-form body, the opening hook, or a whole Short filed in Apple Notes. Use when a video needs a script or a hook, when a script runs long or asks too early, when an open reads weak, or on create a short, script a short, make a TikTok about."
 tags: [writes, video, youtube]
+lane: judgment
 ---
 
 # Video Script
 
-The body is everything after the hook has done its work. It decides whether the viewer is still
-there at minute twelve, and whether the one ask at the end lands on somebody who has already decided.
+3 branches, one job: nothing ships until every fact underneath it is true, the feed evidence
+is fresh, and the voice pass has run. **The opening line**, for a Short's 1-3s window or
+long-form's 30s open: [references/video-hooks.md](references/video-hooks.md). **A whole Short**,
+scripted and filed into Apple Notes end to end: [references/shorts-script.md](references/shorts-script.md).
+**The long-form body**, everything below, is this file's own branch: whether the viewer is still
+there at minute twelve, and whether the one ask at the end lands on somebody who has already
+decided.
 
-**This skill does not write the opening.** The first 30 seconds, the hook variants and the drop-off
-rating are `video-hooks`, and its measured finding stands: the hook governs whether people stay,
-never how many arrive. Read it first, take the open from it, and come back for everything after 0:30.
+## The trunk: true before written, voiced before shot
 
-**The body's structure is `storytelling`.** The five moves, the literalness ladder, one open loop
-and the motif that returns changed. The finding it exists to prevent is the script that is accurate
-all the way through and holds nobody: read the beats in pairs and say what changed between each one,
-because "another point about the same thing" is a list, and a list is watched at the speed of the
-scrub bar.
+**Go as hard as you want on the mechanism; every fact underneath still has to be true.** A number
+nobody measured, a story that did not happen, a stake that does not exist: none of it is
+available, whichever branch is being written. This is a positioning constraint before it is
+anything else. Invented drama also reads generic: a model reaching for stakes reaches for the
+average stakes, and a real number is specific enough to stop a thumb. Proof frame and evidence
+source: [references/proof-and-surfaces.md](references/proof-and-surfaces.md).
 
-Voice is `voice-dna`. Do not restate it, do not soften it, and run `humanizer` over the finished
-script before it is read on camera. **Count the first-person pronouns first: the target is zero.**
-
-## Read what the feed rewards this month, before drafting
-
-`social-engagement` derives it from competitor posts it collects itself, scored against each
-account's own median so a 22,000-like account and a 21-like account contribute the same evidence:
-`social-engagement`, `references/what-works.md`. It carries
-its measurement date and a staleness ladder, because a feed re-ranks every month and a file does
+**Read what the feed rewards this month, before drafting anything.** `community`'s
+`references/engagement-what-works.md` derives it from competitor posts scored against each
+account's own median, so a 22,000-like account and a 21-like account contribute the same
+evidence. It carries its measurement date and a staleness ladder, because a feed re-ranks every
+month and a file does
 not. Over 30 days old, collect the feed again before trusting the page.
+It says what the feed rewards, never what is good; the bans in `@heyramzi/lint` and the voice in
+`humanizer` outrank every number on it.
 
-It says what the feed rewards, never what is good. The bans in `@heyramzi/lint` and the voice in
-`voice-dna` outrank every number on that page.
+**Run the six story locks over the finished bullets, one pass each, no beat moving**: term
+branding, embedded truths, thought narration, negative frames, loop openers, contrast words.
+Contrast is the engine under the other five, so it is the one to use when only one pass is
+affordable. None of the six is judged by eye or is a lever; asked whether any separates a winner
+from its own channel's controls, the best held in 9 of 13, a coin, so they buy retention and never
+reach. [references/story-locks.md](references/story-locks.md), which every branch below runs.
+**The negation pivot is the one this skill gets wrong most often**: defining a thing by denying
+another first, as in "it is not a project, it is a wish". Several in a ninety-second script is the
+loudest signal in the piece that a machine wrote it. **One per script, maximum**, short and
+concrete, counted before shipping. Full treatment: `humanizer`, `references/patterns.md` section 9.
+
+**Voice is `humanizer`. Do not restate it, do not soften it, and run it over the finished script
+before it is read on camera.** Count the first-person pronouns first: the target is zero on a
+hook, and the section below says where a few are allowed in a long-form body.
+
+## The body opens on why, and the hero is the viewer
+
+The author, 19 Sep 2026, on a Claude guide whose body opened straight into the broken morning:
+**"We always should start with why when we record a video."** So the first block after the cold
+open is **the why**: why do you need to master this, and why now. Not what the video covers. What
+is still true for them in a year if they skip it. The lever there is fear and the fear has to be
+already true; the hero is the viewer and you're the mentor; and the emotion is spent in the why,
+the stakes and the close of the proof, never inside a build.
+
+Both halves are checked. `reviewScript` fails a body that opens on anything but the why, and any
+block whose first-person pronouns outnumber its second-person ones. The levers, the arc mapped
+onto the blocks, the beat sheet for the block itself and what each check caught:
+[`references/why-and-hero.md`](references/why-and-hero.md).
 
 ## Decide the subject on a number before writing a beat
 
-`idea-mining` chooses what the piece is about. This is the measurement that says whether it is
-worth a recording day, and it runs before the hook.
+`idea-mining` chooses the subject; the SERP decides whether it is worth a recording day, and it
+decides alone, since `yt-dlp` returns no volume and the app's keyword report is quarantined for
+inventing its own. **Two conditions open a lane**: the unserved query (a first page of clips under
+150 views each) and the **stale head**, the commoner case, where two or three old videos hold a
+commercial phrase and every entrant since is under a thousand. **Never take the runtime off the
+SERP**, since the thin clips crowding a commercial phrase are the ones losing. The two `yt-dlp`
+passes, the Search Console rows a product demo also reads, and the fabrication finding:
+[`references/reading-the-serp.md`](references/reading-the-serp.md).
 
-One read, and it is free.
+## Where the script goes, and what checks it
 
-- **The SERP, and it decides alone.** `yt-dlp` on the exact phrase a buyer types, then a second
-  pass for the counts, because `--flat-playlist` returns `NA` for them:
+A video has exactly one script and it lives on its record. Saving it runs the arithmetic half of this
+page: beats against the floor and ceiling, the word cap per beat, a why block first, second person
+outnumbering first in every block, one action in the ask, no throat-clearing transition, a visible
+state change ending each one. **Change one and change the other in the same session.** Slop and an
+off-register take are refused on save.
+ A script that fails the arithmetic still stores, because 300 words over is worth
+trimming rather than losing.
 
-  ```bash
-  yt-dlp --flat-playlist --skip-download "ytsearch20:<phrase>" --print "%(id)s" > ids.txt
-  yt-dlp --skip-download --no-warnings -a ids.txt --print "%(id)s|%(view_count)s|%(title)s"
-  ```
+**A build video carries its prompts.** Each block's `prompts` holds what gets pasted into Claude in
+that block, `{ step, prompt }`, in the order it's used, and the Prompts tab lists them for
+copy-paste while recording. Write them progressive: each prompt adds one thing to what the last one
+built, and says in plain words what it wants and why.
 
-  **Read the view counts, not the titles.** A first page of 2-to-5-minute clips under 150 views
-  each is an unserved query, and the only condition that justifies entering a keyword a bigger
-  channel already holds.
-- **Demand is no longer measurable, so do not fake it.** `yt-dlp` returns no search volume or
-  competition score. Decide on the SERP, and say in one line that volume was not measured.
+**A take too long for one sitting is recorded in parts.** Set `part` (1, 2, 3) on each block, and
+the Script tab heads each part. The author, 24 Sep 2026, on the Claude Code course: three parts, "because
+it would be super long otherwise." Cut where the recording actually stopped, not where the plan said.
+Each part ships as its own upload.
 
-Worked example, 28 Aug 2026, EC52. `clickup pricing` returned 3,541 monthly searches at competition
-21.3, a middling row, and the SERP returned 11, 7, 27, 118 and 16 views on its top five. The second
-read is what made it a video. **The data cost policy is `programmatic-seo`'s and it binds here too**,
-so do not spend a paid keyword call on a subject `idea-mining` has not already picked.
+**The description is stored with the script, one per upload, before the take.** The Description tab
+is read-only and shows only what's stored there. Write the composer's plan (asks, contents line,
+chapters planned from `startsAt`, `durationSeconds`, plus `part` and `title` for a split video) and
+store it as `{"description": [...]}` through `concepts set <id> --metadata-file`. The rules are
+`youtube`'s `references/description-block.md`; run `heyramzi-slop` over the composed text.
 
-**A fallback that invents its own data is worse than an outage.** The app's keyword report answered
-four different seeds with an identical estimated volume of 140 and seven templated ideas while
-looking exactly like a measurement, and a title was chosen off it on 26 Aug 2026. Any keyword row
-repeating across unrelated seeds is a fallback, not a reading.
-
-## The runtime rules live in code
-
-Where an app generates a script, the rules it enforces live in code. That file is the runtime
-copy and this page is the evidence behind it. **Change one and change the other in the same
-session**, because a rule that only exists here never reaches a generated script, and one that
-only exists there has nothing to defend it.
-
-## The three-run control is the spine of this skill
-
-Runtime, beat budget and ask placement were each measured across three runs of the channel, and the numbers are what this skill enforces. Read [`references/three-run-control.md`](references/three-run-control.md) before writing the beat sheet, or when a script has come out long and the budget has to be argued with.
+**The three-run control is the spine of this skill.** Runtime, beat budget and ask placement were each measured across three runs of the channel, and the numbers are what this skill enforces. Read [`references/three-run-control.md`](references/three-run-control.md) before writing the beat sheet, or when a script has come out long and the budget has to be argued with.
 
 ## The ask rule, where two sources of evidence disagree
 
-The generic retention literature says never save the only CTA for the end, because
-only 16% of viewers reach the final 10%. The three-run control says the two winners
-held every outbound ask to the last 2% and the loser asked at 11% and lost by 3 to
-5x. Both are right, because **they are counting different asks.**
-
-- **An in-platform ask** (subscribe, like, comment) costs the viewer nothing and never breaks the
-  teach. Place these where the retention data says: one around the one-minute mark after the first
-  thing of value has landed, one more later, each paired with something on screen, because embedded
-  beats spoken-only by a wide margin.
-- **An outbound ask** (buy this, book a call, go to this page) spends the viewer's attention and
-  their trust at once. There is exactly one, in the last twenty seconds. A second does not add a
-  second conversion, it converts the video into an ad in the viewer's memory.
-
-If the video exists to sell something, that is an argument for making the teach complete, not for
-asking earlier. The winning run teaches for nineteen minutes and asks once with 21 seconds left.
-
-**Two further sources corroborate the split and one of them bounds it**: Saraev's four-hour course
-with its single closing pitch, the 627-transcript measurement that puts the median last outbound ask
-at 92% of runtime and 77% of videos on one ask or none, and the reason that corpus cannot settle the
-rule either way. All three, with the corrections they force on the mid-roll advice above, are in
+The generic retention literature says never save the only CTA for the end; the three-run control
+says the winners held every outbound ask to the last 2%. Both are right, because they count
+different asks: the in-platform ask (subscribe, like, comment, never breaking the teach), the
+outbound ask (buy, book, go to a page, exactly one, in the last twenty seconds), and the native
+embed, a real thing named because the argument arrived at it, which sends nobody anywhere and was
+never counted. The taxonomy, the corroborating evidence and the sponsor-read exception:
 [`references/three-run-control.md`](references/three-run-control.md).
 
-## A native embed is not an ask, and it is the only free mention in the script
+## Four audits, and the seam between two blocks
 
-Third category, sitting under both rows above. A **native embed** is a real thing named inside the
-teach because the argument arrived at it: the tool that solved the step being demonstrated, the
-artefact the viewer would need to do this themselves, the community the worked example came from. It
-sends the viewer nowhere and interrupts nothing, so it does not spend what an outbound ask spends
-and the one-ask rule has never counted it.
-
-**The distinction is whether the mention breaks the frame.** A viewer twelve minutes into a teach
-has stopped noticing they are watching a video, and a break to a different scene, shirt or tone
-wakes them up, at which point they remember they have work to do. A sentence that continues the
-argument does not. So set up the block until the thing being named is the answer to the question it
-just raised, and let it stay in the teach. Native embeds may appear early and may repeat; the
-outbound ask may not, and is still exactly one, still in the last twenty seconds.
-
-**Where a sponsor read cannot be made native**, it goes after the average view duration for the
-channel, never before it, so the interruption lands on viewers who were leaving anyway. This is
-the only placement rule in this skill that is not derived from the three-run control; it is
-carried in from the Kallaway corpus and it is not control-tested. `attention-mechanics` records
-the collision and why the one-ask rule survives it intact.
-
-## Two hits before the first exit, and the eyes-closed test
-
-Two audits, both run on the draft rather than on the analytics.
-
-**Two usable things, early.** One non-obvious thing the viewer can go and change lands inside the
-first block, a second before the average view duration. One hit and they may stay; two and they
-stay, because the video has proved it holds more. A definition is not a hit: the test is whether they
-can act on it today, rung 3 on `storytelling`'s literalness ladder.
-
-**The eyes-closed test settles pacing, and nothing else does.** Play the cut with the picture off
-and listen. Bored means the sentences are running long and the edit is not chopping; unable to keep
-up means it is chopped past comprehension and needs breathing room put back. The page has no tempo,
-so reading it finds neither. Run it on the first assembly, and the note goes to the editor as a note
-about the audio.
-
-**Reset your tolerance before you judge the cut.** After watching a take twenty times you are the
-least qualified viewer it has: scroll a feed for five minutes, then watch it once through. What
-reads as slow on the second pass is slow, and the correction usually lands in the first thirty
-seconds. Single source, no control test: Mino, Feb 2026, `video-hooks`
-`references/hook-teardown.md`, who reports cutting roughly half a finished video this way.
-
-**One debatable question, written on purpose.** A block that leaves a genuinely contested question
-open produces comment threads that argue with each other, and argument is the engagement platforms
-pay for. Not a bait question addressed to the audience, which `generate-social` bans and X demotes:
-a real fork in the subject that the video declines to close, said once, in the teach.
-
-## The seam between two blocks is where they leave
-
-A body loses people where a block finishes, because that is the moment nothing is unresolved and
-the viewer remembers they have work to do. **So every seam carries a re-hook: the last beat of the
-block closes it and opens the next question in the same breath**, the way a relay baton changes
-hands while both runners are moving.
-
-**The target is no stretch past 300 seconds with nothing reopened**, measured 29 Aug 2026 over 339
-punctuated transcripts: the niche's median gap between loop openers is 230 seconds and its p10 is
-85, so 300 is tighter than 90% of what ships. It replaces the 60-to-90-second cadence this page
-carried for one day, which was one creator's unmeasured number.
-
-**The test is to delete the transition words**: a fact or a question still standing means it was a
-re-hook, and a sentence that disappears was throat-clearing. Those phrases (`here's the thing`,
-`it turns out`, `the truth is`) are banned in `slop-words.js`, which 75% of the niche never uses.
-
-The seam is the re-hook beat of `storytelling`, [`references/addiction-loop.md`](../../../content/writing/storytelling/references/addiction-loop.md),
-which also carries what the block owes before it: stakes with a clock in them, and a big question
-specific enough for the viewer to guess wrong at. **A body with no point where the viewer can guess
-wrong is a correct list**, and a bullet outline is the cheapest place to fix that.
+Two usable things early, the eyes-closed pass on the first assembly, resetting your own tolerance
+before you judge a cut, one debatable question left open on purpose, and the seam where a block
+ends and the viewer remembers they have work to do: [`references/measuring.md`](references/measuring.md).
 
 ## Nothing here is judged by eye
 
@@ -178,77 +128,63 @@ python3 .claude/skills/video-script/scripts/teardown.py <url>          # a refer
 number outside what the niche tolerates, **WARN** is inside the niche and short of the house target.
 Every threshold prints its source, three being percentiles of 627 measured videos and four doctrine.
 59% of that corpus passes clean and each rule fires on 5 to 20%, which is what makes a fail mean
-something, and it refuses to grade the sentence-shaped rules on an unpunctuated transcript rather
-than inventing a number. What each rule is, what `teardown.py` prints, and the norms behind both:
+something. What each rule is, what `teardown.py` prints, the norms, and the four draft audits:
 [`references/measuring.md`](references/measuring.md).
-
-**Then run the six story locks over the finished bullets**, one pass each: term branding, embedded
-truths, thought narration, negative frames, loop openers, contrast words, in `video-hooks`,
-[`references/story-locks.md`](../video-hooks/references/story-locks.md). Three land hardest on a
-body. **Thought narration**: say the thought the viewer is having, in their words, from
-`customer-voice` rather than guessed. **Embedded truths**: hedge the provenance, never the
-instruction. **Contrast words**: split the sentences carrying the main points and turn the viewer
-inside them, which is the zigzag at sentence scale.
+The six story locks are run over the finished bullets too, per the trunk above. Three land
+hardest on a body: **thought narration** (the thought the viewer is having, in their own words out
+of `conversion`), **embedded truths** (hedge the provenance, never the instruction), and
+**contrast words** (split the sentences carrying the main points, the zigzag at sentence scale).
 
 ## The script names the overlays, and only its own
 
-The CTA shelf at `/design` carries one clip per sellable product plus the on-camera asks. Which of
-them an edit needs is decided by the ask this script writes, so the script returns them by file name
-in `overlays` and the concept page shows those files alone. Handing the editor the whole shelf hands
-them somebody else's product, and the right clip is then missed among fifteen wrong ones.
+The CTA shelf at `/design` carries one clip per sellable product plus the on-camera asks, and which
+of them an edit needs is decided by the ask this script writes. So the script names them in
+`overlays` and the concept page shows those files alone: one clip for the outbound ask, naming what
+the ask names, plus a subscribe, like or comment clip only where a block makes that ask on camera.
+Handing the editor the whole shelf hands them somebody else's product. **Check each name against the
+shelf before storing**, because a name that is not on it is dropped silently, and the 19 Sep 2026
+Claude guide named a clip for a product that has never existed.
 
-One clip for the outbound ask, the one that names what the ask names. A subscribe, like or comment
-clip only where a block actually makes that ask on camera. A name that is not on the shelf is dropped
-rather than shown, because a tile that leads nowhere is a download the editor chases.
+**What a series buys**: episode one is the reach event, later episodes convert the audience it captured. Six ran 17,874, 11,425, 4,144, 5,209, 960, 2,258, episode five below the channel median. Front-load accordingly.
 
-## What a series buys
-
-One breakout, plus episodes that hold the people already captured. Six ran 17,874, 11,425, 4,144,
-5,209, 960, 2,258, and episode five landed below the channel median. Front-load accordingly: episode
-one is the reach event, everything after is conversion work on an audience you already have.
-
-## The script is one of five surfaces
-
-A recorded video is cut into five surfaces and the long-form script is only the first. What each surface takes from it and what it must not repeat: [`references/five-surfaces.md`](references/five-surfaces.md), read once the script is written and the video goes into production.
+**The script is one of five surfaces**: a recorded video is cut into five and the long-form script is only the first. What each surface takes from it and must not repeat: [`references/five-surfaces.md`](references/five-surfaces.md), read once the script is written and the video goes into production.
 
 ## Writing it
 
-The bullet rule, the beat budget, the structure, the teach block that is 53% of the script, the camera-language line and the register: [`references/writing-the-script.md`](references/writing-the-script.md).
-
-The same file holds **the argument video**, the format where there is no build to teach: the dated
-chain whose every link ends on the lack that forces the next, the motif that comes back as the
-answer, the caveat spent on the number in place, the fenced prediction and the close that gives
-permission before the ask. Read it whenever the body is a claim about the world rather than a screen
-with a click in it. Single unmeasured reference, so it is candidate craft sitting under everything
-the three-run control decided.
+The bullet rule, the beat budget, the structure, the teach block that is 53% of the script, the camera-language line and the register: [`references/writing-the-script.md`](references/writing-the-script.md). For **the argument video** format (when there is no build to teach): the dated chain, motif, caveat, fenced prediction, and permission close, [`references/argument-video.md`](references/argument-video.md). Read it whenever the body makes a claim about the world rather than clicking through a screen.
 
 ## Before it ships
 
-- Beat count inside 158-185, and the runtime that implies stated at the top.
-- No bullet past 14 words unless the whole line is a quotation.
+- Beat count inside 158-185, runtime stated at the top, no bullet past 25 words unless it is a quotation.
+- The body opens on the why, with one consequence the viewer can check against their own year. The
+  emotional lever is spent there, in the stakes and at the close of the proof, never inside a build.
+- Second person outnumbers first in every block, and the payoff replays the opening object changed.
 - Exactly one outbound ask, inside the final twenty seconds. Native embeds are not counted, and any non-native sponsor read sits after the channel's average view duration.
-- Two things the viewer can act on today, the first inside the opening block and the second before the average view duration.
-- The eyes-closed pass was run on the first assembly and the pacing note went to the editor.
+- The four draft audits ran: two usable things early, the eyes-closed pass on the first assembly with
+  its note to the editor, your tolerance reset before judging, one debatable question left open.
 - `story_metrics.py --grade` run, with zero fails and every warn either fixed or answered in a line.
 - One point where the viewer forms a prediction and one where it breaks, with the clues already on
   screen. The six locks were run, and every hedge left in is provenance rather than instruction.
-- The failure told in full, not summarised.
-- Every number traced to something measured, with the artefact named for the edit.
-- No arithmetic performed on camera.
+- The failure told in full, not summarised, every number traced to something measured with the
+  artefact named for the edit, and no arithmetic performed on camera.
 - One portable idea, named in the mechanism and pointed at as each build lands, and every build
   block opening on its own one-sentence claim at a third to a half of the block.
 - An argument video ran the essay checks: every history link ends on the lack that forces the next,
   any prediction block is fenced out loud, and the close gives permission before the ask.
-- At least one abstraction drawn on screen rather than described.
-- Every term defined the first time it is said, in objects the viewer already owns.
-- One thing shown failing inside each build block, uncut.
-- The dating answer present wherever the subject is a tool that ships weekly.
+- At least one abstraction drawn on screen rather than described, and every term defined the first
+  time it is said, in objects the viewer already owns.
+- One thing shown failing inside each build block, uncut, and the dating answer present wherever
+  the subject is a tool that ships weekly.
 - One chapter per block, named for a state rather than a feature. The corpus: 78% publish chapters,
-  median 7 and 3.9 per ten minutes, titled in 4 words, the first ending at 4.7% of runtime.
-- `humanizer` run over the whole thing.
+  median 7, 3.9 per ten minutes, titled in 4 words, the first ending at 4.7% of runtime.
+- `humanizer` run over the whole thing, then the save stored it: `concepts script` refuses a banned
+  phrase or beats off the `spoken` register.
+- A Short's whole script graded 8 or more with `pnpm jev loop short`. The long-form opening
+  model failed its held-out test, so `pnpm jev score opening` is hints only. The loop and what to
+  do at round 5: `vibe-kit/ai-doc/references/content-grade.md`.
 
 ## Self-Healing
 
-This skill appends new failure modes to `references/learned-patterns.md` after each
-run, newest last. A finding that turns out to be stale gets corrected here in the
-same session, along with the generator's own copy of the rule if it enforces one.
+This skill appends new failure modes to `references/learned-patterns.md` after each run, newest
+first. A stale finding gets corrected here in the same session, along with
+if the rule is one `reviewScript` checks.
