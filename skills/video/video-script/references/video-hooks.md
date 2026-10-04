@@ -86,7 +86,7 @@ the measurements behind each: [two-windows.md](two-windows.md).
 ## The whole Short is a different reference
 
 When the job is a full Short rather than an opening line, load [shorts-script.md](shorts-script.md).
-It holds the skeleton, the hook library, the note shape and the Apple Notes filing, and it sends
+It holds the skeleton, the hook library, the note shape and the CutKit filing, and it sends
 you back here for the opening.
 
 ## One creator's hooks taken apart, and the third replication of the finding above

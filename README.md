@@ -117,7 +117,7 @@ Producer](https://go.upsys-consulting.com/skool), and they run in this order.
 | [youtube-thumbnail](skills/design/youtube-thumbnail) | ⑤ The frame, designed off a measurement you run yourself |
 | [descript-projects](skills/video/descript-projects) | Footage into Descript, named and foldered so the media browser is the shot list |
 | [dji-sync](skills/video/dji-sync) | The lav take waveform-matched to the camera clip and swapped in losslessly |
-| [motion-broll](skills/video/motion-broll) · [youtube-ctas](skills/video/youtube-ctas) | Motion graphics cut against the read, and the transparent overlays an edit is dressed with |
+| [motion-design](skills/video/motion-design) · [youtube-ctas](skills/video/youtube-ctas) | Motion graphics cut against the read, and the transparent overlays an edit is dressed with |
 | [whiteboard](skills/video/whiteboard) | Concept boards written as code and drawn onto the tablet live, on camera. Ships the engine and 1 worked board |
 | [ai-video-prompting](skills/video/ai-video-prompting) | Prompts for Veo, Kling, Seedance and the rest, and when a model should not render a beat at all |
 | [shorts-production](skills/video/shorts-production) | A finished Short taken to a scheduled task with its pillar code, and the rule that an export ships untouched |
@@ -134,7 +134,7 @@ Nothing in it is summoned with a magic phrase either. Describe the job:
 > The cut is fine and it still feels long. Where does the frame sit still?
 
 Of these, 3 need more than a terminal. `descript-script-edit` drives the macOS clipboard,
-`motion-broll` and `youtube-ctas` render through [Remotion](https://remotion.dev), and `whiteboard`
+`motion-design` and `youtube-ctas` render through [Remotion](https://remotion.dev), and `whiteboard`
 ships a small TypeScript project in [`skills/video/whiteboard/tool`](skills/video/whiteboard/tool),
 which is the one thing here with an install step: `cd tool && pnpm install`. It is the exception to
 the dependency-free rule below, because speaking Excalidraw's collaboration protocol means speaking
