@@ -122,7 +122,7 @@ on this channel, and it is here because the alternative was nothing.
   instruction file steers everything; a staircase from 80% to 100%, for why speed beats one-shot
   accuracy; a primacy curve, for why the important rule goes at the top. Highest-yield device in
   the reference video, costing nothing but the seconds. Drawing on the shared screen is
- The `boards` skill builds them.
+ The `whiteboard` skill builds them.
 - **Define the term the moment it appears, in objects the viewer already owns.** "An IDE is a file
   explorer plus a notepad plus ChatGPT, in one." "A token is like a word, just a few more." "A dot
   in front of a folder hides it." Four seconds each, what lets a technical build stay legible to a

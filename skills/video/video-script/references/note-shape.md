@@ -1,6 +1,6 @@
 # The note shape
 
-What a Short script note in Apple Notes has to look like before it is filed. Moved here from
+What a Short script note has to look like before it is filed. Since 1 Oct 2026 only the clean read goes to CutKit; everything below the `---` rides on the Socials task. Moved here from
 `shorts-production` on 23 Sep 2026, so the skill that writes the script also owns its shape.
 
 ## The clean read first, always
