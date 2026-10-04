@@ -24,6 +24,8 @@ rewrite it.
    summary note has already turned his words into categories, so the names are gone before the
    script starts. Three tests: could a stranger do it from the Short alone, repeat it to a friend
    in one sentence, and want to send it to someone (`idea-mining`'s `references/share-test.md`)?
+   Weigh the topic before the first line too, with `idea-mining`'s `scripts/topic-demand.mjs`:
+   a weak topic gets archived, never rewritten.
    Keep the analogy he reached for live, because that's usually the angle nobody else has. Then the truth rule, which is the trunk's and outranks everything here: every
    name, command and "I did" is checked today, or the re-check block says what to do before shooting.
 1b. **Pick the anchor before you write** (`SKILL.md`, the trunk). `node scripts/top-band.mjs <niche words> --n 8`
