@@ -213,7 +213,7 @@ want to be in the room for.
 ### The 3 traps, in order
 
 1. **A silent run is a permissions problem.** It is never a prompt problem. The worst
-   failure here is the one that looks like success: a job that reports itself as started
+   failure here looks like success: a job that reports itself as started
    and never runs, writes nothing and raises no error. If a morning comes back empty with
    no error, look at what the run was allowed to do before touching a word of the file.
 2. **Put a cheap script in front of the model.** 10 lines that check whether anything
