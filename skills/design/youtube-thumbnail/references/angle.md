@@ -22,8 +22,8 @@ pickup or a lie. Quote the proof line, because a summary can't be checked and a 
 
 ## 3 claims, never 3 layouts
 
-The 3 concepts (`safe read`, `owned read`, `break`) used to be 3 design strategies on one
-beat: one concept rendered 3 times. 3 different claims about 3 different beats.
+The 3 concepts (`safe read`, `owned read`, `break`) are 3 different claims about 3 different
+beats, never 3 design strategies on one beat, which is one concept rendered 3 times.
 
 ## Lift the claim from what he says
 
