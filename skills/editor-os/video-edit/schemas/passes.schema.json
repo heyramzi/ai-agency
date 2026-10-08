@@ -5,13 +5,7 @@
   "minItems": 1,
   "items": {
     "type": "object",
-    "required": [
-      "id",
-      "key",
-      "label",
-      "proves",
-      "commands"
-    ],
+    "required": ["id", "key", "label", "proves", "commands"],
     "additionalProperties": false,
     "properties": {
       "id": {
@@ -28,10 +22,7 @@
       },
       "proves": {
         "type": "object",
-        "required": [
-          "descript",
-          "local"
-        ],
+        "required": ["descript", "local"],
         "additionalProperties": false,
         "properties": {
           "descript": {
@@ -46,10 +37,7 @@
       },
       "commands": {
         "type": "object",
-        "required": [
-          "descript",
-          "local"
-        ],
+        "required": ["descript", "local"],
         "additionalProperties": false,
         "properties": {
           "descript": {

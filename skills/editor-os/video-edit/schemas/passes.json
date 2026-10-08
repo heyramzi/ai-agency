@@ -15,9 +15,7 @@
         "track script",
         "track mute"
       ],
-      "local": [
-        "take folder"
-      ]
+      "local": ["take folder"]
     }
   },
   {
@@ -39,10 +37,7 @@
         "descript cut",
         "descript edits"
       ],
-      "local": [
-        "cut short",
-        "cut check"
-      ]
+      "local": ["cut short", "cut check"]
     }
   },
   {
@@ -61,9 +56,7 @@
         "descript script",
         "descript marker"
       ],
-      "local": [
-        "cut check"
-      ]
+      "local": ["cut check"]
     }
   },
   {
@@ -83,9 +76,7 @@
         "layout apply",
         "layout cards"
       ],
-      "local": [
-        "cut check"
-      ]
+      "local": ["cut check"]
     }
   },
   {
@@ -105,9 +96,7 @@
         "music set",
         "descript music"
       ],
-      "local": [
-        "editor-os music offer"
-      ]
+      "local": ["editor-os music offer"]
     }
   },
   {
@@ -119,16 +108,8 @@
       "local": "plan.md first, one clip per slot, each alpha clip looked at over gray and over dark, then picked onto its beat with `editor-os pick`"
     },
     "commands": {
-      "descript": [
-        "fill",
-        "roster",
-        "watch.py",
-        "clips.py",
-        "descript import"
-      ],
-      "local": [
-        "editor-os pick"
-      ]
+      "descript": ["fill", "roster", "watch.py", "clips.py", "descript import"],
+      "local": ["editor-os pick"]
     }
   },
   {
@@ -140,15 +121,8 @@
       "local": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`"
     },
     "commands": {
-      "descript": [
-        "source.py",
-        "brollclip.py",
-        "genvideo.py",
-        "descript import"
-      ],
-      "local": [
-        "editor-os pick"
-      ]
+      "descript": ["source.py", "brollclip.py", "genvideo.py", "descript import"],
+      "local": ["editor-os pick"]
     }
   },
   {
@@ -167,10 +141,7 @@
         "layout apply",
         "descript pin"
       ],
-      "local": [
-        "editor-os plan",
-        "editor-os feedback"
-      ]
+      "local": ["editor-os plan", "editor-os feedback"]
     }
   },
   {
@@ -178,17 +149,12 @@
     "key": "handoff",
     "label": "Handoff",
     "proves": {
-      "descript": "`descript settings` reads clean, then hand over for the author's human pass. Never publish or export: he does that after watching",
+      "descript": "`descript settings` reads clean, then hand over for the person's own pass. Never publish or export: they do that after watching",
       "local": "`cut final` renders the master and its handoff file once every note is closed. Never publish: he does that after watching"
     },
     "commands": {
-      "descript": [
-        "descript settings",
-        "get_project"
-      ],
-      "local": [
-        "cut final"
-      ]
+      "descript": ["descript settings", "get_project"],
+      "local": ["cut final"]
     }
   }
 ]

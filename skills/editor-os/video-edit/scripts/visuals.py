@@ -106,6 +106,8 @@ def main():
         if opt(flag) in args:
             args.remove(opt(flag))
     n = int(opt("--comp") or 0)
+    if not args:
+        sys.exit(__doc__)
 
     rows, total, name = rows_of(args[0], n)
 

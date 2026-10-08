@@ -1,5 +1,11 @@
 # Cutting a take: coach, cut, reorder, close the air
 
+## Contents
+
+[Coach first, long-form only](#coach-first-long-form-only), [The CLI cuts](#the-cli-cuts),
+[The cut list](#the-cut-list), [Reorder](#reorder), [Close the air, last](#close-the-air-last),
+[Done when](#done-when), [The coach's 9 steps](#the-coachs-9-steps)
+
 Open this for passes 1 to 3: before the cut (coaching), the cut itself, reordering, and the gaps. Dressing the cut (shots, layouts) is [sequencing.md](sequencing.md) and [layouts.md](layouts.md).
 
 ## Coach first, long-form only
@@ -59,8 +65,7 @@ Reports **repeat runs** (any 3-word run twice within 400 characters) and **trunc
 
 ### Pass 2: the meaning (read, dispatched)
 
-Delete the sentence, read its 2 neighbours, name what the viewer lost; nothing lost is a cut. A digression is well-formed, so no score finds it. Dispatch oneSonnet subagent
- over the WHOLE live script (a callback over a split is invisible), reporting **50 paragraphs at a time** so each chunk is applied while it reads on (The author, 23 Sep 2026, after 18 silent minutes on 308 paragraphs: "its job should be recursive").
+Delete the sentence, read its 2 neighbours, name what the viewer lost; nothing lost is a cut. A digression is well-formed, so no score finds it. Dispatch one Sonnet subagent over the WHOLE live script (a callback over a split is invisible), reporting **50 paragraphs at a time** so each chunk is applied while it reads on (The author, 23 Sep 2026, after 18 silent minutes on 308 paragraphs: "its job should be recursive").
 
 What goes: **announcements** ("If you see yourself in one of these bullet points..."; not when it cues a visual), **second utterances of one idea** (keep the strongest), **hedges and disclaimers** (once is positioning), **digressions** (rationale that justifies a choice stays), and **the speaker** (every sentence whose subject is the person on camera: write the viewer sentence carrying the same information; none exists, cut it). `restate.py` is the backstop that runs after the pass (`python3 scripts/restate.py doc.json --check needles.json`; the author, 8 Sep 2026: "Here I've repeated myself twice"). A flag points at a paragraph and gives no verdict on a sentence: read it down to the clause (one steering way is the teaching, two is padding, the simile padding on the padding). List every pass-2 cut in the run report.
 

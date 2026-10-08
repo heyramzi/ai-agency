@@ -88,7 +88,7 @@ def load(path, n):
             [m["mediaRef"] for m in d.get("mediaRefsCopyData", [])], "the clipboard")
 
 
-SPAN = {}   # tauId -> (seconds on the play clock, characters): a card anchored MID-tau needs both
+TAU_SPAN = {}   # tauId -> (seconds on the play clock, characters): a card anchored MID-tau needs both
 
 
 def clock(taus):
@@ -105,7 +105,7 @@ def clock(taus):
             continue
         dur = seg["duration"] / (seg.get("speed") or 1)
         at[tau["id"]] = t
-        SPAN[tau["id"]] = (dur, len(tau["text"]["string"]) or 1)
+        TAU_SPAN[tau["id"]] = (dur, len(tau["text"]["string"]) or 1)
         rows.append({"i": i, "id": tau["id"], "start": t, "dur": dur, "src": seg.get("offset", 0.0),
                      "srcend": seg.get("offset", 0.0) + seg["duration"],
                      "flat": " ".join(tau["text"]["string"].split())})
@@ -153,7 +153,7 @@ def states(cards, scenes, at, total):
             if i < cam and w >= 0.9:               # only above the camera does it HIDE the speaker
                 cover.add(name)
         # a split card anchors at a character offset inside its tau: `location` places it
-        dur, n = SPAN.get(tid, (0.0, 1))
+        dur, n = TAU_SPAN.get(tid, (0.0, 1))
         mid = dur * (c["tauAnchor"].get("location") or 0) / n
         rows.append({"t": round(at[tid] + mid + c.get("offsetFromAnchor", 0), 2), "cover": cover})
     rows.sort(key=lambda r: r["t"])
