@@ -83,7 +83,7 @@
     {
       "name": "whiteboard",
       "area": "design",
-      "description": "Builds the whiteboard a video talks over: a compiled app board, or Excalidraw drawn live on the iPad. Use when a video needs a board, a diagram from the terminal, or an .excalidraw file to write, change or read.",
+      "description": "Builds the whiteboard a video talks over: a tldraw board for YouTube, a compiled board for stills, or Excalidraw live on the iPad. Use when a video needs a board, a diagram from the terminal, or an .excalidraw file.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/design/whiteboard/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/design/whiteboard",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/whiteboard.zip"
