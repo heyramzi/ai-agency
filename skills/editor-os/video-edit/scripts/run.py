@@ -25,8 +25,8 @@ production." `board` writes the same rows as a ClickUp checklist on the video's 
 item per pass with its state in the text, and every later `start`/`done`/`block` rewrites it. The
 ledger on disk is the record; the checklist is the view he opens.
 
-    run.py init <dir> --code EC51 --project <id> --comp <id>
-    run.py init <dir> --code EC51 --route local --cut <path/to/cut.json>
+    run.py init <dir> --code C51 --project <id> --comp <id>
+    run.py init <dir> --code C51 --route local --cut <path/to/cut.json>
     run.py show <dir>                       # the table, and rewrite RUN.md
     run.py next <dir>                       # the one pass to do now
     run.py start <dir> 3

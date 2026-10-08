@@ -1,15 +1,23 @@
 # The Descript CLI: credentials, writes, clipboard, lint, library, renders
 
+## Contents
+
+[Credentials](#credentials), [The write path](#the-write-path),
+[Importing and publishing prechecks](#importing-and-publishing-prechecks),
+[The document lint](#the-document-lint),
+[The clipboard is a write path](#the-clipboard-is-a-write-path),
+[The drive media library](#the-drive-media-library),
+[Rendering and downloading](#rendering-and-downloading)
+
 Open this before any write bigger than a rename, when the CLI says a credential is missing, when a project won't open, before reorganising "My media", and before rendering a master.
 
 ## Credentials
 
-`pnpm descript` reads `DESCRIPT_STYTCH_SESSION` and `DESCRIPT_API_TOKEN` from the process environment and loads no `.env`. Both live in `CLIs/.env`, so *"DESCRIPT_STYTCH_SESSION is not set"* looks like a logged-out session and isn't one. Run the whoami first:
+`pnpm descript` needs `DESCRIPT_STYTCH_SESSION` and `DESCRIPT_API_TOKEN`, and its package script loads both through `scripts/secrets.mjs`, so never export them by hand. Run it from the folder that holds the CLI's `package.json`.
+ *"DESCRIPT_STYTCH_SESSION is not set"* means you ran it from the wrong folder. The session is fine. Run the whoami first:
 
 ```sh
-export DESCRIPT_STYTCH_SESSION="$(grep '^DESCRIPT_STYTCH_SESSION=' CLIs/.env | cut -d= -f2-)"
-export DESCRIPT_API_TOKEN="$(grep '^DESCRIPT_API_TOKEN=' CLIs/.env | cut -d= -f2-)"
-npx tsx CLIs/descript/cli.ts            # whoami: the user and the drives
+pnpm -s descript            # whoami: the user and the drives
 ```
 
 `STYTCH_SESSION` does everything inside a project. `API_TOKEN` is only for `project new` and `import`, the 2 things the app's API refuses (`Classic project creation no longer supported`, except `kind: rooms_recording`, which `room new` uses). `auth capture` refreshes an expired cookie from a `web.descript.com` tab in Orca (`--page` when several are open). Anyone else runs `pnpm descript connect`: it opens the walkthrough page, takes both values on the prompt and verifies them with a real call. Take no value as a flag, because a flag lands in shell history and the process list. The page names the 3 things only a person can do (sign in, copy the session, make a token) and shows a screenshot of the finished shelf: "nobody will do that by hand... explain them with actual screenshots." It ships with the product, so it isn't a playground page. The course deck on connecting Descript carries the same split, so edit both.

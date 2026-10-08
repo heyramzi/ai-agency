@@ -1,5 +1,12 @@
 # Sequencing: rhythm, pins, sound, and the review board
 
+## Contents
+
+[The gates](#the-gates), [Shot triggers](#shot-triggers),
+[The clock a clip is cut against](#the-clock-a-clip-is-cut-against),
+[Pins: placing b-roll, overlays and zooms](#pins-placing-b-roll-overlays-and-zooms),
+[Sound on the cut](#sound-on-the-cut), [Review in Editor OS](#review-in-editor-os)
+
 Open this before writing a `pins.json`, placing a clip, when an edit is "done" but reads flat, and when preparing the review page. `scripts/sequence.py` implements every number here; this file is the reasoning. Stamping looks over cards: [layouts.md](layouts.md).
 
 ## The gates
@@ -131,4 +138,4 @@ The project page is the review board: its rail lists the passes and choices left
 
 `editor-os transcript <project>` pulls the cut, words and chapters into `edit.json` (rerun after a cut changes). `editor-os plan <project>` reads `beats.json`, `pins.json` and the music offer into `edit.json`, keeping earlier decisions by beat. `beats.json` is optional input: `layouts`, `motion`, `broll`, `sfx` rows `[code, "m:ss", "spoken line"]` (layout rows add pack names); files go under `motion/`, `broll/<worker>/`, `sfx/`, each named with its beat code first (`M1 [01-16] Tools.mp4`); the page finds new files on refresh, and a beat with no file shows what's missing.
 
-Views: **Cut and Reorder** (transcript, removals marked; a note asks for a fix), **Rhythm** (a card per layout change, plus zooms; keep the AI's pick or another), **Music** (3 tracks: keep one, skip, ask for more), **Motion and B-roll** (each insert in playing order; an unrendered beat can't be kept), **Review** (whole transcript, for notes). Decisions live in `edit.json`, notes in `edit.notes.json`, beside `RUN.json`; the folder describes what's available and owns no decision. `editor-os feedback <project>` and `editor-os wait` read them; answer a note with `editor-os reply <project> <id> "<what changed>"` (a note reopens its beat until accepted). `editor-os place <project>` refuses until he has decided every beat and the music, then applies kept layouts, pins kept media and sounds, lays the bed. Old `plan.json`/`plan.notes.json` are imported once on first open and never written again.
+The page reads the transcript in paragraphs with removals marked, and a note on a line asks for a fix. Each beat is a card (layouts and zooms, then inserts in playing order: keep the AI's pick or another; an unrendered beat can't be kept), and music offers 3 tracks. Decisions live in `edit.json`, notes in `edit.notes.json`, beside `RUN.json`, and only the studio writes them, through an `editor-os` verb. `editor-os feedback <project>` and `editor-os wait` read them; answer a note with `editor-os reply <project> <id> "<what changed>"` (a note reopens its beat until accepted). `editor-os place <project>` refuses until he has decided every beat and the music, then applies kept layouts, pins kept media and sounds, lays the bed.

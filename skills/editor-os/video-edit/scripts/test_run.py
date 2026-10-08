@@ -59,7 +59,7 @@ class Route(unittest.TestCase):
         self.assertIn("is not done", out.stderr + out.stdout)
 
     def test_done_still_refuses_evidence_naming_no_command(self):
-        call("init", self.dir, "--route", "local", "--cut", "/tmp/x/cut.json")
+        call("init", self.dir, "--route", "local", "--cut", os.path.join(self.dir, "absent", "cut.json"))
         call("start", self.dir, "0")
         out = call("done", self.dir, "0", "--evidence", "looks fine to me")
         self.assertNotEqual(out.returncode, 0)

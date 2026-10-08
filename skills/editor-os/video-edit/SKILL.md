@@ -18,10 +18,13 @@ The API once broke an edit that had to be re-uploaded by hand, and Underlord onc
 
 ```bash
 R=.claude/skills/video-edit/scripts/run.py; D=tools/motion/src/<video-code>
-python3 $R init $D --code EC51 --project <id> --comp <id>
-python3 $R board $D --task <ClickUp task id>
-python3 $R next $D
+python3 $R init $D --code C51 --project <id> --comp <id>          # once
+python3 $R init $D --code A40 --route local --take <folder> --cut <folder>/cut.json
+python3 $R board $D --task <ClickUp task id>                      # mirror to the task's checklist
+python3 $R next $D                                                # the ONE pass to do now
+python3 $R start $D <n>
 python3 $R done $D <n> --evidence "<what the command's output said>" --file <its saved output>   # or --run "<command>"
+python3 $R block $D <n> --why "<the one-action unblock>"
 ```
 
 - **A name carries its number and timecode**, `N [MM-SS] Description.ext`, and every `[mm-ss]` quoted downstream comes from `layout cards`, never the raw take (a cut moved every second). Rules: [projects-and-media.md](references/projects-and-media.md).

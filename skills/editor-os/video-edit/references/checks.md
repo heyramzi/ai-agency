@@ -1,5 +1,10 @@
 # The checks: doctrine, strategy, the writing score, the export gate
 
+## Contents
+
+[Doctrine checks](#doctrine-checks), [Strategy checks](#strategy-checks),
+[The writing score, out of 10](#the-writing-score-out-of-10), [The export gate](#the-export-gate)
+
 A check returns `pass`, `fail` or `n/a`, and a `fail` names its source file. A check that can't name its source is an opinion and stays out of the report. Open this when coaching a take (the first 3 sections) and before any export (the last).
 
 ## Doctrine checks
