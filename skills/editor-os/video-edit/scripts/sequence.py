@@ -31,11 +31,11 @@ GATE_COVER = (0.20, 0.50)   # share of runtime under a visual overlay
 
 # The balance gate. `audit` reads averages, and an average hides where the dressing sits: EC49
 # passed within a tenth of a second on the median and still ran four whole minutes with nothing
-# on screen and no sound. references/balance.md carries the teardown.
+# on screen and no sound. references/sequencing.md carries the teardown.
 BIN = 60.0              # the window balance is read in. A minute is what a viewer feels
 NAKED_DRESS = 6.0       # seconds of clip, graphic or title a minute must carry
 NAKED_SFX = 1           # ...unless it carries more sounds than this
-GATE_SFX_QUIET = 45.0   # longest stretch with no sound at all. sound-layout.md measures a body
+GATE_SFX_QUIET = 45.0   # longest stretch with no sound at all. sound.md measures a body
                         # placing one every 7.5-11s, and one reference video every 60s. The MEDIAN
                         # gap is not the gate: EC49's median is 7.1s and passes, while 79% of its
                         # runtime carries no sound, because the sounds arrive in two bursts.

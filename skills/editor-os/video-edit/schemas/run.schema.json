@@ -10,6 +10,8 @@
     "project": { "type": "string" },
     "comp": { "type": "string" },
     "cut": { "type": "string" },
+    "take": { "type": "string" },
+    "format": { "enum": ["wide", "vertical"] },
     "task": { "type": "string" },
     "checklist": { "type": "string" },
     "recorded": {

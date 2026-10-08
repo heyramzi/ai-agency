@@ -310,7 +310,7 @@ def cmd_camera(path: str, ss: float = 0.0, t: float = 12.0) -> None:
     This is what settles whether a reference's motion is "smooth": it is a number, and the two
     that matter are the exponential time constant of the decay and whether the velocity ever
     reaches zero. In the long-take reference both are house constants -- tau near 0.45s, and a
-    residual that never stops. See references/long-take.md.
+    residual that never stops. See references/registers.md.
     """
     _, _, _, fps = probe(path)
     # WHY 960 and not 480: the correlation resolves whole pixels, so a proxy that halves the frame

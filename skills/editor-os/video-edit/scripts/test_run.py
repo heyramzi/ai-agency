@@ -64,6 +64,34 @@ class Route(unittest.TestCase):
         out = call("done", self.dir, "0", "--evidence", "looks fine to me")
         self.assertNotEqual(out.returncode, 0)
 
+    def test_a_local_pass_is_proven_by_a_local_command(self):
+        # A24 had to close passes 2 to 8 with --anyway: the only proofs were Descript commands.
+        call("init", self.dir, "--route", "local", "--cut", os.path.join(self.dir, "cut.json"))
+        self.assertEqual(call("start", self.dir, "0").returncode, 0)
+        self.assertEqual(call("done", self.dir, "0", "--evidence", "take folder").returncode, 0)
+        proof = os.path.join(self.dir, "check.txt")
+        open(proof, "w").write("17 ranges, 52.55s, 0 layers\n")
+        call("start", self.dir, "1")
+        out = call("done", self.dir, "1", "--evidence", "cut check exit 0", "--file", proof)
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertFalse(self.ledger()["passes"][1].get("override"))
+
+    def test_a_local_pass_refuses_a_descript_proof(self):
+        call("init", self.dir, "--route", "local", "--cut", os.path.join(self.dir, "cut.json"))
+        call("start", self.dir, "0")
+        call("done", self.dir, "0", "--evidence", "take folder")
+        proof = os.path.join(self.dir, "tracks.txt")
+        open(proof, "w").write("tracks clean\n")
+        call("start", self.dir, "1")
+        out = call("done", self.dir, "1", "--evidence", "descript cut", "--file", proof)
+        self.assertNotEqual(out.returncode, 0)
+
+    def test_the_local_table_says_what_proves_a_local_pass(self):
+        call("init", self.dir, "--route", "local", "--cut", "/tmp/x/cut.json")
+        md = open(os.path.join(self.dir, "RUN.md")).read()
+        self.assertIn("cut check", md)
+        self.assertNotIn("descript tracks", md)
+
 
 class Evidence(unittest.TestCase):
     """Bug (e): `done` matched a command's last word as a substring, so "shortcut" proved `cut`."""

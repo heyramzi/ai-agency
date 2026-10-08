@@ -3,8 +3,8 @@ import { Composition } from "remotion";
 import {
   CesiumFlythrough,
   type CesiumFlythroughProps,
-} from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/cesium/assets/CesiumFlythrough";
-import cityPath from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/cesium/assets/city-path.json";
+} from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/cesium/assets/CesiumFlythrough";
+import cityPath from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/cesium/assets/city-path.json";
 
 export const RemotionRoot: React.FC = () => (
   <>

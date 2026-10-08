@@ -5,14 +5,71 @@
   "minItems": 1,
   "items": {
     "type": "object",
-    "required": ["id", "key", "label", "proves", "commands"],
+    "required": [
+      "id",
+      "key",
+      "label",
+      "proves",
+      "commands"
+    ],
     "additionalProperties": false,
     "properties": {
-      "id": { "type": "integer", "minimum": 0 },
-      "key": { "type": "string", "pattern": "^[a-z]+$" },
-      "label": { "type": "string", "minLength": 1 },
-      "proves": { "type": "string", "minLength": 1 },
-      "commands": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      "id": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "key": {
+        "type": "string",
+        "pattern": "^[a-z]+$"
+      },
+      "label": {
+        "type": "string",
+        "minLength": 1
+      },
+      "proves": {
+        "type": "object",
+        "required": [
+          "descript",
+          "local"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "descript": {
+            "type": "string",
+            "minLength": 1
+          },
+          "local": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "commands": {
+        "type": "object",
+        "required": [
+          "descript",
+          "local"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "descript": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "local": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
     }
   }
 }

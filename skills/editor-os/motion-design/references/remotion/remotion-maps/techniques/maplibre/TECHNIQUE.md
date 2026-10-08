@@ -11,7 +11,7 @@ Use MapLibre GL JS for rendering maps in Remotion. Use Turf for geospatial opera
 
 - Prefer `@turf/turf` for geospatial work. Do not hand-roll distance, great-circle, route slicing, or coordinate interpolation unless the user explicitly needs a custom non-geodesic effect.
 - Use GeoJSON sources and MapLibre layers for lines, markers, and labels. Avoid DOM `Marker` elements unless the user specifically asks for HTML markers.
-- Keep the live map camera static by default. Before moving it on every frame, read [moving-map stability](references/render-stability.md). Prefer a fixed map plate for satellite imagery, hillshade, or a modest 2D reframe.
+- Keep the live map camera static by default. Before moving it on every frame, read [moving-map stability](../../references/render-stability.md). Prefer a fixed map plate for satellite imagery, hillshade, or a modest 2D reframe.
 - Use a live per-frame camera only after rendering a short MP4 and checking for shimmer. This 2D technique does not provide genuine terrain, pitch, bearing, or banking.
 - Disable non-deterministic map behavior: `interactive: false`, `fadeDuration: 0`.
 - Drive animation from `useCurrentFrame()`; do not use CSS transitions or browser-timed animation.

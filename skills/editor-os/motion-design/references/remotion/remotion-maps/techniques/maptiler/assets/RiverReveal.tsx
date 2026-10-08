@@ -11,15 +11,15 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { CountryLabel } from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/maptiler/assets/CountryLabel";
-import countryMeta from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/maptiler/assets/sample-data/country-meta.json";
-import flowCoords from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/maptiler/assets/sample-data/yarlung-flow.json";
+import { CountryLabel } from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/maptiler/assets/CountryLabel";
+import countryMeta from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/maptiler/assets/sample-data/country-meta.json";
+import flowCoords from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/maptiler/assets/sample-data/yarlung-flow.json";
 import {
   COLORS,
   COUNTRY,
   COUNTRY_DARK,
   FILL_OPACITY,
-} from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/maptiler/assets/tokens";
+} from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/maptiler/assets/tokens";
 
 // Sample route reveal. Replace the imported sample geometry, names, timing, and visual tokens in the
 // consuming production. The renderer stays static; approved centre/zoom motion is a CSS plate transform.
