@@ -1,8 +1,6 @@
 # Shorts script
 
-One reference for the whole job, because the job used to be spread over four. The structure sat in
-`video-hooks`, the corpus of hooks that ran sat in `social`'s `references/instagram-tiktok.md`, and
-the note shape sat in `social`'s `references/shorts-production.md`.
+One reference for the whole job: the structure, the corpus of hooks that ran, and the note shape.
  So
 the pieces specific to a whole Short live here, and this is the one to load when somebody says
 "create a short". The truth rule and the voice pass are the trunk's, in `SKILL.md`, and outrank
@@ -59,8 +57,8 @@ rewrite it.
    the truth rule still outranks it and the last test is yours: read it out loud to someone
    who's never heard of the subject. A batch fanned out to subagents goes to `video-producer`, never general-purpose.
 6. **Take the code** off `social`'s `scripts/ledger.json` plus the closed Socials tasks,
-   never off memory. Then file it in CutKit, never Apple Notes (The author, 1 Oct 2026: the script
-   library is CutKit from now on, so it's on his phone's teleprompter):
+   never off memory. Then file it in CutKit, never Apple Notes. The script library is CutKit,
+   so it's on his phone's teleprompter:
    `node ~/Studio/cutkit/ios/cli/cutkit-scripts.mjs push <clean-read-file> --title "CODE · name" --label "<pillar>"`
    The body is the clean read only, because the phone reads the whole body out loud. Everything
    below the `---` in the note shape (metadata row, re-check block, TikTok cut, description, first
