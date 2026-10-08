@@ -19,15 +19,14 @@ asked for in passing (4 Oct 2026): source in `vibe-kit/ai-doc`, log, audit.
 
 A skill is found by its description; every session sees all of them and there's no router agent.
 An agent's `skills:` line is what it preloads whole at spawn, 1 to 3 core skills. Any other skill
-its body names, it calls through the Skill tool when it needs it (sub-agents docs, read 4 Oct
-2026). Until then the old rule made every agent preload every skill it named, and
-`frontend-designer` started with 8 skills and 14.8k tokens. With nothing to preload, it's a
+its body names, it calls through the Skill tool when it needs it. Preloading every named skill
+is what gave `frontend-designer` 8 skills and 14.8k tokens at spawn. With nothing to preload, it's a
 persona: give it a skill or delete it.
 
 The `audit` command parses every frontmatter block with a real YAML parser and fails an agent
 whose `skills:` names a missing skill or preloads more than 3. Run it in a pre-commit hook.
 
-There are 4 principles. A skill comes from work done twice or a failure that cost real time, and never from a design. A skill that sets a bar ships the eval that holds it. The floor is one shared file, [skill-floor.md](references/skill-floor.md), and it's never restated. And you verify by outcome in a cleared session, never by reading the file back.
+There are 5 principles. A skill comes from work done twice or a failure that cost real time, and never from a design. A skill that sets a bar ships the eval that holds it. The floor is one shared file, [skill-floor.md](references/skill-floor.md), and it's never restated. A finding names its pattern, quotes its evidence and says what in the repo makes it wrong: no pattern, no finding, and a clean shelf is a valid result. And you verify by outcome in a cleared session, never by reading the file back.
 
 ## The paths
 
@@ -37,7 +36,7 @@ how a registry doubles without improving. Clean when the shelf is the problem.
 
 | Command | Does | Open |
 |---|---|---|
-| `critique` | one verdict per skill and agent against the philosophy, then execute | [critique.md](references/critique.md) |
+| `critique` | one verdict per skill and agent, plus every contradiction, dead fact and gate drift the pattern scan finds, then execute | [critique.md](references/critique.md), [consistency.md](references/consistency.md) |
 | `audit` | run the gate, fix each failure at its source, re-run | above |
 | `new [name]`, `agent [name]` | a skill from a run done twice, or an agent (or the finding it's a skill) | [creation-process.md](references/creation-process.md) |
 | `heal [target]`, `log [skill]` | the 5-step loop below; one dated entry in a skill's log | [healing.md](references/healing.md) |
@@ -46,8 +45,8 @@ how a registry doubles without improving. Clean when the shelf is the problem.
 | `clean [folder]` | measure registry and session context, merge, delete, simplify | [cleaning.md](references/cleaning.md), [context-budget.md](references/context-budget.md) |
 | `package [skill]` | validate and zip for outside this workspace | `scripts/package_skill.py` |
 
-With no argument: a correction is `heal`, something missing is `new`, bad names or overlap is
-`critique`, size is `clean`, a broken agent link is `audit`. Heal continuously; critique and
+With no argument: a correction is `heal`, something missing is `new`, bad names, overlap or two
+files disagreeing is `critique`, size is `clean`, a broken agent link is `audit`. Heal continuously; critique and
 clean as a pass over the whole tree.
 
 ## Setup, before writing
@@ -102,27 +101,23 @@ and after.
 
 ## The failure log
 
-A skill keeps an append-only log about itself, because the next run reads it as instructions.
-The log has 4 parts: the stated promise in the body, the closing step, a verification item, and
-`## Learned Patterns` last, seeded with real entries. Format and the 240-character law:
-[healing.md](references/healing.md). Node 20+ and Python 3, nothing installed:
+No skill needs a scaffold: the standing self-healing rule already tells every session to heal.
+A lesson goes into the body as the fix. A skill keeps a `## Learned Patterns` log only when it
+has real entries the body can't hold yet: last in the file, newest first, never empty. Format and
+the 240-character law: [healing.md](references/healing.md). Node 20+, nothing installed:
 
 ```bash
-node scripts/heal.cjs check [paths...]         # which skills carry the scaffold (exits 1 if not)
-node scripts/heal.cjs retrofit <skill> --apply # add the missing parts
-node scripts/heal.cjs log <skill> "<entry>" --apply
+node scripts/heal.cjs check [paths...]         # log hygiene (exits 1 on a log past 25 entries)
+node scripts/heal.cjs log <skill> "<entry>" --apply   # dry run without --apply
 node scripts/heal.cjs fold <skill>             # entries that belong in the body now
 ```
-
-`retrofit` and `log` are dry runs without `--apply`.
 
 ## Before it ships
 
 Mechanical, free: `scripts/review_skill.py` checks frontmatter, name, description, body size,
 dead links, unreachable references and scripts an agent can't drive; exits 1 on an error.
 Judgment: the rubric in [review-rubric.md](references/review-rubric.md), when a skill is about
-to ship or fires wrong. A cold Sonnet session on the rewritten `humanizer` broke it on 4 points
-a reread had passed.
+to ship or fires wrong. Then retest it in a cold session: a reread passes what a cold run breaks.
 
 
 ## Closing a run

@@ -4,7 +4,11 @@ For a cluttered folder, a runtime picking the wrong asset, a `.md` past 200 line
 entries, a fresh import or a quarter with no pass.
 
 The unit of waste is context, not files: 250 assets at 400 chars spend about 25k tokens before
-the user asks anything. A registry also grows deeper, which an asset count hides (an unpruned
+the user asks anything. Size picks where to look; it never decides what goes. A line is cut
+because it matches a pattern in [consistency.md](consistency.md) (written for an older model,
+against its gate, a copy of a fact with a home), and the cut follows the
+[audit contract](~/Studio/vibe-kit/ai-doc/references/audit-contract.md). Cutting by length deletes
+the reasons first, since they're the longest sentences. A registry also grows deeper, which an asset count hides (an unpruned
 failure log, a copied paragraph). One registry held 689 KB of logs against 1.4 MB of bodies.
 
 For a full window, measure the session first (MCP servers, connectors, plugins, duplicated
@@ -72,9 +76,9 @@ looks fine. Read [skill-floor.md](skill-floor.md) and run `review_skill.py` firs
    (drop `--dry` to apply), after committing, since git keeps the run.
 2. A block copied into siblings. Consolidate into a file every reader already loads: 27
    transition references restated the same two notes (12 KB) that `SKILL.md` already said, so
-   deleting all 54 copies cost nothing. Twelve `<area>-lead` agents differ: an agent has no parent to hop to.
-3. A hand-maintained table restating the disk (a skill list in a lead agent). It drifts
-   silently (one sat 5 entries behind). `check-lead-tables.py --fix` rebuilds them; never patch a row.
+   deleting all 54 copies cost nothing. Agents differ: an agent has no parent to hop to.
+3. A hand-maintained table restating the disk (a skill list in an agent body). It drifts
+   silently (one sat 5 entries behind). Generate it or delete it; never patch a row.
 4. Prose the model knows (pack filler like "Common Mistakes").
 5. An entry saying the rule now lives above, or a memory pointing at the skill that owns its fact. Delete it.
 
@@ -157,5 +161,5 @@ on the company page when that agent goes (5 Oct 2026). List those skills first. 
 - [ ] Metadata reported before and after, and it went down; every count at budget or an approved exception
 - [ ] No `SKILL.md` carries log entries, no log is past 25, no `learned-patterns-archive.md` survives, and every compressed log was committed first
 - [ ] `duplicated blocks` went down, or each survivor has a reader with no parent to hop to
-- [ ] No banned words or em dashes (`packages/lint/data/slop-words.js`); `review_skill.py` has no new findings
+- [ ] No banned words (`packages/lint/data/slop-words.js`); `review_skill.py` has no new findings
 - [ ] Consumers re-synced (`pnpm vibekit sync <dir>`), no broken symlinks

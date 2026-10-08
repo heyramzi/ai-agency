@@ -19,7 +19,7 @@ produced it.
 | D5 Disclosure | body is overview plus navigation; each reference states its load condition | references exist but the body never says when to open them ("see references/" is 3 at best) | one long body, no references |
 | D6 Placement | narrowest family that fits, nothing else covers 70%, one coherent unit | overlaps a sibling enough that a prompt could land on either | should be a paragraph in an existing skill |
 | D7 Provenance | written from a real run: real names, numbers, errors | plausible but unrun | describes a capability a script already has |
-| D8 Self-healing | `heal.cjs check` passes, log seeded with real entries | scaffold present, log empty (worse than none) | repeated a mistake and nothing records it |
+| D8 Self-healing | `heal.cjs check` passes, any log seeded with real entries | a log section with no entries (worse than none) | repeated a mistake and nothing records it |
 
 Red flags for D2: defining common terms, restating the filesystem, "In this section we will", the
 same instruction twice in different words. D6 at 3 or below across several skills is a `clean` job.

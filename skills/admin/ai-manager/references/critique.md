@@ -65,15 +65,18 @@ What closes the gap, each one his habit:
    and plugins count).
 2. Sort the names and read the neighbours, then group by the tool each one drives. Most
    verdicts fall out of those two lists before any body is opened.
-3. Give each skill one verdict: keep, rename, fold into X, disambiguate, or delete, with the
+3. Run the [consistency pass](consistency.md). Names and descriptions show overlap; only its
+   greps show two files ruling differently, prose against a gate, and facts the disk dropped.
+4. Give each skill one verdict: keep, rename, fold into X, disambiguate, or delete, with the
    rule it breaks. A product boundary is a real reason to keep two skills apart (a free kit and
    a paid pack can't share one file), so say it when it applies.
-4. Report it as one table, worst first, then execute every verdict through the merge below
-   and the clean path. A critique that ends as a table is half the job.
+5. Report verdicts and findings in the audit contract's shape, worst first, then execute every
+   High and Medium one through the merge below and the clean path. A critique that ends as a
+   table is half the job.
 
-## Lessons from the 4 Oct 2026 rewrite
+## Rewriting the whole shelf in parallel
 
-The whole shelf went through this file that day. It ran 11 parallel Sonnet rewriters with one shared brief, one per area. What held it together, and what bit:
+Give the rewriters one shared brief, one area each. What holds it together, and what bites:
 
 - Some boundaries are not yours to fold. A free kit and a paid pack
   (`clickup-utils/scripts/skills.mjs`), a runtime registry (`agency-os` frontmatter is what
@@ -92,7 +95,7 @@ The whole shelf went through this file that day. It ran 11 parallel Sonnet rewri
 - Rewriters keep facts and drop prose. The brief said what must survive (numbers, rulings,
   traps, exact commands, fences) before it said what to cut, and no batch lost one.
 - A per-skill closing step duplicates the standing self-healing rule every session already
-  loads. `heal.cjs check` now gates only log hygiene: last section, newest first, 25 entries.
+  loads. `heal.cjs check` gates only log hygiene: last section, newest first, 25 entries.
 
 ## Merging two skills that are the same skill
 
