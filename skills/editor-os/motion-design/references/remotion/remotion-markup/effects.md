@@ -5,6 +5,10 @@ metadata:
   tags: effects, visual-effects, webgl, canvas, video, create-effect
 ---
 
+## Contents
+
+[Usage](#usage), [Available effects](#available-effects), [Custom effects](#custom-effects)
+
 Use this rule only when the top-level skill lists an effect that matches the requested look, or when the user asks to create a reusable custom effect.
 
 Docs: https://www.remotion.dev/docs/effects

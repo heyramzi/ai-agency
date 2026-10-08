@@ -1,5 +1,12 @@
 # YouTube CTAs: the evergreen overlay kit
 
+## Contents
+
+[Overlay versus clip](#overlay-versus-clip),
+[Constants or Studio: who may fine-tune a clip](#constants-or-studio-who-may-fine-tune-a-clip),
+[Placement](#placement), [House rules](#house-rules),
+[The glass surface (`glass/surface.tsx`)](#the-glass-surface-glasssurfacetsx)
+
 The 1920x1080 transparent overlays that dress a finished YouTube edit: subscribe, like, a booking link, a
 product ask. They live in Remotion and run for years. They aren't clips cut to a sentence, so this
 skill's clock and planning rules don't apply; its palette, motion vocabulary and finishing rules do.

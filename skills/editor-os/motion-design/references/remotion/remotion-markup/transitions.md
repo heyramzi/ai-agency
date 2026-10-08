@@ -5,6 +5,16 @@ metadata:
   tags: transitions, overlays, fade, slide, wipe, scenes
 ---
 
+## Contents
+
+[TransitionSeries](#transitionseries), [Prerequisites](#prerequisites),
+[Transition example](#transition-example), [Overlay example](#overlay-example),
+[Mixing transitions and overlays](#mixing-transitions-and-overlays),
+[Transition props](#transition-props), [Overlay props](#overlay-props),
+[Available transition types](#available-transition-types),
+[Slide transition with direction](#slide-transition-with-direction),
+[Timing options](#timing-options), [Duration calculation](#duration-calculation)
+
 ## TransitionSeries
 
 `<TransitionSeries>` arranges scenes and supports two ways to enhance the cut point between them:

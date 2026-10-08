@@ -1,5 +1,13 @@
 # Registers: figures, overlays, 3D and the named recipes
 
+## Contents
+
+[Diagrams](#diagrams), [Analogies](#analogies),
+[Lists that aren't a vertical bullet list](#lists-that-arent-a-vertical-bullet-list),
+[Overlays: words over his face](#overlays-words-over-his-face), [3D](#3d),
+[The long take](#the-long-take), [The live screen](#the-live-screen),
+[The code walk, the introduction, the hand-drawn and the paper board](#the-code-walk-the-introduction-the-hand-drawn-and-the-paper-board)
+
 The everyday registers first (diagram, analogy, list, words over his face, a rendered object), then 6 named
 recipes measured frame by frame off a reference. Build one worked example of a recipe before using it.
 
@@ -54,7 +62,7 @@ reciting is an overlay (he's the proof, the words the index); a structure, quant
 frame; a screen he's demonstrating gets neither, since a graphic over evidence argues with it. An overlay is
 the cheaper to be wrong about.
 
-``caption.tsx` has 3. `GlassCaption` (frosted pane) for a long list, a set, or a bright or busy plate.
+`caption.tsx` has 3. `GlassCaption` (frosted pane) for a long list, a set, or a bright or busy plate.
 `PlainCaption` (words on nothing) for one statement of 2 or 3 lines. `DefocusedCamOverlay` blurs his
 plate (about 20 to 30px plus a dark vignette) so vocal presence stays while 100% of focus goes to a
 foreground fork or formula. A video using only one has a lower third or subtitles.

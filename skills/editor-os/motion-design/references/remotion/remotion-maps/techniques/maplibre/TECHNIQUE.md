@@ -5,6 +5,13 @@ metadata:
   tags: map, map animation, maplibre, turf, geojson, route animation
 ---
 
+## Contents
+
+[Core rules](#core-rules), [Prerequisites](#prerequisites), [Basic map example](#basic-map-example),
+[Animated flight route example](#animated-flight-route-example),
+[Camera guidance](#camera-guidance), [Lines](#lines), [Markers and labels](#markers-and-labels),
+[Styles](#styles), [Rendering](#rendering)
+
 Use MapLibre GL JS for rendering maps in Remotion. Use Turf for geospatial operations such as great-circle routes, distances, slicing lines, and positions along routes.
 
 ## Core rules

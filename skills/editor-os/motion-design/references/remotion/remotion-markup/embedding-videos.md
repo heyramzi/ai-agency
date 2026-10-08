@@ -7,6 +7,12 @@ metadata:
 
 # Using videos in Remotion
 
+## Contents
+
+[Prerequisites](#prerequisites), [Trimming](#trimming), [Delaying](#delaying),
+[Sizing and Position](#sizing-and-position), [Volume](#volume), [Speed](#speed),
+[Looping](#looping), [Pitch](#pitch)
+
 ## Prerequisites
 
 First, the @remotion/media package needs to be installed.  

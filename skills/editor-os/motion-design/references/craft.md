@@ -1,5 +1,13 @@
 # Craft: building a clip and checking it
 
+## Contents
+
+[Finishing: photographed, not composited](#finishing-photographed-not-composited),
+[Primitives that exist because something failed](#primitives-that-exist-because-something-failed),
+[One motion language](#one-motion-language), [The frame](#the-frame),
+[Grounds, and the overlay cut](#grounds-and-the-overlay-cut), [Type](#type),
+[Traps that render clean](#traps-that-render-clean), [Verify by looking](#verify-by-looking)
+
 Mechanics for a Remotion motion project. SKILL.md holds the judgment. Names like `Shot`, `Backdrop`,
 `tokens.ts` and `motion.ts` are one project's kit; build your own equivalents, one file each, so every clip
 pulls from one place.
@@ -137,22 +145,20 @@ Content: a label where a value belongs is an invented line item; a chart with no
 still wrong if it only re-names the subject. A depicted third-party interface keeps its own colours, but a terminal outcome line
 takes Sand, never Terra (`8 passed, 0 failed` looked like a failure). Photograph a live-screen page, never redraw it, and light
 the thing that is PLAYING. Size kinetic type by ratio against the previous word (cap largest to smallest at about 6:1). Round a
-locked
-close-up's drift to whole pixels and freeze the camera when the action ends, or every frame resamples and bills near raw.
+locked close-up's drift to whole pixels and freeze the camera when the action ends, or every frame resamples and bills near raw.
 
 Pipeline: `-shortest` without `apad` truncates the video to the audio. A render running in another project starves this one (`ps
 aux | grep chrome-headless` before waiting). A still answers a LOOK complaint, the full clip a MOTION one. A template reserving a
 block must spend it (scale the whole geometry by one factor). `SvgLayer` and `Grain` hardcode the Shorts frame. Drop only
 `undefined` props, never an empty string (a card once read "€36,000K"). A merged multi-path logo comes out a blob (a subpath's
 leading `m` is absolute only at the start of its path); simple-icons lacks `openai` and `monday`
-( covers gaps). A skill's own
-directory can be a symlink, so "editing the repo copy" writes to the source.
+( covers gaps). Nothing the
+camera scales carries `will-change`: Chrome rasterises the layer once, so scaled text goes soft. Strip it from pasted
+`transitions-dev` CSS (`07-panel-reveal.css` and `16-tabs-sliding.css` both set it).
 
 ## Verify by looking
 
-Typecheck proves nothing about whether a graphic appears. A clip opens with the sentence it serves in
-quotes, its timecode, and a `WHY` per real design decision (why this reading beat the alternative). When the author
-overrules one, rewrite the comment to record the reversal.
+When the author overrules a `WHY` in a clip's header, rewrite it to record the reversal.
 
 ```bash
 npx remotion still src/index.ts <CompId> out/stills/<CompId>-<frame>.png --frame=<frame> --log=error
@@ -177,14 +183,24 @@ one and showed fades wrong that the clip drew right. **Measure a finding from a 
 template's own constants, never from a contact sheet.** `rm -rf <clip>.watch` before every `--sheet`, or a
 re-render reads back the old frames. `--assert` says nothing about legibility.
 
-Run each clip's review in a subagent that opens the frames and returns timecoded fixes, so the building
-session never loads the images. Order: present; inside the frame; readable at size; resolved before the cut; and last, whether it carries
-the idea. A sheet can't show time, and lateness against the read, motion at the cut and a set that stopped
-reading as one hand all live in time.
+Run each clip's review in a subagent that opens the frames, so the building session never loads the images.
+It reviews like a harsh director and scores 1 to 10 on 7 axes: hook (something lands in the first 2s),
+readable at 360px wide, motion (eases and settles, never slides or stutters at a loop seam), variety (something
+new every 2 to 4s, skipped under 6s), composition (one subject, no text in the corners, no frame border), brand,
+and sound sync. It names the 3 worst problems with timecodes. Fix those, re-render only the seconds they touch
+and score again, until every axis reads 8 or more. The phone sheet is its own render, since a full-size sheet
+hides type that dies on a phone:
+
+```bash
+ffmpeg -i out/final.mp4 -vf "fps=1,scale=360:-1,tile=5x3" -frames:v 1 out/phone.png
+```
+
+A clip that doesn't carry the idea isn't scored; it goes back to the value test. A sheet can't show time, so
+lateness against the read and motion at the cut need the file watched.
 
 Hand the whole file, with its audio, to a video-capable model and ask for timecoded notes. **The verdict is
 binding**: a note that survives a re-render is fixed or answered in the WHY comment. Make it state the file's
 duration and check that against ffprobe. Put each correction made at final review into your own notes.
 
-Done when: a pass over every rendered file returns nothing, each wide still is unchanged by its narrow twin,
-and a portrait render passes `deadzone.py`.
+Done when: every rendered file scores 8 or more on all 7 axes, each wide still is unchanged by its narrow
+twin, and a portrait render passes `deadzone.py`.

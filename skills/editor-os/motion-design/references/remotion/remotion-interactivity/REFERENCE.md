@@ -4,6 +4,19 @@ description: Structure Remotion markup for interactivity
 version: 4.0.512
 ---
 
+## Contents
+
+[Make an HTML element interactive using `Interactive`](#make-an-html-element-interactive-using-interactive),
+[Prefer inline text](#prefer-inline-text),
+[Give interactive elements a descriptive name](#give-interactive-elements-a-descriptive-name),
+[Keep all CSS styles inline](#keep-all-css-styles-inline),
+[Animate using `interpolate()`](#animate-using-interpolate),
+[Use `scale`, `translate`, `rotate` CSS properties](#use-scale-translate-rotate-css-properties),
+[Keep composition metadata inline](#keep-composition-metadata-inline),
+[Effects should be inline too](#effects-should-be-inline-too),
+[Making your own component interactive](#making-your-own-component-interactive),
+[Video editing](#video-editing)
+
 By writing Remotion markup in a specific way, the Remotion Studio is able to recognize the structure of the code and makes it interactive:
 
 - Allowing items to be selected by clicking on them

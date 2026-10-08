@@ -1,3 +1,10 @@
+## Contents
+
+[Studio-editable animation patterns](#studio-editable-animation-patterns),
+[Spring easing](#spring-easing), [Bézier easing](#bézier-easing),
+[Animating scale](#animating-scale), [Multiple keyframes](#multiple-keyframes),
+[Posterization](#posterization)
+
 Drive motion with `interpolate()` over an explicit frame range. 
 To customize timing, use **`Easing.bezier`** or `Easing.spring`.
 
