@@ -20,7 +20,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 
-const MODEL = process.env.IMAGE_MODEL || "gemini-3.1-flash-image";
+const MODEL = process.env.IMAGE_MODEL || "gemini-3.1-flash-lite-image";
 // Override to route through a proxy or an AI gateway that speaks the same API.
 const BASE = process.env.IMAGE_API_BASE || "https://generativelanguage.googleapis.com/v1beta";
 
