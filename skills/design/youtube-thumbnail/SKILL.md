@@ -45,7 +45,7 @@ the render path copy the execution rules. **Change one, change the others in the
    [`references/copy.md`](references/copy.md). The frame opens the loop; the title is read second
    or not at all. Done when the 2 survivors each make a claim and neither restates the title.
 6. Set the plate and fill a template. Canvas 1280x720, judged at 320x180. Pick the template
-   before writing a word of the frame: `scripts/thumbnail-template.ts list`, then
+   before writing a word of the frame: `tsx scripts/thumbnail-template.ts list` from `app/`, then
    [`references/templates.md`](references/templates.md). A concept naming none is unfinished.
    Depth, light and the plate tests: [`references/craft.md`](references/craft.md).
 7. Write the build order, produce assets, execute, critique. Template and checklist in
