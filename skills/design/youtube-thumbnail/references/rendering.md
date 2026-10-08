@@ -1,47 +1,50 @@
-# Rendering a thumbnail programmatically
+# Rendering and compositing
 
-Step 7, execution route B. The build order from step 6 is the input; nothing here re-decides the concept.
+Step 7. The build order is the input; nothing here re-decides the concept. Assets, real-pixel composites and type: [`composites.md`](composites.md), read when the frame carries a logo, a card, a screenshot or overlay type.
 
-## Do not draw his face
+## Don't draw his face
 
-**A face variant is composited, not generated.** `--photo` takes the face plate, conforms it to
-1280x720, sets the words in Manrope 800 and passes them behind the real subject. No model is
-called, and the likeness is perfect because it is not a likeness.
+**A face variant is composited, not generated.** `--photo` conforms the face plate to 1280x720,
+sets the words in Manrope 800 and passes them behind the real subject. No model runs, so the
+likeness is perfect because it isn't one.
 
 ```bash
 # composite the plate rather than calling a model at all
 ```
 
-`cutSubject` lifts the subject off the RENDERED plate, so a generated frame contains zero photographed pixels of him: the plate
-was only ever a reference. The verdict, 26 Aug 2026, on a frame built from `deadpan-wide-left-02`:
-"it doesn't look like me at all. It looks AI generated way too much." No model choice fixes it.
-
-Generate only for what does not exist to be photographed: an object, a figure, a room we do not
-have. Never to obtain him. When the background must be a **real artifact** (a screenshot, a board,
-a dashboard), composite his real cut-out face onto it: [`composites.md`](composites.md).
+`cutSubject` lifts the subject off the RENDERED plate, so a generated frame holds zero photographed
+pixels of him.
+The verdict, 26 Aug 2026, on a frame built from `deadpan-wide-left-02`: "it doesn't look like me at
+all. It looks AI generated way too much." No model choice fixes it.
+Generate only what can't be photographed (an object, a figure, a room we don't have). When the
+background must be a **real artifact** (screenshot, board, dashboard), composite his cut-out face
+onto it.
 
 ## Which model
 
-**The model, the tier, the price and the ban live in** `vibe-kit/ai-doc/references/image-generation.md`. Ask `@heyramzi/ai` for a tier, never type an id, and `large` (Nano Banana Pro) is banned outright, so `--model=pro` throws. `render-thumbnail.ts` draws on the `medium` tier and takes `--model=<id>` for a test only. Ideogram's type accuracy and FLUX.2's photorealism do not reach here: the words are set in real Manrope, and neither carries the face compositing that keeps one person identical across a wall.
+**Model, tier, price and ban live in** `vibe-kit/ai-doc/references/image-generation.md`. Ask
+`@heyramzi/ai` for a tier, never type an id. `large` (Nano Banana Pro) is banned, so `--model=pro`
+throws. `render-thumbnail.ts` draws on `medium` and takes `--model=<id>` for a test only.
 
-**OpenAI re-rendered the person; Gemini keeps the photograph.** Tested twice with `gpt-image-1` and `gpt-image-2`. Editing a finished frame, `gpt-image-2` returned a lookalike (narrower jaw, different beard) and `gpt-image-1` cropped the type off. Building from the source plate it did far better (convincing likeness, excellent tile lighting, correct card) but still not the photograph: beard filled in, brow heavied, face idealised. Gemini returns the photographed face unchanged in both cases, because it composites where OpenAI resampled the canvas. On a channel where the same face appears weekly, a per-frame re-render drifts.
+**OpenAI re-rendered the person; Gemini keeps the photograph.** Tested twice. Editing a finished
+frame, `gpt-image-2` returned a lookalike (narrower jaw, different beard) and `gpt-image-1` cropped
+the type off. Building from the source plate it was far better but still idealised the face (beard
+filled in, brow heavied). Gemini returns the photographed face unchanged in both cases.
+**That ban is this skill's, it's about the face, and it holds:** a thumbnail carrying him goes to
+`gemini-3.1-flash-image`, always. Objects and illustration with nobody in frame may go to
+`gpt-image-2` where a call site names it. Seeds don't work: `generationConfig.seed` is accepted
+and ignored (same seed twice, hashes differ, 19 Aug 2026), so the substitute is the edit pass. No
+Gemini image model returns alpha: key the backdrop off with `logo3d/key.ts`.
 
-**That ban is this skill's, it is about the face, and it holds.** A thumbnail carrying him goes to `gemini-3.1-flash-image`, always. A workspace-wide ban sat on top for one morning (1 Sep 2026) and was lifted the same day, so objects and illustration with nobody in frame may go to `gpt-image-2` where a call site names it. **Seeds do not work**: `generationConfig.seed` is accepted and ignored by `gemini-3.1-flash-image`, the same seed twice returns two images (verified 19 Aug 2026, same prompt, hashes differ); the substitute is the edit pass. No Gemini image model returns alpha, so key the backdrop off with `logo3d/key.ts`.
+## "This one, but ___": the edit pass
 
-## Changing one thing in a frame you already like
-
-The most common request after a good render is "this one, but ___". Do not re-render the brief:
-you will get a different face, card and crop, because there is no seed. **Hand the finished PNG
-back as the first attached image and edit it.**
-
-**The same pass builds a cinematic frame from a flat plate, and this is the route to reach for.**
-Hand the model a flatly-lit `--photo` plate, tell it to keep his face, hair, beard, expression,
-hand and pose pixel-for-pixel, and transform everything else: a near-black defocused studio, a warm
-rim light, glowing panels. Gemini keeps the photographed face and generates the world, which the
-flat composite in [`composites.md`](composites.md) cannot reach. Verified 26 Aug 2026 on the
-"hiring won't fix it" base at `tier: large`: four samples, the face held in all four. Call
-`generateImage(router, { references: [{bytes, mediaType}], tier: "large" })` and set the type
-afterward. Say "keep his facial detail, do not plasticise the skin."
+Don't re-render the brief (no seed means a different face, card and crop). **Hand the finished PNG
+back as the first attached image and edit it.** The same pass builds a cinematic frame from a flat
+plate: hand a flatly-lit `--photo` plate, tell it to keep face, hair, beard, expression, hand and
+pose pixel for pixel, and transform the rest (a near-black defocused studio, warm rim, glowing
+panels). Verified 26 Aug 2026 on the "hiring won't fix it" base: 4 samples, face held in all
+4. Call `generateImage(router, { references: [{bytes, mediaType}], tier: "large" })`, then set the
+type. Say "keep his facial detail, do not plasticise the skin."
 
 ```
 Edit the FIRST attached image. It is a finished YouTube thumbnail and it is already correct.
@@ -51,121 +54,45 @@ skin, clothing and hand; <every other element, with position and content>; the f
 Do not redraw the face. Do not restyle. Do not re-typeset the text. Do not change the crop.
 ```
 
-**Naming what must not change is the whole job.** A model asked only to enlarge a logo will cheerfully re-typeset the overlay and re-crop the frame. List the survivors explicitly, then take three samples. The edit pass is the one case still on Pro, because nobody has re-run it on Nano Banana 2 since 25 Aug.
+Naming what must not change is the whole job: a model asked only to enlarge a logo will
+re-typeset the overlay and re-crop. List the survivors, take 3 samples. The edit pass is the
+one case still on Pro; nobody has re-run it on Nano Banana 2 since 25 Aug.
 
-## The template is what a render is built from
+A concept with a `templateId` renders from [`templates.md`](templates.md) and ignores its prose fields
+(`buildPrompt` hands off to `compileTemplatePrompt`). The template names the provider, so
+`--provider=` is for a deliberate comparison only.
 
-A concept carrying a `templateId` is rendered from [`templates.md`](templates.md), not from its prose fields: `buildPrompt` hands off to `compileTemplatePrompt`, and the three paragraphs are only there for the wall and for a designer handoff. The template names the provider, so `--provider=` is for a deliberate comparison and nothing else.
+## The client and the key order
 
-## The client, and the key order
+Put every image caller behind **one module**; don't build a provider by hand or add a key.
+It walks 3 lanes in order and only changes lane when the lane failed: a quota answer (429, or a
+403 naming `RESOURCE_EXHAUSTED`) or a rejected key (401, or a 400 naming the key). A malformed
+request is returned as is, since retrying it just spends the next key.
 
-Put every image caller behind **one module**. Import
-`googleImageClient()` and `NANO_BANANA_MODEL` from it; do not build a provider by hand and do not
-add a new key anywhere. It walks three lanes in order and only changes lane when the lane itself
-failed: a quota answer (429, or a 403 naming `RESOURCE_EXHAUSTED`) or a rejected key (401, or a 400
-naming the key). A malformed request is returned as is, because retrying it on the next key just
-spends the next key.
+1. `GOOGLE_GENERATIVE_AI_API_KEY`: direct to Google AI Studio, the priority lane.
+2. `GOOGLE_GENERATIVE_AI_API_KEY_BACKUP`: a second direct key. Leave unset rather than set a dead one.
+3. `CF_AIG_*`: the Cloudflare AI Gateway, holding its own Google key.
 
-1. `GOOGLE_GENERATIVE_AI_API_KEY`: direct to Google AI Studio. The priority lane.
-2. `GOOGLE_GENERATIVE_AI_API_KEY_BACKUP`: direct, a second key. Leave it unset rather than setting
-   a dead one.
-3. `CF_AIG_*`: the Cloudflare AI Gateway, which holds its own Google key.
+State, 26 Aug 2026: the direct key isn't in `app/.env.local`, so every image call lands on lane
+3, the lane every verified render was drawn on. OpenAI has no gateway lane: a direct `fetch` on
+`OPENAI_API_KEY`, billed by returned tokens at $30 per 1M image output (platform.openai.com/docs/pricing,
+26 Aug 2026). That comes to about $0.008 low, $0.032 medium and $0.125 high at 1536x1024. No frame carrying him goes there.
+Lock the lane order with a test and keep it identical in any second caller.
 
-**Known state, 26 Aug 2026: the direct Google key is not in `app/.env.local` either.** Every image
-call lands on lane 3, the Cloudflare AI Gateway, which holds its own Google key: the fallback
-doing its job, and the lane every verified render here was drawn on. **OpenAI has no gateway lane,
-and that is separate from whether it is allowed.** It is a direct `fetch` on `OPENAI_API_KEY`,
-because `/v1/images/generations` and `/v1/images/edits` are their own endpoints. It bills by
-returned tokens ($30 per 1M image output tokens, off platform.openai.com/docs/pricing on 26 Aug
-2026), so a frame at 1536x1024 costs about $0.008 low, $0.032 medium and $0.125 high. No thumbnail
-carrying his face goes there whatever it costs.
+## Filing the result
 
-Lock the lane order with a test and keep it identical in any second caller. Put callers behind the
-same module.
+**A rendered thumbnail is filed on its concept**, never a loose file or standalone HTML sheet:
+`/youtube/concepts` is the wall frames are judged on.
+File the frame against the video's concept record with the build orders merged into its metadata; a
+stored set that fails the schema disappears silently, so read it back before you say it's done.
 
-## Filing the result, and generating options
-
-**A rendered thumbnail is filed on its concept**, never handed over as a loose file or a standalone
-HTML sheet: the Concepts page at `/youtube/concepts` is the wall the frames are judged on.
-
-The frame is filed against the video's concept record, with the build orders merged into its
-metadata; a stored set that fails the schema disappears silently, so read it back before calling it
-done.
-
-In the browser the same two writes are `POST /api/youtube/thumbnails` (multipart: `file`, `name`,
-`conceptId`, `type`). The mood board's generator is the fastest route to a rendered option: it
-reads the concept, resolves the owned assets and writes to the board.
-
-```bash
-node scripts/render.mjs --prompt prompt.txt --ref face.webp --ref box.png --out out/a.png
-```
-
-It hands the model the owned assets as image parts, so identity is photographic and free. PNGs land
-in the **private** `app-assets` bucket, so board nodes point at
-`/api/storage/serve-url?bucket=app-assets&path=…&mode=redirect`, never a storage public URL.
-
-## Set the type yourself, and put it behind the subject
-
-**This is wired in since 20 Aug 2026 and is no longer a manual four-step.** Give the concept a
-`type` block and the script does all of it:
-
-```json
-"type": {
-  "lines": ["ClickUp was", "layer one"],
-  "placement": "top-left",     // top-left | top-right | left-center | bottom-left
-  "shape": "tab",              // tab hugs each line; band bleeds off the left edge
-  "plate": "#414FD2",          // brand indigo
-  "ink": "#FBF3EF",            // brand cream
-  "behindSubject": true
-}
-```
-
-Its presence forces `No text anywhere in the image` into the prompt, so there is nothing to paint
-out, and the size is fitted in the page. `scripts/thumbnail-compose.ts` owns it. For a frame
-rendered elsewhere: cut the subject out
-with a `cutout <in.png> <out.png>` helper (Apple's
-`VNGenerateForegroundInstanceMaskRequest` on the Neural Engine, free, no key, no upload); set real
-Manrope 800 through headless Chrome; stack plate, type, subject. The type then lands **behind** the
-person: a band that bleeds off the edge and dies behind his head reads as a thing in the room,
-where the same band on top reads as a label on a picture. **Occlude the plate, never a glyph**: the
-first composite hid the full stop after "it." behind the card, which reads as a typo rather than
-depth. The brand face is Manrope 800.
-
-## Prompt in pictures, and what must stay real
-
-**When a reference image exists, stop describing and start pointing.** Hand the model the winner
-tile whose composition you are borrowing ("this layout, this subject") and a second image for the
-type treatment. The house style is the last ten thumbnails, so consistency comes from those files,
-not a written style guide.
-
-**Text inside the frame obeys the same law, and it is the one people try to prompt.** Not the
-overlay, which the model sets reliably at four words, but writing on an object: a card, a screen, a
-label, a list of names. Prose cannot pin it: the same card described four ways came back with the
-wrong row count and different colours. Build the artwork as HTML, screenshot it transparent, attach
-it as a reference image, then point: *"the THIRD attached image is the printed card artwork.
-Reproduce it exactly: same words, order and colours, correctly spelled. Do not invent, translate,
-reorder or add text."* A supplied 3D tile is the same, and degrades the same way (angle and size
-limits in [`composites.md`](composites.md)): **say "reproduce that exact object at almost exactly
-the angle it is presented in, do not rotate the mark, do not merge the shapes", then crop the mark
-at full resolution and look.**
-
-**Grade, never regenerate, and that is what makes skin look expensive.** Ask for re-lighting and
-colour, never resampled skin: the full recipe and the corollary about skin is in [`craft.md`](craft.md).
-
-**Do not copy a composition closely enough to be recognisably another creator's.** Change the
-subject, the type and the palette; keep the structure. **The `Avoid` line is not boilerplate**:
-every item is a measured control marker (see [`niche-evidence.md`](niche-evidence.md)): a second
-person, a shocked expression, a readable screenshot, a chart, more than two working colours, a
-centred symmetric composition, more than four words of text, a flat cut-out pasted look, an object
-square-on to camera, fused or extra fingers.
-
-## When the render comes back wrong
+## Fixing a wrong render
 
 | Symptom | Fix |
 | --- | --- |
-| Text misspelled | Shorten the string. Four words is the practical ceiling for reliable glyphs. |
-| Face distorted | You asked it to change an expression. Go back to a composite. |
-| Five things in frame | The prompt described a scene. Name one subject and one accent. |
-| Washed out at 320px | Two working colours, and the type on a solid plate, not an outline. |
-| Looks like the reference | Change subject, type and palette. Keep only the structure. |
-| Quota error on every lane | All three lanes are rate limited. Wait, or add a second direct key. |
+| Text misspelled | Shorten the string; 4 words is the reliable ceiling |
+| Face distorted | You asked it to change an expression; go back to a composite |
+| 5 things in frame | The prompt described a scene; name one subject and one accent |
+| Washed out at 320px | 2 working colours, type on a solid plate instead of an outline |
+| Looks like the reference | Change subject, type and palette; keep only structure |
+| Quota error on every lane | All 3 lanes rate limited; wait, or add a second direct key |

@@ -42,13 +42,17 @@ sys.path.insert(0, HERE)
 import schema
 
 # The order and its gate live in `../schemas/passes.json`, the one home the studio reads too.
-# Each row is (key, what it proves, the commands whose output proves it).
+# Each row is (key, what it proves, the commands whose output proves it), the last two keyed by route.
 PASSES = [(p["key"], p["proves"], p["commands"]) for p in schema.passes()]
 
 STATE_WORD = {"done": "DONE", "started": "IN PROGRESS", "blocked": "BLOCKED", "": "OPEN"}
 
 
 ROUTES = ("descript", "local")
+
+
+def route_of(run):
+    return run.get("route", "descript")
 
 
 def sync_board(run):
@@ -63,7 +67,7 @@ def sync_board(run):
     for i, (name, what, _) in enumerate(PASSES):
         s = run["passes"][i]
         ev = f" ({s['evidence']})" if s.get("evidence") else ""
-        items.append(f"{STATE_WORD.get(s['state'], 'OPEN')} · {i} {name} - {what}{ev}")
+        items.append(f"{STATE_WORD.get(s['state'], 'OPEN')} · {i} {name} - {what[route_of(run)]}{ev}")
     out = subprocess.run(["cu", "task", "checklist", "create", task, "--name",
                           f"Edit - the {len(PASSES)} passes ({run['code']})", "--items-json", json.dumps(items)],
                          capture_output=True, text=True)
@@ -108,9 +112,19 @@ def names_command(text, commands):
     return None
 
 
-def proof_of(d, n, ev, file, cmd):
+def proof_of(d, run, n, ev, file, cmd):
     """What makes `done` checkable: a saved output that exists, or a command run and kept here."""
-    key, _, commands = PASSES[n]
+    key, _, by_route = PASSES[n]
+    route = route_of(run)
+    commands = by_route[route]
+    if route == "local" and n == 0 and file is None and cmd is None:
+        take = run.get("take") or os.path.dirname(run.get("cut", ""))
+        if not take or not os.path.exists(take):
+            refuse("local organise needs the take folder recorded in RUN.json, and it must exist")
+        proof_file = os.path.join(d, "proof", "0-organise.txt")
+        os.makedirs(os.path.dirname(proof_file), exist_ok=True)
+        open(proof_file, "w").write("take folder: %s\n" % os.path.abspath(take))
+        return {"file": proof_file, "sha256": schema.sha256(proof_file)}
     if file is None and cmd is None:
         refuse(f"done needs --file <saved output> or --run \"<command>\", so the proof is checkable.\n"
                f"commands for pass {n} ({key}): {', '.join(commands)}")
@@ -161,7 +175,7 @@ def table(run):
         mark = {"done": "done", "started": "started", "blocked": "BLOCKED"}.get(s["state"], "")
         if s.get("override"):
             mark += " (out of order)"
-        rows.append(f"| {i} | {name} - {what} | {mark} | {s.get('evidence', '')} |")
+        rows.append(f"| {i} | {name} - {what[route_of(run)]} | {mark} | {s.get('evidence', '')} |")
     return head + "\n".join(rows) + "\n"
 
 
@@ -182,7 +196,8 @@ def main():
         run = {"code": arg("--code", os.path.basename(d.rstrip("/"))),
                "route": route,
                "project": arg("--project", ""), "comp": arg("--comp", ""),
-               "cut": arg("--cut", ""),
+               "cut": arg("--cut", ""), "take": arg("--take", ""),
+               "format": arg("--format", "vertical" if route == "local" else "wide"),
                "passes": [{"state": "", "evidence": ""} for _ in PASSES]}
         os.makedirs(d, exist_ok=True)
         save(d, run)
@@ -199,12 +214,12 @@ def main():
         if n is None:
             print("every pass done")
             return
-        name, what, proof = PASSES[n]
+        name, what, proofs = PASSES[n]
         state = run["passes"][n]["state"]
-        print(f"{n} {name}: {what}")
+        print(f"{n} {name}: {what[route_of(run)]}")
         if state == "blocked":
             print(f"  BLOCKED: {run['passes'][n]['evidence']}")
-        print("  proves it: " + ", ".join(proof))
+        print("  proves it: " + ", ".join(proofs[route_of(run)]))
     elif cmd == "start":
         n = idx(sys.argv[3])
         behind = [i for i in range(n) if run["passes"][i]["state"] not in ("done", "blocked")]
@@ -226,7 +241,7 @@ def main():
                 refuse("--anyway still needs --evidence saying what the proof was")
             entry["override"] = True
         else:
-            entry["proof"] = proof_of(d, n, ev, arg("--file"), arg("--run"))
+            entry["proof"] = proof_of(d, run, n, ev, arg("--file"), arg("--run"))
         run["passes"][n] = entry
         sync_board(run)
         save(d, run)

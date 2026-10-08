@@ -1,192 +1,176 @@
-# Storytelling, and the direction gate
+# Storytelling, planning and the direction gate
 
-The value test in SKILL.md judges one clip at a time, so the best it can do is throw out the bad
-ones; it cannot produce a story, because nothing in it looks at the clip before. This file is the
-other half: the direction gate that runs before any clip exists, what a beat draws instead of the
-words, and what makes a set continuous. Read it at plan time and again before writing any clip's
-header.
+Read it at plan time, and again before you write any clip's header. The value test judges one clip.
+The rest of this file is what runs before a clip exists: the gate, the through-line, and how much goes
+where.
 
-This file is the motion application of general storytelling principles (one subject, change as the
-unit of attention, an open loop). Where a general principle and this file disagree, the general one
-is right about the principle and this file about the register.
+## The direction gate (step zero)
 
-## The direction gate comes before `plan.md`
+Nothing is built until the owner has picked a look. A 20-clip operations set went all the way into the
+editor before the owner saw one frame. Verdict, 25 Aug 2026: *"I don't like at all any of
+the designs we have created sadly. They are all ugly and too complex. We need to go a little bit more
+minimal. It looks amateur if you watch what you do. The skill should offer me one or two angles or three
+angles in the beginning in an HTML."*
 
-**Nothing is built until the owner has picked a look.** A twenty-clip operations set was designed,
-built, rendered, verified and imported before the author saw a frame. Verdict, 2026-08-25:
+1. Pick 2 or 3 directions for the whole video, disagreeing on ink, subject or ground.
+2. Render one still per direction, of the same beat (`remotion still` on a throwaway comp, or hand SVG).
+3. Write them into a plain local `.html` (`scripts/directions.py` builds it from a small JSON manifest).
+   Give each a name, its still, one sentence on what it commits to and one on what it gives up. Its `now`
+   panel shows the current set at a third the width: a choice reads as academic without it.
+4. Ask the owner, and wait. This is one of the few places a question beats a decision.
 
-> "I don't like at all any of the designs we have created sadly. They are all ugly and too complex.
-> We need to go a little bit more minimal. It looks amateur if you watch what you do. The skill
-> should offer me one or two angles or three angles in the beginning in an HTML."
+Showing one beat 3 ways doesn't satisfy the gate. A later video ran that board and built every clip in
+a look the owner never saw: near-black, with a blue grid measuring nothing and a bloom on 4 objects. Verdict:
+"extremely ugly", "the way we work right now has been beginner". The gate covers ground, ink and material.
 
-So step zero, before the beats are even measured:
+Done when: the owner named a direction in writing.
 
-1. Pick **two or three visual directions** for the video, not three designs of one beat. They have
-   to actually disagree: different amount of ink, different subject, different relationship to the
-   ground.
-2. Render **one still per direction, of the same beat**, so they are comparable. `remotion still` on
-   a throwaway composition, or hand-write the SVG.
-3. Write them into a **plain `.html` file on disk** and give the owner the path. Not an Artifact - a local
-   file is enough and does not put the work on claude.ai. Each direction gets its name, its still,
-   one sentence on what it commits to and one on what it gives up.
-4. **Stop and ask.** One of the few places a question beats a decision, because the whole session's
-   output hangs off the answer.
+### What "too complex" measured as
 
-`scripts/directions.py` writes the page from a small JSON manifest so the gate costs a minute, not
-an afternoon. Its `now` panel carries a frame of the current set at a third the width of the
-options, because the choice reads as academic without the thing being replaced beside it.
+That board held about 50 marks. It had 25 blocks across 5 lanes, with 5 valves, wires and a 9-segment
+ceiling, nearly all outlined bright on near-black and glowing: a sci-fi HUD. 4 countable rules fix it:
 
-**A board of three designs for ONE BEAT does not satisfy the gate.** A later video ran that board, and every clip in the video was then built in a look nobody had been shown: near-black,
-a blue grid measuring nothing, a bloom on each of four objects. The verdict was
-"extremely ugly" and "the way we work right now has been beginner" - the same verdict as the
-earlier set, sixteen days later, through the gate written to prevent it. The gate is about the
-GROUND, the amount of ink and the material. Which of three arrangements a single beat uses is a
-different question, asked after.
+- One subject, and you can point at it. Cover everything but it; if the rest still does work, cut it.
+- Seven marks at most. A repeated element counts once, and past about seven the eye scans.
+- Glow is for one thing. One glow in 19 seconds, held for the beat the passage was built to reach.
+- Value before hue. Most of the frame at one dim value, the subject brighter.
 
-## What "too complex" measured as
+Draw fewer things bigger (3 blocks at 200px say what 25 at 118px tried), imply structure (2
+rules and a gap say "rows"), cut the label before the shape. A beat that needs fifty marks gets his face.
+This ranks above the value test: a clip that carries the idea and is unreadable at a glance failed first.
 
-That board carried, in one frame: five lane plates, five client discs, twenty-five work
-blocks, five valves, five wires, a gate, a spine, a ceiling of nine segments, five people and up to
-three labels. Fifty-odd marks, nearly all outlined in a bright colour on near-black, nearly all
-carrying a glow. That is a control panel, the sci-fi HUD default a good eye rejects on sight.
+## The value test
 
-Four rules, and they are countable rather than tasteful:
+Before building, answer in one line: **what does the viewer know after this clip that the sentence did not
+tell them?** If the answer is "the same thing in shapes", put his face there. A graphic can add 4
+things:
 
-**One subject, and you can point at it.** Cover everything except the thing the beat is about; if
-the rest of the frame is still doing work, cut it.
+- A quantity made comparable. A fifth of a grid lit, wired to a bar at four fifths.
+- A consequence the read leaves implicit. Draw the cost of putting the eighty down.
+- A structure with no name yet. Speech is serial, a frame shows the parts at once.
+- A recognition. The real logo, screen or word, the tool they have open in another tab.
 
-**Seven marks, not fifty.** Count distinct marks in a still. A repeated element - a row of identical
-blocks, five lanes - counts as one. Past about seven the eye stops reading and starts scanning.
+A cutaway with a budget adds none of the four, and being on-palette, on-clock and well sprung doesn't
+rescue it. The second question is what the clip changes, and what it hands to the clip after. A clip that
+can only answer the first is correct and inert. Put both answers in the header comment on one line each, and add the clip's rung and the sentence it serves verbatim.
 
-**Glow is for one thing.** The subject glows; the room does not. Across a passage it is scarcer
-still: one glow in nineteen seconds, held back for the beat the passage was built to reach. A glow
-in every beat is a glow in none of them.
+**A right clip on the wrong sentence is a wrong clip.** The viewer sees one thing, hears another and leaves:
+a retention cliff that looks like boredom and gets "fixed" by cutting faster. The in-point belongs to the
+clip's spec, and the editor doesn't get to pick it.
 
-**Value before hue.** The eye reads value first. Most of the frame sits at one dim value with the
-subject brighter, not five colours competing at the same brightness.
-
-What to do instead: draw fewer things bigger (three blocks at 200px say what twenty-five at 118px
-tried); let the ground carry the frame; imply a structure (two rules and a gap say "rows"); cut the
-label before the shape; if a beat needs fifty marks, put his face there instead and say so in the
-plan.
-
-**This ranks above the value test and the through-line.** A clip that carries the idea, changes
-state, inherits its world and is unreadable at a glance has failed at the first thing a viewer does,
-which is look at it.
-
-## The two failures, one root
-
-**The clip says the sentence.** He says "three gates" and three boxes appear labelled Gate 1, Gate
-2, Gate 3 - a transcript in the brand typeface, describing the read word for word instead of the
-idea. **The clips do not know about each other.** Each opens on an empty frame, builds its own small
-world, resolves, and is thrown away. Fifteen of those is a slideshow of correct diagrams. Both come
-from the same place: the unit of work was the sentence. **The unit of work is the video.**
-
-## Transcription is not neutral, it costs retention
-
-Measured, not taste. Mayer's redundancy principle: when narration and on-screen words carry the same
-content, comprehension goes **down**, because reading and listening compete for one channel and
-reading wins. A clip that repeats the read takes the beat, spends the budget, and lowers the
-retention of the line it was meant to help. His face was the better shot and it was free. Partial
-redundancy (keywords beside speech) tests better than the sentence set in type, which is why the
-overlay register stays to short labels and never a paragraph.
-
-**Type leads only for a list or a name.** An idea gets a picture.
+**Transcription costs retention** (Mayer's redundancy principle): when narration and on-screen words carry
+the same content, comprehension drops because reading wins the one channel. Keywords beside speech test
+better than the sentence. Type leads only for a list or a name; an idea gets a picture.
 
 ## The literalness ladder
-
-Every beat sits on one of five rungs. Most drift lands on 0 and 1.
-
-| Rung | What the frame does | Verdict |
+| Rung | The frame | Verdict |
 | --- | --- | --- |
-| **0. Transcription** | His words, set in type | Banned |
-| **1. Illustration** | Draws the noun he said (he says database, a cylinder appears) | Only for recognition |
-| **2. Structure** | Draws the arrangement speech had to say serially | The floor for a real clip |
-| **3. Consequence** | Draws what the sentence left implicit: the cost, the second-order effect | Where the good clips are |
-| **4. Meaning carried** | Uses the video's own motif, so the beat lands and the argument advances at once | Decided in the plan, never per clip |
+| 0. Transcription | His words in type | Don't |
+| 1. Illustration | Draws the noun he said | Only for recognition |
+| 2. Structure | Draws the arrangement speech said serially | The floor for a real clip |
+| 3. Consequence | Draws what the sentence left implicit | Where the good clips are |
+| 4. Meaning carried | Uses the video's own motif | Decided in the plan, never per clip |
 
-Rung 1 is legal only when the noun is a **recognition**: the real logo, screen or word is the whole
-payload. A drawn cylinder is a picture of a word, and legal is not the same as right: a real
-docs-app screenshot under "your source of truth for your templates" was genuine and still a picture of
-the word *documentation*, because it named the thing a second time instead of showing what it does.
+Rung 1 is legal when the real logo, screen or word is the whole payload, and legal isn't right: a docs-app
+screenshot under "your source of truth for your templates" named the thing twice and never showed what it
+does. **A count is transcription with the type removed.** A line about pillars gets drawn as that many columns, which puts
+the count word in rectangles. Draw the topology and the number is usually wrong (sales and delivery were
+the two ends of one loop, and the third thing sat underneath holding what the loop wrote). Same for a line
+about steps. Aim for a median of 2 to 3 with 2 or 3 beats at 4; a median of 1 is a set of illustrations, and
+rung 4 on every beat is a video that won't say anything plainly.
 
-**A count is transcription with the type removed.** "Three main pillars" looks like it hands over a
-layout: three columns, done. That layout is the word *three* in rectangles. A count is a property of
-speech, which names a list one at a time; it is rarely the structure. Draw the topology and the
-number is usually wrong: sales and delivery were the two ends of one loop, and the third thing was
-underneath, holding what the loop wrote. The same trap runs on "four steps" and "two sides".
+## The through-line
+It goes at the top of `plan.md`, before any clip. The video is the unit of work. A set of clips that
+each open on an empty frame, draw a small world and resolve is a slideshow of correct diagrams.
 
-**Name the rung in the clip's header comment.** A set whose rungs are all 1 and 2 is a set of
-illustrations however well it renders. Aim for a median of 2 to 3 with two or three beats at 4.
+- One world, the domain every figure comes from (the kitchen, the machine, the queue). Beat 9 can reuse
+  a shape beat 3 set up. Extend the world before opening a new one.
+- One motif that appears in the first minute, changes across the video and returns at the end. If it
+  doesn't change it's a watermark. A rack fills or a queue drains, or a wall gets a door.
+- Change is the unit of attention. Per clip, ask what state the last one left, what this one changes and what it
+  hands on. Never redraw an established structure from zero. A scale word ("more projects") widens the
+  same loop.
+- One open loop, like a missing box or a link going nowhere. Open it on the frame where he opens it, then
+  pay it off with the same composition completed where he answers.
+- A story role per beat: state (one early beat), break (the cost, often his face), complication (why the
+  obvious fix fails), mechanism (where most clips live), resolution (the motif, changed). All "explain" goes flat.
+- A passage that won't draw means the copy is wrong. A line about pillars, then "all of it is kept by a
+  system", gave the container and its part the same name. Send the sentence back.
 
-## The through-line: one world, one motif
+Skip it for a recognition beat, a screen demo (a graphic over evidence argues with it) and a quantity.
 
-Decided in `plan.md` before any clip exists, written at the top of it.
+## Devices that tie clips together
 
-**One world.** The domain every figure is drawn from: the kitchen, the machine, the map, the queue.
-Fixing it early is what lets beat 9 use a shape beat 3 established. A fresh domain per section
-teaches nothing, because none of them compound.
+A video needs one continuity device, so don't use 5. Cheapest first:
+1. Carry-over state: the next clip opens where the last resolved, via a shared constant. Where a passage
+   shares one figure, build it as one clip.
+2. The return frame: one composition back at each boundary with one more thing in it (`ReturnMark`, a
+   higher `at` per section).
+3. The match cut: the last shape of one clip is the first of the next, meaning something else.
+4. Running position: the client always enters left, the system always sits right.
+5. The 3D carousel: core models sit on a curved plane while the camera tracks across and the rest fall into depth blur.
 
-**One motif.** One object that appears in the first minute, changes across the video, and returns at
-the end. **It has to change, or it is a watermark.** A rack that fills, a queue that drains, a wall
-that turns out to have a door. Pick one world (a kitchen: recipes, the pass, the rack, the same
-burger) and extend it before opening a new one.
+3 spatial frames anchor an idea before anyone explains the detail: the dichotomy fork (blur his plate about
+25px, two paths side by side, zoom into the chosen one), the bullseye (5 concentric rings, for audience
+or scope) and 3D pillars with real social-proof cards docked under each.
 
-## Change is the unit of attention
+Where a graphic lands against the word (measured on a 19-minute reference, 29 Aug 2026): it arrives
+10 to 15 frames before the word it serves and completes on it, since a graphic landing ON the word is a
+caption. It leaves 6 to 10 frames before the last syllable, which hands focus back to the face. `HOLD` is the
+tail floor that moves earlier.
 
-The brain is a change detector, so the per-clip question is not what the clip shows. It is **what it
-changes**: what state the previous clip left, what this one makes different, what it hands to the
-next. A clip whose honest answer is "nothing, it shows another thing" is a bullet point, not a beat.
+The clock those sit inside is **a visible change every 1.7 to 2.5s**: 41 in the first 60 seconds, no static
+stretch over 5s, about 7 micro-changes per hard cut. Micro-beats every 1.5 to 2.5s (tool pills, `20%`
+callouts, 1.15x punch-ins, a spotlight dimming all but the active field), meso every 5 to 8s (connector
+travel, prompt-then-output reveals), macro every 15 to 45s (an architecture map, a full workflow). 3
+mechanisms fill it:
 
-**An established structure is never redrawn from zero.** Rebuilding tells the viewer the video has
-no memory.
+- Show every row of a list from frame one with one lit. Inactive rows sit at about 35% with no border, and
+  the active one snaps to full white on the cue. A row that hasn't arrived can't be anticipated. A staggered
+  reveal is only for a list whose order is the argument.
+- Nothing is shown finished. Charts, fills and connectors draw over 1 to 1.5s (a one-second floor) behind
+  a leading point; the mark lands before the fill reaches it.
+- In live demos, split the focus: a pill tracks the tool being invoked, so the screen is never dead.
 
-**A scale word is said with a dimension, not with more objects.** "More projects" is the same loop,
-wider. A second loop beside the first is a new thing to read.
+## Planning a video's set
 
-## One open loop
+`plan.md` covers every sentence in the cut, states the coverage percentage and gives each beat a register and
+a story role. Build in plan order; if only some beats are built this session, say which.
 
-A video asks one question early and answers it late: a missing box, a link that goes nowhere, a
-number with no explanation. Open it on the frame where he opens it in the read. Do not resolve it;
-let the video continue past the incompleteness. Pay it off with the same composition, completed, at
-the beat where he answers it: recognition is the payoff. Two open loops in one video is neither.
+There are 5 registers, chosen by what the clip does to the picture. One replaces it (full frame, its own
+ground, uppercase labels per `type.ts`); one sits on it (keyed over his face, sentence case, brand type);
+a figure (boxes and arrows, or an analogy bridge, only when the arrangement says something new); a rendered
+object (real 3D keyed over him, 2 or 3 per video); a borrowed shot (found footage, 3 to 6s, muted, licence
+in a ledger, shipped from `B-roll`). The first four ship from `Motion`.
+Wide clips ship in a wide and a narrow frame (`craft.md`).
 
-**Which device ties one clip to the next, and which spatial arrangement anchors an idea before the
-detail is spoken: the five continuity devices and the three framing models are in
-[beat-devices.md](beat-devices.md).**
+Take the clock from the cut's SRT, and ignore the written script. Export it and compare the cut's duration to
+the raw take. Equal durations mean no cut yet: build the beats you can name and say which are waiting.
+Different means the SRT is the only clock; what got said runs longer, reordered, full of asides that want a
+face. Diff line timings right before committing filenames, since the names are write-once.
 
-## The arc the plan writes down
 
-A beat gets a **story role** as well as a register. A plan whose every beat is "explain" is a
-lecture and goes flat in the third minute.
+A film with no read takes its clock from the track's bar (`product-film.md`). Search what exists before you design.
+Open every clip with a header comment that quotes the line it serves and argues its design. That makes your
+own clip library searchable: grep it for the line you're about to build for before you design from zero.
 
-- **State.** How things are now. One beat, early.
-- **Break.** The change or cost that makes the rest necessary. The beat most often handed to his
-  face.
-- **Complication.** Why the obvious fix does not work. Skipping it makes an explainer feel
-  weightless.
-- **Mechanism.** How it does work. Most clips live here, where the motif and carry-over earn a
-  place.
-- **Payoff.** The motif returning, changed.
+- Coverage: under about 40% on a talking-head explainer, look again; over about 60% the presenter has
+  vanished behind his graphics, so cut the weakest. A tour that's mostly screen states its band against the
+  other minutes.
+- Balance: no stretch over 45s without b-roll, none over 25s without his face, and no 2 clips back to
+  back with no face between them (unless the second lands the point). Don't front-load.
+- Story checks: the through-line sits atop the plan; the motif returns changed (name both beats); the loop
+  opens and closes on the same frame; no structure is drawn twice; rungs are counted; 6 figures in a row is
+  wallpaper; a single borrowed shot is a punchline and 4 make a compilation, and none ships in a paid product
+  unchecked; words on a background past a third of the plan means the video is subtitling itself.
+- Give one beat one clip with 3 designs at identical frame counts. A second design is a second reading on
+  another rung, and a second layout doesn't count.
+- Timing: one `beats.ts` per video keyed by beat from the SRT, and clips import from it. Make every schedule
+  constant a named frame number at the top. Resolve before the cut and leave hold frames. Phases that
+  reference each other's final geometry must not overlap.
 
-## When a passage will not draw, the copy is wrong
+The line he pastes can differ from the line he speaks. A scene copied out of the editor carries the
+struck-through words absent from the export (M0 L1 lost a sentence and a whole beat to it). Check
+`getComputedStyle(...).textDecorationLine` per text node before building.
 
-A storyboard is the first honest proofread a read gets, because speech carries an ambiguity a frame
-cannot. The pillars passage said the system stands on three pillars (sales, delivery, system) and
-then said all of it is maintained by a system: the container and one of its parts had the same name.
-No frame can draw that. **A beat you cannot draw without inventing a distinction the read does not
-make is a beat whose read is missing that distinction.** Send the sentence back before designing
-round it.
-
-## Where storytelling is the wrong answer
-
-- **A recognition beat.** Three seconds of the real screen or logo; a metaphor buries the one thing
-  it was for.
-- **A screen demo.** The evidence is the story; a graphic over it argues with it.
-- **A quantity.** Draw the quantity; a metaphor adds a domain to translate back out of.
-
-Reaching for rung 4 on every beat is its own failure: a video that will not say anything plainly.
-Both answers to the value test go in the clip's header comment, one line each: what the viewer knows
-after this clip that the sentence did not tell them, and what it changes from the clip before and
-hands to the clip after. A clip that can only answer the first is correct and inert.
-
+Done when: the plan has the through-line, a rung and a role per beat, and the checks above pass.

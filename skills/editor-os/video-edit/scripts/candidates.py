@@ -86,7 +86,7 @@ def joined(blocks):
     AFTER the one it abandons - Descript breaks a paragraph at the pause the speaker took to start
     again - so a per-block search cannot see the thing it is looking for. FC38 opened with four
     attempts at one sentence spread over three paragraphs and reported zero candidates; the edit
-    that followed kept attempt 2's head and attempt 4's tail. `references/what-to-cut.md`.
+    that followed kept attempt 2's head and attempt 4's tail. `references/cutting.md`.
     """
     spans, at = [], 0
     for text in blocks:

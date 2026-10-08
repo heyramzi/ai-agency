@@ -3,98 +3,192 @@
     "id": 0,
     "key": "organise",
     "label": "Organise",
-    "proves": "One folder per video; tracks named CAM/CAM GS/MIC/SCREEN, one live, only the live one in the script, the green twin on CAM's clock: `descript tracks` prints clean",
-    "commands": ["descript tree", "descript tracks", "descript comps", "track script", "track mute"]
+    "proves": {
+      "descript": "One folder per video; tracks named CAM/CAM GS/MIC/SCREEN, one live, only the live one in the script, the green twin on CAM's clock: `descript tracks` prints clean",
+      "local": "The take sits in its own folder beside RUN.json: camera, screen and mic files, nothing else to sort"
+    },
+    "commands": {
+      "descript": [
+        "descript tree",
+        "descript tracks",
+        "descript comps",
+        "track script",
+        "track mute"
+      ],
+      "local": [
+        "take folder"
+      ]
+    }
   },
   {
     "id": 1,
     "key": "cut",
     "label": "Cut",
-    "proves": "Coach BEFORE the cut, pass 1 deterministic, pass 2 a dispatched read, proven on a fresh dump",
-    "commands": [
-      "take-stats.py",
-      "recut2.py",
-      "beatclock.py",
-      "candidates.py",
-      "restate.py",
-      "prove_cuts.py",
-      "descript cut",
-      "descript edits"
-    ]
+    "proves": {
+      "descript": "Coach BEFORE the cut, pass 1 deterministic, pass 2 a dispatched read, proven on a fresh dump",
+      "local": "`cut short` wrote the first cut: dead air, fillers and retakes out, each repeated line keeping its last whole take; `cut check` reads clean"
+    },
+    "commands": {
+      "descript": [
+        "take-stats.py",
+        "recut2.py",
+        "beatclock.py",
+        "candidates.py",
+        "restate.py",
+        "prove_cuts.py",
+        "descript cut",
+        "descript edits"
+      ],
+      "local": [
+        "cut short",
+        "cut check"
+      ]
+    }
   },
   {
     "id": 2,
     "key": "reorder",
     "label": "Reorder",
-    "proves": "Intro's second pain and the outro's double ask moved into place, then a `descript marker` chapter on every section, the first at 0:00",
-    "commands": [
-      "arrange.py",
-      "descript move",
-      "beatclock.py",
-      "descript script",
-      "descript marker"
-    ]
+    "proves": {
+      "descript": "Intro's second pain and the outro's double ask moved into place, then a `descript marker` chapter on every section, the first at 0:00",
+      "local": "The brief's hook opens the cut, the CTA keeps its last take, and `cut check` reads clean on the new order"
+    },
+    "commands": {
+      "descript": [
+        "arrange.py",
+        "descript move",
+        "beatclock.py",
+        "descript script",
+        "descript marker"
+      ],
+      "local": [
+        "cut check"
+      ]
+    }
   },
   {
     "id": 3,
     "key": "rhythm",
     "label": "Rhythm",
-    "proves": "Slots named, the visual read dispatched, then a pack layout on every card",
-    "commands": [
-      "sequence.py",
-      "visuals.py",
-      "descript layout",
-      "layout pace",
-      "layout apply",
-      "layout cards"
-    ]
+    "proves": {
+      "descript": "Slots named, the visual read dispatched, then a pack layout on every card",
+      "local": "Every stretch has a pack layout, a change about every 3s and none held past 6s: `cut check` names no scene outside the pack and no long hold"
+    },
+    "commands": {
+      "descript": [
+        "sequence.py",
+        "visuals.py",
+        "descript layout",
+        "layout pace",
+        "layout apply",
+        "layout cards"
+      ],
+      "local": [
+        "cut check"
+      ]
+    }
   },
   {
     "id": 4,
     "key": "music",
     "label": "Music",
-    "proves": "Three options offered, nothing laid: the brand's music style searched in Descript Stock, three tracks long enough and named for the mood pulled into Music/ and put on the project page by `editor-os music offer`. `place` lays the one he keeps with `music set`. Style `none` skips the pass",
-    "commands": [
-      "editor-os music",
-      "descript stock music search",
-      "descript stock music pull",
-      "editor-os music offer",
-      "music set",
-      "descript music"
-    ]
+    "proves": {
+      "descript": "Three options offered, nothing laid: the brand's music style searched in Descript Stock, three tracks long enough and named for the mood pulled into Music/ and put on the project page by `editor-os music offer`. `place` lays the one he keeps with `music set`. Style `none` skips the pass",
+      "local": "Three options offered, nothing laid: the brand's style searched and put on the project page by `editor-os music offer`. `place` lays the one he keeps. Style `none` skips the pass"
+    },
+    "commands": {
+      "descript": [
+        "editor-os music",
+        "descript stock music search",
+        "descript stock music pull",
+        "editor-os music offer",
+        "music set",
+        "descript music"
+      ],
+      "local": [
+        "editor-os music offer"
+      ]
+    }
   },
   {
     "id": 5,
     "key": "motion",
     "label": "Motion",
-    "proves": "plan.md first, one clip per slot, watched, imported to Motion/, not placed yet",
-    "commands": ["fill", "roster", "watch.py", "clips.py", "descript import"]
+    "proves": {
+      "descript": "plan.md first, one clip per slot, watched, imported to Motion/, not placed yet",
+      "local": "plan.md first, one clip per slot, each alpha clip looked at over gray and over dark, then picked onto its beat with `editor-os pick`"
+    },
+    "commands": {
+      "descript": [
+        "fill",
+        "roster",
+        "watch.py",
+        "clips.py",
+        "descript import"
+      ],
+      "local": [
+        "editor-os pick"
+      ]
+    }
   },
   {
     "id": 6,
     "key": "broll",
     "label": "B-roll",
-    "proves": "Found, generated or captured; licensed into the ledger; imported to B-roll/, not placed yet",
-    "commands": ["source.py", "brollclip.py", "genvideo.py", "descript import"]
+    "proves": {
+      "descript": "Found, generated or captured; licensed into the ledger; imported to B-roll/, not placed yet",
+      "local": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`"
+    },
+    "commands": {
+      "descript": [
+        "source.py",
+        "brollclip.py",
+        "genvideo.py",
+        "descript import"
+      ],
+      "local": [
+        "editor-os pick"
+      ]
+    }
   },
   {
     "id": 7,
     "key": "review",
     "label": "Review",
-    "proves": "The project page shows transcript, layouts, inserts and sound in order; he closes each, and plan.json holds every choice before placement",
-    "commands": [
-      "editor-os transcript",
-      "editor-os plan",
-      "editor-os wait",
-      "layout apply",
-      "descript pin"
-    ]
+    "proves": {
+      "descript": "The project page shows transcript, layouts, inserts and sound in order; he closes each, and plan.json holds every choice before placement",
+      "local": "The project page shows transcript, layouts, inserts and sound in order after `editor-os plan`; he closes each card"
+    },
+    "commands": {
+      "descript": [
+        "editor-os transcript",
+        "editor-os plan",
+        "editor-os wait",
+        "layout apply",
+        "descript pin"
+      ],
+      "local": [
+        "editor-os plan",
+        "editor-os feedback"
+      ]
+    }
   },
   {
     "id": 8,
     "key": "handoff",
     "label": "Handoff",
-    "proves": "`descript settings` reads clean, then hand over for the author's human pass. Never publish or export: he does that after watching",
-    "commands": ["descript settings", "get_project"]
+    "proves": {
+      "descript": "`descript settings` reads clean, then hand over for the author's human pass. Never publish or export: he does that after watching",
+      "local": "`cut final` renders the master and its handoff file once every note is closed. Never publish: he does that after watching"
+    },
+    "commands": {
+      "descript": [
+        "descript settings",
+        "get_project"
+      ],
+      "local": [
+        "cut final"
+      ]
+    }
   }
 ]

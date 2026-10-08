@@ -7,14 +7,14 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import terrainPath from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/cesium/assets/cesium-path.json";
+import terrainPath from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/cesium/assets/cesium-path.json";
 import {
   smoothFlightPath,
   type LngLat,
-} from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/cesium/assets/flight-path";
+} from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/cesium/assets/flight-path";
 
 export type FlyoverMode = "landscape" | "city";
-export type { LngLat } from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/cesium/assets/flight-path";
+export type { LngLat } from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/cesium/assets/flight-path";
 
 export type CesiumFlythroughProps = {
   mode?: FlyoverMode;

@@ -18,7 +18,7 @@ delayRender → setData/setPaintProperty → map.once('idle', continueRender) �
 ```
 
 `preserveDrawingBuffer:true` so Remotion's screenshot captures the canvas. Render `--gl=angle`.
-For an animated camera, read `render-stability.md`: the MapTiler renderer remains static and a CSS plate
+For an animated camera, read [render-stability.md](../../../references/render-stability.md): the MapTiler renderer remains static and a CSS plate
 transform supplies the camera choreography.
 
 ## 2. Timing model — time-based; beat length derived from the sequences
@@ -124,6 +124,6 @@ own type and palette system.
 
 ## 7. Camera — fixed map plate for any movement
 
-Read `render-stability.md`. Do not use per-frame `map.jumpTo()` for a moving 2D shot; it can shimmer in
+Read [render-stability.md](../../../references/render-stability.md). Do not use per-frame `map.jumpTo()` for a moving 2D shot; it can shimmer in
 headless renders even on satellite imagery. Interpolate the intended camera for the CSS plate transform,
 while keeping the MapTiler renderer static.

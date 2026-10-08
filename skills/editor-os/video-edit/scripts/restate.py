@@ -13,7 +13,7 @@ that a reader can check, so pass 2 is auditable the same way.
 Exit status is 1 when --check finds an uncovered candidate. Every candidate is a
 needle or a dismissal, and a dismissal is one word.
 
-The four are the ones `references/what-to-cut.md` names. `restate` is item 2, the same
+The four are the ones `references/cutting.md` names. `restate` is item 2, the same
 idea in different words, which is the one that costs the most seconds and the one no
 regex finds: it scores content-word overlap between sentences inside a window, so
 `create a single source of truth` and `emphasizing on that single source of truth`

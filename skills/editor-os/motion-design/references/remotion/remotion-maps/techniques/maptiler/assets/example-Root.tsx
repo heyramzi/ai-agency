@@ -6,7 +6,7 @@
 
 import React from "react";
 import { Composition } from "remotion";
-import { RiverReveal } from "#ai-doc/skills/video/graphics/remotion/remotion-maps/techniques/maptiler/assets/RiverReveal"; // → src/components/RiverReveal.tsx in your project
+import { RiverReveal } from "#ai-doc/skills/editor-os/motion-design/references/remotion/remotion-maps/techniques/maptiler/assets/RiverReveal"; // → src/components/RiverReveal.tsx in your project
 
 export const RemotionRoot: React.FC = () => (
   <Composition

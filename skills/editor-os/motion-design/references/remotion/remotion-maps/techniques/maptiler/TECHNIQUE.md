@@ -45,7 +45,7 @@ MapTiler vector features remain split across tiles. Do not use them for a semant
 
 **Do not call `map.jumpTo()` on every Remotion frame when the camera moves.** In headless capture it can make both MapTiler hillshade **and satellite imagery** shimmer/jitter, even when the source tiles load correctly. This is renderer resampling, not a data, network, or label problem.
 
-For the implementation, read **`references/render-stability.md`** before building or debugging any moving map. It contains the fixed-map-plate recipe, diagnostics, and render checks.
+For the implementation, read [render-stability.md](../../references/render-stability.md) before building or debugging any moving map. It contains the fixed-map-plate recipe, diagnostics, and render checks.
 
 - Use the live MapTiler camera only for a static shot.
 - Keep pitch and bearing constant for a fixed plate. This technique does not implement a genuine changing 3D camera.
@@ -77,4 +77,4 @@ Use as reference:
 - `references/map-explainer-architecture.md` — timing model and implementation.
 - `references/map-data-sources.md` — provider vector versus custom GeoJSON selection.
 - `references/map-geo-prep.md` — basemap stripping and geo preparation.
-- `references/render-stability.md` — camera motion and stable headless renders.
+- [render-stability.md](../../references/render-stability.md): camera motion and stable headless renders.

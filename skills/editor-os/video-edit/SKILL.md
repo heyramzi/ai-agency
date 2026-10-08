@@ -1,30 +1,20 @@
 ---
 name: video-edit
-description: "Runs a take from card to composition. In Descript: DJI lav sync, project setup, pre-cut coaching, the script cut, long-form or the tighter 5-pass Short. Use when a reel used a lav, footage needs to land in Descript, a take needs coaching before cutting, or a raw take or Short needs cutting."
+description: "Cuts a take in Descript, card to composition: DJI lav sync, project setup, coaching, the script cut, a Short. Use when a reel used a lav, footage must land in Descript, or a raw take needs cutting."
 tags: [drives, descript, video]
 lane: general
 ---
 
 # Video Edit
 
-The path from a recorded take to a rendered Descript composition runs in nine passes, 0 to 8,
-each timed against the one before it. Work out of order and you build motion for a frame that is about to
-move, or lay a bed before the cut ends in its final place.
+A take becomes a rendered Descript composition in 9 passes, 0 to 8, each timed against the one before. Out of order, you build motion for a frame that's about to move or lay a bed before the cut ends where it will stay.
 
-## Before any of the nine
+## Rules for every pass
 
-**Everything Descript goes through `pnpm descript`.** The browser, the published API and
-Underlord write outside the CLI's commit gate and get reverted or corrupted.
-The API once broke an edit that had to be re-uploaded by hand, and Underlord once littered a
-project with test sequences.
-Where no verb exists, write the verb in `CLIs/descript/` instead of reaching past
-it.
-
-**A production gets a ledger before the first pass.** `scripts/run.py` writes `RUN.md`/`RUN.json`
-beside the video's `plan.md` and mirrors the same rows to its ClickUp task as a checklist.
-`next` names the one pass to do now and what proves it; `start` refuses a pass whose predecessor
-is neither done nor blocked; `done` needs the pass's proof command named in `--evidence` and
-either `--file` (its saved output) or `--run` (run.py runs it and keeps the output in `proof/`).
+- **Descript goes through `pnpm descript`.** The browser, the published API and Underlord write outside the CLI's commit gate and get reverted or corrupted.
+The API once broke an edit that had to be re-uploaded by hand, and Underlord once littered a project with test sequences.
+  No verb for it? Write the verb in `CLIs/descript/`. Credentials, the write model and renders: [descript-cli.md](references/descript-cli.md).
+- **A production gets a ledger before pass 0.** `scripts/run.py` writes `RUN.md` and `RUN.json` beside the video's `plan.md` and mirrors the rows to its ClickUp task. `next` names the pass to do and what proves it; `start` refuses a pass whose predecessor isn't done or blocked; `done` needs the proof command in `--evidence` plus `--file` (saved output) or `--run` (run.py runs it and keeps the output in `proof/`).
 
 ```bash
 R=.claude/skills/video-edit/scripts/run.py; D=tools/motion/src/<video-code>
@@ -34,44 +24,34 @@ python3 $R next $D
 python3 $R done $D <n> --evidence "<what the command's output said>" --file <its saved output>   # or --run "<command>"
 ```
 
-**A name always carries its number and timecode**: `N [MM-SS] Description.ext`. Any `[mm-ss]`
-quoted anywhere downstream comes from `layout cards`, never from the raw take. A cut has already
-moved every second. Full naming rules: [references/naming.md](references/naming.md).
-
-**Never publish or export on your own.**
+- **A name carries its number and timecode**, `N [MM-SS] Description.ext`, and every `[mm-ss]` quoted downstream comes from `layout cards`, never the raw take (a cut moved every second). Rules: [projects-and-media.md](references/projects-and-media.md).
+- **Export only after his human pass.**
 The editor always does a human pass before anything is exported.
- The state gets read back from outside the tool
-that wrote it at the end of every one: a tool reporting success is not evidence. The project
-stays his, for him to watch.
+  Read the state back from outside the tool that wrote it after every pass: a tool reporting success isn't evidence. The project stays his to watch.
 
-Sibling skills, not covered here: `social`'s `references/shorts-production.md` (encoding, Drive, ClickUp, calendar),
-`video-script` (writing the script), `social` (captions), `broll`
-(finding a shot that exists), `motion-design` (building a clip).
+Siblings: `social` (`references/shorts-production.md` for encoding, Drive, ClickUp and calendar; captions), `video-script` (the script), `broll` (a shot that exists), `motion-design` (a clip that's built).
 
-## The order the passes run in
+## The passes
 
-Long-form is 9 passes, timed against each other. `schemas/passes.json`, which `run.py` reads, is
-the one home of the order; this table says what owns each one and where its detail lives.
+`schemas/passes.json`, which `run.py` reads, is the one home of the order. A pass is done when its last column is true.
 
-| # | Pass | Owner | Done when |
+| # | Pass | Detail | Done when |
 |---|---|---|---|
-| pre | feeds pass 0 | [dji-sync.md](references/dji-sync.md) runs before any footage lands, when a reel used a DJI lav | card burned, verified, archived |
-| 0 | organise | [descript-projects.md](references/descript-projects.md) | `descript tracks` prints clean |
-| 1 | coach, then cut | [video-coach.md](references/video-coach.md) runs first, then [descript-script-edit.md](references/descript-script-edit.md) | script reads with no retake or false start left standing |
-| 2 | reorder, chapters | `descript-script-edit.md` (`arrange.py`, then a marker per section) | markers land, chapters read right |
-| 3 | rhythm, layouts | `descript-script-edit.md` (`sequence.py`, then `layout pace`/`layout apply`) | `layout cards` shows a card per beat |
-| 4 | music | `descript-projects.md` (the brand's music style, searched in Descript Stock; three options offered, he keeps one) | `music offer` answered, no bed laid yet |
-| 5 | motion | `motion-design` (a sibling skill, outside video-edit) | every clip rendered, watched, in Editor OS review |
-| 6 | broll | `broll` (a sibling skill, outside video-edit) | sourced, imported, in Editor OS review |
-| 7 | review | [review-board.md](references/review-board.md) (`editor-os transcript`, `editor-os plan`, `editor-os wait`) | he decides the open beats and the music in the project page; `edit.json` holds his choices |
-| 8 | handoff | `descript-projects.md` (`descript settings` clean) | settings clean, project left for his pass |
+| pre | DJI lav sync, when a reel used one | [dji-sync.md](references/dji-sync.md) | card burned, verified, archived |
+| 0 | organise | [projects-and-media.md](references/projects-and-media.md) | `descript tracks` prints `tracks clean` |
+| 1 | coach, then cut | [cutting.md](references/cutting.md) (coach runs first, so the raw take still exists) | script reads with no retake or false start left |
+| 2 | reorder, chapters | `cutting.md` (`arrange.py`, then a marker per section) | markers land, chapters read right |
+| 3 | rhythm, layouts | [sequencing.md](references/sequencing.md), [layouts.md](references/layouts.md) (`sequence.py`, then `layout pace` and `layout apply`) | `layout cards` shows a card per beat |
+| 4 | music | `projects-and-media.md` (3 options from Descript Stock, he keeps one) | `music offer` answered, no bed laid |
+| 5 | motion | `motion-design` | every clip rendered, watched, in Editor OS review |
+| 6 | broll | `broll` | sourced, imported, in Editor OS review |
+| 7 | review | `sequencing.md` (`editor-os transcript`, `plan`, `wait`) | he decided the open beats and the music; `edit.json` holds his choices |
+| 8 | handoff | `projects-and-media.md` (`descript settings`) | settings clean, project left for his pass |
 
-A Short earns five of these passes and never reorders or chapters; it runs its own tighter cut,
-dress and bed in place of passes 1 through 4, and hands off to encoding and scheduling instead of
-pass 7.
+A Short earns five of these passes and never reorders or chapters; it runs its own tighter cut, dress and bed in place of passes 1 through 4, and hands off to encoding and scheduling where pass 7 would be.
+
+Checks on a finished cut (doctrine, strategy, the export checklist): [checks.md](references/checks.md). Coach workflow and cut-list method: `cutting.md`. Clipboard mechanics: `descript-cli.md`.
 
 ## Learned Patterns
 
-One log for all nine passes: [references/learned-patterns.md](references/learned-patterns.md).
-Read it before a run: most entries are a call that reported success while doing something else.
-Append any new failure mode there, newest last, dated, as the rule alone: git holds the story.
+This skill appends new failure modes to its own pattern list after each run: [references/learned-patterns.md](references/learned-patterns.md). Read it before a run, because most entries are a call that reported success while doing something else. If a run surfaces a failure mode not listed, append it to Learned Patterns there, newest first, dated, as the rule alone. Git holds the story.
