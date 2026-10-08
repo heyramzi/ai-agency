@@ -4,8 +4,29 @@ description: Content, animation and effects best practices
 version: 4.0.512
 ---
 
+## Contents
+
+[Preserve user changes](#preserve-user-changes), [General rules](#general-rules), [Assets](#assets),
+[Media components](#media-components), [Example scene](#example-scene),
+[Delaying, trimming](#delaying-trimming), [Maps](#maps),
+[Text highlights and annotations](#text-highlights-and-annotations),
+[Multi-scene videos](#multi-scene-videos), [Voiceover](#voiceover),
+[Embedding Videos](#embedding-videos), [Embedding Audio](#embedding-audio),
+[Video editing](#video-editing), [Cropping](#cropping), [Transitions](#transitions),
+[Visual and pixel effects](#visual-and-pixel-effects), [3D content](#3d-content),
+[Sound effects](#sound-effects), [Audio visualization](#audio-visualization), [Maps](#maps-1),
+[Captions](#captions), [Google Fonts](#google-fonts), [Local fonts](#local-fonts), [GIFs](#gifs),
+[Advanced Images](#advanced-images), [Lottie animations](#lottie-animations), [Timing](#timing),
+[Parameterized videos](#parameterized-videos), [Measuring DOM nodes](#measuring-dom-nodes),
+[Measuring text](#measuring-text), [Using FFmpeg](#using-ffmpeg),
+[Silence detection](#silence-detection),
+[Dynamic duration, dimensions and data](#dynamic-duration-dimensions-and-data),
+[Advanced compositions](#advanced-compositions), [Advanced sequencing](#advanced-sequencing),
+[Install modules](#install-modules), [Previewing markup](#previewing-markup),
+[Optional: one-frame render check](#optional-one-frame-render-check)
+
 This is guidance for writing Remotion React Markup.
-If this is not relevant, load [Remotion Best Practices](../SKILL.md) instead.
+If this is not relevant, load [Remotion Best Practices](../../../SKILL.md) instead.
 
 ## Preserve user changes
 

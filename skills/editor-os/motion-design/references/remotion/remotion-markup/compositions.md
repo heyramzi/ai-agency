@@ -5,6 +5,12 @@ metadata:
   tags: composition, still, folder, props, metadata
 ---
 
+## Contents
+
+[Default Props and scaffold metadata](#default-props-and-scaffold-metadata), [Folders](#folders),
+[Stills](#stills), [Dynamic duration, width, and height](#dynamic-duration-width-and-height),
+[Nesting compositions within another](#nesting-compositions-within-another)
+
 A `<Composition>` defines the component, width, height, fps and duration of a renderable video.
 
 ## Default Props and scaffold metadata

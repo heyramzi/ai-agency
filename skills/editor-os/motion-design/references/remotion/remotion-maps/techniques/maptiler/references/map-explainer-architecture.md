@@ -1,5 +1,15 @@
 # Map Explainer — architecture reference
 
+## Contents
+
+[1. The render harness (per frame)](#1-the-render-harness-per-frame),
+[2. Timing model — time-based; beat length derived from the sequences](#2-timing-model--time-based-beat-length-derived-from-the-sequences),
+[3. Provider-vector animation](#3-provider-vector-animation),
+[4. Custom line animation — reveal + electric draw-head](#4-custom-line-animation--reveal--electric-draw-head),
+[5. Country animation — border draws → fill blooms → label rises](#5-country-animation--border-draws--fill-blooms--label-rises),
+[6. Labels — HTML overlay, projected each frame](#6-labels--html-overlay-projected-each-frame),
+[7. Camera — fixed map plate for any movement](#7-camera--fixed-map-plate-for-any-movement)
+
 Deep detail behind `TECHNIQUE.md`: the timing model, the river reveal + electric head, the per-country
 sequence, and label projection. The supplied values are examples, not a production style system.
 The custom-geometry example is `../assets/RiverReveal.tsx` +

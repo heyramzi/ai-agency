@@ -1,5 +1,10 @@
 # Sound
 
+## Contents
+
+[The kit](#the-kit), [Mix numbers from 4 creator uploads](#mix-numbers-from-4-creator-uploads),
+[Produced marks, the census shelf and the keystroke](#produced-marks-the-census-shelf-and-the-keystroke)
+
 A clip cut into a read carries its own audio track. A product film mutes this whole file (`product-film.md`).
 
 ## The kit

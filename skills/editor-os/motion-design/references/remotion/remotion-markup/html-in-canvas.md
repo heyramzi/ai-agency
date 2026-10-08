@@ -1,5 +1,11 @@
 # Using `<HtmlInCanvas>` in Remotion
 
+## Contents
+
+[Nesting](#nesting), [Enabling WebGL during renders](#enabling-webgl-during-renders),
+[Basic usage](#basic-usage), [2D effect with `onPaint`](#2d-effect-with-onpaint),
+[WebGL effects](#webgl-effects), [Async `onPaint`](#async-onpaint)
+
 Renders children into a `<canvas>` so you can post-process them with the Canvas 2D API or WebGL.
 
 Only works in Chrome 149+ with the `chrome://flags/#canvas-draw-element` flag enabled.  

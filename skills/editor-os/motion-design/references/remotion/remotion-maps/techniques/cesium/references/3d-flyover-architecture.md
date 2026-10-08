@@ -1,5 +1,13 @@
 # 3D Flyover — architecture reference
 
+## Contents
+
+[1. Provider initialization](#1-provider-initialization),
+[2. The camera path — structure & generation](#2-the-camera-path--structure--generation),
+[3. Camera animation per frame (position, heading, pitch, bank)](#3-camera-animation-per-frame-position-heading-pitch-bank),
+[4. The feel — proven water-wars values](#4-the-feel--proven-water-wars-values),
+[5. The complete component](#5-the-complete-component), [6. Render](#6-render)
+
 Deep detail behind `TECHNIQUE.md`: provider loading, the camera-path pipeline, per-frame camera math, and
 the proven terrain values. Both landscape and city modes have been forward-tested through Remotion.
 

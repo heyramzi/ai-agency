@@ -7,6 +7,15 @@ metadata:
 
 # Displaying captions in Remotion
 
+## Contents
+
+[Prerequisites](#prerequisites), [Fetching captions](#fetching-captions),
+[Creating pages](#creating-pages), [Rendering with Sequences](#rendering-with-sequences),
+[White-space preservation](#white-space-preservation),
+[Separate component for captions](#separate-component-for-captions),
+[Word highlighting](#word-highlighting),
+[Display captions alongside video content](#display-captions-alongside-video-content)
+
 This guide explains how to display captions in Remotion, assuming you already have captions in the [`Caption`](https://www.remotion.dev/docs/captions/caption) format.
 
 ## Prerequisites

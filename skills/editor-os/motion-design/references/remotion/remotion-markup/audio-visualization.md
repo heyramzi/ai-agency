@@ -7,6 +7,13 @@ metadata:
 
 # Audio Visualization in Remotion
 
+## Contents
+
+[Prerequisites](#prerequisites), [Loading Audio Data](#loading-audio-data),
+[Spectrum Bar Visualization](#spectrum-bar-visualization),
+[Waveform Visualization](#waveform-visualization), [Bass-Reactive Effects](#bass-reactive-effects),
+[Volume-Based Waveform](#volume-based-waveform), [Postprocessing](#postprocessing)
+
 ## Prerequisites
 
 ```bash

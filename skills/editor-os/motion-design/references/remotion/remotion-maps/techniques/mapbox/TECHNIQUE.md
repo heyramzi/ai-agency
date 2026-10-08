@@ -5,6 +5,13 @@ metadata:
   tags: map, map animation, mapbox, turf, geojson, route animation
 ---
 
+## Contents
+
+[Core rules](#core-rules), [Prerequisites](#prerequisites), [Basic map example](#basic-map-example),
+[Animated flight route example](#animated-flight-route-example),
+[Camera guidance](#camera-guidance), [Lines](#lines), [Markers and labels](#markers-and-labels),
+[Styles](#styles), [Rendering](#rendering)
+
 Use Mapbox GL JS for rendering maps in Remotion when the user wants Mapbox styles or higher-fidelity map visuals and has a Mapbox access token. Use Turf for geospatial operations such as great-circle routes, distances, slicing lines, and positions along routes.
 
 Use this technique only when the user has a Mapbox access token and wants Mapbox styles or data.

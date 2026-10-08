@@ -5,6 +5,13 @@ metadata:
   tags: light-leaks, overlays, effects, transitions
 ---
 
+## Contents
+
+[Light Leaks](#light-leaks), [Prerequisites](#prerequisites),
+[Light leak overlay component](#light-leak-overlay-component),
+[Basic usage with TransitionSeries](#basic-usage-with-transitionseries), [Options](#options),
+[Customizing the look](#customizing-the-look), [Standalone usage](#standalone-usage)
+
 ## Light Leaks
 
 This only works from Remotion 4.0.500 and up. Use `npx remotion versions` to check your Remotion version and `npx remotion upgrade` to upgrade your Remotion version.

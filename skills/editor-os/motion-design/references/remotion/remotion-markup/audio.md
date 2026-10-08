@@ -7,6 +7,12 @@ metadata:
 
 # Using audio in Remotion
 
+## Contents
+
+[Prerequisites](#prerequisites), [Importing Audio](#importing-audio), [Trimming](#trimming),
+[Delaying](#delaying), [Volume](#volume), [Muting](#muting), [Speed](#speed), [Looping](#looping),
+[Pitch](#pitch)
+
 ## Prerequisites
 
 First, the @remotion/media package needs to be installed.

@@ -1,5 +1,12 @@
 # Storytelling, planning and the direction gate
 
+## Contents
+
+[The direction gate (step zero)](#the-direction-gate-step-zero), [The value test](#the-value-test),
+[The literalness ladder](#the-literalness-ladder), [The through-line](#the-through-line),
+[Devices that tie clips together](#devices-that-tie-clips-together),
+[Planning a video's set](#planning-a-videos-set)
+
 Read it at plan time, and again before you write any clip's header. The value test judges one clip.
 The rest of this file is what runs before a clip exists: the gate, the through-line, and how much goes
 where.

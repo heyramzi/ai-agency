@@ -1,5 +1,12 @@
 # The product film
 
+## Contents
+
+[The 5 laws](#the-5-laws), [The 6 moves, and no seventh](#the-6-moves-and-no-seventh),
+[Overrides to the rest of the skill](#overrides-to-the-rest-of-the-skill),
+[Build order](#build-order),
+[A worked build: 39 seconds and no cuts](#a-worked-build-39-seconds-and-no-cuts)
+
 A self-contained film: 30 to 120 seconds, no voice-over, no cuts, one music bed, the product the only actor.
 It isn't a clip cut into a read. We measured one reference, a launch film for a table-based research product,
 95.3s at 60fps. `python3 scripts/teardown.py all <film.mp4>` reproduces every number here from any mp4
