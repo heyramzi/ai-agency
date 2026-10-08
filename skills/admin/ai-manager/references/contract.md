@@ -71,7 +71,7 @@ holds the refresh procedure.
 - Skills: `ai-doc/skills/<area>/<family>/<kebab-name>/SKILL.md`. The areas are fixed
   (`ls ai-doc/skills`); a family is a shelf of 2 to 8 related skills (`growth/search`, `apple/swift`),
   and **a skill never sits loose under its area**. The directory name is the command. **Every `.md`
-  stays under 200 lines, a skill holds at most 10, and no path climbs with `../`** (a consumer's
+  stays under 200 lines, a skill holds at most 25, and no path climbs with `../`** (a consumer's
   `SKILL.md` is a symlink, so `../` resolves against the consumer repo; write `~/Studio/...`).
   `scripts/check-skill-length.mjs` gates all three. A skill's command comes from its directory and ignores its `name:`.
 - Agents: `ai-doc/agents/<category>/<kebab-name>.md`, the filename equal to `name:`
@@ -104,6 +104,12 @@ directories, among them 139 impeccable **v2.1.1** sub-skills across 9 repos whil
 4.1.2. `.agents/skills/` is the cross-runtime projection (Codex, Gemini CLI, Antigravity, OpenCode);
 other directories under `.agents/` are dead.
 
+**Every repo takes its agents and skills from vibe-kit** through `vibekit.json`. A repo keeps its
+own only for a job no other repo has (r-hub's `taxes-irs`, an app's `ship`), named under
+`claude.local`. Anything else is a vibe-kit gap: add it to `ai-doc/` and subscribe. A downloaded
+`frontend-developer` for React sat in the SvelteKit `heyramzi-website` beside the kit's
+`frontend-designer` until 8 Oct 2026. Doctor reports an undeclared local agent as an `orphan`.
+
 **Impeccable comes from the plugin**, `~/.claude/plugins/cache/impeccable/impeccable/<version>/`,
 never a `vibekit.json` entry: `claude plugin install impeccable@impeccable --scope project` (the
 `claude` wrapper passes `--setting-sources project,local`, so a user install never loads). Its
@@ -121,10 +127,9 @@ family; four sessions each spent 3 to 5 calls on this).
 
 - Inside vibe-kit: `bash ai-doc/scripts/ai-docs-sync.sh`.
 - A commit touching `ai-doc/` syncs every consumer through vibe-kit's `post-commit` hook
-  (`bash scripts/install-hooks.sh` installs it; log `~/.cache/vibekit-sync.log`). By hand:
-  `cd ../vibe-kit/CLIs && npx tsx vibekit/cli.ts sync <project-dir>`, not `pnpm vibekit sync <dir>`,
-  whose secrets wrapper drops the path (`No vibekit.json found at .../CLIs`, 2 Oct 2026). A folder
-  subscription (`"marketing"`) pulls it recursively.
+  (`bash scripts/install-hooks.sh` installs it; log `~/.cache/vibekit-sync.log`). By hand, from
+  `CLIs/`: `pnpm vibekit sync <project-dir>`, where a relative path resolves against `CLIs/`. A
+  folder subscription (`"marketing"`) pulls it recursively.
 - The shared core in every `AGENTS.md`/`CLAUDE.md`: edit `ai-doc/references/agents-core.md`, then
   `node ai-doc/scripts/sync-agents-core.cjs`.
 - Call `claude <subcommand>` as `env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u
@@ -146,7 +151,7 @@ written into only one is the bug, so read a line-count gap before assuming the s
 | `scripts/validate-architecture.mjs [--files ...]` | every frontmatter block against the sync's YAML parser, each agent's `skills:` against the skills that exist and the cap of 3 preloads, every Studio `vibekit.json` id | a block the sync can't read, or an agent that preloads a missing skill or more than 3 |
 | `ai-doc/scripts/check-agent-readme.py [--fix]` | the table and count in `agents/README.md` | drift in membership or row text |
 | `ai-doc/scripts/check-descriptions.py [--files ...]` | descriptions: a `Use when` trigger, the 240-char ceiling, no em dash or banned word from `packages/lint/data/slop-words.js`, an explicit non-Opus `model:` on an agent | a description the registry can't route on |
-| `scripts/check-slop.mjs [--all] [--fix]` | em and en dashes, invisible characters in `ai-doc` markdown. Run by hand; no hook runs it, because internal markdown may carry slop (The author, 6 Oct 2026) | a dash on a line you wrote |
+| `heyramzi-slop --only=dash` (`pnpm check:slop-corpus` for the whole corpus) | em and en dashes in pushed `ai-doc` markdown and every `AGENTS.md`, `CLAUDE.md` and `CODING_STANDARDS.md`; the pre-push hook runs it. Only dashes, because internal markdown may carry other slop (The author, 6 Oct 2026) | a dash anywhere in a pushed file |
 | `ai-doc/scripts/publish-public.mjs [--check]` | the manifest's skills into public `heyramzi/ai-agency`, plus the `FROZEN` set | a stale copy, a public skill with no source, a name, id, private path or monorepo-only command surviving the scrub |
 | `clickup-utils/scripts/skills.mjs check` | the ClickUp and board skills `clickup-utils` publishes itself, and the symlinks giving vibe-kit one copy | a broken link or the leak list |
 | `skills/content/social/social/scripts/linkedin-scripts/copy-score.py --check --corpus <posts.json>` | the copy scorer against its corpus | the score no longer separating each creator's best posts from worst |

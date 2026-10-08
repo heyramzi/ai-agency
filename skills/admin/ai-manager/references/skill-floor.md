@@ -14,7 +14,7 @@ edit that will.
 - Provenance. All examples happened, with the real path, number, error or name. An invented
   one teaches the reader to trust none.
 - Altitude. The body routes; references do. A section liftable whole into a reference goes
-  there. No `.md` runs past 200 lines, a skill holds at most 10 (both gated), and a body that
+  there. No `.md` runs past 200 lines, a skill holds at most 25 (both gated), and a body that
   is mostly reference material fails at 120. `humanizer` once ran 247 lines pointing at 21 files
   of 330 KB; a session read the body, opened none, and shipped the slop it exists to stop.
 - Disclosure. A reference link states the condition that opens it ("read `api-errors.md`
@@ -39,8 +39,8 @@ edit that will.
 - Frontmatter. `name` equals the directory; `description` under 240 characters, no angle
   brackets; `allowed-tools` only where it removes a prompt hit every run;
   `disable-model-invocation: true` on anything only ever typed.
-- Self-healing. The 4 parts seeded with real entries, or the section absent
-  (`heal.cjs check <dir>`).
+- Self-healing. A `## Learned Patterns` log, if there is one, is last, newest first and seeded
+  with real entries (`heal.cjs check <dir>`).
 
 ## Refuse
 

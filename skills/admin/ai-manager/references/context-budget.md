@@ -53,7 +53,7 @@ alone is about 100 tools.
 | User and project servers | `mcpServers` in `~/.claude.json`, top level and under `projects[path]`; prune matching `disabledMcpServers` |
 | Repo servers | every `.mcp.json`, nested `web/` and `vibe-kit/starters/*` too. A tracked one returns when a worktree is rebuilt, so delete it in the main checkout |
 | Plugins | `~/.local/bin/claude plugin uninstall <name>@<marketplace>` (a plugin can ship a remote MCP server) |
-| Agents | nothing on Claude's side reads `.claude/agents` (delegation goes through Orca), so sync no longer projects them; delete stray copies in `.claude/agents/` and `~/.claude/agents/` |
+| Agents | sync projects them into `.claude/agents/`, and the Agent tool spawns from there. Delete only a copy whose source is gone |
 | Instruction files | one home per rule: the shared core for every repo, `Studio/AGENTS.md` for the workspace, nothing in `~/.claude/CLAUDE.md`. On 25 Sep the home file said "leave the other repo alone" while the core said "fix it in every repo" |
 
 4. Reroute every caller. `grep -rnE "mcp__<server>|<Name> MCP"` over `ai-doc/` and every repo's
