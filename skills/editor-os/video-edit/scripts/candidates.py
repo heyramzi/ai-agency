@@ -36,15 +36,15 @@ WINDOW = 400        # a restart lands within this many characters of its attempt
 SHINGLE = 3         # words per repeated run
 TRUNCATION = re.compile(r"\S*(?:--|\.\.\.)(?=\s|$)|\b[A-Za-z]{1,3}-(?=\s)")
 
-# Phrases that OPEN a digression rather than being one. The author, 2 Sep 2026: "when I say 'you could
-# potentially' it's often the digression, this needs to be cut."
+# Phrases that OPEN a digression rather than being one: "you could potentially" is often the
+# digression, and it needs to be cut.
 #
 # WHY THIS IS A CANDIDATE AND NOT A CUT, unlike the sentence-opening `now` / `so` and the phrase
 # "and what that means is that" in `recut2.py`. Those two ARE the filler: bounded, four words at
 # most, and what remains after them is the sentence. This one is a SIGNPOST to a span whose end
 # nothing in the text marks. His own example ran "you could potentially add another custom field
 # with their email address, for example, or you could add your--" and died on a truncation; the one
-# still live in EC49 runs a full sentence past the marker and into the next. Cutting to a guessed
+# still live in one video runs a full sentence past the marker and into the next. Cutting to a guessed
 # end would delete real teaching, and cutting only the marker leaves the digression behind with its
 # opening gone, which is worse than leaving it whole.
 #
@@ -84,7 +84,7 @@ def joined(blocks):
 
     Detection runs over the whole script, never block by block. A restart lands in the paragraph
     AFTER the one it abandons - Descript breaks a paragraph at the pause the speaker took to start
-    again - so a per-block search cannot see the thing it is looking for. FC38 opened with four
+    again - so a per-block search cannot see the thing it is looking for. One video opened with four
     attempts at one sentence spread over three paragraphs and reported zero candidates; the edit
     that followed kept attempt 2's head and attempt 4's tail. `references/cutting.md`.
     """
@@ -213,7 +213,7 @@ def masks(blocks, needles):
 def live(c, blocks, marks):
     """The prose inside a candidate's span that the cut list leaves standing, block by block.
 
-    Head-matching was the old test and it passed the FC38 opening: needles covered the first
+    Head-matching was the old test and it passed one video's opening: needles covered the first
     attempt and the third, and the SECOND sat untouched between them, so the finished sentence
     read as attempt 2's head spliced onto attempt 4's tail.
     """

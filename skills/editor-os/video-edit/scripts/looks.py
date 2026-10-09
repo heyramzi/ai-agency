@@ -8,7 +8,7 @@ library to clone, and the camera and the screen sit in one frozen split for the
 whole runtime. This emits card boundaries over the scenes that are ALREADY in
 the composition, so it needs no pinTrack and no clip dragged in by hand.
 
-    looks.json  [{"look": "screen-full", "from": "So we have a Glance portal"},
+    looks.json  [{"look": "screen-full", "from": "So we have a client portal"},
                  {"look": "screen-full", "zoom": 130, "from": "the budget is a custom field"},
                  {"look": "camera-full", "from": "That is a ridiculous return"}]
 

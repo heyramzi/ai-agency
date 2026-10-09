@@ -16,7 +16,21 @@
     "checklist": { "type": "string" },
     "recorded": {
       "type": "string",
-      "description": "The day it was filmed, YYYY-MM-DD. The shelf sorts on it."
+      "description": "The day it was filmed, YYYY-MM-DD. The shelf's Recorded sort uses it, and breaks ties in the default Updated sort."
+    },
+    "stitched": {
+      "type": "array",
+      "description": "Set when `editor-os new --take` joined several takes into one file: the parts in the order they were joined. The originals stay where they were.",
+      "items": {
+        "type": "object",
+        "required": ["file", "seconds"],
+        "additionalProperties": false,
+        "properties": {
+          "file": { "type": "string", "minLength": 1 },
+          "seconds": { "type": "number" },
+          "createdAt": { "type": "string" }
+        }
+      }
     },
     "passes": {
       "type": "array",

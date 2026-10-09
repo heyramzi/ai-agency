@@ -6,9 +6,8 @@ The passes, in order, are `../schemas/passes.json`, and RUN.json is checked agai
 
 WHY THIS EXISTS: the passes are timed against each other, so a pass done out of order is
 work thrown away - motion built before layouts is motion built for a frame about to change. Held
-only in a session's head, the order survives until the first interruption. The author, 8 Sep 2026:
-"make sure the agent orchestration is state of the art and methodical and sequential by doing
-things in steps otherwise we will lose track."
+only in a session's head, the order survives until the first interruption. The agent
+orchestration has to be methodical and sequential, done in steps, or the run loses track.
 
 WHY EVIDENCE IS MANDATORY: a tool reporting success is not evidence. Every `done` names one of
 the pass's commands as a whole phrase AND hands over something checkable: `--file` is that
@@ -20,13 +19,12 @@ file and its sha256. Matching a bare word was the old gate, and "the shortcut is
 WHY IT REFUSES OUT OF ORDER: `start` on pass N with N-1 not done is the mistake, not a warning.
 Override with --anyway, which is recorded in the ledger as an override and shows in the table.
 
-WHY THE BOARD MIRRORS IT: the author, 7 Sep 2026: "create a todo. always do that on a descript
-production." `board` writes the same rows as a ClickUp checklist on the video's task, one
+WHY THE BOARD MIRRORS IT: every Descript production gets a todo list. `board` writes the same rows as a ClickUp checklist on the video's task, one
 item per pass with its state in the text, and every later `start`/`done`/`block` rewrites it. The
 ledger on disk is the record; the checklist is the view he opens.
 
-    run.py init <dir> --code C51 --project <id> --comp <id>
-    run.py init <dir> --code C51 --route local --cut <path/to/cut.json>
+    run.py init <dir> --code <code> --project <id> --comp <id>
+    run.py init <dir> --code <code> --route local --cut <path/to/cut.json>
     run.py show <dir>                       # the table, and rewrite RUN.md
     run.py next <dir>                       # the one pass to do now
     run.py start <dir> 3
@@ -123,7 +121,10 @@ def proof_of(d, run, n, ev, file, cmd):
             refuse("local organise needs the take folder recorded in RUN.json, and it must exist")
         proof_file = os.path.join(d, "proof", "0-organise.txt")
         os.makedirs(os.path.dirname(proof_file), exist_ok=True)
-        open(proof_file, "w").write("take folder: %s\n" % os.path.abspath(take))
+        lines = ["take folder: %s\n" % os.path.abspath(take)]
+        for i, part in enumerate(run.get("stitched", []), 1):
+            lines.append("stitched part %d: %s (%.2fs)\n" % (i, part["file"], part["seconds"]))
+        open(proof_file, "w").write("".join(lines))
         return {"file": proof_file, "sha256": schema.sha256(proof_file)}
     if file is None and cmd is None:
         refuse(f"done needs --file <saved output> or --run \"<command>\", so the proof is checkable.\n"

@@ -105,11 +105,11 @@
     "label": "Motion",
     "proves": {
       "descript": "plan.md first, one clip per slot, watched, imported to Motion/, not placed yet",
-      "local": "plan.md first, one clip per slot, each alpha clip looked at over gray and over dark, then picked onto its beat with `editor-os pick`"
+      "local": "plan.md first, one clip per slot, each alpha clip looked at over gray and over dark, then picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay` when it has no beat of its own"
     },
     "commands": {
       "descript": ["fill", "roster", "watch.py", "clips.py", "descript import"],
-      "local": ["editor-os pick"]
+      "local": ["editor-os pick", "editor-os overlay"]
     }
   },
   {
@@ -118,11 +118,11 @@
     "label": "B-roll",
     "proves": {
       "descript": "Found, generated or captured; licensed into the ledger; imported to B-roll/, not placed yet",
-      "local": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`"
+      "local": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay` when it has no beat of its own"
     },
     "commands": {
       "descript": ["source.py", "brollclip.py", "genvideo.py", "descript import"],
-      "local": ["editor-os pick"]
+      "local": ["editor-os pick", "editor-os overlay"]
     }
   },
   {
@@ -130,8 +130,8 @@
     "key": "review",
     "label": "Review",
     "proves": {
-      "descript": "The project page shows transcript, layouts, inserts and sound in order; he closes each, and plan.json holds every choice before placement",
-      "local": "The project page shows transcript, layouts, inserts and sound in order after `editor-os plan`; he closes each card"
+      "descript": "The project page shows transcript, layouts, overlays and sound in order; he closes each, and plan.json holds every choice before placement",
+      "local": "The project page shows transcript, layouts, overlays and sound in order after `editor-os plan`; he closes each card"
     },
     "commands": {
       "descript": [

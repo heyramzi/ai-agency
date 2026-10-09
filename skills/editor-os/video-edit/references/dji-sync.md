@@ -11,7 +11,7 @@ Starts when the recording stops and owns the card until it's empty. It swaps one
 | Output | `NAME-dji.MOV`, video bit-identical | speech-only `.opus` + a vault voicenote |
 | Rule | the video is the timeline | the transcript is the deliverable |
 
-Ask which one it is. The author says it in plain words ("that's a voice memo", "pair this with the reel") and that wins; a wrong guess burns 20 minutes or destroys a reel's audio half. Without it: no clip in `~/Downloads` near the take's timestamp means solo; a take VAD reports as mostly silence means solo; a take within seconds of a clip's length means reel. When unsure, `dji_note.py --dry-run` decides and writes nothing.
+Ask which one it is. The person says it in plain words ("that's a voice memo", "pair this with the reel") and that wins; a wrong guess burns 20 minutes or destroys a reel's audio half. Without it: no clip in `~/Downloads` near the take's timestamp means solo; a take VAD reports as mostly silence means solo; a take within seconds of a clip's length means reel. When unsure, `dji_note.py --dry-run` decides and writes nothing.
 
 ## Reel path
 

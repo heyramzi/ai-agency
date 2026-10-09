@@ -7,7 +7,7 @@ This reads the rhythm off a finished edit (`audit`) and proposes the next one fr
 script (`plan`), in the pins.json shape `pins.py` already consumes.
 
 THE CLOCK IS SPEED-ADJUSTED. `audioSegment.duration` is source time; a tau played at speed 1.05
-occupies duration/1.05 on the timeline. ES02 sums to 476.83s raw and 454.54s adjusted, and 454.54
+occupies duration/1.05 on the timeline. One cut sums to 476.83s raw and 454.54s adjusted, and 454.54
 is what `get_project` reports. Every second printed here is the adjusted one.
 
 BOTH HOMES OF THE SAME SHAPES. A `doc.json` from the CLI keeps them under
@@ -29,7 +29,7 @@ GATE_DEAD = 12.0        # seconds the frame may sit unchanged
 GATE_MEDIAN = 7.0       # median seconds between state changes
 GATE_COVER = (0.20, 0.50)   # share of runtime under a visual overlay
 
-# The balance gate. `audit` reads averages, and an average hides where the dressing sits: EC49
+# The balance gate. `audit` reads averages, and an average hides where the dressing sits: one long talk
 # passed within a tenth of a second on the median and still ran four whole minutes with nothing
 # on screen and no sound. references/sequencing.md carries the teardown.
 BIN = 60.0              # the window balance is read in. A minute is what a viewer feels
@@ -37,7 +37,7 @@ NAKED_DRESS = 6.0       # seconds of clip, graphic or title a minute must carry
 NAKED_SFX = 1           # ...unless it carries more sounds than this
 GATE_SFX_QUIET = 45.0   # longest stretch with no sound at all. sound.md measures a body
                         # placing one every 7.5-11s, and one reference video every 60s. The MEDIAN
-                        # gap is not the gate: EC49's median is 7.1s and passes, while 79% of its
+                        # gap is not the gate: one talk's median is 7.1s and passes, while 79% of its
                         # runtime carries no sound, because the sounds arrive in two bursts.
 GATE_ARRIVAL_SFX = 0.80 # share of visual arrivals that carry a sound within PAIR seconds
 PAIR = 0.6              # how close a sound has to land to count as being on the arrival
@@ -45,10 +45,10 @@ GATE_FIFTH = 0.08       # least share of the dressing any fifth of the runtime m
 CHROME_W = 0.15         # narrower than this, above the camera, is a HUD rather than a shot
 
 LIST_MAX = 2.6          # a clause this short, three in a row, is a micro-cut run
-# The zoom ladder ES02 uses, and it returns to 100 between steps: a zoom pin has no closing
+# The zoom ladder the standard cut uses, and it returns to 100 between steps: a zoom pin has no closing
 # card, so it holds until the next one and two steps in a row read as a drift, not a cut.
 LADDER = [110, 100, 120, 100, 130, 100]
-SPAN = 5.0              # a b-roll insert runs about this long; ES02's median is 4.7s
+SPAN = 5.0              # a b-roll overlay runs about this long; the standard cut's median is 4.7s
 SHOW = re.compile(r"\b(this is what|here'?s what|here is what|let me show|i'?ll show|"
                   r"an example of|this is an example|look at|on (the )?screen|what it looks like|"
                   r"what it can look like)\b", re.I)
@@ -59,7 +59,7 @@ CTA = re.compile(r"\b(link is (down|in) (the )?description|down description|book
                  r"see you on the other side|it'?s your (choice|decision))\b", re.I)
 TC = re.compile(r"\[(\d{2})-(\d{2})\]")
 # An announcement of what the next sentence will say. Cutting one inside a dead stretch is a
-# cheaper fix than a zoom, because it buys the jump cut AND takes the words out: ES02's worst
+# cheaper fix than a zoom, because it buys the jump cut AND takes the words out: one cut's worst
 # stretch (29s at 6:31) is split by ignoring "And one last thing," and nothing is lost.
 ANNOUNCE = re.compile(r"^(and |now |so |but )?(one last thing|another thing|the last thing|"
                       r"what i (wanna|want to|will) (say|tell you|explain)|"
@@ -129,7 +129,7 @@ def states(cards, scenes, at, total):
     A card is a whole layer stack and layer order IS z-order, index 0 on top, so what the viewer
     sees is decided by what sits ABOVE the camera. A layer whose sourceSceneId is not a pinScene
     is the camera itself; a full-frame pinned scene above it hides the speaker, and the same scene
-    below it is a background plate. Counting plates as b-roll is how a first run read ES02 at 70%
+    below it is a background plate. Counting plates as b-roll is how a first run read one cut at 70%
     coverage against the 34% the FCPXML shows.
     """
     rows, looks = [], {}
@@ -416,7 +416,7 @@ def dressing(path, n):
 
     THE FIFTH LANE IS `chrome`, AND IT IS THE ONE THAT MAKES THE COUNT HONEST. A background
     plate and a progress bar are pinned scenes like any other, and a first run of this counted
-    them: EC49 came back at 199% title and 83% footage, because a grid plate ran under all
+    them: one long talk came back at 199% title and 83% footage, because a grid plate ran under all
     eighteen minutes and a progress HUD sat on 129 cards. So a scene earns a lane only where it
     sits ABOVE the camera on some card - below it is a plate - and only where it is wider than
     CHROME_W, which is what separates a lower third from a corner dot. Neither is a state change;

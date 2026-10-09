@@ -3,9 +3,10 @@
 ## Contents
 
 [Doctrine checks](#doctrine-checks), [Strategy checks](#strategy-checks),
-[The writing score, out of 10](#the-writing-score-out-of-10), [The export gate](#the-export-gate)
+[The writing score, out of 10](#the-writing-score-out-of-10), [The local cut checks](#the-local-cut-checks),
+[The export gate](#the-export-gate)
 
-A check returns `pass`, `fail` or `n/a`, and a `fail` names its source file. A check that can't name its source is an opinion and stays out of the report. Open this when coaching a take (the first 3 sections) and before any export (the last).
+A check returns `pass`, `fail` or `n/a`, and a `fail` names its source file. A check that can't name its source is an opinion and stays out of the report. Open this when coaching a take (the first 3 sections), after any local cut, and before any export (the last).
 
 ## Doctrine checks
 
@@ -58,6 +59,20 @@ One number on the front of the report so the ledger shows a line moving. **It sc
 
 W1 to W7 read straight off the doctrine verdicts so the score can't disagree with the table. W1b shares W1's point (half failure, half count). W8 and W9 are structural and the 2 most often missing: a tour scoring 3 can reach 5 without changing a word it has, say so. W10 is computed (it was a judged "register" line 2 reviewers scored 2 ways); the denominator stays 10 so `writingScore` stays comparable, and `humanizer` audits register separately.
 
+## The local cut checks
+
+- `editor-os verify <name>` transcribes what the render plays and flags a repeated line, a long pause
+  or a Short over length. Run it before you say a cut is clean. It's the only check word times can't fool.
+- `editor-os cutcheck <name>` waits for the draft and the check the studio runs on it after every
+  render: speech with no words, a pop, a cut inside a word, length, and loudness on a final. It also
+  fails on what the shelf shows from edit.json alone (a layout and its overlay apart, a scene held past
+  6s, a hook title on a layout that draws none or a Title scene under 1s), so a PASS means the shelf
+  is clean. It blocks while the draft renders, up to 15 minutes, so don't poll it. Every run saves
+  `.check/frames.png`, a frame at 0.5s and at each scene and overlay: open it every time. Each
+  failing cut also gets a filmstrip PNG for a visual jump or a hidden caption, which no number
+  catches. Fix, save once, and check again. After 3 tries that still fail, stop and tell the person
+  which cuts and why, in plain words. They only polish, so they never see a draft that failed.
+
 ## The export gate
 
 Before export, on every video:
@@ -73,7 +88,7 @@ pnpm descript settings after.json                 # or a document saved by `doc 
 
 **Green screen stack:** (10) CAM GS on top, text or shape under, CAM at the back (index 0 is nearest the viewer); (11) CAM GS in CAM's box: `pnpm descript layer copy <p> <comp> <card> <layer> --to all`, never eyeballed; (12) no leftover duplicate cameras (a restamp switches the old one off and leaves it: 3 restamps leave 3 hidden cameras). The twin must sit on CAM's clock to half a frame: `tracks` gates it, `track shift <project> "CAM GS" --to CAM` repairs it ([projects-and-media.md](projects-and-media.md)).
 
-**Frame and finish:** (13) frame 1920x1080 or larger (and read `videoMetadata` before any export: a 1280x720 canvas threw away a 4K take); (14) smart transition in and out wherever the shot changes; (15) names spelled right (ClickUp, Brand, the author); (16) watch the whole video once with sound. **Update the captions before EVERY export and before each platform render** (a cut moves every word; the caption layer keeps old text and timings; YouTube and TikTok are separate exports). A cut's length comes off `layout cards` or the last timecode, never the music bed's seconds (the bed is 181 s under a 2:21 cut).
+**Frame and finish:** (13) frame 1920x1080 or larger (and read `videoMetadata` before any export: a 1280x720 canvas threw away a 4K take); (14) smart transition in and out wherever the shot changes; (15) names spelled right (ClickUp); (16) watch the whole video once with sound. **Update the captions before EVERY export and before each platform render** (a cut moves every word; the caption layer keeps old text and timings; YouTube and TikTok are separate exports). A cut's length comes off `layout cards` or the last timecode, never the music bed's seconds (the bed is 181 s under a 2:21 cut).
 
 | Setting | The value | In the document |
 | --- | --- | --- |
@@ -88,7 +103,8 @@ pnpm descript settings after.json                 # or a document saved by `doc 
 | Layer order | twin, graphic, camera | `cards[].layers[]`, 0 nearest |
 | Frame | 1920x1080 or larger | `compositions[].videoMetadata` |
 
-The author set these on camera, 18 Sep 2026: "you want to put maybe 50% of studio sound, otherwise it looks weird", "lower other audio so that the other tracks are not too loud", "the green screen and the regular screen always have the same settings of uplighting and skin smoothing... I put 10%, then here I put 50%, and then here zero background brightness". A percentage is a number and never a taste: one b-roll clip at 70% is a fault, and cards differing on one look row read as "the face flickers", so the gate compares twins card by card. Shadow, Border and corner radius belong to the layout and are held to nothing.
+Studio sound sits near 50%, other audio stays low, and the green screen and the regular screen share the same uplighting and skin-smoothing settings.
+A percentage is a number and never a taste: one b-roll clip at 70% is a fault, and cards differing on one look row read as "the face flickers", so the gate compares twins card by card. Shadow, Border and corner radius belong to the layout and are held to nothing.
 
 The command can't see the key itself (a clean edge on a busy frame is a look), the captions, chapters and end card; the cut's checks are in [cutting.md](cutting.md). Repairs:
 
