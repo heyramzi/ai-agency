@@ -67,13 +67,13 @@ rewrite it.
    Mindset. A push with a title that exists updates that script, never adds a copy. Open a `to do`
    task on the Socials list whose description says `Script: CutKit > CODE`.
 6b. **Build what's on screen before the take.** The author, 4 Oct 2026: whoever writes the Short
-   also makes the visuals, the dashboards and screens he shows as b-roll, inserts or a screen share.
+   also makes the visuals, the dashboards and screens he shows as b-roll, overlays or a screen share.
    A re-check line that says "have a dashboard on screen" hands him the build. So give every line that
    shows something one of 3 sources. A real screen is a product he owns or a demo workspace, never a
    redraw and never a client's data, with its UI in the language the Short is spoken in. A drawn
    clip is an idea with no screen, like a keep or drop list. The third is his face. Write that shot list into the Socials task under `ON SCREEN`, each row
    with its line, its source URL and what it adds. Then spawn one `motion-designer` with the list:
-   it captures the real plates and renders the inserts at 1080x1920. A screen he records himself gets
+   it captures the real plates and renders the overlays at 1080x1920. A screen he records himself gets
    its page set up, signed in and on demo data, with the URL in the task.
 7. **The reasoning goes in the batch brief**:
    variants, ratings and surfaces. The spoken text never goes there. It lives in the CutKit script.
@@ -96,5 +96,5 @@ After the take, the coding, the edit and the scheduling are `social`'s `referenc
 - [ ] The cold read named the action with its tools, and its hardest sentence got rewritten
 - [ ] The gate ran on `--register=shorts`, and every hit left in is one you'd defend out loud
 - [ ] The CTA's artefact exists, or the re-check block says it gets made before publishing
-- [ ] Every line that shows something has its real screen, drawn clip or face in the task's `ON SCREEN` list, and the inserts are rendered or briefed to `motion-designer`
+- [ ] Every line that shows something has its real screen, drawn clip or face in the task's `ON SCREEN` list, and the overlays are rendered or briefed to `motion-designer`
 - [ ] The clean read is in CutKit under its pillar label, the rest is on the Socials task, and the task says `Script: CutKit > CODE`
