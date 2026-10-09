@@ -125,8 +125,7 @@ ground swing of 75 against the reference's 76.
 8. The UI is vector, so it can be lit, blurred and typed into.
 9. A held comparison (second reference, 1:30 to 2:11) gains one label per phrase within about 0.2s of its
    word, the label the compressed noun ("40x more followers"), moves between objects as a fast blurred whip.
-   At 12s against a 41s reference, the build lost the 2 return legs. The author, 28 Aug 2026: "the anchor
-   comparison lasted more than half a minute." The fix: 5 stations, a label every 50 frames. Use it when
+   At 12s against a 41s reference, the build lost the 2 return legs. The fix: 5 stations, a label every 50 frames. Use it when
    the read spends 30s or more on one comparison; use the travelling shape when the argument moves places.
 
 Build (`src/specimens/LongTake.tsx`): `<Shot ground="daylight" cameraX cameraY>`, one `<Canvas>` per
@@ -180,8 +179,7 @@ product. Draw the wait (36 frames of one breathing dot). The field leaves before
 pointer and click (the one operated screen, because the cursor is the point). Generic composer skin; length
 set through `askDuration`.
 
-Hand-drawn (the default for a new clip; anything else needs an argument. The author: "I think we should go for
-this for all the future design more hand-drawn kind of"): paper, one marker colour per video, geometry a
+Hand-drawn (the default for a new clip; anything else needs an argument): paper, one marker colour per video, geometry a
 machine didn't make. 3 pieces: a seeded wobble (so it doesn't boil) with rough primitives, an ink layer
 (everything draws on; a fade-up reads as composited), a paper ground with no key light, vignette or glow.
 Draw the analogy as the thing itself, with no symbol standing in ("why don't you simply use the actual metaphor of the lobster

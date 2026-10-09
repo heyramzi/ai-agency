@@ -2,15 +2,12 @@
 
 ## Contents
 
-[Finishing: photographed, not composited](#finishing-photographed-not-composited),
-[Primitives that exist because something failed](#primitives-that-exist-because-something-failed),
-[One motion language](#one-motion-language), [The frame](#the-frame),
-[Grounds, and the overlay cut](#grounds-and-the-overlay-cut), [Type](#type),
-[Traps that render clean](#traps-that-render-clean), [Verify by looking](#verify-by-looking)
+[Finishing: photographed, not composited](#finishing-photographed-not-composited), [Primitives that exist because something failed](#primitives-that-exist-because-something-failed),
+[One motion language](#one-motion-language), [The frame](#the-frame), [Grounds, and the overlay cut](#grounds-and-the-overlay-cut),
+[Type](#type), [Traps that render clean](#traps-that-render-clean), [Verify by looking](#verify-by-looking)
 
-Mechanics for a Remotion motion project. SKILL.md holds the judgment. Names like `Shot`, `Backdrop`,
-`tokens.ts` and `motion.ts` are one project's kit; build your own equivalents, one file each, so every clip
-pulls from one place.
+Mechanics for a Remotion motion project; SKILL.md holds the judgment. `Shot`, `Backdrop`, `tokens.ts` and
+`motion.ts` are one project's kit: build your own, one file each, so every clip pulls from one place.
 
 ## Finishing: photographed, not composited
 `Shot.tsx` adds 3 finishes, and a clip gets them by wrapping in `<Shot>`.
@@ -47,8 +44,7 @@ their own inline springs look like the work of different hands. `motion.ts` is t
 **Journeys interpolate, arrivals spring.** A spring at every waypoint turns a route into arrivals. Add a
 missing curve to `motion.ts` with its own WHY; an inline curve starts the drift again.
 
-Design both ends. The author, 27 Aug 2026: **"Always think of the entry and exit animation of a motion.
-Always."** A clip built entry-first arrives well, resolves and sits until the render runs out: it stops, it
+**Design both ends**. A clip built entry-first arrives well, resolves and sits until the render runs out: it stops, it
 doesn't end. An `ENTER` with no exit is half a clip, so name the exit in the header comment. It's one of
 three: depart (the subject leaves under `DEPART`), resolve and hold (settle, then `HOLD`), or hand over
 (everything goes except the one mark the next clip inherits, the default in a set). An alpha clip has no
@@ -64,8 +60,7 @@ ground to hide behind, so its exit is what separates an overlay from a pop. A lo
   rectangles and exits non-zero; run it on every portrait render (`--for tiktok` too). We wrote it after
   `n-plus-one.mp4` passed 300/1650 and failed it: its key moment sat below y=1436 under the Reels caption block.
   The numbers are a conservative intersection of disagreeing guides; `--calibrate` fits a real screenshot.
-- Centre the clip's full extent. Centring the band is the mistake. Check a label's rendered width against 1080.
-- Colours come from `tokens.ts`; don't invent values. A clip carries its own `<Backdrop />`. Brand
+- Check a label's rendered width against 1080. Colours come from `tokens.ts`; don't invent values. A clip carries its own `<Backdrop />`. Brand
   colours may leave the palette but still have to pass contrast: a mark darker than the backdrop needs a light
   substitute for border, glow and wires or it renders permanently unlit (Notion is `#000000`).
 - A wide frame has a third of the vertical budget and twice the horizontal, so you can't rotate a portrait
@@ -74,9 +69,9 @@ ground to hide behind, so its exit is what separates an overlay from a pop. A lo
 
 ### Wide clips ship in a wide and a narrow frame
 
-The author cuts the same graphic beside himself, keyed over the empty half of the room or as a split screen.
+The presenter cuts the same graphic beside themselves, keyed over the empty half of the room or as a split screen.
 **1920x1080** is the cutaway (opaque for a straight cut, alpha for keying); **960x1080** (`NARROW_W/H`) sits
-beside his face, exactly half the wide frame and committed to neither side. A clip makes 4 files, with render
+beside the face, exactly half the wide frame and committed to neither side. A clip makes 4 files, with render
 scripts in pairs (`render:<set>`, `render:<set>-mov`, `<set>-narrow`, `<set>-narrow-mov`).
 
 - Re-layout the figure and don't scale it, because 45% of a 32px label is 14px. Stand it on end (a row
@@ -158,8 +153,6 @@ camera scales carries `will-change`: Chrome rasterises the layer once, so scaled
 
 ## Verify by looking
 
-When the author overrules a `WHY` in a clip's header, rewrite it to record the reversal.
-
 ```bash
 npx remotion still src/index.ts <CompId> out/stills/<CompId>-<frame>.png --frame=<frame> --log=error
 ```
@@ -195,11 +188,11 @@ hides type that dies on a phone:
 ffmpeg -i out/final.mp4 -vf "fps=1,scale=360:-1,tile=5x3" -frames:v 1 out/phone.png
 ```
 
-A clip that doesn't carry the idea isn't scored; it goes back to the value test. A sheet can't show time, so
-lateness against the read and motion at the cut need the file watched.
+A clip that doesn't carry the idea isn't scored; it goes back to the value test.
 
 Hand the whole file, with its audio, to a video-capable model and ask for timecoded notes. **The verdict is
-binding**: a note that survives a re-render is fixed or answered in the WHY comment. Make it state the file's
+binding**: a note that survives a re-render is fixed or answered in the WHY comment, and an overruled `WHY` is
+rewritten to record the reversal. Make it state the file's
 duration and check that against ffprobe. Put each correction made at final review into your own notes.
 
 Done when: every rendered file scores 8 or more on all 7 axes, each wide still is unchanged by its narrow
