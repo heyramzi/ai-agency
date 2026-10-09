@@ -55,8 +55,7 @@ top right (the cards teaser).
   haloes the word inside.
 - Never uppercase a handle. It's a literal string a viewer types into a search box. Type rules stop
   at anything the viewer must reproduce.
-- Nothing touches the frame edge, and that includes a shadow. The author, 25 Sep 2026: *"sometimes the shadow clips
-  beyond the 16 by 9 video."* The shapes once rose 400px from below the frame and the 92px ambient shadow
+- Nothing touches the frame edge, and that includes a shadow. The shapes once rose 400px from below the frame and the 92px ambient shadow
   reached the last row at rest. Now the block hangs at `BLOCK_CENTRE_Y = 788`, rises `RISE` (24px) under the
   fade, and the exit eases in so a spring can't overshoot toward the edge. A long product ask takes a smaller
   `statementSize` and keeps the pane width. `alpha-edges.sh` proves it and the render script won't ship a failure.

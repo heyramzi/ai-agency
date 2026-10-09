@@ -3,8 +3,8 @@
 
 WHY THIS EXISTS: `directions.py` answers "what does this video look like" with one still. It cannot
 answer "does this beat carry the idea", because that is a question about change over time and one
-frame has none. A treatment written as prose cannot answer it either - The author asked for the visuals
-before deciding, and he was right: a beat that reads fine as a sentence ("the loop widens") is the
+frame has none. A treatment written as prose cannot answer it either - the visuals have to be seen
+before deciding: a beat that reads fine as a sentence ("the loop widens") is the
 same sentence whether the frame earns it or not.
 
 So this sits between the direction gate and `plan.md`: the argument, drawn, at three moments per

@@ -16,7 +16,8 @@ file, so a portrait clip can never pick up the landscape numbers. Landscape isn'
 
 We build 4 of the 5 registers here. The fifth is a found shot: a meme, a film beat or a piece of archive is
 a shot somebody else made, and a borrowed frame can't ship where a drawn one can without a licence check. Keep
-those clips in their own folder. This skill decides what a beat should show and draws it.
+those clips in their own folder. This skill decides what a beat should show and draws it. In a Short, a
+beat that names a tool, object, screen or place is `broll`'s, and motion takes at most 2 a Short.
 
 This isn't a general video skill. Getting clips into the editor and placed at a phrase is `video-edit`, and writing the
 read is `video-script`. The vendored Remotion references (`references/remotion/remotion-*/REFERENCE.md`, one
@@ -35,7 +36,8 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    marks, and nobody recognised their own stack in a hexagon. Use real logos (simple-icons, else a logo API by
    domain, never an image search), real words and the real screen. 15 correct clips that each open on an
    empty frame make a slideshow. Aim for a single world, a motif that changes and one motion language
-   (`motion.ts`, `references/craft.md`).
+   (`motion.ts`, `references/craft.md`). A motif that returns is one component with fixed node positions
+   (one rail component did): centred on the count, a fourth node moved the first three.
 
 ## Which branch
 
@@ -44,7 +46,7 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
   clock, type and sound rules below.
 - A CTA, lower third or end card, evergreen and reused for years: `references/ctas.md` (someone else's channel
   or a CTA described in plain words: the `cta-creation` skill).
-- Which renderer? Both open Chrome and encode. Stay in Remotion for anything reusing your tokens, scenes or
+- Which renderer? Stay in Remotion for anything reusing your tokens, scenes or
   components; reach for HyperFrames (HeyGen's HTML renderer, installed on demand, never vendored) for a source
   that's already a web page or GSAP file, a throwaway, or a client-run deliverable (`references/render.md`).
 - A recipe (figures, overlays, 3D, long take, live screen, code walk, introduction, hand-drawn, paper
@@ -54,11 +56,11 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 
 The `motion-designer` agent runs one beat; these steps run a whole set.
 
-3. Read the library's roster and pick the template whose job says what the beat
-   needs. A miss is reported with the job named, never coded from scratch: new templates come in updates.
+3. Run `editor-os motion --find "<the line>"` and pick the cell whose use-when line says what the beat
+   needs (`editor-os motion rules` says when b-roll wins). A miss is reported with the job named, never coded from scratch: new templates come in updates.
 4. Fill it with the beat's own words (`fill <Template> --prop=value`), in the video's one style.
-5. A still per phase per clip, and look at every one. A clip isn't done because it typechecked, and silent
-   invisibility survives a clean render and exit code. Then render the mp4s and, for anything meant to key, the
+5. A still per phase per clip, composited over a real frame of its second, and look at every one: the
+   brief's face box stays clear (one set put 6 of 18 on the face). Silent invisibility survives a clean render. Then render the mp4s and, for anything meant to key, the
    MOVs (`references/render.md`). Done when nothing is invisible, cut off or unreadable.
 6. Watch every rendered file with `scripts/watch.py`, one review subagent per clip scoring 7 axes; fix the 3
    worst, re-render, score again. Done when every axis reads 8 or more (`references/craft.md`, verify by looking).
