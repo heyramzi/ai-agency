@@ -28,7 +28,7 @@ curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
 curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
   -X POST "$API/api/youtube/concepts/<id>/production-task" -d '{}'
 # 4. the name carries the code, the fields carry the schedule
-cu task update <taskId> --name "EC52 - <title>" --description "$(cat brief.md)" --markdown \
+cu task update <taskId> --name "C52 - <title>" --description "$(cat brief.md)" --markdown \
   --due-date 2026-12-09
 cu task field set <taskId> --field 663d0445-3420-4152-bacb-e11a8145d859 --value 2026-12-09 --all-day
 cu task field set <taskId> --field d508e762-2df9-4d4d-9640-4e260b602a18 --value 6      # Format: Video
@@ -38,7 +38,7 @@ cu task field set <taskId> --field d8574a56-d8c0-4ab0-bb47-8343cc9dbf78 \
   --value '["bd92c09f-45eb-4d69-a6e7-8b6b0fe9b6a2"]' --json-value                      # Socials: YouTube
 # 5. Descript project, before the shoot, so the field is never empty
 cd ../vibe-kit/CLIs
-pnpm descript project new "EC52 - <title>"
+pnpm descript project new "C52 - <title>"
 pnpm descript project mv <projectId> "01 - Youtube HeyRamzi/00 - In Production"
 pnpm descript rename <projectId> <compId> "<title>"      # the composition is the title ALONE
 cd -
@@ -50,7 +50,6 @@ curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
 ```
 
  ClickUp wins on any disagreement, so write the row after the board.
-
 ## Traps
 
 - `cu task field set` on a `labels` field needs a JSON array of option ids, and `cu fields list` doesn't show them. Read `GET /list/<id>/field` on the ClickUp API with the token in `~/.config/clickup/`. A plain label answers `Value must be an array`.
