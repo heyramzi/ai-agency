@@ -34,7 +34,7 @@ for dir in skills/*/*/; do
   # node_modules and build output belong to the repo, not to the uploaded skill.
   (cd "skills/$area" && zip -qr "../../zips/$name.zip" "$name" \
     -x "$name/*/node_modules/*" "$name/node_modules/*" "$name/*/out/*" \
-    "$name/dist/*" "$name/test/*" "*/.DS_Store")
+    "$name/dist/*" "$name/test/*" "$name/article.html" "*/.DS_Store")
   printf '%-32s %-12s %s\n' "$name.zip" "$area" "$(du -h "zips/$name.zip" | cut -f1)"
 done
 
@@ -78,14 +78,18 @@ for rel in paths:
     rel = rel.lstrip("./")
     area, name = rel.split("/")[1], rel.split("/")[2]
     fm = frontmatter(f"{rel}/SKILL.md")
-    skills.append({
+    entry = {
         "name": fm.get("name", name),
         "area": area,
         "description": fm.get("description", ""),
         "skill_md": f"{RAW}/{rel}/SKILL.md",
         "folder": f"{TREE}/{rel}",
         "zip": f"{RAW}/zips/{name}.zip",
-    })
+    }
+    # The playground board that explains the skill; ai.heyramzi.com/skills renders it as the article.
+    if __import__("os").path.exists(f"{rel}/article.html"):
+        entry["article"] = f"{RAW}/{rel}/article.html"
+    skills.append(entry)
 
 commands = sorted(f[:-3] for f in __import__("os").listdir("commands") if f.endswith(".md"))
 index = {
