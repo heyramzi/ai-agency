@@ -1,205 +1,141 @@
-<img src="assets/banner.png" alt="ai-agency" width="100%">
+<img src="assets/banner-readme.png" alt="ai-agency: agent skills for SEO, video and client delivery" width="100%">
 
 # ai-agency
 
-You get 26 agent skills with 6 slash commands and 1 agent for the 3 parts of an
-agency that repeat each week: search, video production and client delivery. Another 2
-tools keep a skills registry from rotting, because everything here has to
-survive being added to.
+**19 agent skills for Claude**, plus 6 slash commands and an agent, built for the 3 jobs an
+agency repeats every week: getting found in search, making video, and delivering client work.
+One more, `ai-manager`, stops the rest of the shelf from rotting as you add to it.
 
-Everything in it is the working version of something taught in **[AI Agency][skool]**,
-a free Skool room where each classroom teaches 1 column of an agency. The course is
-the mental model you read. The folder here is the same system your own Claude runs.
-
-[**Join the room**][skool]. It is free, the 5 built classrooms are open, and the
-commands below run their courses on your own business.
-
-[skool]: https://go.upsys-consulting.com/skool
-
-## Start here
-
-Fork it. This repo is a base for your own kit. Add your skills under `skills/`, keep the 2 that ship with it, and they
-keep the rest honest as the registry grows.
+It's the working copy of what's taught in **[AI Agency][skool]**, a free Skool room. The course
+is the mental model you read. This repo is the same system, written for your own Claude to run.
 
 ```
 /plugin marketplace add heyramzi/ai-agency
 /plugin install ai-agency@ai-agency
 ```
 
-Or clone it and point Claude Code at the directory.
+You'll find each skill explained with examples at **[ai.heyramzi.com/skills](https://ai.heyramzi.com/skills)**.
 
-**Working through an agent with no terminal?** A single fetch answers what is here:
+[skool]: https://go.upsys-consulting.com/skool
 
-> Read https://raw.githubusercontent.com/heyramzi/ai-agency/main/index.json and tell me which skill fits.
+## What's in it
 
-[`index.json`](index.json) is generated beside the zips and carries every skill's
-name, area and description with the raw URL of its `SKILL.md`, plus the 6
-commands and the agent. No agent lists a directory over HTTP and guessing raw
-URLs off a README table is where a run goes wrong, so they are written out. Point any
-Claude at a `skill_md` URL and it runs that skill without installing anything.
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'fontFamily': 'Helvetica', 'fontSize': '16px', 'lineColor': '#8b89b8', 'clusterBkg': '#201f92', 'clusterBorder': '#201f92', 'titleColor': '#fbf3ef', 'primaryColor': '#fbf3ef', 'primaryTextColor': '#14133d', 'primaryBorderColor': '#201f92', 'edgeLabelBackground': '#fbf3ef'}}}%%
+flowchart TB
+  subgraph S["Search"]
+    direction LR
+    sc["/seo-engine"] ~~~ s1["programmatic-seo"]
+  end
+  subgraph V["Video production"]
+    direction LR
+    vc["/youtube-engine"] ~~~ v1["<b>Write</b><br/>video-hooks<br/>video-script"]
+    v1 --> v2["<b>Review and cut</b><br/>video-coach<br/>descript-projects<br/>dji-sync<br/>descript-script-edit<br/>video-edit"]
+    v2 --> v3["<b>Dress</b><br/>motion-design<br/>youtube-ctas<br/>whiteboard<br/>ai-video-prompting<br/>youtube-thumbnail"]
+    v3 --> v4["<b>Ship</b><br/>shorts-production<br/>generate-social"]
+  end
+  subgraph D["Client delivery"]
+    direction LR
+    dc["/clickup-foundations<br/>/the-project-manager"] ~~~ d2["project-manager<br/>agent"]
+    d2 -->|routes work to| d1["clickup<br/>board"]
+  end
+  subgraph A["Across all 3"]
+    direction LR
+    ac["/start-here<br/>/marketing-department"] ~~~ a1["ai-manager"]
+  end
+  S ~~~ V ~~~ D ~~~ A
+  classDef skill fill:#fbf3ef,stroke:#201f92,color:#14133d
+  classDef cmd fill:#f0503d,stroke:#f0503d,color:#0a0a0a
+  classDef agent fill:#fbf3ef,stroke:#f0503d,stroke-width:3px,color:#14133d
+  class s1,v1,v2,v3,v4,d1,a1 skill
+  class sc,vc,dc,ac cmd
+  class d2 agent
+```
 
-**Not in a terminal?** Claude Cowork and claude.ai take 1 skill at a time as a
-zip. You get every skill prebuilt as a zip in [`zips/`](zips): download the zip you
-want, then go to Customize, Skills, the plus button, Create skill, Upload a
-skill, and pick it. About a minute per skill, and it is the same skill either
-way.
+Cream boxes are skills, red boxes are slash commands, and the red-ringed box is the agent.
+`/start-here` and `/marketing-department` aren't tied to 1 part. You score your whole agency
+with the first and build The Media Buyer's 5 files with the second.
 
-## A folder per role
-
-Skills sit in `skills/<area>/<skill>/`, and the areas are the same 12 the
-[AI Agency](https://go.upsys-consulting.com/skool) classroom is built from. An
-area is 1 column of an agency, and the course named beside it teaches a person to run
-that column, so the shelf you read and the folder you install out of say the same thing.
-
-| Folder | The role it adds up to | Skills |
-| --- | --- | --- |
-| [`skills/search`](skills/search) | The SEO Copywriter | 4 |
-| [`skills/video`](skills/video) | The Video Producer | 11 |
-| [`skills/delivery`](skills/delivery) | The Project Manager | 8 |
-| [`skills/design`](skills/design) | The Art Director | 1 |
-| [`skills/content`](skills/content) | The Ghostwriter | 1 |
-| [`skills/operations`](skills/operations) | The Chief of Staff | 1 |
-
-The other 6 areas (strategy, demand, sales, engineering, finance and quality) are rows
-on the classroom shelf with no public skills yet, and they get a folder the day 1 lands.
-
-**A kit is a workflow.** The SEO kit is `skills/search` from start to finish, but the
-YouTube kit crosses 3 areas. The thumbnail is art direction and the posts cut out of a video
-are ghostwriting, so they file under `design` and `content` and still run in the video
-order below. File each skill by whose job it is.
-
-**A nested folder stays invisible until its path is listed.** `.claude-plugin/plugin.json` names each
-skill path, and `./scripts/build-zips.sh` regenerates that list, so adding a skill to a
-fork is 1 folder plus 1 run of the script.
-
-## The SEO kit
-
-4 skills that take a site from a blank keyword file to published pages
-that rank, plus the read of the scoreboard afterwards. They are the ones behind
-[The SEO Copywriter](https://go.upsys-consulting.com/skool), and they run in this order.
+### Search
 
 | Skill | Does |
 | --- | --- |
-| [programmatic-seo](skills/search/programmatic-seo) | ① The whole pipeline: what page to write next, keyword and prompt research, the draft, and the off-site mentions that decide whether an assistant names you. Serper scripts at each step |
-| [seo-content-strategy](skills/search/seo-content-strategy) | ② That research to an ordered plan, pillars and clusters |
-| [seo-schema-markup](skills/search/seo-schema-markup) | ③ JSON-LD on the page once it is written, and the rich results it buys |
-| [search-console](skills/search/search-console) | ④ Real GSC data: pages stuck on page 2, dead click rates and pages competing with each other |
+| [programmatic-seo](skills/search/programmatic-seo) | The whole pipeline: what page to write next, keyword and prompt research, the draft, and the off-site mentions that decide whether an assistant names you |
 
-It was 14 skills until [`ca64ef2`](https://github.com/heyramzi/ai-agency/commit/ca64ef2)
-retired the 10 that were never invoked and folded what they knew into `programmatic-seo`. A
-skill that never fires is a skill the model picks between, and that is a cost with no return.
+It wants Search Console access through `gcloud`. Keyword data comes from Google autocomplete
+and the Keyword Planner, both free, and a `SERPER_API_KEY` is optional.
 
-Once a skill is installed you do not summon it with a magic phrase. Describe the
-job and Claude picks it up:
+### Video production
 
-> Do keyword research for Mac dictation apps. Save it to a file.
+In the order you make a video, from the first line of the hook to the posts you cut out of it.
+
+| Skill | Does |
+| --- | --- |
+| [video-hooks](skills/video/video-hooks) | The opening. Competing variants by named mechanism, each rated for drop-off risk |
+| [video-script](skills/content/video-script) | Picks what to film and writes the words: long-form body, hook, or a Short |
+| [video-coach](skills/video/video-coach) | Reviews the take against its plan before a single cut, and returns 1 habit to change |
+| [descript-projects](skills/video/descript-projects) | Footage into Descript, named and foldered from the terminal |
+| [dji-sync](skills/video/dji-sync) | The DJI lav take waveform-matched to the phone clip and swapped in losslessly |
+| [descript-script-edit](skills/video/descript-script-edit) | Cuts the false starts and filler, then plans the jump cuts, layouts and b-roll |
+| [video-edit](skills/editor-os/video-edit) | Runs the passes of an edit: ledger, cuts, layouts, clips, checks, Shorts or long-form |
+| [motion-design](skills/editor-os/motion-design) | Remotion clips, figures, captions and CTAs for anything that isn't your face |
+| [youtube-ctas](skills/video/youtube-ctas) | Transparent 1920x1080 overlays: subscribe, like, lower third, end screen |
+| [whiteboard](skills/design/whiteboard) | The board a video talks over: tldraw, a compiled still, or Excalidraw live on the iPad |
+| [whiteboard](skills/video/whiteboard) | The Excalidraw engine itself, boards written as TypeScript in `tool/` and drawn onto the iPad on camera |
+| [ai-video-prompting](skills/video/ai-video-prompting) | Prompts for Veo, Kling, Seedance and the rest, plus the shot list behind them |
+| [youtube-thumbnail](skills/design/youtube-thumbnail) | The thumbnail, from a measurement you run on your own niche, then a render |
+| [shorts-production](skills/video/shorts-production) | A finished Short taken to a scheduled, coded task, with the export shipped untouched |
+| [generate-social](skills/content/generate-social) | The transcript turned into LinkedIn and X posts |
+
+A few need more than a terminal. `motion-design` and `youtube-ctas` render through
+[Remotion](https://remotion.dev). `youtube-thumbnail` renders with
+[`scripts/render.mjs`](skills/design/youtube-thumbnail/scripts/render.mjs), which wants a Gemini
+API key or a gateway. The `whiteboard` engine in [`skills/video/whiteboard/tool`](skills/video/whiteboard/tool)
+is the one thing here with an install step, `pnpm install` once, because Excalidraw's live protocol
+is socket.io.
+
+### Client delivery
+
+| Skill | Does |
+| --- | --- |
+| [clickup](skills/delivery/clickup) | Every read and write in ClickUp through the `cu` command line, plus the browser path for templates, automations and dashboards |
+| [board](skills/delivery/board) | A task moved, specced into a brief, built into a reviewed PR, or shipped and closed |
+
+The agent on top is [project-manager](agents/delivery/project-manager.md). It reads the board,
+names what's late and what's waiting on a client, and proposes 1 move per problem. It doesn't
+press the button itself.
+
+Both skills need the `cu` command line. Its install line is handed out in The Project Manager,
+lesson 2. Without it they read as documentation.
+
+### Keeping the shelf honest
+
+| Skill | Does |
+| --- | --- |
+| [ai-manager](skills/admin/ai-manager) | Writes, repairs and cleans skills and agents |
+
+Agent config fails without a sound. A broken skill drops out of the list with no error, and a
+duplicated name collapses to 1 side. So it rots 2 ways. It grows, until the model is
+picking between 4 skills that all look right. And it goes stale, so every session pays again for
+the same wrong turn. `ai-manager heal` writes the lesson into the file that should've known it,
+in the session that learned it. `ai-manager clean` merges the overlap back down. Heal all the
+time and clean on a schedule, or the 2 passes fight: one adds caveats while the other strips them.
+
+## You don't need a magic phrase
+
+Once a skill is installed, describe the job and Claude picks the skill up:
 
 > Look at that keyword file and tell me the first 10 articles to write, best intent first.
 
-> Write the comparison page for us against VoiceInk. Here are my numbers.
-
-`programmatic-seo` wants a key from
-[serper.dev](https://serper.dev), free for 2,500 queries. `search-console` uses
-your own Google account through `gcloud`, and reads only.
-
-## The YouTube kit
-
-13 skills that take a video from the first line of the hook to the posts cut out of
-it afterwards. They are the ones behind [The Video
-Producer](https://go.upsys-consulting.com/skool), and they run in this order.
-
-| Skill | Does |
-| --- | --- |
-| [video-hooks](skills/video/video-hooks) | ① The opening. Variants by named mechanism, each rated for drop-off risk |
-| [video-script](skills/video/video-script) | ② The body. 8 blocks, a beat budget, and 1 commercial ask at the end |
-| [video-coach](skills/video/video-coach) | ③ The take reviewed against its plan, before a single cut, returning 1 habit to change |
-| [descript-script-edit](skills/video/descript-script-edit) | ④ The cut happens in Descript's rich clipboard with a rewrite. You then measure the rhythm of that cut and place the shots against it |
-| [youtube-thumbnail](skills/design/youtube-thumbnail) | ⑤ The frame, designed off a measurement you run yourself |
-| [descript-projects](skills/video/descript-projects) | Footage into Descript, named and foldered so the media browser is the shot list |
-| [dji-sync](skills/video/dji-sync) | The lav take waveform-matched to the camera clip and swapped in losslessly |
-| [motion-design](skills/video/motion-design) · [youtube-ctas](skills/video/youtube-ctas) | Motion graphics cut against the read, and the transparent overlays an edit is dressed with |
-| [whiteboard](skills/video/whiteboard) | Concept boards written as code and drawn onto the tablet live, on camera. Ships the engine and 1 worked board |
-| [ai-video-prompting](skills/video/ai-video-prompting) | Prompts for Veo, Kling, Seedance and the rest, and when a model should not render a beat at all |
-| [shorts-production](skills/video/shorts-production) | A finished Short taken to a scheduled task with its pillar code, and the rule that an export ships untouched |
-| [generate-social](skills/content/generate-social) | The transcript turned back into LinkedIn and X posts |
-
-Nothing in it is summoned with a magic phrase either. Describe the job:
-
 > Write me 3 hooks for a video about why agency retainers stall. Rate each one.
 
-> Here is the raw transcript of the take. Coach me before I cut it.
+> What's late on the delivery board, and what's waiting on a client?
 
-> Cut this Descript script. I copied it, it is on the clipboard.
+## The commands run the courses
 
-> The cut is fine and it still feels long. Where does the frame sit still?
-
-Of these, 3 need more than a terminal. `descript-script-edit` drives the macOS clipboard,
-`motion-design` and `youtube-ctas` render through [Remotion](https://remotion.dev), and `whiteboard`
-ships a small TypeScript project in [`skills/video/whiteboard/tool`](skills/video/whiteboard/tool),
-which is the one thing here with an install step: `cd tool && pnpm install`. It is the exception to
-the dependency-free rule below, because speaking Excalidraw's collaboration protocol means speaking
-socket.io.
-
-### The thumbnail, in more detail
-
-[youtube-thumbnail](skills/design/youtube-thumbnail) treats a thumbnail as a
-measurement problem before it treats it as a design problem.
-
-Most thumbnail advice is a style opinion repeated until it sounded like a rule. The way
-past that is banding: for each channel you learn from, build a winner band and a control
-band from that same channel and period, so brand, photographer and budget are held
-constant. **A trait present in both bands is house style.** Copy only the traits that
-separate the bands.
-
-Run it on a real niche and the usual advice starts falling over. A face tends to appear in
-both bands, so its presence counts as house style and a close-up filling the frame often
-marks a control. Somebody else's revenue is a control marker. Adjectives with no object are
-control markers. A bounded promise in 2 to 4 words is the one reliable difference.
-
-The skill carries the method from start to finish: how to build the bands, how to choose between the
-face and faceless variants, 6 copy formulas with the ban list, and the composite rules
-for rendering with an image model. [`scripts/render.mjs`](skills/design/youtube-thumbnail/scripts/render.mjs)
-is a dependency-free renderer that takes your own photographs as reference images, so the
-model composites around a real face you supply. Bring a Gemini API key, or
-point it at a gateway.
-
-It ships without an evidence file on purpose. The bands are yours to build, on your own
-niche, and the skill is the method for building them. The whole kit is written that way:
-each measured claim in it names what produced the number, and each one of them is worth
-re-running on your own channel before you trust it.
-
-## The ClickUp kit
-
-Delivery on ClickUp runs on 2 free skills and 1 agent. They're the ones behind
-[The Project Manager](https://go.upsys-consulting.com/skool), and they both talk to the
-same `cu` command line.
-
-| Skill | Does |
-| --- | --- |
-| [clickup](skills/delivery/clickup) | Every read and write: tasks, lists, docs, views, fields and time, bulk cleanup, and the browser path for templates, automations and dashboards |
-| [board](skills/delivery/board) | A task specced into a brief, built in its own worktree, shipped through the merge gate, or just moved to a new status |
-
-Planning the week in batches with points and a per-person cap, and turning a call into
-tasks, come with [Agency Master](https://www.upsys-consulting.com/en/agency-master).
-
-The agent on top is [project-manager](agents/delivery/project-manager.md). It reads the
-board, names what is late, names what is waiting on a client, and proposes 1 move
-per problem. It never presses the button itself.
-
-> What is late on the delivery board, and what is waiting on a client?
-
-> Write the brief for the oldest open task, then start it.
-
-**These need the `cu` command line.** Its install line is handed out in The Project
-Manager, lesson 2. The skills read as documentation without it, and run with it.
-
-## The agent runs the courses
-
-The Classroom shelf in [AI Agency](https://go.upsys-consulting.com/skool) is 13
-cards with 1 per column of an agency plus Start Here, and 5 of them are built. All 5
-are free, and each one ships a second copy of itself written for the agent.
-The course is the mental model you read. The command is the same system as
-instructions your own Claude can execute, so the reading and the building happen at once.
+The free courses in [AI Agency][skool] ship a second copy of themselves, written for the agent. Type
+the command and it runs 1 module a sitting on your own business, asks you the decisions that are
+yours, stops at the checkpoint and names the lesson you read next.
 
 | Command | Course | Runs |
 | --- | --- | --- |
@@ -210,102 +146,90 @@ instructions your own Claude can execute, so the reading and the building happen
 | `/youtube-engine` | The Video Producer | The 4 numbers off your own channel, from the runtime table to the ledger |
 | `/the-project-manager` | The Project Manager | Your board, your capacity number, and the 4 gates the work passes |
 
-Install the plugin and type the command. It runs a module a sitting, asks you the
-decisions that are yours, stops at the checkpoint, and names the lesson you read next.
-It runs beside the course and it will send you back to it.
+None of them touch a live account without showing you first, none invent a number you haven't
+measured, and every one stops when the module ends.
 
-Start Here opens the day you join. The other 4 sit on the room's level ladder and
-open as you post and reply, which takes a few days of turning up.
-The 8 unbuilt cards are locked above each rung anyone has reached, because an
-empty course that opens is a worse promise than a padlock.
+Start Here opens the day you join. You reach the others on the room's level ladder by posting and
+replying, which takes a few days of turning up.
 
-**No terminal?** Each command is a single markdown file. Paste this into any Claude and it
-does the same thing:
+## 4 ways in
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'fontFamily': 'Helvetica', 'fontSize': '16px', 'lineColor': '#8b89b8', 'primaryColor': '#fbf3ef', 'primaryTextColor': '#14133d', 'primaryBorderColor': '#201f92', 'edgeLabelBackground': '#fbf3ef'}}}%%
+flowchart LR
+  R["skills/&lt;area&gt;/&lt;skill&gt;/SKILL.md"] -->|build-zips.sh| G["plugin.json skill list<br/>index.json<br/>zips/"]
+  G -->|/plugin install| CC["Claude Code"]
+  G -->|fetch index.json| ANY["Any agent with web access"]
+  G -->|upload a zip| CW["Cowork and claude.ai"]
+  R -->|git clone| CL["Your own fork"]
+  classDef src fill:#201f92,stroke:#201f92,color:#fbf3ef
+  classDef out fill:#fbf3ef,stroke:#201f92,color:#14133d
+  classDef dest fill:#f0503d,stroke:#f0503d,color:#0a0a0a
+  class R src
+  class G out
+  class CC,ANY,CW,CL dest
+```
+
+**Claude Code.** The 2 lines at the top. Or clone the repo and point Claude Code at the folder.
+
+**An agent with no terminal.** 1 fetch tells it what's here:
+
+> Read https://raw.githubusercontent.com/heyramzi/ai-agency/main/index.json and tell me which skill fits.
+
+[`index.json`](index.json) lists every skill's name, area and description with the raw URL of
+its `SKILL.md`, plus the 6 commands and the agent. It's written out because no agent can list a
+directory over HTTP, and guessing raw URLs off a README is where a run goes wrong. Point any
+Claude at a `skill_md` URL and it runs that skill without installing anything. The commands work
+the same way:
 
 > Read https://raw.githubusercontent.com/heyramzi/ai-agency/main/commands/seo-engine.md and run it with me.
 
-None of them touch a live account without showing you first, none of them invent a number
-you have not measured, and every one of them stops when the module ends.
+**Cowork and claude.ai.** They take 1 skill at a time as a zip, and every skill is prebuilt in
+[`zips/`](zips). Download one, then go to Customize, Skills, the plus button, Create skill,
+Upload a skill. About a minute per skill, and it's the same skill either way.
 
-## The 2 failure modes
+## Fork it
 
-Agent configuration rots in a specific way. It fails without noise. A broken skill
-drops out of the offer list with no error. A duplicated name collapses to 1 side.
-The skill below makes silent failures visible and repairs the parts with exactly
-1 correct answer.
-
-A registry decays in 2 directions at once, and 1 skill owns both, because
-both are judged against the same quality floor. 2 files holding 1 standard
-become 2 standards inside a quarter.
-
-| Path | Direction | Cadence | Use when |
-| --- | --- | --- | --- |
-| [ai-architecture](skills/operations/ai-architecture) `new` / `heal` | Additive | Per session | A skill needs writing or its description fires on the wrong prompts, a session taught you something a file should have known, or a skill keeps repeating a mistake it already made |
-| [ai-architecture](skills/operations/ai-architecture) `clean` | Subtractive | Scheduled | Duplicates and overlapping skills compete for the same task, a skill works some days and not others, skills are scattered across projects and home directories, or links are dead |
-
-**It accumulates.** Each skill you add competes with the others for the same
-triggers. Past a certain size the model picks between 4 skills that all look right,
-and you cannot tell which skill it
-picked. The clean path merges those down to 1 survivor each, behind a git
-guard so a bad merge is 1 command to undo.
-
-**It goes stale.** A file keeps giving an instruction that stopped being true,
-and every session pays again for the same wrong turn. The heal path writes the
-lesson into the file that should have known it, in the session that learned it,
-and deletes what the lesson contradicts.
-
-Run them on the same cadence and they fight: 1 pass adding caveats while
-another removes them. Heal continuously, clean on a schedule, and let the clean
-pass fold in what the heal passes accumulated.
-
-## Layout
+This repo is meant as the base for your own kit. Add your skills under `skills/<area>/<skill>/`
+and keep `ai-manager`, so the shelf stays honest as it grows.
 
 ```
 .claude-plugin/
   marketplace.json      this repo as a marketplace
   plugin.json           this repo as a plugin
-commands/
-  <course>.md           1 slash command per Skool course
-agents/
-  <area>/<agent>.md     1 folder per area, same 12 as the skills
-skills/
-  <area>/
-    <skill-name>/
-      SKILL.md          frontmatter and instructions
-      references/       detail loaded only when needed
-      scripts/          executables, committed, no install step
-zips/
-  <skill-name>.zip      1 zip per skill, for Cowork and claude.ai
-assets/                 the banner above and the social card, generated
+commands/<course>.md    1 slash command per Skool course
+agents/<area>/          1 folder per area, like the skills
+skills/<area>/<skill>/
+  SKILL.md              frontmatter and instructions
+  references/           detail loaded only when needed
+  scripts/              executables, committed, no install step
+zips/<skill>.zip        1 zip per skill, for Cowork and claude.ai
 index.json              every skill, command and agent with its raw URL
 ```
 
-`zips/`, `index.json` and the `skills` array in `plugin.json` are all generated. After changing
-anything under `skills/`, run `./scripts/build-zips.sh` and commit what it writes. The
-zip is flat inside, `<skill>/SKILL.md`. The area describes this repo, while the skill
-stands alone.
+A nested folder stays invisible until `plugin.json` names it. That list, `index.json` and the
+zips are all generated, so after any change under `skills/`, run `./scripts/build-zips.sh` and
+commit what it writes. A new skill in a fork is 1 folder plus 1 run of the script.
 
-A skill is self-contained, carries its own reference material, and ships a
-dependency-free script so it works on a fresh clone. Node 20 or later, nothing
-installed. `whiteboard` is the one exception and says so: its `tool/` wants
-`pnpm install` once, because the collaboration protocol it speaks is socket.io.
+File each skill by whose job it is, not by which kit uses it. The thumbnail is design work and
+the posts are content work, so they file under `design` and `content` and still run in the video
+order above.
 
-## Checking your own fork
+A skill carries its own references and a dependency-free script, so it works on a fresh clone
+with Node 20 or later and nothing installed. The `whiteboard` engine is the 1 exception.
 
-The tools run against this repo, and against each other. That is the intended
-way to use them on your own:
+Check your fork with the same tools:
 
 ```bash
-node skills/operations/ai-architecture/scripts/heal.cjs check skills
-python3 skills/operations/ai-architecture/scripts/review_skill.py skills
-python3 skills/operations/ai-architecture/scripts/context_cost.py skills
+node skills/admin/ai-manager/scripts/heal.cjs check skills
+python3 skills/admin/ai-manager/scripts/review_skill.py skills
+python3 skills/admin/ai-manager/scripts/context_cost.py skills
 ```
 
-They exit non-zero when something is wrong, so they drop into CI as-is.
+They exit non-zero when something's wrong, so they drop into CI as they are.
 
-## The classrooms and the room
+## The room
 
-The classrooms these skills came out of, the builds run in a real workspace 1 a
-week, and the room where you can ask about your own setup:
-
-**[go.upsys-consulting.com/skool][skool]**. The room is free, and each request is read by hand.
+The courses these skills came out of, a build run in a real workspace each week, and a place to
+ask about your own setup: **[go.upsys-consulting.com/skool][skool]**. It's free, and every
+request gets read by hand.
