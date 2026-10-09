@@ -14,13 +14,13 @@ Open this for pass 0 (organise), pass 4 (music), pass 8 (handoff), before an imp
 
 ## Pass 0: organise
 
-**The pack's camera cards bind to a track named `CAM`**, so a sequence still wearing recorder names refuses every `layout pace` and `layout apply` ("has no CAM track for that layer", EC51, 8 Sep 2026). That's why organise is a pass: it reads ASSETS and ALIGNMENT too. FC38's camera was uploaded and never joined, its transcript carried right words over wrong times, and `tracks` printed clean through both.
+**The pack's camera cards bind to a track named `CAM`**, so a sequence still wearing recorder names refuses every `layout pace` and `layout apply` ("has no CAM track for that layer", 8 Sep 2026). That's why organise is a pass: it reads ASSETS and ALIGNMENT too. One camera was uploaded and never joined, its transcript carried right words over wrong times, and `tracks` printed clean through both.
 
 **A project is one sequence with 4 layers.** However many takes, `sequence join` them in order, then `comp fill`. Takes all carry `CAM`, `CAM GS`, `MIC` and `SCREEN`. Sync each camera from the audio, head and tail, never by eye (2 cameras dropped at 0 by hand sat 1.04 s and 6.5 s off). An intro recorded in the web recorder has no separate mic, so that file is `MIC` and `CAM`/`CAM GS` play an untranscribed copy of its mediaRef; the same transcribed file on a muted track makes the app drop its words. A series too heavy for one project is one project per part: `<Title> - Part N · <Topic>` (project and composition), `SEQ <same>`, raw `RAW CAM|MIC|SCREEN <Take>`.
 
 Tracks. A sequence's tracks are `sequenceScenes` (reached from the sequence mediaRef through `audio.trackSceneIds`), so `tree` and `comps` never show them. Names are `CAM`, `CAM GS`, `MIC`, `SCREEN`, in timeline order. `CAM GS` is the keyed (green-removed) twin, drawn as the body over text by 8 of the pack's cards.
 
-`descript tracks <project>` ends on `tracks clean` or a fault per line; **pass 0 is done when it reads clean** and `run.py` takes that output as evidence (The author, 8 Sep 2026: "double-check that there is the green screen layer at the exact same time in the sequence" and "only the active audio is in the script, the other one it should remove from script"). 3 gates:
+`descript tracks <project>` ends on `tracks clean` or a fault per line; **pass 0 is done when it reads clean** and `run.py` takes that output as evidence. 3 gates:
 
 - One live track and the rest muted: the mic if there is one, otherwise the camera. 2 unmuted captures of one room is comb filtering, invisible in a waveform and listed by `tracks`. A muted track keeps gain 1, so reading gain finds every track live.
 - Only the live track in the script. `includeTranscript` is "Include in script"; a camera left in puts a second, worse transcript under every word. `track script <track> --off` on every non-mic track.
@@ -40,13 +40,14 @@ Read the clock once with `layout cards <project> <comp>` at the top of pass 3, a
 
 ## Layouts and the bed (pass 4)
 
-Run `layout sync` before choosing a card, every time: he edits the packs, `layout seed` reports `alreadyHeld` and keeps the stale copy, and the manifest says what a card is FOR. A layout is a stamp with no link back to the pack, and a ladder splits on commas, so a card whose NAME holds one goes in by id. A camera layout needs a SEQUENCE, declared as its own `add_media` entry `tracks: [{media: "<key>"}]`. Read layers back after any screen stamp and take one off with `layer rm`: a `sceneId` naming a scene nothing draws locks the project out of its editor. A CLI-stamped composition publishes (EC51, 8 Sep 2026: 48 cards and 21 pins, 4K in 14 minutes); pull a finished job with `descript job <id> --download`, never re-render. The pack list, the zoom ladder and the `--with` placeholder rule are in [layouts.md](layouts.md).
+Run `layout sync` before choosing a card, every time: he edits the packs, `layout seed` reports `alreadyHeld` and keeps the stale copy, and the manifest says what a card is FOR. A layout is a stamp with no link back to the pack, and a ladder splits on commas, so a card whose NAME holds one goes in by id. A camera layout needs a SEQUENCE, declared as its own `add_media` entry `tracks: [{media: "<key>"}]`. Read layers back after any screen stamp and take one off with `layer rm`: a `sceneId` naming a scene nothing draws locks the project out of its editor. A CLI-stamped composition publishes (8 Sep 2026: 48 cards and 21 pins, 4K in 14 minutes); pull a finished job with `descript job <id> --download`, never re-render.
+The pack list, the zoom ladder and the `--with` placeholder rule are on the layouts page in the studio.
 
-The screen's size is set per video, never taken from the pack. The author frames one card of each layout (PiP, big head) in the app and copies it (Cmd+C); `layer paste <p> <comp>` puts that framing on every card of the layout, once per layout. Read the sizes back (P33, 25 Sep 2026: PiP 0.90x0.53, big head 0.72x0.39 at x 0.39).
+The screen's size is set per video, never taken from the pack. The presenter frames one card of each layout (PiP, big head) in the app and copies it (Cmd+C); `layer paste <p> <comp>` puts that framing on every card of the layout, once per layout. Read the sizes back (25 Sep 2026: PiP 0.90x0.53, big head 0.72x0.39 at x 0.39).
 
-One bed per channel, and pass 4 never lays it. The brand's music style answers it; a track a sibling project already uses wins a tie. `music set` writes **0.211, ducking on, `fillBehavior: loop`** (a 121 s bed under a 22-minute cut goes silent at 2:01 otherwise, EC51, 8 Sep 2026), the scene's own gain stays 1. A guard checking only `media &&` counts an empty `Placeholder` pin or a bare PNG as a bed; never clear one with `music rm` (it lifts the card's own pin).
+One bed per channel, and pass 4 never lays it. The brand's music style answers it; a track a sibling project already uses wins a tie. `music set` writes **0.211, ducking on, `fillBehavior: loop`** (a 121 s bed under a 22-minute cut goes silent at 2:01 otherwise, 8 Sep 2026), the scene's own gain stays 1. A guard checking only `media &&` counts an empty `Placeholder` pin or a bare PNG as a bed; never clear one with `music rm` (it lifts the card's own pin).
 
-Pass 4 offers 3 options and moves on (The author, 29 Sep 2026: "Editor OS should be capable of giving me a few options instead of being stuck."). `editor-os music` prints his answer to "what should your videos sound like?" and its search terms. Style `none` means no card: mark done with that as evidence. No answer yet: don't ask, offer one track from each of 3 fitting styles, and save no style he didn't say.
+Pass 4 offers 3 options and moves on. `editor-os music` prints their answer to "what should your videos sound like?" and its search terms. Style `none` means no card: mark done with that as evidence. No answer yet: don't ask, offer one track from each of 3 fitting styles, and save no style they didn't say.
 
 1. `stock music search "<term>" --json --full` per term, best first (`--full` keeps the `preview` link).
 2. Pick 3: at least 20 s (the loop covers the rest), a mood read from its title (no vocal, no jingle), each different from the others.
@@ -68,8 +69,7 @@ Open before an import: the manifest key is the name and the folder both. `import
 - A letter suffix means alternatives for one beat (`2a`, `2b`); a single option has none.
 - `-` not `:` (Finder shows `:` as `/`): `[04-19]` is 4:19. Zero-pad so `[00-09]` sorts first.
 - No take yet: drop the bracket and don't guess one. With a composition, the real clock is `layout cards` or an SRT export.
-- A raw take is `RAW <CAM|MIC|SCREEN|IPAD> <Take>` with no number or timecode (The author, 24 Sep 2026, dropping `00`: "remove this concept."). A salvage take carries `ALT 4K [salvage 1-05, 1-13, 3-41].MOV`.
-- A video code carries no `E`: `C51`, `A19`, `P33`, `S02`, French `FC38`, `FA08`. `EC51` names nothing now; a folder or `RUN.json` still carrying it is old. The author, 22 Sep 2026: "we renamed everything by removing the letter E everywhere."
+- A raw take is `RAW <CAM|MIC|SCREEN|IPAD> <Take>` with no number or timecode. A salvage take carries `ALT 4K [salvage 1-05, 1-13, 3-41].MOV`.
 
 3 clip folders, apart for licensing: `Music` (the bed only, one file, no beat number), `Motion` (built here: flat opaque `.mp4`, full frame or 960x1080, and alpha QuickTime Animation `qtrle` `.mov`; HEVC-alpha keys as a black rectangle here), `B-roll` (real footage, usually someone else's, always muted). A borrowed shot can't ship in a paid lesson, client deliverable or ad; mixed in, an unshippable frame sits one drag from a paid build. `broll` keeps the rights ledger. `Music` sorts first, the order the passes run.
 
@@ -87,7 +87,7 @@ A session folder is slug-cased with raw files `RAW CAM|IPAD|MIC <Title>.<ext>`; 
 
 iPhone footage. `afcclient ls /DCIM/<NNNAPPLE>`, then `afcclient info <path>` (`st_size`, `st_mtime`, `st_birthtime` in ns; `birthtime -> mtime` is the recording span, which matches "the 46 minute one" without pulling). Always pass a subcommand: bare `afcclient` opens a shell that hangs the call. mtime alone misleads (a clip deleted in Photos sits in `/DCIM` until purged): confirm by duration. Frames that won't transfer are iCloud optimisation: Settings > Photos > Download and Keep Originals. Upload `import_media` URLs are presigned for 3 hours: `curl -T <file>`, never `--data-binary` (buffers the file in RAM, dies "out of memory" on multi-GB). The job is atomic: it sits at `waiting_for_uploads`, every file a placeholder with an audio icon until the last byte lands; re-uploading only makes a `-1` duplicate. A name already in the project makes `import_media` refuse: prefix a folder path (`"iPhone 19 Aug/IMG_7646.MOV"`).
 
-- A `[mm-ss]` in a media name goes stale on every re-cut. To find where a clip plays, map `pinScenes[].id` through `compositions[].timeline.cards.components[].layers[].sourceSceneId` to its card and read `layout cards`. A clip whose sentence was cut loses its bracket and goes to `Not in the cut/` (EA20's beat 11 was named `[19-50]` and played at 1:06).
+- A `[mm-ss]` in a media name goes stale on every re-cut. To find where a clip plays, map `pinScenes[].id` through `compositions[].timeline.cards.components[].layers[].sourceSceneId` to its card and read `layout cards`. A clip whose sentence was cut loses its bracket and goes to `Not in the cut/` (one beat 11 was named `[19-50]` and played at 1:06).
 - An iPhone take can report 3840x2160 with `side_data=rotation` -90, meaning portrait: read rotation, never raw width and height, before setting composition size. Different resolutions per angle don't mean different cameras.
 
 ## Done when

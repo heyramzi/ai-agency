@@ -4,10 +4,10 @@
 `sequence.py plan` is pass 1 of the shots and it is deterministic: six triggers, each of
 them a surface pattern - a number in the line, a demonstrative phrase, a contrastive
 opener, or dead air. What no pattern finds is a sentence that is well formed, carries no
-number and names a STRUCTURE, which is most of what a graphic is for. The author, 8 Sep 2026,
-on EA20 at 12:09 - "so that ClickUp, your project tool, could talk to Notion, your
-documentation tool" - asked why the plan had put a zoom there: "why isn't the descript
-skill smart enough to know that this is a visual context?" It is not, and it cannot be:
+number and names a STRUCTURE, which is most of what a graphic is for. In one talk at 12:09,
+"so that ClickUp, your project tool, could talk to Notion, your
+documentation tool" got a zoom from the plan, though it is a visual context. The plan
+is not smart enough to know that, and it cannot be:
 the line has no digit in it, so the `motion` trigger never fires and `zoom` takes the
 stretch as dead air.
 
@@ -27,7 +27,7 @@ import schema
 from sequence import clock, load
 
 # The share of a plan's slots that may be zoom steps before the plan is a zoom ladder with
-# opinions. EA20 came in at 29 of 42, 69%, with five motion slots in a 22-minute video.
+# opinions. One screen demo came in at 29 of 42, 69%, with five motion slots in a 22-minute video.
 ZOOM_CEILING = 0.45
 # Seconds either side of a brief within which an existing slot counts as covering it.
 NEAR = 6.0

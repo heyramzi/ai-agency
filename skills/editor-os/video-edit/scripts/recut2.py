@@ -23,25 +23,25 @@ def is_filler(w):
     n = re.sub(r"[^\w'-]", "", unicodedata.normalize("NFKC", w)).lower()
     return n in FILLERS or (len(n) > 1 and n.endswith("-"))
 
-# Words that carry nothing when they OPEN a sentence. The author, 2 Sep 2026: "you always forget to
-# remove 'now' and 'so' - when they start a sentence, it's often fillers that we need to remove."
+# Words that carry nothing when they OPEN a sentence: 'now' and 'so' that start a sentence are
+# often fillers that need to be removed.
 #
 # THEY ARE NOT IN `FILLERS`, and the difference is the whole point: a hesitation is filler wherever
 # it lands, and these two are filler in ONE position and meaningful everywhere else. "It costs more,
 # so I built it" is the word doing its job; "So I built it" as a fresh sentence is a throat-clear.
-# 66 of EC49's 226 sentences open with one - 29% - and the sandbox take runs 11%.
+# 66 of one talk's 226 sentences open with one - 29% - and the sandbox take runs 11%.
 OPENERS = {"so", "now"}
 
 # The one shape that keeps its opener: "so that" / "now that" is a subordinator, and cutting the
-# first word of it leaves a fragment. MEASURED AT ZERO across 300 sentences of EC49 and the sandbox,
+# first word of it leaves a fragment. MEASURED AT ZERO across 300 sentences of one talk and the sandbox,
 # so this guards nothing that has happened yet - it costs one comparison and prevents a broken
 # sentence the day it does. Note that "So that's the first thing" is NOT this case: that is the
 # opener plus a contraction, and it correctly becomes "That's the first thing".
 KEEP_AFTER = {"that"}
 
 
-# Discourse phrases that announce a point instead of making it. The author, 2 Sep 2026, pointing at one
-# in EC49: "make sure we cut this off every time I say this. This is a filler."
+# Discourse phrases that announce a point instead of making it. One example from a talk:
+# "make sure we cut this off every time I say this. This is a filler."
 #
 # A PHRASE, NOT A WORD, which is why `OPENERS` cannot hold it: no single token here is filler -
 # "what", "that", "means" all carry weight on their own - and it is the run of them that says
@@ -55,7 +55,7 @@ KEEP_AFTER = {"that"}
 # subject, the verb, the leading "and" and the trailing "that" all vary independently, which is
 # 24 members. Four literals would have been four more corrections.
 #
-# Measured across EC49: "and what that means is that" and "what this does is" each appear once in
+# Measured across one talk: "and what that means is that" and "what this does is" each appear once in
 # the live script and once in the text he had already struck through by hand - so both halves of
 # the family are things he says and then cuts.
 FILLER_PHRASES = sorted(
@@ -540,7 +540,7 @@ def build(cuts, path=None, fillers=True, typos=None):
         # `caps` is the second reason to capitalise, and without it cutting a sentence's opening
         # word leaves the sentence starting lowercase MID-PARAGRAPH, where `starts_para` is false:
         # "Now, systems are built upon templates" would have become "systems are built upon
-        # templates". 66 of EC49's sentences open with one of these, so the repair is the feature.
+        # templates". 66 of one talk's sentences open with one of these, so the repair is the feature.
         if starts_para or r[0] in caps:
             for k, ch in enumerate(text):
                 if ch.isalpha():

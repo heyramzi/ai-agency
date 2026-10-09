@@ -76,6 +76,18 @@ class Route(unittest.TestCase):
         self.assertEqual(out.returncode, 0, out.stderr)
         self.assertFalse(self.ledger()["passes"][1].get("override"))
 
+    def test_pass_0_cites_the_parts_a_stitched_take_was_joined_from(self):
+        call("init", self.dir, "--route", "local", "--cut", os.path.join(self.dir, "cut.json"))
+        path = os.path.join(self.dir, "RUN.json")
+        run = json.load(open(path))
+        run["stitched"] = [{"file": "/a/IMG_1.MOV", "seconds": 7.735}, {"file": "/a/IMG_2.MOV", "seconds": 26.733}]
+        json.dump(run, open(path, "w"))
+        call("start", self.dir, "0")
+        self.assertEqual(call("done", self.dir, "0", "--evidence", "stitched take").returncode, 0)
+        text = open(os.path.join(self.dir, "proof", "0-organise.txt")).read()
+        self.assertIn("stitched part 1: /a/IMG_1.MOV (7.74s)", text)
+        self.assertIn("stitched part 2: /a/IMG_2.MOV (26.73s)", text)
+
     def test_a_local_pass_refuses_a_descript_proof(self):
         call("init", self.dir, "--route", "local", "--cut", os.path.join(self.dir, "cut.json"))
         call("start", self.dir, "0")
@@ -85,6 +97,21 @@ class Route(unittest.TestCase):
         call("start", self.dir, "1")
         out = call("done", self.dir, "1", "--evidence", "descript cut", "--file", proof)
         self.assertNotEqual(out.returncode, 0)
+
+    def test_motion_and_broll_are_proven_by_an_insert_as_well_as_a_pick(self):
+        # A clip with no beat of its own goes in with `editor-os overlay`, so a worker that did that had no proof to show.
+        call("init", self.dir, "--route", "local", "--cut", os.path.join(self.dir, "cut.json"))
+        run = self.ledger()
+        for n in range(5):
+            run["passes"][n]["state"] = "done"
+        json.dump(run, open(os.path.join(self.dir, "RUN.json"), "w"))
+        proof = os.path.join(self.dir, "insert.txt")
+        open(proof, "w").write("Placed as insert insert-s1 on the words.\n")
+        for n in (5, 6):
+            self.assertEqual(call("start", self.dir, str(n)).returncode, 0)
+            out = call("done", self.dir, str(n), "--evidence", "editor-os overlay placed it", "--file", proof)
+            self.assertEqual(out.returncode, 0, out.stderr)
+            self.assertFalse(self.ledger()["passes"][n].get("override"))
 
     def test_the_local_table_says_what_proves_a_local_pass(self):
         call("init", self.dir, "--route", "local", "--cut", "/tmp/x/cut.json")

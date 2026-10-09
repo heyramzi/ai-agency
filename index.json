@@ -107,7 +107,7 @@
     {
       "name": "video-edit",
       "area": "editor-os",
-      "description": "Cuts a take in Descript, card to composition: DJI lav sync, project setup, coaching, the script cut, a Short. Use when a reel used a lav, footage must land in Descript, or a raw take needs cutting.",
+      "description": "Runs the passes of a video edit: ledger, cuts, layouts, clips, checks, DJI lav sync, Shorts or long-form, local or Descript. Use when a raw take needs cutting, a worker gets edit passes, or a reel used a lav.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/editor-os/video-edit/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/editor-os/video-edit",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-edit.zip"

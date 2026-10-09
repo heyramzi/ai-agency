@@ -8,7 +8,7 @@ A pin in Descript is three coupled objects, never one:
                          pin is one layer in it, addressed by `sourceSceneId`
   sceneComponent         the span - tauAnchor -> endAnchor{cardBoundaryId}
 
-So an insert is a STATE CHANGE, not an object drop: a card at the in-point that
+So an overlay is a STATE CHANGE, not an object drop: a card at the in-point that
 carries the layer, and a second card at the out-point that does not. Miss the
 closing card and the clip runs to the end of the video.
 

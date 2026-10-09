@@ -2,7 +2,7 @@
 """Measure a beat off the live project document, on the clock the render is cut against.
 
 WHY THIS EXISTS: a subtitle export is a second clock read by eye, and reading it by eye is how
-the Glance set ended up timed 200 seconds wrong. This computes the play clock from the document
+one set ended up timed 200 seconds wrong. This computes the play clock from the document
 itself - the cumulative duration of the unblocked taus, which is exactly what `get_project`
 reports as the composition duration - so a beat's in and out points are derived, never typed.
 
@@ -32,7 +32,7 @@ def load(path):
             continue
         # `duration` is SOURCE time. A tau played at speed 1.05 occupies duration/1.05 on the
         # timeline, so dividing is what makes the total equal the composition duration the API
-        # reports: ES02 sums to 476.83s undivided and 454.54s divided, and 454.54 is the truth.
+        # reports: one cut sums to 476.83s undivided and 454.54s divided, and 454.54 is the truth.
         seg = tau["audioSegment"]
         dur = seg["duration"] / (seg.get("speed") or 1)
         raw = tau["text"]["string"]
