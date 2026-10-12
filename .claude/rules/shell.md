@@ -14,6 +14,7 @@ zsh and macOS, each one a round trip lost before:
 - Quote anything that starts with `=`. A bare `===` is equals expansion and answers `== not found`.
 - Brace a variable that's followed by a colon. zsh reads `$FONT:text=...` as the history modifier `:t`.
 - `cd` prints a terminal-title escape (`]1;web`) to stdout, so `K=$(cd web && cmd)` captures it with the value. A key written that way fails auth. `cd` before the `$(...)`.
+- Never `rm` a path built from a bare variable. `rm -f "$O/x.mov"` stops on a permission prompt ("Dangerous rm operation on possibly-empty variable path") that Ramzi has to click, and an unanswered one blocks the run. Write `"${O:?}/x.mov"` or a literal path, or render to a fresh name and skip the `rm`.
 - `timeout` isn't installed. Use the Bash tool's own `timeout` parameter.
 - Call `/usr/bin/log` for the unified log. zsh's `log` builtin answers `too many arguments`.
 - Call `~/.local/bin/claude` for a `claude` subcommand. The shell snapshot's `claude` function appends `-p`, so `claude plugin list` dies on `Input must be provided`.
