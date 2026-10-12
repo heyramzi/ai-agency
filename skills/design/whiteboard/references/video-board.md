@@ -54,7 +54,7 @@ the first 2 minutes, which is where Delivery Ceiling lost people.
 ## The visual bar
 
 - Pictures carry the concrete. A real object, a screenshot, a cover, a face reacting: at
-  least 3 per board, placed with `wb-image`. Text alone reads as a slide deck.
+  least 3 per board, placed with `wb image`. Text alone reads as a slide deck.
 - One shape per concept, no 2 neighbours alike without a reason. Before/after, steps,
   pyramid, flowchart and table are 5 different shapes because they're 5 different ideas.
 - Readable at screen-share zoom. A frame gets recorded zoomed to fill 1920x1080, so a label
