@@ -38,9 +38,8 @@ cu task field set <taskId> --field d8574a56-d8c0-4ab0-bb47-8343cc9dbf78 \
   --value '["bd92c09f-45eb-4d69-a6e7-8b6b0fe9b6a2"]' --json-value                      # Socials: YouTube
 # 5. Descript project, before the shoot, so the field is never empty
 cd ../vibe-kit/CLIs
-pnpm descript project new "C52 - <title>"
-pnpm descript project mv <projectId> "01 - Youtube HeyRamzi/00 - In Production"
-pnpm descript rename <projectId> <compId> "<title>"      # the composition is the title ALONE
+pnpm descript project new "C52 · <Working Title>" --folder "01 YouTube HeyRamzi/In Production"
+pnpm descript rename <projectId> <compId> "C52 · <Working Title>"   # the composition is the project name
 cd -
 cu task field set <taskId> --field 632095f8-6949-40f7-88dc-7737203ab5c0 \
   --value "https://web.descript.com/<projectId>"
@@ -54,7 +53,7 @@ curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
 
 - `cu task field set` on a `labels` field needs a JSON array of option ids, and `cu fields list` doesn't show them. Read `GET /list/<id>/field` on the ClickUp API with the token in `~/.config/clickup/`. A plain label answers `Value must be an array`.
 - The dev server is the writer, never prod.
-- One name across all 5 surfaces. Task and Descript project are `CODE - Title`; the Descript composition and the concept are the title alone. All 7 videos in flight on 26 Aug 2026 kept Descript's import name.
+- One name across all 5 surfaces. The task is `CODE - Title` and the concept the title alone. The Descript project and its composition are both `CODE · Working Title`, 2 to 6 words, and the sequence `SEQ CODE · Working Title` (the rules: `video-edit/references/projects-and-media.md`). All 7 videos in flight on 26 Aug 2026 kept Descript's import name.
 - Assign the code off the whole registry. `[Language][Pillar][NN]`, pillars SCALPM. List every code including closed tasks (`cu tasks --list 901507318169 --closed --json`) and take the next free number in that pillar. `NN` is an id, so never renumber a gap. 3 live collisions came from skipping this.
 - Doctrine lives here, and the generator is a runtime copy.
 - Course lesson files are the curriculum record and never a second script: module, surface, status, runtime, takeaways, recording notes. A lesson that's also a YouTube video keeps its spoken beats in one place and the other links to it.

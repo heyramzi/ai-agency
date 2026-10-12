@@ -116,7 +116,7 @@ never a `vibekit.json` entry: `claude plugin install impeccable@impeccable --sco
 scripts exit silently through a symlink (an `import.meta.url` guard), so run them at the real
 plugin path and don't patch the cache. `concept-seed.mjs` resolves `PRODUCT.md` from the working
 directory. It defaults to React and Next.js, and every Studio project is SvelteKit: tell a
-subagent "this is SvelteKit, `.svelte` with Svelte 5 runes, shadcn-svelte, edit this exact path",
+subagent "this is SvelteKit, `.svelte` with Svelte 5 runes, shadcn-svelte imported from `@heyramzi/ui/shadcn/*`, edit this exact path",
 and to invoke `impeccable:<command>` through the Skill tool before changing anything.
 
 ## Syncing what you changed
@@ -125,7 +125,7 @@ and to invoke `impeccable:<command>` through the Skill tool before changing anyt
 `readlink -f .claude/skills/<name>/SKILL.md`**, never by guessing the path (skills sit inside a
 family; four sessions each spent 3 to 5 calls on this).
 
-- Inside vibe-kit: `bash ai-doc/scripts/ai-docs-sync.sh`.
+- Inside vibe-kit: `cd CLIs && pnpm vibekit sync ..`. vibe-kit is a consumer of its own `vibekit.json`.
 - A commit touching `ai-doc/` syncs every consumer through vibe-kit's `post-commit` hook
   (`bash scripts/install-hooks.sh` installs it; log `~/.cache/vibekit-sync.log`). By hand, from
   `CLIs/`: `pnpm vibekit sync <project-dir>`, where a relative path resolves against `CLIs/`. A

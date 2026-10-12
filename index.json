@@ -177,14 +177,6 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-hooks.zip"
     },
     {
-      "name": "whiteboard",
-      "area": "video",
-      "description": "Lays out hand-drawn concept boards as code and draws them onto the iPad live over Excalidraw's collaboration protocol, so a diagram arrives already composed and still editable on camera. Use when a video needs a board behind it, when an idea has to become circles, arrows and highlighter rings, when a board needs re-laying out or re-pushing, or when anything needs drawing into ExcalidrawZ from the Mac.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/video/whiteboard/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/video/whiteboard",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/whiteboard.zip"
-    },
-    {
       "name": "youtube-ctas",
       "area": "video",
       "description": "Builds the evergreen 1920x1080 transparent overlays a finished YouTube edit is dressed with, in Remotion: subscribe, like, comment, book-a-call and link-in-the-description pills, the channel lower third, and the end-screen bed. Use when a CTA, a lower third or an end card is needed, when an overlay renders without its alpha channel, when an overlay has to land where YouTube's own clickable elements go, or when adding a clip to the Design Assets shelf.",
