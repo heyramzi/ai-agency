@@ -134,7 +134,13 @@ hide a bulleted list that passes a length check and renders as raw markup in the
 
 ## Memory stores
 
-Auto memory is off (`autoMemoryEnabled: false` in `~/.claude/settings.json`). The author, 6 Oct 2026:
-"There shouldn't be memories and stale markdowns. Everything should be in the agents.md and
-simple." A `~/.claude/projects/*/memory/` folder that shows up anyway gets deleted, after any
-rule in it is folded into `agents-core.md` or the skill that owns it.
+Auto memory is off. The author, 6 Oct 2026: "There shouldn't be memories and stale markdowns.
+Everything should be in the agents.md and simple." `autoMemoryEnabled: false` in
+`~/.claude/settings.json` didn't hold on its own: 25 memories landed in 4 repos after it was set.
+So `env.CLAUDE_CODE_DISABLE_AUTO_MEMORY` is `"1"` there too, which the CLI checks before any
+setting, and every repo's `.claude/settings.json` carries `autoMemoryEnabled: false`.
+
+`vibekit doctor` reports any store that shows up anyway as a `memory` finding. For each note,
+grep the owning skill first: delete it when the skill already says it, fold it into
+`agents-core.md` or the skill when it's a durable rule, and drop dated status. Then delete the
+folder.
