@@ -44,7 +44,7 @@ Siblings: `social` (`references/shorts-production.md` for encoding, Drive, Click
 | # | Pass | Detail | Done when |
 |---|---|---|---|
 | pre | DJI lav sync, when a reel used one | [dji-sync.md](references/dji-sync.md) | card burned, verified, archived |
-| 0 | organise | [projects-and-media.md](references/projects-and-media.md) | `descript tracks` prints `tracks clean` |
+| 0 | organise | [projects-and-media.md](references/projects-and-media.md) | `descript tracks` prints `tracks clean`, `descript lint` has no naming warning |
 | 1 | coach, then cut | [cutting.md](references/cutting.md) (coach runs first, so the raw take still exists) | script reads with no retake or false start left |
 | 2 | reorder, chapters | `cutting.md` (`arrange.py`, then a marker per section) | markers land, chapters read right |
 | 3 | rhythm, layouts | [sequencing.md](references/sequencing.md), the layouts page in the studio (`sequence.py`, then `layout pace` and `layout apply`) | `layout cards` shows a card per beat |
@@ -55,6 +55,17 @@ Siblings: `social` (`references/shorts-production.md` for encoding, Drive, Click
 | 8 | handoff | `projects-and-media.md` (`descript settings`) | settings clean, project left for his pass |
 
 A Short never coaches, reorders or chapters.
+
+## Transcript cleanup
+
+The first thing in the first pass, before captions, a title or the plan read the words. Whisper's transcript is a draft, so read it the way an editor would and fix it. "CLOUD.MD" went out on a title card and "agencu brain" on another because nobody read the words.
+
+1. `editor-os transcript <name> --read` prints one screen: the brief's title, the names to spell right (the caption library, plus what `BRIEF.md` and `plan.md` spell), the kept sentences with source times, doubted words in {braces}, and any word one letter off a name. `--all` adds the cut-out sentences.
+2. Read every sentence against the brief, the brand and the names. Fix a word everywhere with `editor-os retime <name> --respell <heard>=<correct>`, one saying with `editor-os respell <name> --at "<first words>" "<heard>=<correct>"`. That's wrong names, typos, a word that makes no sense in its sentence, a number said as words. Stumbles and retakes belong to the cut, not here.
+3. Write `transcript.review.md` in the video folder: one line per fix (heard, fixed, time, why), or one line saying nothing needed fixing.
+4. `editor-os transcript <name> --reviewed --learn <heard>=<correct>` records the read. `--learn` saves a pair you're sure of, a name whisper keeps getting wrong and never a one-off, to the caption library so the next video starts right. `--learn` refuses a lowercase word whose fix is only its case or ending ("assigned=Assignee"); `editor-os transcript --learned` lists the pairs and `--unlearn <heard>` takes a wrong one back, never the JSON by hand.
+
+A `retime` or a new take changes the words, so the review is due again: a later `retime` needs the same `--respell` pairs, and `--reviewed` comes last. Until you record the read, `title` and `final` refuse and `plan` and `cut check` warn. It's part of pass 1's proof on the local route.
 
 Checks on a finished cut (doctrine, strategy, the export checklist): [checks.md](references/checks.md). Coach workflow and cut-list method: `cutting.md`. Clipboard mechanics: `descript-cli.md`.
 

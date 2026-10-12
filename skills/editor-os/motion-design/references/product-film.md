@@ -95,7 +95,9 @@ real logos and screens beat abstractions, one shared motion file, every decision
 3. Pair each claim with its proof on one page.
 4. Lay the canvas out in space before animating, so the camera travels between screens uncut.
 5. Camera path, then screens, then type last (pinned to the frame and independent of the canvas).
-6. Still every claim's hold frame and every proof's resolve frame, and look at all of them.
+6. Still every claim's hold frame and every proof's resolve frame, and look at all of them. Frame 0 too:
+   it's the thumbnail and the file's first frame, so start the first line's entrance about 0.5s before 0 and
+   it already reads there. A bare ground at frame 0 ships a blank thumbnail.
 7. Watch the whole file once at speed with sound on: the only check that catches a bar that drags or a move
    that reads as a cut.
 

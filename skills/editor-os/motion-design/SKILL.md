@@ -9,7 +9,7 @@ vendored:
 
 # Motion design
 
-The clips live in a Remotion project at 30fps with 2 frame sizes: **1080x1920** for anything cut into a Short, and
+The clips live in a Remotion project at 30fps, rendered at 2 native frame sizes: **1080x1920** for anything cut into a Short, and
 **1920x1080** for lessons and long-form YouTube. Keep each frame's size and safe band in its own constants
 file, so a portrait clip can never pick up the landscape numbers. Landscape isn't portrait rotated
 (`references/craft.md`).
@@ -44,21 +44,23 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 - No read (no voice-over, no face, no transcript): a product film. The type is the only voice and the clock
   is the music; the reference films have zero cuts in 95 seconds. `references/product-film.md` replaces the
   clock, type and sound rules below.
+- Which cell a line gets, or what to do when none fits: `references/placement.md`.
 - A CTA, lower third or end card, evergreen and reused for years: `references/ctas.md` (someone else's channel
   or a CTA described in plain words: the `cta-creation` skill).
 - Which renderer? Stay in Remotion for anything reusing your tokens, scenes or
   components; reach for HyperFrames (HeyGen's HTML renderer, installed on demand, never vendored) for a source
   that's already a web page or GSAP file, a throwaway, or a client-run deliverable (`references/render.md`).
-- A recipe (figures, overlays, 3D, long take, live screen, code walk, introduction, hand-drawn, paper
-  board): `references/registers.md`. Sound: `references/sound.md`.
+- A diagram, analogy, list, words over his face or a 3D object: `references/registers.md`. A named recipe (long
+  take, live screen, a client walkthrough, code walk, introduction, hand-drawn, paper board):
+  `references/recipes.md`. Sound: `references/sound.md`.
 
 ## Steps
 
 The `motion-designer` agent runs one beat; these steps run a whole set.
 
-3. Run `editor-os motion --find "<the line>"` and pick the cell whose use-when line says what the beat
-   needs (`editor-os motion rules` says when b-roll wins). A miss is reported with the job named, never coded from scratch: new templates come in updates.
-4. Fill it with the beat's own words (`fill <Template> --prop=value`), in the video's one style.
+3. Run `editor-os motion place --line "<the line>"` and take its pick, or `editor-os motion --find "<the line>"` and pick the cell whose use-when line says what the beat
+   needs (`editor-os motion rules` says when b-roll wins). A miss is a bespoke clip built from the kit's primitives and tokens, never a near miss, and your report names the job that's missing (`references/placement.md`).
+4. Fill it with the beat's own words (`fill <Template> --prop=value`), taking the job's first cell, or its second only for the reason its tag gives.
 5. A still per phase per clip, composited over a real frame of its second, and look at every one: the
    brief's face box stays clear (one set put 6 of 18 on the face). Silent invisibility survives a clean render. Then render the mp4s and, for anything meant to key, the
    MOVs (`references/render.md`). Done when nothing is invisible, cut off or unreadable.

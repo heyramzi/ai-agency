@@ -105,8 +105,8 @@ class Route(unittest.TestCase):
         for n in range(5):
             run["passes"][n]["state"] = "done"
         json.dump(run, open(os.path.join(self.dir, "RUN.json"), "w"))
-        proof = os.path.join(self.dir, "insert.txt")
-        open(proof, "w").write("Placed as insert insert-s1 on the words.\n")
+        proof = os.path.join(self.dir, "overlay.txt")
+        open(proof, "w").write("Placed as overlay overlay-s1 on the words.\n")
         for n in (5, 6):
             self.assertEqual(call("start", self.dir, str(n)).returncode, 0)
             out = call("done", self.dir, str(n), "--evidence", "editor-os overlay placed it", "--file", proof)

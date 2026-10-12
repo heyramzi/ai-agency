@@ -49,7 +49,7 @@ doesn't end. An `ENTER` with no exit is half a clip, so name the exit in the hea
 three: depart (the subject leaves under `DEPART`), resolve and hold (settle, then `HOLD`), or hand over
 (everything goes except the one mark the next clip inherits, the default in a set). An alpha clip has no
 ground to hide behind, so its exit is what separates an overlay from a pop. A long take runs on its own 4 camera helpers, `TAU`, `dolly`,
-`countTo` and `wordFlow`, and mixes none of them with these (`registers.md`).
+`countTo` and `wordFlow`, and mixes none of them with these (`recipes.md`).
 
 ## The frame
 
@@ -134,11 +134,16 @@ plus or minus 28%, or the band comes round in phase and pulses. A dashoffset cha
 height by a climb factor so the run rises as it extends. `SETTLE` is too slow for landings under a second apart; a beat under 5
 seconds can't afford a slow stagger. A last frame equal to the first means nothing happened (an accumulation's point is drawn by
 ADDING), and resolving everything back to neutral argues against the clip's own point. Bring an overlay's light up about a second
-before its clause and start it about 0.2s before its first row, or the head reads blank.
+before its clause and start it about 0.2s before its first row, or the head reads blank. Nothing flashes or hard-cuts more
+than 3 times a second, a photosensitivity limit a beat-cut run or a fast caret breaks. Cut into a close-up while it's still
+building (offset its local frame so the cut lands on the build's tail): a cut to a finished still reads as a slideshow. Fake
+motion blur from the frame alone: 2 or 3 copies at earlier frames with falling opacity, or a `scaleX` stretch along the travel.
 
 Content: a label where a value belongs is an invented line item; a chart with no type invents no figure. A recognition beat is
-still wrong if it only re-names the subject. A depicted third-party interface keeps its own colours, but a terminal outcome line
-takes Sand, never Terra (`8 passed, 0 failed` looked like a failure). Photograph a live-screen page, never redraw it, and light
+still wrong if it only re-names the subject. A depicted interface keeps its own colours and only eases (overshoot, squash and blur
+are for shapes, cards and logos; the clip's accent in product chrome reads as branding leaking in), but a terminal outcome line
+takes Sand, never Terra (`8 passed, 0 failed` looked like a failure). No real customer's name or data on screen: fictional, or
+the client's own with their OK. Photograph a live-screen page, never redraw it, and light
 the thing that is PLAYING. Size kinetic type by ratio against the previous word (cap largest to smallest at about 6:1). Round a
 locked close-up's drift to whole pixels and freeze the camera when the action ends, or every frame resamples and bills near raw.
 
@@ -178,7 +183,7 @@ re-render reads back the old frames. `--assert` says nothing about legibility.
 
 Run each clip's review in a subagent that opens the frames, so the building session never loads the images.
 It reviews like a harsh director and scores 1 to 10 on 7 axes: hook (something lands in the first 2s),
-readable at 360px wide, motion (eases and settles, never slides or stutters at a loop seam), variety (something
+readable at 360px wide, motion (eases and settles, never slides, stutters at a loop seam or flashes over 3 a second), variety (something
 new every 2 to 4s, skipped under 6s), composition (one subject, no text in the corners, no frame border), brand,
 and sound sync. It names the 3 worst problems with timecodes. Fix those, re-render only the seconds they touch
 and score again, until every axis reads 8 or more. The phone sheet is its own render, since a full-size sheet

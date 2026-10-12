@@ -11,7 +11,7 @@ The opening card has a small line, a BIG line and a small line. They name the vi
 hook word, the frame such as mistake, trap, fix or rule), never a line of the speech, and they have
 to read at grid size, so the big one is a short word or phrase. Write them with `video-script`'s hook
 rules, run them through the slop gate, set the best with `editor-os title <name> "<small>" "<BIG>"
-"<small>"`, and offer 3 options as a note on the hook beat. The planner never derives one, and `cut
+"<small>"` (it refuses until the transcript cleanup in `SKILL.md` is recorded), and offer 3 options as a note on the hook beat. The planner never derives one, and `cut
 check` fails until it's set. No slot starts before the Title scene ends: read its span in `edit.json` before planning the first one.
 
 ## Layouts
@@ -52,7 +52,7 @@ the picture for it and where it goes.
 In any Short: at least one overlay per 5s, at most 4 cutaways and at most 2 motion clips
 (the closing CTA card is `cta-creation`'s and doesn't count). An overlay over or under the head is the common one; full frame is the exception. The long-form
 shot read's cap (one beat per 30s) and its redundancy test don't apply: a logo on the word that names
-it is recognition. Brief `broll` with every noun in the same turn as the motion brief, never after it.
+it is recognition. Brief `broll` with every noun in the same turn as the motion brief, never after it. `editor-os motion place --plan <dir>` runs these rules over the plan's slots (`motion-design`, `references/placement.md`) and gives each a one-clause `reason` to write into the slot.
 Place each with `editor-os overlay <name> --file "<clip>" --at "<the word>"`, landing 0 to 3 frames
 before the word; add `--layout "Shorts Green Screen"` for an under-the-head picture.
 

@@ -25,7 +25,7 @@
           "properties": {
             "transcript": { "type": "string" },
             "layouts": { "type": "string" },
-            "inserts": { "type": "string" },
+            "overlays": { "type": "string" },
             "sound": { "type": "string" }
           }
         },
@@ -102,6 +102,7 @@
           "sourceCode": { "type": "string" },
           "lane": { "enum": ["drawn", "found", "generated", "captured", "zoom"] },
           "brief": { "type": "string" },
+          "reason": { "type": "string" },
           "state": { "enum": ["proposed", "approved", "changed", "skipped"] },
           "orphaned": { "type": "boolean" },
           "pick": {
