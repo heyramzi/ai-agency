@@ -4,13 +4,14 @@
     "key": "organise",
     "label": "Organise",
     "proves": {
-      "descript": "One folder per video; tracks named CAM/CAM GS/MIC/SCREEN, one live, only the live one in the script, the green twin on CAM's clock: `descript tracks` prints clean",
+      "descript": "The Files panel skeleton and names (raw takes CAM/MIC/SCREEN at the root, everything else in a folder); tracks named CAM/CAM GS/MIC/SCREEN, one live, only the live one in the script, the green twin on CAM's clock: `descript tracks` prints clean and `descript lint` has no naming warning",
       "local": "The take sits in its own folder beside RUN.json: camera, screen and mic files, nothing else to sort"
     },
     "commands": {
       "descript": [
         "descript tree",
         "descript tracks",
+        "descript lint",
         "descript comps",
         "track script",
         "track mute"
@@ -24,7 +25,7 @@
     "label": "Cut",
     "proves": {
       "descript": "Coach BEFORE the cut, pass 1 deterministic, pass 2 a dispatched read, proven on a fresh dump",
-      "local": "`cut short` wrote the first cut: dead air, fillers and retakes out, each repeated line keeping its last whole take; `cut check` reads clean"
+      "local": "`cut short` wrote the first cut: dead air, fillers and retakes out, each repeated line keeping its last whole take; the transcript was read and fixed (`editor-os transcript <name> --reviewed`); `cut check` reads clean"
     },
     "commands": {
       "descript": [
@@ -37,7 +38,7 @@
         "descript cut",
         "descript edits"
       ],
-      "local": ["cut short", "cut check"]
+      "local": ["cut short", "editor-os transcript", "cut check"]
     }
   },
   {

@@ -6,7 +6,7 @@
 [The writing score, out of 10](#the-writing-score-out-of-10), [The local cut checks](#the-local-cut-checks),
 [The export gate](#the-export-gate)
 
-A check returns `pass`, `fail` or `n/a`, and a `fail` names its source file. A check that can't name its source is an opinion and stays out of the report. Open this when coaching a take (the first 3 sections), after any local cut, and before any export (the last).
+A check returns `pass`, `fail` or `n/a`, and a `fail` names its source file. A check that can't name its source is an opinion and stays out of the report. A published video is never the proof a flag is fine: past edits carry their own faults, so read them for shape only (chapters, card pace, where motion sits), and fix the flag or prove the check wrong. Open this when coaching a take (the first 3 sections), after any local cut, and before any export (the last).
 
 ## Doctrine checks
 

@@ -163,7 +163,7 @@ def states(cards, scenes, at, total):
 
 
 def overlays(rows):
-    """Each run of covered frame, merged: one entry per b-roll insert the viewer sees."""
+    """Each run of covered frame, merged: one entry per b-roll overlay the viewer sees."""
     out = []
     for r in rows:
         if not r["cover"]:

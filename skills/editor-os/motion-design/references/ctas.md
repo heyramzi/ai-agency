@@ -90,14 +90,9 @@ wash anyway. `shine` runs 54 frames, so a clip carrying it can't be cut under ab
 The concentric radius rule: every curve that wraps a curve shares its centre. `Glass` takes the pane's
 radius and gives the rim `radius + 1.5`; set the pane's radius to the round thing's radius plus the padding
 around it (a 53px avatar in 22px of padding gives 75px, so 62 is wrong). It's the first thing anybody spots on a
-finished render. All 3 shapes come out as stadiums; when they don't, the round element isn't the tallest
-child, so grow it. The far padding is larger on the 2 type shapes so the last letter clears the stadium end.
-
-| shape | child r | padding | pane |
-|---|---|---|---|
-| `CtaSubscribeUnit` | 53 | 22 | 75 |
-| `CtaHero` | 62 | 40 | 102 |
-| `CtaPill` | 41 | 17 | 58 |
+finished render. `Cta` is one stadium for every mode: a 106px disc (r 53) in 22px of padding gives a pane of 75, 150 tall. When it
+isn't a stadium, the round element isn't the tallest child, so grow it. The far padding is 64 on the text
+modes (ask, link) so the last letter clears the stadium end; subscribe ends on its button, so it keeps 22.
 
 Icons: Phosphor duotone (`@phosphor-icons/react`); regular vanishes at distance on a phone and fill fights
 the type. The ghost layer needs lifting: Phosphor writes `opacity="0.2"` as a literal and `duotoneOpacity` isn't

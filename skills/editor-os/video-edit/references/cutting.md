@@ -59,7 +59,8 @@ empty the take stops there, so a cut never lands mid-word.
   `--at "the Claude" "Claude=cloud"`. It fails when `--at` is said twice, so add words. A later `keep` or
   `tighten` leaves it; a `retime` hears the take again, so pass the respells to it too.
 - `editor-os keep <name> 4.4-12.4 18.8-22.7 ...` keeps those source spans in one save, each edge
-  snapped to the pause next to it. A save re-renders only the 2s stretches it changed, so make one
+  snapped to the pause next to it. It replaces the whole range list: pass every range you keep, never just the one you
+  changed (one range once collapsed a Short's cut to its last 7.5s, twice). A save re-renders only the 2s stretches it changed, so make one
   save, not eight.
 - `editor-os tighten <name>` trims the dead air left inside kept ranges. Scenes follow their words
   through `keep` and `tighten`, layouts kept; run `tighten` again to realign an older cut.
