@@ -48,7 +48,9 @@ the sync check: [sequencing.md](sequencing.md#clips-and-layouts-on-the-local-rou
 
 ## Overlays and b-roll before motion
 
-A Short changes picture every 2 to 3s. A beat that names a tool, app, object, screen or place gets the
+A Short's b-roll runs as one chain: each overlay holds until the next one starts, slowed or held to fill the gap,
+with no `Shorts Head` scene in between. His face comes back only after the Title and for the closing lines and the
+CTA.A beat that names a tool, app, object, screen or place gets the
 real thing: its logo, a cutout, a screenshot, a found shot, never a drawing of it. One Short shipped 5
 motion clips held 3.5 to 7s and nothing found. Its fault was that nothing real showed up on screen.
 The bar is @nextbysophie's reel `Dc4qQwBxDCG`: about 25 changes in 63s, 4 of them full frame.
@@ -59,22 +61,24 @@ beat he picks. There's no cap on how many.
 Read the cut once and mark every tool, object, screen and place a viewer could point at. The table picks
 the picture for it and where it goes.
 
-| The line | Picture | Where | Hold |
-|---|---|---|---|
-| Names a tool, app or brand | its real logo, or several around the head: `ShortsPop` first, landing on the words that name them (cluster for several, single for one) | over the head on `Shorts Head` | 1 to 2s |
-| Says "a lot" of one thing ("all my inboxes") | one mark filling the frame | over the head | 1 to 1.5s |
-| Names an object (a laptop, an invoice) | a keyed cutout beside him or in his hand | over the head | 1.5 to 2s |
-| Talks about a result or a place | a found shot or still | under the head on `Shorts Green Screen` (the matte keeps him in front) | 2 to 3s |
-| Points at a screen | one field or label: a screenshot card; a flow: the recording | card above the head, under his cut-out so his cap draws over it; recording on `Shorts Split` or `Shorts Bottom` | 2 to 3s |
-| Moves to a scene with no face needed | a found shot, full frame | `Shorts Full Screen Insert` | 1.5 to 3s |
-| States the video's one idea, the line the rest builds on | a full-frame motion clip in the brand (`motion-design`) | `Shorts Full Screen Insert` | 2 to 4s |
-| Says a number, a split or a structure no camera can show | a motion clip from the library | over or under the head | 2 to 3s |
+| The line | Picture | Where |
+|---|---|---|
+| Names a tool, app or brand | its real logo, or several around the head: `ShortsPop` first, landing on the words that name them (cluster for several, single for one) | over the head on `Shorts Head` |
+| Says "a lot" of one thing ("all my inboxes") | one mark filling the frame | over the head |
+| Names an object (a laptop, an invoice) | a keyed cutout beside him or in his hand | over the head |
+| Talks about a result or a place | a found shot or still | under the head on `Shorts Green Screen` (the matte keeps him in front) |
+| Points at a screen | one field or label: a screenshot card; a flow: the recording | card above the head, under his cut-out so his cap draws over it; recording on `Shorts Split` or `Shorts Bottom` |
+| Moves to a scene with no face needed | a found shot, full frame | `Shorts Full Screen Insert` |
+| States the video's one idea, the line the rest builds on | a full-frame motion clip in the brand (`motion-design`) | `Shorts Full Screen Insert` |
+| Says a number, a split or a structure no camera can show | a motion clip from the library | over or under the head |
 
-In any Short: at least one overlay per 5s and at most 4 cutaways. An overlay over or under the head is
+In any Short: at most 4 cutaways. An overlay over or under the head is
 the common one; full frame is the exception. The long-form shot read's redundancy test doesn't apply: a logo on the word that names
 it is recognition. Brief `broll` with every noun in the same turn as the motion brief, never after it. `editor-os motion place --plan <dir>` runs these rules over the plan's slots (`motion-design`, `references/placement.md`) and gives each a one-clause `reason` to write into the slot.
 Place each with `editor-os overlay <name> --file "<clip>" --at "<the word>"`, landing 0 to 3 frames
-before the word; add `--layout "Shorts Green Screen"` for an under-the-head picture.
+before the word; add `--layout "Shorts Green Screen"` for an under-the-head picture. A gap of more than 2
+frames between one clip's leave and the next one's start puts the layout before it back, so close it with
+`--until` and read the frame sheet for a `Shorts Head` scene mid-chain.
 
 ## Pace
 

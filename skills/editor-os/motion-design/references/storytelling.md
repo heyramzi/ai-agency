@@ -166,7 +166,7 @@ own clip library searchable: grep it for the line you're about to build for befo
   vanished behind his graphics, so cut the weakest. A tour that's mostly screen states its band against the
   other minutes.
 - Balance: no stretch over 45s without b-roll, none over 25s without his face, and no 2 clips back to
-  back with no face between them (unless the second lands the point). Don't front-load.
+  back with no face between them (unless the second lands the point; a Short chains them). Don't front-load.
 - Story checks: the through-line sits atop the plan; the motif returns changed (name both beats); the loop
   opens and closes on the same frame; no structure is drawn twice; rungs are counted; 6 figures in a row is
   wallpaper; a single borrowed shot is a punchline and 4 make a compilation, and none ships in a paid product
