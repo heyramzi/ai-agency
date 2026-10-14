@@ -1,6 +1,6 @@
-# Projects and media: organise, name, tracks, the bed
+# Projects and media: organise, name, tracks
 
-Open this for pass 0 (organise), pass 4 (music), pass 8 (handoff), before an import, and before touching Studio Sound. `pnpm descript --help` lists the verbs; this holds what it can't say. Credentials and the write model: [descript-cli.md](descript-cli.md).
+Open this for pass 0 (organise), pass 8 (handoff), before an import, and before touching Studio Sound. `pnpm descript --help` lists the verbs; this holds what it can't say. Credentials and the write model: [descript-cli.md](descript-cli.md).
 
 ## Verbs with a trap
 
@@ -8,9 +8,8 @@ Open this for pass 0 (organise), pass 4 (music), pass 8 (handoff), before an imp
 - `comp:` and `media:` say which panel. One name is often a composition and a mediaRef (Descript names a sequence after its composition); unprefixed, the pair is refused, not guessed.
 - Every write replays the whole commit graph, so 26 single renames is 26 replays: reorganise with one `batch` (key is `item`; a wrong key dies on op 1 as `undefined`).
 - `rm` refuses a live publish; `assets prune <project> --kind audio` is read only; `realign <project> <comp>` repairs "sortTiebreaker already used"; `card merge <pack> Camera <id>` deletes a card (its span joins the one before); `share <email> <id>,<id>` gives an editor Can edit with no drive seat; `room new "<title>" --start <ISO+offset> --end <ISO+offset>` schedules a Rooms recording and prints the join link (each run makes a new Room, and a calendar event isn't synced to it).
-- `comments <p> --todo` lists his open notes; `comment reply <p> <id> "..." --done` says it's placed. Never `comment resolve`: he ticks after checking.
+- `comments <p> --todo` lists his open notes, including one where his reply sits under yours; `comment reply <p> <id> "..." --done` says it's placed and prefixes 🤖, so every agent reply uses it. Never `comment resolve`: he ticks after checking. The loop runs until `comments` lists none (`motion-design/references/the-set.md`).
 - `track shift "CAM GS" --to CAM` puts the keyed twin on CAM's clock (the gate demands it); `track add <p> <seq> CAM --segments pieces.json` (`[{at, offset, seconds, media?}]`) lets one track span the takes of a joined sequence; `sequence new <p> "SEQ <code> · <Title>" --media <mic> --frame <screen>` gives a take with no sequence one; `gaps <p> <comp>` lists pauses longest first (`gaps close --over 1`); `cue` writes the keyframe behind Smart Zoom; `card copy`, `layer copy`, `layer paste` copy framing between cards.
-- `stock music search` prints only id, title and length (no mood or genre), so the query filters. `stock music pull <p> <id-or-title> [--as "Music/<name>"]` files a WAV under `Music/<title>` (a title 2 tracks share is refused: pass the id), puts nothing on a card (`music set --use "<title>"` does), and is a no-op on a track the project holds. It fetches 25 MB server side: allow 30 s. `--dry` prints the name.
 
 ## Pass 0: organise
 
@@ -38,23 +37,18 @@ Which track transcribes: only the microphone. The same words on lav, camera mic 
 
 Read the clock once with `layout cards <project> <comp>` at the top of pass 3, and take every `[mm-ss]` from it. A timecode from the raw take is meaningless because the line may be cut.
 
-## Layouts and the bed (pass 4)
+## Layouts
 
 Run `layout sync` before choosing a card, every time: he edits the packs, `layout seed` reports `alreadyHeld` and keeps the stale copy, and the manifest says what a card is FOR. A layout is a stamp with no link back to the pack, and a ladder splits on commas, so a card whose NAME holds one goes in by id. A camera layout needs a SEQUENCE, declared as its own `add_media` entry `tracks: [{media: "<key>"}]`. Read layers back after any screen stamp and take one off with `layer rm`: a `sceneId` naming a scene nothing draws locks the project out of its editor. A CLI-stamped composition publishes (8 Sep 2026: 48 cards and 21 pins, 4K in 14 minutes); pull a finished job with `descript job <id> --download`, never re-render.
 The pack list, the zoom ladder and the `--with` placeholder rule are on the layouts page in the studio.
 
 The screen's size is set per video, never taken from the pack. The presenter frames one card of each layout (PiP, big head) in the app and copies it (Cmd+C); `layer paste <p> <comp>` puts that framing on every card of the layout, once per layout. Read the sizes back (25 Sep 2026: PiP 0.90x0.53, big head 0.72x0.39 at x 0.39).
 
-One bed per channel, and pass 4 never lays it. The brand's music style answers it; a track a sibling project already uses wins a tie. `music set` writes **0.211, ducking on, `fillBehavior: loop`** (a 121 s bed under a 22-minute cut goes silent at 2:01 otherwise, 8 Sep 2026), the scene's own gain stays 1. A guard checking only `media &&` counts an empty `Placeholder` pin or a bare PNG as a bed; never clear one with `music rm` (it lifts the card's own pin).
+Pass 4, the music, is the `music` skill's, and the `music-scout` agent runs it.
 
-Pass 4 offers 3 options and moves on. `editor-os music` prints their answer to "what should your videos sound like?" and its search terms. Style `none` means no card: mark done with that as evidence. No answer yet: don't ask, offer one track from each of 3 fitting styles, and save no style they didn't say.
+Handoff, pass 8, background first, after every layout and pin is placed: `descript background <p> <comp>` deletes every `Brand Grid Dark` pin (by name or by file) and lays one fresh copy from 0:00 to the end, bottom of every card's stack, looped, in one commit. Camera cards need nothing: the full-frame camera sits above it. `--dry` prints `removed`, `cards` and `fill: loop`; `descript lint <p>` then reads blocking 0. By hand (C52, 12 Oct 2026, measured; it doesn't loop, so the 24 s file freezes on its last frame): `pin rm <p> <comp> --media "Brand Grid Dark"`, `layer rm <p> <comp> all "Brand Grid Dark"` for strays, `pin <p> <comp> --media "Brand Grid Dark.mov" --at 0:00 --cards <card count> --keep-cameras`, `layer set <p> <comp> all "Brand Grid Dark" --to -1`, `lint`.
 
-1. `stock music search "<term>" --json --full` per term, best first (`--full` keeps the `preview` link).
-2. Pick 3: at least 20 s (the loop covers the rest), a mood read from its title (no vocal, no jingle), each different from the others.
-3. `stock music pull` each into `Music/`, then `editor-os music offer <project> '[{"id","title","seconds","mood","preview"}]'` (mood in 1 or 2 words). Mark pass 4 done with the 3 titles, go to pass 5.
-4. Skip `music set`: `place` lays the one he keeps and nothing on a skip, and refuses until he decides. On `music.more` from `editor-os wait`, search the next terms and offer a new set (`asked` counts).
-
-Handoff, pass 8: `descript settings` reads every audio and look setting against its standard ([checks.md](checks.md)). Pulling a render to disk is only on his ask, after his pass: `export local` is the better master, `publish` when the browser must stay free ([descript-cli.md](descript-cli.md)).
+Then `descript settings` reads every audio and look setting against its standard ([checks.md](checks.md)). Pulling a render to disk is only on his ask, after his pass: `export local` is the better master, `publish` when the browser must stay free ([descript-cli.md](descript-cli.md)).
 
 ## Naming
 
@@ -135,4 +129,4 @@ A top-level area is `NN Name`: 2 digits, a space, a plain name. No emoji, no bra
 
 ## Done when
 
-`tracks` and `settings` read clean; `pnpm descript lint <project>` prints no naming warning; every `[mm-ss]` came from `layout cards`; `tree` shows each file under its intended name; one bed and `music <project>` reports it ducking; any composition touched was checked against `publishes`; any composition created carries the orientation the take was shot in.
+`tracks` and `settings` read clean; `pnpm descript lint <project>` prints no naming warning; every `[mm-ss]` came from `layout cards`; `tree` shows each file under its intended name; any composition touched was checked against `publishes`; any composition created carries the orientation the take was shot in.
