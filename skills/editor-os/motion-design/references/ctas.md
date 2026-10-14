@@ -99,9 +99,8 @@ the type. The ghost layer needs lifting: Phosphor writes `opacity="0.2"` as a li
 in `IconProps` on 2.1.10, so `glass/icons.tsx` injects one rule lifting it to 0.38. The brand mark stays
 hand-drawn. A glyph on terra is ink, never cream (3.24:1 fails at any size; cream on indigo is 8.4:1).
 
-Type: Space Grotesk, the Code/Label role, short, uppercase and tracked out. Manrope is the heading face and
-doesn't belong here. Space Grotesk's character shows in lowercase, so it sits on the handle (46px, tracking -0.9) and the call CTA's
-sub-label; at 42px caps with +4.2 tracking a pill word is nearly face-agnostic. `font.ts` loads the woff2
+Type: the house face through `BRAND_FONT` and `useBrandFont()`, as `Cta.tsx` does, never a face of its own
+(`craft.md`, Type). The handle is 46px, tracking -0.9. `font.ts` loads the woff2
 through `delayRender` until `document.fonts.load` resolves for every weight. Don't swap in a Google Fonts URL:
 a slow request leaves the first frames in the fallback, which exits zero.
 

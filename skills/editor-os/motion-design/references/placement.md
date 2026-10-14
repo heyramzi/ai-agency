@@ -1,7 +1,7 @@
 # Placement: the rule table, the judge and the bespoke clip
 
 `editor-os motion place` picks motion for a script. It runs each line through a rule table with no AI, then a judge
-where the table can't settle it, then a per-minute budget. A placement comes back with a one-clause reason
+where the table can't settle it. No count caps the clips. A placement comes back with a one-clause reason
 for the plan, so he can overrule it in review.
 
 ```
@@ -20,7 +20,7 @@ Copy each `reason` into the slot's `reason` in plan.json. A `bespoke` one also c
 - `broll`: a picture answers it. Either the line names a thing a camera could film and no drawn cell fits this
   format, or a real shot exists and the cell is an `either` lane cell. A drawn lane cell never gives way.
 - `bespoke`: no cell does the job and a clip would still add something. Build it from the kit (below) and report `job`.
-- `none`: a clip adds nothing the sentence doesn't say, the line is too short to carry one, or the budget is spent.
+- `none`: a clip adds nothing the sentence doesn't say, or the line is too short to carry one.
   His face holds it.
 - `verify`: the judge wasn't sure, or isn't there. Nothing is guessed. `lean` says which way it tilted. Ask him.
 
@@ -32,7 +32,7 @@ A cell with its own `signals` is the specific answer, and the cells without are 
 cell for a busy plate, `twins.raw` the full-frame one. `lane: overlay` in place of a `cell` covers every cell in
 that lane, so a new one is covered the day it lands. A rule carries one `example` line that must fire it.
 
-One cell answers one rule. `packages/studio/src/motion-rules.test.ts` fails when an offered cell has no rule,
+One cell answers one rule. `packages/studio/src/motion/motion-rules.test.ts` fails when an offered cell has no rule,
 when one answers two, or when a rule names a cell, a mode or a pattern that isn't there. Adding a cell to
 `library.json` means adding it to a rule in the same change.
 
@@ -40,15 +40,14 @@ Where the rules leave exactly one cell, that's the placement. Two or more, or no
 
 ## The judge
 
-Jev, TypeSafe's judgment model through Kilo, the way the SEO audit uses it (`jev-seo/references/judgments.md`).
-It needs `KILO_API_KEY` (env, `.env.local`, or Proton Pass Dev/Kilo). Without it a line the rules leave open is
-`verify`, never a guess. The checks:
+A judgment model reads each line, and the checks below decide what it flags. A line the rules leave open is
+`verify`, never a guess.
+ The checks:
 
 - **Strengthens** (Noul): does the line hold a number, an order, a contrast, a structure or a named thing that lands
   faster seen than heard? No at 0.20 or below is `none`. Anything between is `verify`.
 - **Carry** (Noul, only when a clip sits within 30s before): does the line continue that clip's subject? Yes breaks a
   tie toward the same cell, since an earlier beat's structure is inherited, never redrawn.
-- **Budget** (code, never asked): 2 motion clips in any 60s. Overlay-lane pops and b-roll don't count.
 
 Beside those, a Choice over the candidate cells (every offered cell when the rules left none) with a `no_match`
 option. At 0.80 confidence or more it decides. Under it, two or more candidates is `verify`; with none, the rules
@@ -56,7 +55,9 @@ found nothing and no cell is a clear fit, so the line is `bespoke` and the neare
 
 ## Building a bespoke clip
 
-The house look comes from the kit, so a clip with no cell is built out of its parts, never from a blank file:
+First make sure it really has no cell: search the library and the project's own `Root.tsx`, since a CTA, lower
+third or name card the house already has is never rebuilt. The house look comes from the kit, so a clip with no
+cell is built out of its parts, never from a blank file:
 
 1. Read the nearest cell in the same family for the structure, and `tokens.ts`, `type.ts`, `motion.ts`,
    `primitives.tsx` and the family's `design.ts` for colour, type, easing and the frame. No literal hex, font or

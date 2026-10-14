@@ -563,7 +563,7 @@ def main() -> int:
     ap.add_argument("--take", help="force this wav instead of matching (single video)")
     ap.add_argument("--watch", default="~/Downloads", help="where AirDropped clips land")
     ap.add_argument("--output", help="explicit output path (single video only)")
-    ap.add_argument("--archive", default="~/Movies/dji-archive")
+    ap.add_argument("--archive", default="~/Movies/dji-card-archive")
     ap.add_argument("--codec", choices=("alac", "pcm", "aac"), default="alac")
     ap.add_argument("--keep-scratch", action="store_true",
                     help="keep the iPhone audio as a second track")

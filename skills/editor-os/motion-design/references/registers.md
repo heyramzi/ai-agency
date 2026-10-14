@@ -60,10 +60,17 @@ reciting is an overlay (he's the proof, the words the index); a structure, quant
 frame; a screen he's demonstrating gets neither, since a graphic over evidence argues with it. An overlay is
 the cheaper to be wrong about.
 
+A key line on screen acts out what it says. Words alone, as a kinetic card, `CaptionField` or a text
+layout, got "elevate the design" and "go for motion design". The set he loves sets the key words big and the
+small connective words small, and gives each key word its own move: a hard wipe with speed lines for
+"faster", letters built through masks for "productize", brackets closing like a crate on "package", nodes
+linking into a loop for "a system". No cell does that yet, so it's a `bespoke` clip (`placement.md`).
+
 `caption.tsx` has 3. `GlassCaption` (frosted pane) for a long list, a set, or a bright or busy plate.
-`PlainCaption` (words on nothing) for one statement of 2 or 3 lines. `DefocusedCamOverlay` blurs his
+`PlainCaption` (words on nothing) for a list he recites, never a key line. `DefocusedCamOverlay` blurs his
 plate (about 20 to 30px plus a dark vignette) so vocal presence stays while 100% of focus goes to a
-foreground fork or formula. A video using only one has a lower third or subtitles.
+foreground fork or formula. A video using only one has a lower third or subtitles. A name card is a
+bottom-left lower third: the full name, the company logo under it.
 
 Sentence case here, uppercase everywhere else, by what the clip replaces: the picture takes `type.ts`
 (uppercase, tracked, labels only). A clip that sits on it takes `caption.tsx` (sentence case, brand

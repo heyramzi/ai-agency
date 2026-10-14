@@ -150,11 +150,11 @@
     "key": "handoff",
     "label": "Handoff",
     "proves": {
-      "descript": "`descript settings` reads clean, then hand over for the person's own pass. Never publish or export: they do that after watching",
+      "descript": "`descript background` laid ONE grid under the whole video after every layout and pin (each older grid pin deleted, bottom of every card, looped) and `lint` reads blocking 0, then `descript settings` reads clean and the project is handed over for the person's own pass. Never publish or export: they do that after watching",
       "local": "`cut final` renders the master and its handoff file once every note is closed. Never publish: he does that after watching"
     },
     "commands": {
-      "descript": ["descript settings", "get_project"],
+      "descript": ["descript background", "descript lint", "descript settings", "get_project"],
       "local": ["cut final"]
     }
   }

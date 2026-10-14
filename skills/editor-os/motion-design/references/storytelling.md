@@ -78,13 +78,14 @@ better than the sentence. Type leads only for a list or a name; an idea gets a p
 | 3. Consequence | Draws what the sentence left implicit | Where the good clips are |
 | 4. Meaning carried | Uses the video's own motif | Decided in the plan, never per clip |
 
-Rung 1 is legal when the real logo, screen or word is the whole payload, and legal isn't right: a docs-app
-screenshot under "your source of truth for your templates" named the thing twice and never showed what it
-does. **A count is transcription with the type removed.** A line about pillars gets drawn as that many columns, which puts
+Rung 1 is legal when the real logo or screen is the whole payload, and legal isn't right: a docs-app
+screenshot under "your source of truth for your templates" named the thing twice and never showed what it does. **A count is transcription with the type removed.** A line about pillars gets drawn as that many columns, which puts
 the count word in rectangles. Draw the topology and the number is usually wrong (sales and delivery were
 the two ends of one loop, and the third thing sat underneath holding what the loop wrote). Same for a line
 about steps. Aim for a median of 2 to 3 with 2 or 3 beats at 4; a median of 1 is a set of illustrations, and
 rung 4 on every beat is a video that won't say anything plainly.
+
+**Script-cue pass.** When planning a beat, mark each abstract noun, number, tool name and contrast word in its sentence. A noun becomes the situation that makes it true. A number becomes a quantity you can compare. A name becomes the real mark or UI. A contrast ("not", "instead", before/after) becomes a swap in place. Not every word goes on screen.
 
 ## The through-line
 It goes at the top of `plan.md`, before any clip. The video is the unit of work. A set of clips that

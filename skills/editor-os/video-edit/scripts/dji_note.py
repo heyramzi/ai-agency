@@ -182,7 +182,7 @@ def main() -> int:
     ap.add_argument("--take", help="force this wav instead of the newest")
     ap.add_argument("--title", help="note title; provisional if omitted")
     ap.add_argument("--vault", default=DEFAULT_VAULT)
-    ap.add_argument("--archive", default="~/Movies/dji-archive")
+    ap.add_argument("--archive", default="~/Movies/dji-card-archive")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--vad-model", default=DEFAULT_VAD)
     ap.add_argument("--vad-threshold", type=float, default=0.5)

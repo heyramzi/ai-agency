@@ -2,7 +2,7 @@
 """Every file one stage hands the next is checked against its schema, on read and on write.
 
 The schemas live in `../schemas/`, one per file, and the studio reads the same ones through
-vibe-kit's `packages/studio/src/schema.ts`. This validator knows only the keywords those schemas use: type,
+vibe-kit's `packages/studio/src/video/schema.ts`. This validator knows only the keywords those schemas use: type,
 required, properties, additionalProperties, items, prefixItems, minItems, maxItems, enum, const,
 pattern, minimum, minLength and anyOf. A schema using anything else is refused, so a keyword
 can't be silently ignored.

@@ -137,7 +137,7 @@ pnpm descript library import sounds.json --folder "Sound Signature"
 , also the app's Descript kit shelf: one name from census to timeline (it held `Chime Light` and `Whip Low Whoosh` until 8 Sep 2026). `Sound Signature` became `Sounds` on 9 Sep 2026 to match the project.
 - A flat panel of upload names means the client couldn't load the document, and the project isn't messy. On 9 Sep 2026 the drive media endpoint answered 503 (`suppressing local load failure`) and the panel fell back to`brand-testimonials-highlight.mp4`
  while the document said `Products/Brand/Testimonials Highlight.mp4`. Run `pnpm descript tree` before calling a project disorganised.
-- Deleting an asset breaks every project that adopted it. `Extra Fast Multimedia Whoosh 3` was uploaded into `Brand Layouts` (`lookup_key` names `projectId=9765b037`) but adopted by `ClickUp Super Agents Just Got MCP`; deleting it from the pack on 8 Sep 2026 left a media reference whose `assetGuid` resolved to nothing (a spinning Files row). Repair touches no card:
+- Deleting an asset breaks every project that adopted it. `Extra Fast Multimedia Whoosh 3` was uploaded into the layouts project (`lookup_key` names its `projectId`) but adopted by a video project; deleting it from the pack on 8 Sep 2026 left a media reference whose `assetGuid` resolved to nothing (a spinning Files row). Repair touches no card:
 
 ```bash
 pnpm descript pull <video> "Multimedia Whoosh" --out /tmp     # the artifact usually survives
