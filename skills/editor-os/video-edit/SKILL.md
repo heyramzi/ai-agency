@@ -17,13 +17,12 @@ Read `RUN.json` first. Its `format` picks the format file: [shorts.md](reference
 The API once broke an edit that had to be re-uploaded by hand, and Underlord once littered a project with test sequences.
   No verb for it? Write the verb in `CLIs/descript/`. Credentials, the write model and renders: [descript-cli.md](references/descript-cli.md).
 - **Every change goes through a CLI verb.** That's `editor-os <verb>` or `cut <verb>` on a local project, `pnpm descript` on a Descript one. Only the studio writes `edit.json` and `edit.notes.json`, so a hand edit races it and loses. A missing verb gets added to the CLI with a test, never worked round with a script. A render, matte or transcript that prints "Waiting for a render slot" is queued behind the Mac's 2 slots: let it wait, never kill it or start a second one.
-- **A production gets a ledger before pass 0.** `scripts/run.py` writes `RUN.md` and `RUN.json` beside the video's `plan.md` and mirrors the rows to its ClickUp task. `next` names the pass to do and what proves it; `start` refuses a pass whose predecessor isn't done or blocked; `done` needs the proof command in `--evidence` plus `--file` (saved output) or `--run` (run.py runs it and keeps the output in `proof/`).
+- **A production gets a ledger before pass 0.** `scripts/run.py` writes `RUN.md` and `RUN.json` beside the video's `plan.md` and, in the house, mirrors the rows to its task board. `next` names the pass to do and what proves it; `start` refuses a pass whose predecessor isn't done or blocked; `done` needs the proof command in `--evidence` plus `--file` (saved output) or `--run` (run.py runs it and keeps the output in `proof/`).
 
 ```bash
 R=.claude/skills/video-edit/scripts/run.py; D=tools/motion/src/<video-code>
 python3 $R init $D --code <code> --project <id> --comp <id>          # once
 python3 $R init $D --code <code> --route local --take <folder> --cut <folder>/cut.json
-python3 $R board $D --task <ClickUp task id>                      # mirror to the task's checklist
 python3 $R next $D                                                # the ONE pass to do now
 python3 $R start $D <n>
 python3 $R done $D <n> --evidence "<what the command's output said>" --file <its saved output>   # or --run "<command>"

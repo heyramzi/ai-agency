@@ -17,7 +17,7 @@ file, so a portrait clip can never pick up the landscape numbers. Landscape isn'
 We build 4 of the 5 registers here. The fifth is a found shot: a meme, a film beat or a piece of archive is
 a shot somebody else made, and a borrowed frame can't ship where a drawn one can without a licence check. Keep
 those clips in their own folder. This skill decides what a beat should show and draws it. In a Short, a
-beat that names a tool, object, screen or place is `broll`'s, and motion takes at most 2 a Short.
+beat that names a tool, object, screen or place is `broll`'s, and motion goes on every beat that needs one.
 
 This isn't a general video skill. Getting clips into the editor and placed at a phrase is `video-edit`, and writing the
 read is `video-script`. The vendored Remotion references (`references/remotion/remotion-*/REFERENCE.md`, one
@@ -26,15 +26,20 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 
 ## 3 rules that outrank the rest
 
-1. **Nothing gets built until the owner picks a look.** Show 2 or 3 directions as a single still of the same
-   beat, in a local `.html`, then stop and ask (`references/storytelling.md`). A 20-clip set built before
-   the author saw a frame got the verdict "ugly and too complex".
+1. **A new set waits for the owner to pick a look; a comment he left doesn't.** Show 2 or 3 directions as a
+   single still of the same beat, in a local `.html`, then stop and ask (`references/storytelling.md`). He
+   called a 20-clip set made before he saw a frame "ugly and too complex". His comment is already the pick, so
+   build it, and never ask ("stop asking questions, do it").
 2. **A clip adds something the sentence didn't say.** That's a quantity made comparable, a consequence left
    implicit, a structure with no name yet, or a recognition. If none of those fits, his face goes there
-   instead. A right clip on the wrong sentence is a wrong clip.
+   instead. A right clip on the wrong sentence is a wrong clip. A word he says, typed into the clip, adds
+   nothing: the captions already carry it. Show what the word means happening: "GitHub can be scary" is a
+   repo that turns out to be the folder they know, never "scary" struck out on a card.
 3. **Draw the actual thing, and make the set one video.** "AI Skill System" shipped 8 neutral geometric
-   marks, and nobody recognised their own stack in a hexagon. Use real logos (simple-icons, else a logo API by
-   domain, never an image search), real words and the real screen. 15 correct clips that each open on an
+   marks, and nobody recognised their own stack in a hexagon. Show the artefact before its logo: a beat on
+   Make gets the scenario running, a course gets the lesson page inside it (`broll` 2b). A logo is the
+   real mark (simple-icons, else a logo API by domain, never an image search). A product that exists (Claude,
+   ClickUp, Descript, a real app screen) is its real UI, never a brand-styled glass card. Brand cards are for ideas and claims. 15 correct clips that each open on an
    empty frame make a slideshow. Aim for a single world, a motif that changes and one motion language
    (`motion.ts`, `references/craft.md`). A motif that returns is one component with fixed node positions
    (one rail component did): centred on the count, a fourth node moved the first three.
@@ -61,8 +66,8 @@ The `motion-designer` agent runs one beat; these steps run a whole set.
 3. Run `editor-os motion place --line "<the line>"` and take its pick, or `editor-os motion --find "<the line>"` and pick the cell whose use-when line says what the beat
    needs (`editor-os motion rules` says when b-roll wins). A miss is a bespoke clip built from the kit's primitives and tokens, never a near miss, and your report names the job that's missing (`references/placement.md`).
 4. Fill it with the beat's own words (`fill <Template> --prop=value`), taking the job's first cell, or its second only for the reason its tag gives.
-5. A still per phase per clip, composited over a real frame of its second, and look at every one: the
-   brief's face box stays clear (one set put 6 of 18 on the face). Silent invisibility survives a clean render. Then render the mp4s and, for anything meant to key, the
+5. A still per phase per clip, composited over a real frame of its second, and every frame of each reveal
+   (`craft.md`, verify by looking). Look at every one: the brief's face box stays clear (one set put 6 of 18 on the face). Silent invisibility survives a clean render. Then render the mp4s and, for anything meant to key, the
    MOVs (`references/render.md`). Done when nothing is invisible, cut off or unreadable.
 6. Watch every rendered file with `scripts/watch.py`, one review subagent per clip scoring 7 axes; fix the 3
    worst, re-render, score again. Done when every axis reads 8 or more (`references/craft.md`, verify by looking).

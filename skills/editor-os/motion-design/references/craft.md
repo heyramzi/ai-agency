@@ -27,6 +27,8 @@ Mechanics for a Remotion motion project; SKILL.md holds the judgment. `Shot`, `B
   under a `width: 100%` parent the ring hangs down and right of what landed, silently.
 - Say "this one" with colour. More light doesn't do it. Cross-fade between plates and don't switch a colour
   with a ternary, because a threshold on a moving value flips inside one frame and pops.
+- People on screen (avatars, a team row, assignees) are photoreal faces of people who don't exist: pull them once from
+  thispersondoesnotexist.com into the project's `public/` and crop round. Never drawn or initials avatars, never a real person's photo.
 
 ## One motion language
 
@@ -102,7 +104,10 @@ tracked out, never a sentence, because a viewer reading prose has stopped listen
 **replaces** the picture. An overlay keyed over his face is the other case (sentence case, set to be read;
 `registers.md`), and a product film's type is the voice (`product-film.md`).
 
-Load the brand font once, in one file, through `delayRender`; a font loaded inside one clip family leaves the
+Text a person would type into a drawn UI (a chat message, a prompt, a search, a form field) is the real example, never a summary in labels or placeholders. The labels-only rule is for captions, not for what's inside the UI: a bubble that says "Who I am · What I do · What I want" becomes "Hi, I run a 6-person bookkeeping firm in Lyon. Help me write a reminder to a client who is late on documents."
+Set type in the house face only: `BRAND_FONT`, with `useBrandFont()` called once in the composition (`src/font.ts`
+in the kit). Clash Display or any other face got "stick to our fonts". The generated brand lists one static 400
+file, so a heavier weight comes out a faked bold: load the variable Satoshi (300 to 900). A font loaded inside one clip family leaves the
 others in the system stack. `label()`, `numeral()` and `ui()` carry `fontFamily`; a bare `<span style>` doesn't
 and Remotion inherits none, so it renders in the serif fallback with a clean typecheck. `label()` carries
 `whiteSpace: nowrap`, so an over-wide caption prints through both edges.
@@ -138,8 +143,14 @@ before its clause and start it about 0.2s before its first row, or the head read
 than 3 times a second, a photosensitivity limit a beat-cut run or a fast caret breaks. Cut into a close-up while it's still
 building (offset its local frame so the cut lands on the build's tail): a cut to a finished still reads as a slideshow. Fake
 motion blur from the frame alone: 2 or 3 copies at earlier frames with falling opacity, or a `scaleX` stretch along the travel.
+An entrance never slices a glyph: a vertical wipe through the U of the Brand logo read as "the U is broken". Reveal
+whole letters, staggered or rising from under the baseline. The one exception is a build that IS the concept,
+like the letters of "productize" put together through masks. A shadow sits on an unmasked wrapper outside the mask, or the mask clips it every
+time. A logo lands solid, by scale or position; one fading up from 0 "arrives too transparent".
 
-Content: a label where a value belongs is an invented line item; a chart with no type invents no figure. A recognition beat is
+Content: a label where a value belongs is an invented line item; a chart with no type invents no figure. A number
+stands alone ("just keep 100k, 1 million, 10 million"), with no tag like "6 figures", and no frame mid-count shows
+a label the value hasn't reached. A recognition beat is
 still wrong if it only re-names the subject. A depicted interface keeps its own colours and only eases (overshoot, squash and blur
 are for shapes, cards and logos; the clip's accent in product chrome reads as branding leaking in), but a terminal outcome line
 takes Sand, never Terra (`8 passed, 0 failed` looked like a failure). No real customer's name or data on screen: fictional, or
@@ -163,7 +174,8 @@ npx remotion still src/index.ts <CompId> out/stills/<CompId>-<frame>.png --frame
 ```
 
 Still every phase's resolve frame and open it: what's lit, what's drawn, anything off the frame, anything
-present that isn't a graphic, and **count the marks**. Remotion serves a stale webpack bundle after an edit:
+present that isn't a graphic, and **count the marks**. A reveal or a count is judged on every frame through it
+(`watch.py --fps 30 --range <its seconds>`): the hold still passed while the frames mid-reveal showed the broken U. Remotion serves a stale webpack bundle after an edit:
 `rm -rf node_modules/.cache/webpack` before re-rendering, and check a frame you know should differ, because the
 mtime proves nothing. A still can't show the encode, alpha, audio or a cut, so watch the file too:
 
@@ -184,8 +196,13 @@ re-render reads back the old frames. `--assert` says nothing about legibility.
 Run each clip's review in a subagent that opens the frames, so the building session never loads the images.
 It reviews like a harsh director and scores 1 to 10 on 7 axes: hook (something lands in the first 2s),
 readable at 360px wide, motion (eases and settles, never slides, stutters at a loop seam or flashes over 3 a second), variety (something
-new every 2 to 4s, skipped under 6s), composition (one subject, no text in the corners, no frame border), brand,
-and sound sync. It names the 3 worst problems with timecodes. Fix those, re-render only the seconds they touch
+new every 2 to 4s, skipped under 6s), composition (one subject, no frame border), brand,
+and sound sync. Motion and composition also fail on the tells of motion nobody designed, each with its fix: a
+crossfade or blur-in between unrelated scenes (grow the next scene out of an element already on screen), a
+particle burst, shockwave ring or lens flare from nothing (whatever moves starts from something on screen), overshoot
+on every element (landings only), camera shake, RGB split, HUD text in the corners, a hold with nothing left to
+read, a second glow (`storytelling.md`), `Math.random` (Remotion's seeded `random()`, or 2 renders differ), and
+anything else that would pass as a stock template. It names the 3 worst problems with timecodes. Fix those, re-render only the seconds they touch
 and score again, until every axis reads 8 or more. The phone sheet is its own render, since a full-size sheet
 hides type that dies on a phone:
 
@@ -193,7 +210,11 @@ hides type that dies on a phone:
 ffmpeg -i out/final.mp4 -vf "fps=1,scale=360:-1,tile=5x3" -frames:v 1 out/phone.png
 ```
 
-A clip that doesn't carry the idea isn't scored; it goes back to the value test.
+A clip that doesn't carry the idea isn't scored; it goes back to the value test. Three more tests, any fail sends it back:
+
+- Mute: sound and captions off, does the picture alone tell the beat's idea?
+- Swap: cover the logo and swap in another tool. A clip that names a tool and works unchanged is generic.
+- Started action: every prompt typed, claim made or toggle flipped gets answered on screen before the clip ends. Capabilities are never flashed as small labels.
 
 Hand the whole file, with its audio, to a video-capable model and ask for timecoded notes. **The verdict is
 binding**: a note that survives a re-render is fixed or answered in the WHY comment, and an overruled `WHY` is

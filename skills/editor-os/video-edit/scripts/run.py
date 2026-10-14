@@ -19,13 +19,14 @@ file and its sha256. Matching a bare word was the old gate, and "the shortcut is
 WHY IT REFUSES OUT OF ORDER: `start` on pass N with N-1 not done is the mistake, not a warning.
 Override with --anyway, which is recorded in the ledger as an override and shows in the table.
 
-WHY THE BOARD MIRRORS IT: every Descript production gets a todo list. `board` writes the same rows as a ClickUp checklist on the video's task, one
+WHY THE BOARD MIRRORS IT: every Descript production gets a todo list. `board` writes the same rows as a checklist on the video's task, one
 item per pass with its state in the text, and every later `start`/`done`/`block` rewrites it. The
 ledger on disk is the record; the checklist is the view he opens.
 
     run.py init <dir> --code <code> --project <id> --comp <id>
     run.py init <dir> --code <code> --route local --cut <path/to/cut.json>
     run.py show <dir>                       # the table, and rewrite RUN.md
+    run.py comp <dir> <composition id>      # point the ledger at the composition being edited, keeping every pass
     run.py next <dir>                       # the one pass to do now
     run.py start <dir> 3
     run.py done <dir> 3 --evidence "layout cards: 47/47 stamped" --file cards.txt
@@ -210,6 +211,12 @@ def main():
     if cmd == "show":
         save(d, run)
         print(table(run))
+    elif cmd == "comp":
+        if len(sys.argv) < 4 or sys.argv[3].startswith("-"):
+            sys.exit("usage: run.py comp <dir> <composition id>")
+        run["comp"] = sys.argv[3]
+        save(d, run)
+        print(f"comp: {run['comp']}")
     elif cmd == "next":
         n = next((i for i, s in enumerate(run["passes"]) if s["state"] not in ("done", "blocked")), None)
         if n is None:
@@ -256,7 +263,7 @@ def main():
     elif cmd == "board":
         run["task"] = arg("--task", run.get("task", ""))
         if not run["task"]:
-            sys.exit("board needs --task <ClickUp task id>")
+            sys.exit("board needs --task <task id>")
         sync_board(run)
         save(d, run)
         print(f"checklist {run.get('checklist', '?')} on {run['task']} mirrors the table")

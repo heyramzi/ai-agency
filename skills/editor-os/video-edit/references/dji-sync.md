@@ -62,4 +62,4 @@ Needs `ffmpeg`, `ffprobe`, numpy; the solo path also `whisper-cli` and `whisper-
 
 ## The card wipe
 
-Order is fixed: **burn, verify, archive, checksum, delete.** Every take is copied to `~/Movies/dji-archive/YYYY-MM-DD/` and each SHA-256 compared before anything is removed. A mismatched take stays on the card; if any clip fails to verify, the card is left alone. **Trashing takes on a removable volume never frees space**: they sit in a hidden `.Trashes` on the card (31.5 MB the first run). The wipe clears `.Trashes` explicitly.
+Order is fixed: **burn, verify, archive, checksum, delete.** Every take is copied to `~/Movies/dji-card-archive/YYYY-MM-DD/` and each SHA-256 compared before anything is removed. A mismatched take stays on the card; if any clip fails to verify, the card is left alone. **Trashing takes on a removable volume never frees space**: they sit in a hidden `.Trashes` on the card (31.5 MB the first run). The wipe clears `.Trashes` explicitly.
