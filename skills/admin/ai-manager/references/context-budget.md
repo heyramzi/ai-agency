@@ -6,7 +6,7 @@
 [MCP servers, connectors and the rest of the session](#mcp-servers-connectors-and-the-rest-of-the-session),
 [Zero-use is the prune list](#zero-use-is-the-prune-list), [Cutting a description](#cutting-a-description),
 [Cutting a body](#cutting-a-body), [Splitting to references](#splitting-to-references),
-[Frontmatter levers](#frontmatter-levers), [Memory stores](#memory-stores)
+[Frontmatter levers](#frontmatter-levers), [No memories](#no-memories)
 
 ## Cost per level
 
@@ -132,15 +132,18 @@ describe an activity (not `helper`, `utils`); `name` matches its directory, 64 c
 leading, trailing or double hyphen, no "claude" or "anthropic". A YAML block-scalar description can
 hide a bulleted list that passes a length check and renders as raw markup in the prompt.
 
-## Memory stores
+## No memories
 
-Auto memory is off. The author, 6 Oct 2026: "There shouldn't be memories and stale markdowns.
-Everything should be in the agents.md and simple." `autoMemoryEnabled: false` in
-`~/.claude/settings.json` didn't hold on its own: 25 memories landed in 4 repos after it was set.
-So `env.CLAUDE_CODE_DISABLE_AUTO_MEMORY` is `"1"` there too, which the CLI checks before any
-setting, and every repo's `.claude/settings.json` carries `autoMemoryEnabled: false`.
+Memories don't exist here. The author, 14 Oct 2026: "Delete the concept of memories entirely.
+Everything should be in skills or markdown files." A lesson goes into the skill, agent or
+reference that owns it, written as a rule, through the repair path in `SKILL.md`. Never a
+`memory/` folder, a `MEMORY.md` index or an agent's `memory:` field.
 
-`vibekit doctor` reports any store that shows up anyway as a `memory` finding. For each note,
-grep the owning skill first: delete it when the skill already says it, fold it into
-`agents-core.md` or the skill when it's a durable rule, and drop dated status. Then delete the
-folder.
+4 things hold it. `~/.claude/settings.json` sets `autoMemoryEnabled: false` and
+`env.CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1"`, and each repo's `.claude/settings.json` (or, in a client
+repo, the ignored `settings.local.json`) sets `autoMemoryEnabled: false` too, because Orca starts
+sessions with `--setting-sources project,local` and skips the user file. The `memory-gate.sh` hook
+refuses any write into `~/.claude/projects/*/memory/` or `agent-memory/`, since on 9 Oct 2026 two
+sessions started before the env flag landed wrote memories by hand. And `vibekit doctor` reports
+any store that shows up anyway as a `memory` finding: fold each note into its owner, then delete
+the folder.
