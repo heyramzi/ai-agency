@@ -17,8 +17,8 @@ instruction files): [context-budget.md](context-budget.md#mcp-servers-connectors
 ## Targets
 
 `.claude/` is the flat runtime projection, `ai-doc/` the packaged source (skills + agents),
-`<plugin>/` has `.claude-plugin/plugin.json`, and `~/.claude/projects/*/memory/` is an auto-memory
-store, which is off and gets deleted ([context-budget.md](context-budget.md#memory-stores)). `skills/<area>/<family>/<name>/SKILL.md`
+`<plugin>/` has `.claude-plugin/plugin.json`, and `~/.claude/projects/*/memory/` is a memory
+store, which must not exist: fold it and delete it ([context-budget.md](context-budget.md#no-memories)). `skills/<area>/<family>/<name>/SKILL.md`
 is the kit's layout; anything shallower is a stray to file into a family. Follow every symlink with
 `readlink -f` (`find -type f` hides them, `diff` and `wc` follow them).
 
@@ -38,7 +38,7 @@ its size and trips the warning; say so in the pointer.
 | Skills per package | 12 | merge, or sub-package (distinct tools stay apart: Make, n8n and ClickUp) |
 | Learned Patterns log | 0 in the body, 25 in `references/` | simplification, class 1 |
 | A block repeated across siblings | 3 copies | simplification, class 2 |
-| CLAUDE.md / any memory file | ~500 lines / 1 file | extract to skills; fold the memory's rule into its owner, then delete it |
+| CLAUDE.md / any memory file | ~500 lines / 0 files | extract to skills; fold a memory's rule into its owner, then delete it |
 
 ## The flow
 
