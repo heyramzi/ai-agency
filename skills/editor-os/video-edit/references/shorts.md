@@ -5,6 +5,13 @@ Read this when `RUN.json` says `format: vertical`. The local route is the main p
 (`retime`, `keep`, `tighten`, `title`, `layout`, `overlay`, `pick`). The trunk rules in `SKILL.md`
 still hold. This file only adds what a Short does differently.
 
+
+## The cast
+
+Every clip is made by its own worker, so the brief names who appears and in which colour once. `BRIEF.md` carries a
+`## The cast` section with one line, like "Ana is blue, Marc is orange, Lea is green." Write it before the first clip
+is briefed, and put it in every clip's brief. `cut check` warns when a Short has 2 clips or more and no cast line.
+
 ## The hook title
 
 The opening card has a small line, a BIG line and a small line. They name the video's idea (the topic, the
@@ -21,6 +28,9 @@ A Short draws from 7 cards in the pack: `Shorts Title`, `Shorts Head`, `Shorts B
 `job` line under each card. Pick by that line, and never invent a layout or its geometry. The verbs and
 the sync check: [sequencing.md](sequencing.md#clips-and-layouts-on-the-local-route).
 
+- `Shorts Split` is for a real screen recording, and it frames the camera from the face it measures (the render
+  does it, once per take), so the caption never sits on the forehead. A clip over the head goes on `Shorts Bottom`,
+  because Split has no Media slot.
 - `Shorts Bottom` shows the whole head, with the caption above the hat. An overlay on it keeps its
   content above the caption band: `overlay` prints that line, and `cutcheck` and every render fail a
   clip that fills the band. A Bottom layout a word early left an empty slot, so the pair moves together.

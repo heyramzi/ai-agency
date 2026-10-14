@@ -2,7 +2,7 @@
 
 # ai-agency
 
-**19 agent skills for Claude**, plus 6 slash commands and an agent, built for the 3 jobs an
+**18 agent skills for Claude**, plus 6 slash commands and an agent, built for the 3 jobs an
 agency repeats every week: getting found in search, making video, and delivering client work.
 One more, `ai-manager`, stops the rest of the shelf from rotting as you add to it.
 
@@ -81,7 +81,6 @@ In the order you make a video, from the first line of the hook to the posts you 
 | [motion-design](skills/editor-os/motion-design) | Remotion clips, figures, captions and CTAs for anything that isn't your face |
 | [youtube-ctas](skills/video/youtube-ctas) | Transparent 1920x1080 overlays: subscribe, like, lower third, end screen |
 | [whiteboard](skills/design/whiteboard) | The board a video talks over: tldraw, a compiled still, or Excalidraw live on the iPad |
-| [whiteboard](skills/video/whiteboard) | The Excalidraw engine itself, boards written as TypeScript in `tool/` and drawn onto the iPad on camera |
 | [ai-video-prompting](skills/video/ai-video-prompting) | Prompts for Veo, Kling, Seedance and the rest, plus the shot list behind them |
 | [youtube-thumbnail](skills/design/youtube-thumbnail) | The thumbnail, from a measurement you run on your own niche, then a render |
 | [shorts-production](skills/video/shorts-production) | A finished Short taken to a scheduled, coded task, with the export shipped untouched |
@@ -90,9 +89,7 @@ In the order you make a video, from the first line of the hook to the posts you 
 A few need more than a terminal. `motion-design` and `youtube-ctas` render through
 [Remotion](https://remotion.dev). `youtube-thumbnail` renders with
 [`scripts/render.mjs`](skills/design/youtube-thumbnail/scripts/render.mjs), which wants a Gemini
-API key or a gateway. The `whiteboard` engine in [`skills/video/whiteboard/tool`](skills/video/whiteboard/tool)
-is the one thing here with an install step, `pnpm install` once, because Excalidraw's live protocol
-is socket.io.
+API key or a gateway.
 
 ### Client delivery
 
@@ -216,7 +213,7 @@ the posts are content work, so they file under `design` and `content` and still 
 order above.
 
 A skill carries its own references and a dependency-free script, so it works on a fresh clone
-with Node 20 or later and nothing installed. The `whiteboard` engine is the 1 exception.
+with Node 20 or later and nothing installed.
 
 Check your fork with the same tools:
 

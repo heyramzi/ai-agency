@@ -9,7 +9,7 @@ lane: general
 
 A take becomes a finished cut in 9 passes, 0 to 8, each timed against the one before. Out of order, you build motion for a frame that's about to move or lay a bed before the cut ends where it will stay.
 
-Read `RUN.json` first. Its `format` picks the format file: [shorts.md](references/shorts.md) for `vertical`, [long-form.md](references/long-form.md) for `wide`. Its `route` is `local` (the take on disk, every Short today) or `descript`. On the local route, close each pass on the proof `next` names (the take folder, `cut short`, `cut check`, `check.txt`, `music offer`, `pick` plus the alpha check, `plan`, `cut final`), never a Descript command or `--anyway`. Its verbs: `retime`, `keep` and `tighten` in [cutting.md](references/cutting.md#the-local-route-cuts), `verify` and `cutcheck` in [checks.md](references/checks.md#the-local-cut-checks), `pick`, `overlay` and `layout` in [sequencing.md](references/sequencing.md#clips-and-layouts-on-the-local-route).
+Read `RUN.json` first. Its `format` picks the format file: [shorts.md](references/shorts.md) for `vertical`, [long-form.md](references/long-form.md) for `wide`. Its `route` is `local` (the take on disk, every Short today) or `descript`. On the local route, close each pass on the proof `next` names (the take folder, `cut short`, `cut check`, `check.txt`, `music offer`, `pick` plus the alpha check, `plan`, `cut final`), never a Descript command or `--anyway`. Its verbs: `retime`, `keep` and `tighten` in [cutting.md](references/cutting.md#the-local-route-cuts), `verify`, `cutcheck` and `final` in [checks.md](references/checks.md#the-local-cut-checks), `pick`, `overlay` and `layout` in [sequencing.md](references/sequencing.md#clips-and-layouts-on-the-local-route).
 
 ## Rules for every pass
 
@@ -48,11 +48,11 @@ Siblings: `social` (`references/shorts-production.md` for encoding, Drive, Click
 | 1 | coach, then cut | [cutting.md](references/cutting.md) (coach runs first, so the raw take still exists) | script reads with no retake or false start left |
 | 2 | reorder, chapters | `cutting.md` (`arrange.py`, then a marker per section) | markers land, chapters read right |
 | 3 | rhythm, layouts | [sequencing.md](references/sequencing.md), the layouts page in the studio (`sequence.py`, then `layout pace` and `layout apply`) | `layout cards` shows a card per beat |
-| 4 | music | `projects-and-media.md` (3 options from Descript Stock, he keeps one) | `music offer` answered, no bed laid |
+| 4 | music | `music` (the `music-scout` agent: 3 options from Descript Stock, he keeps one) | `music offer` answered, no bed laid |
 | 5 | motion | `motion-design` | every clip rendered, watched, in Editor OS review |
 | 6 | broll | `broll` | sourced, imported, in Editor OS review |
 | 7 | review | `sequencing.md` (`editor-os transcript`, `plan`, `wait`) | he decided the open beats and the music; `edit.json` holds his choices |
-| 8 | handoff | `projects-and-media.md` (`descript settings`) | settings clean, project left for his pass |
+| 8 | handoff | `projects-and-media.md` (`descript background`, then `descript settings`) | one grid under the whole video, settings clean, project left for his pass |
 
 A Short never coaches, reorders or chapters.
 

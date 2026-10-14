@@ -63,15 +63,16 @@ W1 to W7 read straight off the doctrine verdicts so the score can't disagree wit
 
 - `editor-os verify <name>` transcribes what the render plays and flags a repeated line, a long pause
   or a Short over length. Run it before you say a cut is clean. It's the only check word times can't fool.
-- `editor-os cutcheck <name>` waits for the draft and the check the studio runs on it after every
-  render: speech with no words, a pop, a cut inside a word, length, and loudness on a final. It also
+- `editor-os cutcheck <name>` waits for the preview (`cut.review.mp4`) and the check the studio runs
+  on it after every render: speech with no words, a pop and a cut inside a word. Length and loudness
+  are checked on the final only (`editor-os final <name> [--wait]`, to `cut.mp4`). It also
   fails on what the shelf shows from edit.json alone (a layout and its overlay apart, a scene held past
   6s, a hook title on a layout that draws none or a Title scene under 1s), so a PASS means the shelf
-  is clean. It blocks while the draft renders, up to 15 minutes, so don't poll it. Every run saves
+  is clean. It blocks while the preview renders, up to 15 minutes, so don't poll it. A run saves
   `.check/frames.png`, a frame at 0.5s and at each scene and overlay: open it every time. Each
   failing cut also gets a filmstrip PNG for a visual jump or a hidden caption, which no number
   catches. Fix, save once, and check again. After 3 tries that still fail, stop and tell the person
-  which cuts and why, in plain words. They only polish, so they never see a draft that failed.
+  which cuts and why, in plain words. They only polish, so they never see a preview that failed.
 
 ## The export gate
 
@@ -113,7 +114,7 @@ pnpm descript studio <p> <track|media> --on --intensity 0.5      # Studio Sound
 pnpm descript gaps close <p> <comp> --over 0.7 --keep 0.3 --edges
 pnpm descript layer effect <p> <comp> <card> <layer> uplighting --value "[0.1,0.5,0,0.05,-0.05,0]"
 pnpm descript layer copy <p> <comp> <card> <layer> --to all      # one look onto every card
-pnpm descript layer set <p> <comp> <card> <layer> --to 0         # stack position, 0 is top
+pnpm descript layer set <p> <comp> <card|all> <layer> --to 0     # stack position, 0 is top, -1 the bottom
 pnpm descript layer sweep <p> <comp>                             # hidden duplicate cameras
 pnpm descript resize <p> <comp> 1920x1080
 pnpm descript track mute <p> <track>                             # leave one live track
