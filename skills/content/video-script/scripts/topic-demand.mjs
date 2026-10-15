@@ -11,13 +11,13 @@ import path from "node:path";
 // The catalogues folder: COMPETITOR_INTEL_DATA, or `topic-demand.internal.json` beside this file, which stays out of the public copy.
 const local = new URL("topic-demand.internal.json", import.meta.url);
 const internal = fs.existsSync(local) ? JSON.parse(fs.readFileSync(local, "utf8")) : {};
-const configured = process.env.COMPETITOR_INTEL_DATA ?? internal.data ?? null;
+const configured = process.env.COMPETITOR_INTEL_DATA ?? internal.data;
 if (!configured) {
   console.error("Set COMPETITOR_INTEL_DATA to the folder holding <source>/catalogue.json.");
   process.exit(1);
 }
 const DATA = configured.replace(/^~(?=\/)/, os.homedir());
-const OWN = process.env.OWN_CATALOGUE ?? internal.own ?? "";
+const OWN = process.env.OWN_CATALOGUE ?? internal.own;
 const patterns = process.argv.slice(2);
 if (patterns.length === 0) {
   console.error('usage: node topic-demand.mjs "<title regex>" ...');
