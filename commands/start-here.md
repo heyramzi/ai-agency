@@ -6,7 +6,7 @@ description: Run Start Here with me. Score my agency, then build the intake end 
 # Start Here, the agent's copy
 
 Course: https://www.skool.com/ai-agency-systems-3191/classroom/bf9532af
-8 lessons, about 10 minutes of reading. Version 2026-08-23.
+9 lessons, about 10 minutes of reading. Version 2026-10-15.
 
 The course is the mental model for the person in front of you. This file is the same
 system written for you. **They keep every decision and they keep reading the lessons.
@@ -35,6 +35,7 @@ Then ask which session they are on. If they do not know, they are on session 1.
 4. 3 automation rules, so the form creates the task, sets the date and posts the link.
 5. A task template carrying 6 steps, so the process arrives with every job.
 6. The same score run again, and the gap between the 2 numbers.
+7. `agency-system/` backed up in a private GitHub repo, with its first commit.
 
 ## Preflight, once
 
@@ -148,12 +149,29 @@ one line, and it names things exactly as their tool names them.
 - Asking anybody to change how they work. The fix here is structural, which is why the
   build comes first.
 
+### Back up the workspace (lesson 8)
+
+From here on you edit `agency-system/`, so back it up before the checkpoint. Treat GitHub
+as Google Drive for the folder and define each word the first time you use it: a repo is
+the folder kept on GitHub, a commit is a dated photo of every file in it with a note, and
+a push sends the new photos up.
+
+1. Ask whether they have a GitHub account. If not, they make a free one at github.com.
+2. They create the repo themselves: `+` → New repository → Private.
+3. Check git is installed. Explain each command before you run it, then commit with the
+   note "first backup" and push.
+4. Show them how to bring 1 file back from an older commit.
+
+Refuse a public repo, and refuse to commit any file that holds a password or a key.
+Private still means a copy on somebody else's computer.
+
 ### Checkpoint, module 2
 
 Have them submit the form once more as a test client, using a real job from last month.
 Time it. From submit to a task in Incoming, with 5 fields filled and 6 steps
 attached, should take seconds and no messages. Open the task and check every answer landed
-in a field. Append and stop.
+in a field. Then open the repo page with them: it says Private and shows today's commit.
+Append and stop.
 
 ## Session 3, prove it (lesson 7)
 
@@ -172,8 +190,8 @@ onto the template.
 
 ## The takeaway lines
 
-One per lesson, and the finish reads them back in order. Where a line carries a number, read it
-from their own files so it is their score rather than the course's.
+One per lesson, and the finish (lesson 9) reads them back in order. Where a line carries a
+number, read it from their own files so it is their score rather than the course's.
 
 1. 5 processes carry the money in an agency and the other 40 are filing.
 2. Capture each answer the first time the client says it, on the call or in the form.
@@ -182,6 +200,8 @@ from their own files so it is their score rather than the course's.
 5. One field per answer, because a field can be counted.
 6. The steps ride on the task template.
 7. The score moving is the only proof the build worked.
+8. A commit is a dated photo of the folder, so commit after every session and you can
+   always go back.
 
 ## Rules that do not bend
 
@@ -202,6 +222,10 @@ from their own files so it is their score rather than the course's.
 - The test submission lands with empty fields: the form field is not mapped to the task
   field. That mapping is the whole of lesson 5.
 - They want to build all 5 processes today: one of them, properly, beats 5 started.
+- The push asks them to sign in: walk them through GitHub's own sign-in. Never ask them to
+  paste a password or a token into the chat.
+- Claude broke a file: open Commits on the repo page, find the commit from before the
+  break, and bring back that 1 file from it.
 
 ## The one ask, and only at the finish
 
