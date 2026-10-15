@@ -48,9 +48,12 @@ the sync check: [sequencing.md](sequencing.md#clips-and-layouts-on-the-local-rou
 
 ## Overlays and b-roll before motion
 
-A Short's b-roll runs as one chain: each overlay holds until the next one starts, slowed or held to fill the gap,
-with no `Shorts Head` scene in between. His face comes back only after the Title and for the closing lines and the
-CTA.A beat that names a tool, app, object, screen or place gets the
+A Short's b-roll runs as one chain: each overlay runs until the next one starts, with no `Shorts Head` scene in
+between. His face comes back only after the Title and for the closing lines and the CTA.A chained clip never freezes and never slows past 0.75x. When the shot is too short for its stretch, fetch a longer
+cut of the same stock shot (`source.py fetch` with a longer `--dur` from the same URL in `sources.json`), or lay a
+second clip that matches the words said there. A `-held` copy with a frozen last frame reads as stuck.
+B-roll sits on `Shorts Green Screen` with his face at the bottom, never `Shorts Full Screen Insert`, which hides
+it.A beat that names a tool, app, object, screen or place gets the
 real thing: its logo, a cutout, a screenshot, a found shot, never a drawing of it. One Short shipped 5
 motion clips held 3.5 to 7s and nothing found. Its fault was that nothing real showed up on screen.
 The bar is @nextbysophie's reel `Dc4qQwBxDCG`: about 25 changes in 63s, 4 of them full frame.
@@ -68,8 +71,9 @@ the picture for it and where it goes.
 | Names an object (a laptop, an invoice) | a keyed cutout beside him or in his hand | over the head |
 | Talks about a result or a place | a found shot or still | under the head on `Shorts Green Screen` (the matte keeps him in front) |
 | Points at a screen | one field or label: a screenshot card; a flow: the recording | card above the head, under his cut-out so his cap draws over it; recording on `Shorts Split` or `Shorts Bottom` |
-| Moves to a scene with no face needed | a found shot, full frame | `Shorts Full Screen Insert` |
+| Moves to a scene with no face needed (not stock b-roll, which stays on Green Screen) | a drawn or screen clip, full frame | `Shorts Full Screen Insert` |
 | States the video's one idea, the line the rest builds on | a full-frame motion clip in the brand (`motion-design`) | `Shorts Full Screen Insert` |
+| Names 2 to 4 key nouns in a row ("a system for operations and delivery") | the `KeywordsAroundFace` cell: each noun lands around the face on the beat it's said, with letters scrambling then locking in (`fill KeywordsAroundFace --words=... --frames=...`) | over the head on `Shorts Head`, face full, words above y 600 |
 | Says a number, a split or a structure no camera can show | a motion clip from the library | over or under the head |
 
 In any Short: at most 4 cutaways. An overlay over or under the head is
