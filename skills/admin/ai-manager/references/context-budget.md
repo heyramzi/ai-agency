@@ -34,21 +34,27 @@ before turning anything off.
 
 ## MCP servers, connectors and the rest of the session
 
-The registry is the smallest part of a full window. On 25 Sep 2026 `/context` read 83.6k used
-before a word was typed and 223k more in deferred MCP schemas, from 10 claude.ai connectors. Make
-alone is about 100 tools.
+The registry is the smallest part of a full window. On 16 Oct 2026 a fresh desktop session read
+86.6k used: 16.8k loaded MCP tools, 9.9k skills, 4.8k server instructions, 225k more deferred, from
+455 tools. The `ENABLE_CLAUDEAI_MCP_SERVERS` switch set on 25 Sep was gone, and connectors had real
+use again (CutKit 50 calls, Gmail 45), so read the current state; never assume the last clean held.
+Deferred schemas cost nothing until loaded, but every deferred name is listed each session and each
+server's instructions load whole. Make alone is 111 tools for 3 calls a month.
 
 1. Measure calls, not config. `python3 scripts/mcp_usage.py 45` counts every MCP call, subagent
    and plugin skill over 45 days of transcripts and lists each configured server never called (that
-   day 18 had zero; Gmail had 150, from 4 repos).
+   day 18 had zero; Gmail had 150, from 4 repos). claude.ai connectors come from `~/.claude.json`
+   `claudeAiMcpEverConnected`; in the desktop app `mcp__ccd_connectors__session_connectors_status`
+   lists what this session loaded, with tool counts.
 2. Interview on that evidence, a few questions per round with a recommended default: dead
    connectors, live ones scoped or replaced by a CLI, Claude in Chrome, local servers, agents,
    plugins, instruction-file overlap. Zero calls in Code can still be a daily tool on claude.ai web.
-3. Pull the lever that owns the cost (all config, no click needed):
+3. Pull the lever that owns the cost:
 
 | Source | Lever |
 | --- | --- |
-| claude.ai connectors | `"ENABLE_CLAUDEAI_MCP_SERVERS": "false"` in `~/.claude/settings.json` `env`; a CLI covers each (`gws`, `cu`, `make`, `pnpm descript`). One session opts in with `ENABLE_CLAUDEAI_MCP_SERVERS=true claude` |
+| claude.ai connectors | `"ENABLE_CLAUDEAI_MCP_SERVERS": "false"` in `~/.claude/settings.json` `env`; a CLI covers each (`gws`, `cu`, `make`, `pnpm descript`). One session opts in with `ENABLE_CLAUDEAI_MCP_SERVERS=true claude`. An unused one is removed on claude.ai Settings → Connectors (his click) |
+| Desktop app sessions | per session, `mcp__ccd_connectors__set_session_connector_enabled`; desktop extensions (Control Chrome, Control your Mac) in the app's Settings → Extensions |
 | Claude in Chrome | `claudeInChromeDefaultEnabled: false` in `~/.claude.json`, then `claude --chrome` per session |
 | User and project servers | `mcpServers` in `~/.claude.json`, top level and under `projects[path]`; prune matching `disabledMcpServers` |
 | Repo servers | every `.mcp.json`, nested `web/` and `vibe-kit/starters/*` too. A tracked one returns when a worktree is rebuilt, so delete it in the main checkout |
@@ -59,8 +65,8 @@ alone is about 100 tools.
 4. Reroute every caller. `grep -rnE "mcp__<server>|<Name> MCP"` over `ai-doc/` and every repo's
    `docs/`, and rewrite each hit to its CLI command: a skill calling a disabled tool fails
    silently. With no CLI (Make's module schema), name the one-session opt-in.
-5. Re-run `mcp_usage.py`. The footer should read `connectors: off`, and nothing configured
-   should show zero calls unless he chose to keep it.
+5. Re-run `mcp_usage.py` and `/context`. Nothing configured shows zero calls unless he chose to
+   keep it, and the footer matches what he chose for connectors.
 
 ## Zero-use is the prune list
 
