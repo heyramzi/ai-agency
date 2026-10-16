@@ -153,7 +153,7 @@ def check_body(body, add):
 
 
 def resolve(base, target):
-    """`~/Studio/...` is the form check-skill-length.mjs requires, so expand it."""
+    """`~/...` is the form check-skill-length.mjs requires, so expand it."""
     return Path(target).expanduser().resolve() if target.startswith("~") else (base / target).resolve()
 
 

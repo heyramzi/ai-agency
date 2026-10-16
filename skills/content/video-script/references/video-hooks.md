@@ -2,7 +2,7 @@
 
 The opening decides whether people stay. It doesn't decide how many arrive. Across 27 transcripts (Matt Gray), then 627 transcripts across 13 channels (26 Aug 2026), opening length (107 vs 106 words) and first-number arrival (22.2s vs 23.9s) show zero correlation with views.
 
-- The hook opens the loop and can't close it. [storytelling](~/Studio/vibe-kit/ai-doc/references/storytelling.md) owns what keeps people past the open.
+- The hook opens the loop and can't close it. [storytelling](~/vibe-kit/ai-doc/references/storytelling.md) owns what keeps people past the open.
 - Low views is never a hook problem. Check the subject (`choosing-ideas.md`), rewrite the title and regenerate the thumbnail (`youtube-thumbnail`). `vibe-kit/ai-doc/references/competitor-evidence.md` has the 2 title levers that survived the control test. `scripts/teardown.py <url>` prints a reference video's first 30 seconds and its first-number moment.
 - A dip right after an off-target spike is a cohort problem. The next videos get served to the borrowed audience and land flat, so leave a working format alone. Judge the spike on joins, not views:
  Hypothesis from a course newsletter, not control-tested.
@@ -73,7 +73,7 @@ The eighth uses second person and is the comparison they already make. "Why are 
 Write the first frame, the on-screen title text and the spoken line. A viewer who sees one thing, reads a second and hears a third assembles nothing, and confusion reads as boredom on a retention chart. Title text is larger and unspoken, carrying context or the gap; dropping it costs a surface. Beyond that:
 
 - State the common belief, then break it. "Most people think the hook decides how many people arrive. It decides whether they stay." The implied form makes the viewer reconstruct the belief first, and most won't. Use a belief people hold and skip the strawman.
-- Confirm the click. The title and thumbnail made a promise; the first breath must show this is the video it came from, in the viewer's words ([storytelling](~/Studio/vibe-kit/ai-doc/references/storytelling.md) rung 0 bans restating the title). `youtube-thumbnail` records the claim the frame made.
+- Confirm the click. The title and thumbnail made a promise; the first breath must show this is the video it came from, in the viewer's words ([storytelling](~/vibe-kit/ai-doc/references/storytelling.md) rung 0 bans restating the title). `youtube-thumbnail` records the claim the frame made.
 - Show the number. The proof frame is the real artefact within 2 seconds of the claim. Strongest: 2 artefacts from one input and a verdict that splits the field ("this one won the format, that one the structure"). One run is one run, so say so. Single source (Nate Herk, 12 Aug 2026).
 
 ## Execution

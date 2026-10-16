@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// What got built across ~/Studio in the last N days, clustered by repo and scope and ranked, as raw material for content.
-// usage: node build-log.mjs [--days 7] [--json] [--root ~/Studio]
+// What got built across the workspace folder in the last N days, clustered by repo and scope and ranked, as raw material for content.
+// usage: node build-log.mjs [--days 7] [--json] [--root <workspace folder>]
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
