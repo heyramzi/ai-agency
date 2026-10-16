@@ -39,6 +39,8 @@ for k in cj.get("mcpServers", {}):
 for proj, v in cj.get("projects", {}).items():
     for k in v.get("mcpServers", {}) or {}:
         configured.setdefault(k, Path(proj).name)
+for k in cj.get("claudeAiMcpEverConnected", []):  # "claude.ai Gmail" is called as claude_ai_Gmail
+    configured.setdefault(re.sub(r"[^A-Za-z0-9]", "_", k), "claude.ai")
 for f in glob.glob(str(home / "Studio/*/.mcp.json")):
     for k in json.loads(Path(f).read_text()).get("mcpServers", {}):
         configured.setdefault(k, Path(f).parent.name)
@@ -47,5 +49,5 @@ print("\nConfigured, never called:\n  " + ("\n  ".join(dead) or "none"))
 print("\nSubagents:", ", ".join(f"{k} {n}" for k, n in agents.most_common(15)) or "none")
 print("Plugin skills:", ", ".join(f"{k} {n}" for k, n in skills.most_common(15)) or "none")
 env = json.loads((home / ".claude/settings.json").read_text()).get("env", {})
-print("\nclaude.ai connectors:", "off" if env.get("ENABLE_CLAUDEAI_MCP_SERVERS") == "false" else "ON (every one loads its schemas)")
+print("\nclaude.ai connectors:", "off" if env.get("ENABLE_CLAUDEAI_MCP_SERVERS") == "false" else "ON (every one lists its tools; the desktop app toggles them per session)")
 print("Claude in Chrome default:", cj.get("claudeInChromeDefaultEnabled"))
