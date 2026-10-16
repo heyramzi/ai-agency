@@ -59,7 +59,7 @@ rewrite it.
 6. **Take the code** off `social`'s `scripts/ledger.json` plus the closed Socials tasks,
    never off memory. Then file it in CutKit, never Apple Notes. The script library is CutKit,
    so it's on his phone's teleprompter:
-   `node ~/Studio/cutkit/ios/cli/cutkit-scripts.mjs push <clean-read-file> --title "CODE · name" --label "<pillar>"`
+   `node ~/cutkit/ios/cli/cutkit-scripts.mjs push <clean-read-file> --title "CODE · name" --label "<pillar>"`
    The body is the clean read only, because the phone reads the whole body out loud. Everything
    below the `---` in the note shape (metadata row, re-check block, TikTok cut, description, first
    comment, hashtags) goes in the Socials task description instead. The pillar label comes from

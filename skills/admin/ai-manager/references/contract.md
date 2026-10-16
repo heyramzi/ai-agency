@@ -72,7 +72,7 @@ holds the refresh procedure.
   (`ls ai-doc/skills`); a family is a shelf of 2 to 8 related skills (`growth/search`, `apple/swift`),
   and **a skill never sits loose under its area**. The directory name is the command. **Every `.md`
   stays under 200 lines, a skill holds at most 25, and no path climbs with `../`** (a consumer's
-  `SKILL.md` is a symlink, so `../` resolves against the consumer repo; write `~/Studio/...`).
+  `SKILL.md` is a symlink, so `../` resolves against the consumer repo; write `~/...`).
   `scripts/check-skill-length.mjs` gates all three. A skill's command comes from its directory and ignores its `name:`.
 - Agents: `ai-doc/agents/<category>/<kebab-name>.md`, the filename equal to `name:`
   (`design/frontend-designer.md` is `frontend-designer`), lowercase and hyphens, no colon. Eight

@@ -3,7 +3,7 @@
 Read for `critique`, or whenever 2 files might be ruling on the same thing. It finds where the
 shelf disagrees with itself, with its gates or with the disk. The rules every finding follows,
 the report shape and the eval are in
-[audit-contract.md](~/Studio/vibe-kit/ai-doc/references/audit-contract.md); this file holds the
+[audit-contract.md](~/vibe-kit/ai-doc/references/audit-contract.md); this file holds the
 shelf's own patterns and keep list.
 
 Why it works: a pattern with a grep finds what reading misses. One pass on 8 Oct 2026 found 3
@@ -22,7 +22,7 @@ Audit the source, never a projection: `ai-doc/skills/`, `ai-doc/agents/`, `ai-do
 | Pattern | Signal | Wrong when | Fix |
 | --- | --- | --- | --- |
 | Prose against its gate | `numbers`, then the gate's constant | A number in prose differs from what the gate enforces: `contract.md` and `skill-floor.md` said a skill holds at most 10 `.md` files while `check-skill-length.mjs` sets `MAX_FILES = 25` | `rewrite` the prose to the gate. The gate runs; the sentence doesn't |
-| Two rulings on one point | `rg -n "<the command or noun>" ai-doc ~/Studio/*/AGENTS.md` | Two files say opposite things: `contract.md` said `pnpm vibekit sync <dir>` drops the path, 4 other places said to use it, and `pnpm --silent vibekit verify <dir>` read the path fine | `rewrite` the side the repo contradicts, else the older side by `git blame`, else `flag` |
+| Two rulings on one point | `rg -n "<the command or noun>" ai-doc ~/*/AGENTS.md` | Two files say opposite things: `contract.md` said `pnpm vibekit sync <dir>` drops the path, 4 other places said to use it, and `pnpm --silent vibekit verify <dir>` read the path fine | `rewrite` the side the repo contradicts, else the older side by `git blame`, else `flag` |
 | Dead fact | `python3 scripts/dead_pointers.py` for asset names; file-manager's `tree_scan.py <dir> --only=refs --also=<sibling repo>` for paths | Prose names a script, path or asset that's gone: `cleaning.md` sent you to `check-lead-tables.py` (deleted 9 Sep 2026) for twelve `-lead` agents that no longer exist | `rewrite` to what replaced it, or `remove` the line |
 | Trigger overlap | sort the names, read neighbours, compare descriptions | Two descriptions both half-match one prompt | `merge` or disambiguate: [critique.md](critique.md#merge-or-disambiguate) |
 | Rule a regex could hold | a ban written as a list of literal strings | Prose bans a string no gate checks | `move` it into `packages/lint`, then `remove` the prose ([contract.md](contract.md#a-skill-is-the-third-best-fix)) |
@@ -33,7 +33,7 @@ Audit the source, never a projection: `ai-doc/skills/`, `ai-doc/agents/`, `ai-do
 | Written for an older model | `old-model` | A line patches a failure the current model doesn't have: "think step by step", "be thorough, don't stop early", an old model name, a numeric word cap | `remove` it and retest in a cleared session; if behaviour slips, re-add it in its shortest form |
 | Recency trap | read Learned Patterns | A rule fixes one session's pothole that can't recur | `remove` it, or fold the general rule into the body |
 
-The named signals, from `~/Studio/vibe-kit`:
+The named signals, from `~/vibe-kit`:
 
 ```bash
 rg -n "at most [0-9]+|[0-9]+ (lines|chars|characters|entries|files)" ai-doc   # numbers

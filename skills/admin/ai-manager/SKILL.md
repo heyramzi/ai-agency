@@ -90,7 +90,7 @@ Start with the whole machine, because one folder looks clean while the panel lis
 for a 60-skill source (7 Oct 2026):
 
 ```bash
-cd ~/Studio/vibe-kit/CLIs && pnpm --silent vibekit doctor   # copies, orphans, dead trees, sessionVisible
+cd ~/vibe-kit/CLIs && pnpm --silent vibekit doctor   # copies, orphans, dead trees, sessionVisible
 python3 scripts/context_cost.py <folder>    # counts, metadata cost, every violation
 python3 scripts/dead_pointers.py <folder>   # routes into assets that no longer exist
 ```

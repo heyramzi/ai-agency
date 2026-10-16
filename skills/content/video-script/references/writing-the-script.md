@@ -49,7 +49,7 @@ The author, 19 Sep 2026, on a Claude guide that opened straight into the broken 
 - The lever is fear, already true. Name what's broken today, load the consequence, stop and let them answer (lever table: `video-hooks.md`). An invented stake is the one thing that can cost the account.
 - Spend emotion in 3 places only: the why, the stakes and the last beats of the proof. A build is teaching.
 - One lever per block, named in the brief. The Claude guide: fear in the why, shame-release in the failure, loss aversion in the stakes, nothing through the 4 builds, identity split closing the proof.
-- The viewer is the hero, you're the mentor: a scar and a gift, then out of the way ([storytelling](~/Studio/vibe-kit/ai-doc/references/storytelling.md), "The 5 moves"). `reviewScript` counts pronouns per block. "Our proposal skill takes the CRM record we created" is the mentor doing the work; "your own record, the one you filed 2 minutes ago" is the same demo with the hero inside. On the 19 Sep guide, 2 of 10 blocks failed, both builds, 11 "our/my" against 4 "your".
+- The viewer is the hero, you're the mentor: a scar and a gift, then out of the way ([storytelling](~/vibe-kit/ai-doc/references/storytelling.md), "The 5 moves"). `reviewScript` counts pronouns per block. "Our proposal skill takes the CRM record we created" is the mentor doing the work; "your own record, the one you filed 2 minutes ago" is the same demo with the hero inside. On the 19 Sep guide, 2 of 10 blocks failed, both builds, 11 "our/my" against 4 "your".
 
 | Arc position | Block | Owes |
 | --- | --- | --- |

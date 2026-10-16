@@ -1,6 +1,6 @@
 # Story locks, and measuring a script
 
-6 sentence-level word swaps: walk a finished script once per lock and it tightens without a beat moving. They apply to a Short, a long-form body and a post. The structure is [storytelling](~/Studio/vibe-kit/ai-doc/references/storytelling.md)'s ([addiction-loop](~/Studio/vibe-kit/ai-doc/references/storytelling/addiction-loop.md)). Contrast is the engine under the other 5 (lock 6), so if only one pass is affordable, run that one. 2 locks collide with registry rules, and the registry wins: the hedge rule (2) and the banned phrase bank (5).
+6 sentence-level word swaps: walk a finished script once per lock and it tightens without a beat moving. They apply to a Short, a long-form body and a post. The structure is [storytelling](~/vibe-kit/ai-doc/references/storytelling.md)'s ([addiction-loop](~/vibe-kit/ai-doc/references/storytelling/addiction-loop.md)). Contrast is the engine under the other 5 (lock 6), so if only one pass is affordable, run that one. 2 locks collide with registry rules, and the registry wins: the hedge rule (2) and the banned phrase bank (5).
 
 ## 1. Term branding
 
@@ -89,6 +89,6 @@ Reset your tolerance before judging a cut. After 20 watches you're its worst vie
 
 Ask one debatable question on purpose. It's a real fork that the video declines to close, said once in the teach. It isn't bait, which X demotes (see `social` and `references/writing-posts.md`).
 
-The seam between blocks is where they leave. The re-hook is lock 5; what the block owes first is [storytelling](~/Studio/vibe-kit/ai-doc/references/storytelling.md)'s: stakes with a clock and a big question specific enough to guess wrong at. A body where the viewer can't guess wrong is a correct list. On a counted list the last seam is a demotion, paid for in the outline.
+The seam between blocks is where they leave. The re-hook is lock 5; what the block owes first is [storytelling](~/vibe-kit/ai-doc/references/storytelling.md)'s: stakes with a clock and a big question specific enough to guess wrong at. A body where the viewer can't guess wrong is a correct list. On a counted list the last seam is a demotion, paid for in the outline.
 
 Done when each lock ran once, `story_metrics.py --grade` shows zero fails, and every remaining warn is fixed or answered in one line.

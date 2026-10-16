@@ -237,7 +237,7 @@ def audit(root, top, dupes_top=10):
             # as a broken file on every run.
             body = FENCE.sub("", body)
 
-            # A shared reference is linked as `~/Studio/vibe-kit/ai-doc/...`. Without
+            # A shared reference is linked as `~/vibe-kit/ai-doc/...`. Without
             # expanduser, 9 skills linking existing files read as broken on 2026-10-07.
             def resolve(l):
                 return os.path.normpath(os.path.join(base, os.path.expanduser(l)))

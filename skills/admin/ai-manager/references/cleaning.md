@@ -7,7 +7,7 @@ The unit of waste is context, not files: 250 assets at 400 chars spend about 25k
 the user asks anything. Size picks where to look; it never decides what goes. A line is cut
 because it matches a pattern in [consistency.md](consistency.md) (written for an older model,
 against its gate, a copy of a fact with a home), and the cut follows the
-[audit contract](~/Studio/vibe-kit/ai-doc/references/audit-contract.md). Cutting by length deletes
+[audit contract](~/vibe-kit/ai-doc/references/audit-contract.md). Cutting by length deletes
 the reasons first, since they're the longest sentences. A registry also grows deeper, which an asset count hides (an unpruned
 failure log, a copied paragraph). One registry held 689 KB of logs against 1.4 MB of bodies.
 

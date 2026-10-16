@@ -87,7 +87,7 @@ Give the rewriters one shared brief, one area each. What holds it together, and 
 - `author:` marks a borrowed core. A borrowed reference inside our skill credits its author
   in that file. Never guess one.
 - A rename or a move touches five places: the folder, `scripts/skill-folds.json`, every
-  `vibekit.json`, every path in prose (grep the old path across `~/Studio`, projections
+  `vibekit.json`, every path in prose (grep the old path across the workspace, projections
   excluded), and the app's `areas.ts`, `cast.ts` and `icons.ts` when an area moves. Sync after.
 - `skillOverrides` rots. A settings file listed 74 dead names, and one "off" hid
   `ui-design` from the person typing it. `off` blocks the typed command too; to save context,

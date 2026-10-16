@@ -39,7 +39,7 @@ All one idea: open a loop, pay it off and open the next before attention runs ou
 
 - Modern story arc: drop in at 70/100, spike to 90 in the first seconds, then peak-release-peak every 10 to 15 seconds.
 - Mid flip: attention span is about 25 seconds. Part 1 covers what it is and part 2 covers how to do it, with the flip on a contrast word once.
-- Dopamine loop: stakes (a character, something at risk, urgency), big question, head fake, re-hook. Tactics per beat: [storytelling](~/Studio/vibe-kit/ai-doc/references/storytelling.md), [addiction-loop](~/Studio/vibe-kit/ai-doc/references/storytelling/addiction-loop.md). Read it before a Short whose body is a story.
+- Dopamine loop: stakes (a character, something at risk, urgency), big question, head fake, re-hook. Tactics per beat: [storytelling](~/vibe-kit/ai-doc/references/storytelling.md), [addiction-loop](~/vibe-kit/ai-doc/references/storytelling/addiction-loop.md). Read it before a Short whose body is a story.
 - Delayed reward: the mid flip in list shape. A counted list pays a little at each item, so demote what's delivered just before the last. Source: TikTok @lacedmedia, 12 Sep 2026, 10.1k views, unmeasured.
 - Anticipation loading: deliver a useful answer, then open the next specific question. Use the promise-and-payoff variant below when the beats depend on each other.
 - Small effort, big reward: frame the solution as tiny and the reward as large, by choosing small solutions.
