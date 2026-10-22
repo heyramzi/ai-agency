@@ -65,22 +65,6 @@
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-script.zip"
     },
     {
-      "name": "board",
-      "area": "delivery",
-      "description": "Runs the ClickUp board lifecycle: move changes a task's status, spec turns an Open idea into a PRD, start implements a Ready task into a reviewed PR, ship merges a PR and closes the task. Use on /board-move, /board-spec, /board-start, /board-ship, or picking up, speccing or shipping a task.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/board/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/board",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/board.zip"
-    },
-    {
-      "name": "clickup",
-      "area": "delivery",
-      "description": "Runs ClickUp: the cu CLI for tasks, docs and hierarchy (default), scripted bulk work (cleanup, demo enrichment, doc-name standardizing), and the browser for what has no API (templates, automations, dashboards, statuses, Workload). Use for any ClickUp task, doc, bulk-update or browser-only job.",
-      "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/delivery/clickup/SKILL.md",
-      "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/delivery/clickup",
-      "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/clickup.zip"
-    },
-    {
       "name": "whiteboard",
       "area": "design",
       "description": "Builds the whiteboard a video talks over: a tldraw board for YouTube, a compiled board for stills, or Excalidraw live on the iPad. Use when a video needs a board, a diagram from the terminal, or an .excalidraw file.",
