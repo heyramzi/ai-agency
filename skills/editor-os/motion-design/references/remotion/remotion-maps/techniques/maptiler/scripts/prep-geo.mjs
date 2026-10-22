@@ -1,12 +1,12 @@
 // Geo prep for the map-explainer. Bakes the data the component reads: out/river-flow.json    -> the river draw-on line   (→ copy to your Remotion project's src/geo/)
 
-// out/country-meta.json  -> per-country { stop, anchor, border }   (→ src/geo/) out/borders.geojson    -> country polygons, each tagged {country}  (→ public/geo/  — loaded via staticFile)
+// out/country-meta.json  -> per-country { stop, anchor, border }   (→ src/geo/) out/borders.geojson    -> country polygons, each tagged {country}  (→ public/geo/, loaded via staticFile)
 
-// RUN:  node prep-geo.mjs        (needs YOUR geodata — see CONFIG; the source polygons are too large to ship, so the skill ships the OUTPUTS in assets/sample-data/ instead.)
+// RUN:  node prep-geo.mjs        (needs YOUR geodata, see CONFIG; the source polygons are too large to ship, so the skill ships the OUTPUTS in assets/sample-data/ instead.)
 
 // RIVER INPUT MUST BE ONE CLEAN LINESTRING, source → mouth (features[0].geometry is a LineString).
 
-// If your OSM river comes as many ways / braided channels, ROUTE it into a single line FIRST — a graph shortest-path from source node to mouth node.
+// If your OSM river comes as many ways / braided channels, ROUTE it into a single line FIRST with a graph shortest-path from source node to mouth node.
 
 // Do NOT greedily chain by nearest endpoint: it bounces between parallel channels. (That routing step is a prerequisite, not part of this script.)
 
@@ -28,18 +28,18 @@ const root = resolve(__dir, "..");
 const geo = resolve(root, "../geodata"); // ADAPT: where your input GeoJSON lives
 const read = (p) => JSON.parse(readFileSync(p, "utf8"));
 
-// ===== CONFIG — edit for your river + countries =====
+// ===== CONFIG: edit for your river + countries =====
 const COUNTRIES = ["china", "india", "bangladesh"]; // ORDERED headwaters → mouth; first = source (stop 0)
 const RIVER = resolve(geo, "focus-rivers/yarlung-brahmaputra-full-osm.geojson"); // a single clean source→mouth LineString
 const BORDER = (name) => resolve(geo, `project-borders/${name}.geojson`); // one polygon file per country, named <country>.geojson
-const FRAME_BBOX = [76, 14, 104, 33.5]; // [W,S,E,N] visible extent — fallback for label anchoring only
+const FRAME_BBOX = [76, 14, 104, 33.5]; // [W,S,E,N] visible extent, fallback for label anchoring only
 const ANCHOR_BBOX = {
   china: [82, 27, 96, 32],
   india: [76, 14, 99, 31],
   bangladesh: [86, 20, 93, 27],
 }; // [W,S,E,N] per-country label "story region"
 const NUDGE = { china: [0, 0.6], india: [-1.0, 0], bangladesh: [0, -0.6] }; // [lng,lat] label nudge
-const RIVER_SIMPLIFY_TOL = 0.006; // degrees — smooths the draw-on (bigger = simpler)
+const RIVER_SIMPLIFY_TOL = 0.006; // degrees, smooths the draw-on (bigger = simpler)
 const OUT_RIVER = resolve(root, "out/river-flow.json");
 const OUT_META = resolve(root, "out/country-meta.json");
 const OUT_BORDERS = resolve(root, "out/borders.geojson");
@@ -55,7 +55,7 @@ const havKm = (a, b) => {
   return 2 * R * Math.asin(Math.sqrt(h));
 };
 
-// --- River draw-on line: take the clean routed LineString, strip a dangling final hop, simplify so the wide-zoom draw-on reads as one smooth thread (no bezier — meander overshoot on
+// --- River draw-on line: take the clean routed LineString, strip a dangling final hop, simplify so the wide-zoom draw-on reads as one smooth thread (no bezier: meander overshoot on
 
 // a long river). ---
 const routed = read(RIVER).features[0].geometry.coordinates;

@@ -75,7 +75,10 @@ const DRAW = Object.fromEntries(
     }
     return [c, { segLines, segLen, cum, total: acc }];
   }),
-) as Record<Country, { segLines: any[]; segLen: number[]; cum: number[]; total: number }>;
+) as Record<
+  Country,
+  { segLines: ReturnType<typeof turf.lineString>[]; segLen: number[]; cum: number[]; total: number }
+>;
 
 // Reveal the portion of the border between fromKm and toKm as a MultiLineString (no joins across gaps).
 const sliceBorder = (d: (typeof DRAW)[Country], fromKm: number, toKm: number) => {
@@ -94,6 +97,15 @@ const sliceBorder = (d: (typeof DRAW)[Country], fromKm: number, toKm: number) =>
     geometry: { type: "MultiLineString" as const, coordinates: out },
   };
 };
+type MapOptionsWithCanvas = ConstructorParameters<typeof maptilersdk.Map>[0] & {
+  canvasContextAttributes: { preserveDrawingBuffer: boolean };
+};
+
+const setSourceData = (map: maptilersdk.Map, id: string, data: GeoJSON.Feature) => {
+  const source = map.getSource(id);
+  if (source instanceof maptilersdk.GeoJSONSource) source.setData(data);
+};
+
 const EMPTY = {
   type: "Feature" as const,
   properties: {},
@@ -115,7 +127,7 @@ export const RiverReveal: React.FC = () => {
   const started = useRef(false);
   const frame = useCurrentFrame();
   const { fps, durationInFrames, width, height } = useVideoConfig();
-  const [map, setMap] = useState<any>(null);
+  const [map, setMap] = useState<maptilersdk.Map | null>(null);
   const [labels, setLabels] = useState<Record<string, { x: number; y: number; reveal: number }>>(
     {},
   );
@@ -125,7 +137,7 @@ export const RiverReveal: React.FC = () => {
   useEffect(() => {
     if (!ref.current || started.current) return;
     started.current = true;
-    const m = new maptilersdk.Map({
+    const options: MapOptionsWithCanvas = {
       container: ref.current,
       style: maptilersdk.MapStyle.BASIC,
       center: END.center,
@@ -139,12 +151,13 @@ export const RiverReveal: React.FC = () => {
       maptilerLogo: true,
       fadeDuration: 0,
       canvasContextAttributes: { preserveDrawingBuffer: true },
-    } as any);
+    };
+    const m = new maptilersdk.Map(options);
 
     m.on("load", () => {
       // Strip basemap labels (symbols) AND the inner admin-1 borders ('Other border[ dash]',
-      // admin_level 3–10) to cut basemap clutter. Keep country + disputed borders.
-      for (const l of m.getStyle().layers as any[])
+      // admin_level 3 to 10) to cut basemap clutter. Keep country + disputed borders.
+      for (const l of m.getStyle().layers)
         if (l.type === "symbol" || /other border/i.test(l.id)) m.removeLayer(l.id);
 
       m.addSource("countries", { type: "geojson", data: countryPolygons });
@@ -244,12 +257,12 @@ export const RiverReveal: React.FC = () => {
       easing: Easing.bezier(0.645, 0.045, 0.355, 1),
     });
     const riverDrawnKm = lineKm * reveal;
-    (map.getSource("river") as any)?.setData(
-      turf.lineSliceAlong(line, 0, Math.max(0.001, riverDrawnKm)),
-    );
+    setSourceData(map, "river", turf.lineSliceAlong(line, 0, Math.max(0.001, riverDrawnKm)));
     // Electric draw-head leading the river: white-hot core + glow, fading out once the river completes.
     const riverHeadKm = lineKm * 0.03;
-    (map.getSource("river-head") as any)?.setData(
+    setSourceData(
+      map,
+      "river-head",
       turf.lineSliceAlong(
         line,
         Math.max(0, riverDrawnKm - riverHeadKm),
@@ -279,13 +292,11 @@ export const RiverReveal: React.FC = () => {
       const d = DRAW[c];
       const lt = t - trigger(c); // local seconds since this country triggered
 
-      // 1) border draws on (constant duration), settling to a darker shade — no electric head
+      // 1) border draws on (constant duration), settling to a darker shade, no electric head
       const bp = interpolate(clamp01(lt / BORDER_S), [0, 1], [0, 1], {
         easing: Easing.bezier(0.645, 0.045, 0.355, 1),
       });
-      (map.getSource(`trail-${c}`) as any)?.setData(
-        bp <= 0 ? EMPTY : sliceBorder(d, 0, d.total * bp),
-      );
+      setSourceData(map, `trail-${c}`, bp <= 0 ? EMPTY : sliceBorder(d, 0, d.total * bp));
 
       // 2) fill blooms in (overshoot then settle) after the border completes
       const fp = clamp01((lt - BORDER_S) / FILL_S);

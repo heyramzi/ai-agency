@@ -22,7 +22,4 @@ agent for the three parts of an agency that repeat every week, search, video pro
 client delivery, plus the two tools that keep the registry itself honest. `README.md` is the
 reader-facing entry point and `index.json` the marketplace manifest.
 
-- **Everything published here is read by strangers.** No client names, no ClickUp ids, no path
-  inside a private repo, in any file, including this one.
-
 <!-- vibekit:disclosed -->

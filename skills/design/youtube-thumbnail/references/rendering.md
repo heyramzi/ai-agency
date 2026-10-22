@@ -23,7 +23,7 @@ onto it.
 ## Which model
 
 **Model, tier, price and ban live in** `vibe-kit/ai-doc/references/image-generation.md`. Ask
-`@heyramzi/ai` for a tier, never type an id. `large` (Nano Banana Pro) is banned, so `--model=pro`
+`@heyramzi/utils/ai` for a tier, never type an id. `large` (Nano Banana Pro) is banned, so `--model=pro`
 throws. `render-thumbnail.ts` draws on `medium` and takes `--model=<id>` for a test only.
 
 **OpenAI re-rendered the person; Gemini keeps the photograph.** Tested twice. Editing a finished

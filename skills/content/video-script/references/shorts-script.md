@@ -26,9 +26,11 @@ rewrite it.
    a weak topic gets archived, never rewritten.
    Keep the analogy he reached for live, because that's usually the angle nobody else has. Then the truth rule, which is the trunk's and outranks everything here: every
    name, command and "I did" is checked today, or the re-check block says what to do before shooting.
-1b. **Pick the anchor before you write** (`SKILL.md`, the trunk). `node scripts/top-band.mjs <niche words> --n 8`
-   prints the best-ranked competitor Shorts on the subject. Choose one and write beside it, beat
-   for beat. Copy its moves, never its words: they name the tool in its own sentence, count out
+1b. **Start from an outlier, never a blank page** (`SKILL.md`, the trunk). `pnpm corpus outliers
+   --watchlist` in `~/cutkit` lists Shorts at 5x or more of their own channel's median,
+   from the last 90 days, on 10k to 250k accounts, where the idea carried the video and not the
+   name. Take the one closest to the subject and write beside it, beat for beat. Nothing close
+   (try `--all`, or `--days 365`): `node scripts/top-band.mjs <niche words> --n 8` ranks every size. Copy its moves, never its words: they name the tool in its own sentence, count out
    loud and show each step working.
 2. **Pick an opening shape by number** from [hook-library.md](hook-library.md),
    the 30 shapes reverse-engineered from 475 banded openings plus our own posts. Then write 3

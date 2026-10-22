@@ -1,7 +1,7 @@
 // Example tokens only. Replace every visual value with production-local tokens.
 export const COLORS = {
   bg: "#101315",
-  // Electric water — a near-white icy core with a blue glow and a white-hot draw-head (the "electricity"
+  // Electric water: a near-white icy core with a blue glow and a white-hot draw-head (the "electricity"
   // travels along the river as it draws on). No dark casing.
   river: "#E8F7FF", // bright icy core
   riverGlow: "rgba(73,198,255,0.5)", // electric-blue glow
@@ -17,7 +17,7 @@ export const COUNTRY = {
   india: "#5B8A8A",
   bangladesh: "#C07B57",
 } as const;
-// Darker shade of each country colour — the settled border line (the bright COUNTRY colour is the
+// Darker shade of each country colour: the settled border line (the bright COUNTRY colour is the
 // glowing draw-head that leads the animation).
 export const COUNTRY_DARK = {
   china: "#9A7530",

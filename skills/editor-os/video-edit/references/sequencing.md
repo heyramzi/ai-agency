@@ -4,11 +4,10 @@
 
 [The gates](#the-gates), [Shot triggers](#shot-triggers),
 [The clock a clip is cut against](#the-clock-a-clip-is-cut-against),
-[Pins: placing b-roll, overlays and zooms](#pins-placing-b-roll-overlays-and-zooms),
 [Clips and layouts on the local route](#clips-and-layouts-on-the-local-route),
 [Sound on the cut](#sound-on-the-cut), [Review in Editor OS](#review-in-editor-os)
 
-Open this before writing a `pins.json`, placing a clip, when an edit is "done" but reads flat, and when preparing the review page. `scripts/sequence.py` implements every number here; this file is the reasoning.
+Open this before writing a `pins.json`, when an edit is "done" but reads flat, and when preparing the review page. `scripts/sequence.py` implements every number here; this file is the reasoning. Placing a clip: [pins.md](pins.md).
 Stamping looks over cards: the layouts page in the studio.
 
 ## The gates
@@ -96,27 +95,6 @@ python3 scripts/beatclock.py doc.json --beat "first words" "last words"   # star
 ```
 
 It walks the superTau and skips blocked taus. It divides each duration by `speed` (one cut: 476.83 s undivided, 454.54 s true), and its total equals `get_project`'s duration. Re-run after any cut, reorder or paste. A beat is its own sentence; neighbours are a constraint (2 beats 2.6 s apart are a montage, not 2 clips). A shortened beat loses its last movement. With ignores, report duration by summing unblocked taus (what `pnpm descript script` prints). A cut's length comes off layout cards or the last timecode, never the bed's seconds (the bed is 181 s under a 2:21 cut). A `[mm-ss]` in a media name goes stale on every re-cut: to find where a clip really plays, map `pinScenes[].id` to the card through `cards.components[].layers[].sourceSceneId` and read `layout cards`. The SRT and `layout cards` agree; the markdown transcript drifts late (58 s at 5:30).
-
-## Pins: placing b-roll, overlays and zooms
-
-A pin is three coupled objects: `pinTrack` (media, in/out via `audioSegment.offset/duration`, `speed`), `cardBoundaryComponent` (the whole layer stack at a point; the clip is one layer by `sourceSceneId`), `sceneComponent` (`tauAnchor` to `endAnchor {cardBoundary}`). An overlay is a state change: a card at the in-point carrying the layer, a card at the out-point without it. Miss the closing card and the clip runs to the end. Layer order is z-order, **index 0 on top**; geometry is width-normalised (full 16:9 `box {width: 1, height: 0.5625}`; `position` 0..1 names the centre; `--anchor` converts). Geometry is cloned from a layout already in the project (`catalogue` prints them): box, contentScale, contentPosition, shadow trio, glassBlur, colorAdjustments, and the camera layer is replaced by the layout's, not merged. A zoom changes only `contentScale` and needs no closing card: `{"zoom": 130, "from": "..."}`. Overrides: `"geo": {"contentScale": {"x": 1.4, "y": 1.4}}`, `"z": 0`, `"cam": false`, `"speed": 2`. A still holds its slot to the closing card whatever `--seconds` says. `audioSegment.duration` is the ref's audio duration, not its video one. `--media` resolves against the media library: read names off `assets` or `doc`, never a pin (pin `1b [00-28] ...`, media `4a [00-24] ...`).
-
-```json
-[{"media": "19 [02-00] Nobody Pointed At It.mp4", "in": 0, "dur": 16.8, "layout": "02 [00-20] Mental Load Fades",
-  "from": "Nobody takes care of harnessing that information", "to": "for your sales team and your AI"}]
-```
-
-- Run `catalogue` before any zoom and read the layout line as a gate. `none - no card in this payload carries a pin layer` means no stack to clone, and every zoom lands an **empty card** (31 Aug: 14 blank cards). Then `pnpm descript layout pace` is both placement and repair (`--screen SCREEN` on a screen tour).
-- A b-roll ends where its scene ends.A b-roll that stops short of its scene's end leaves an empty frame.
-At 85% or more of the card `pin` slows it so the last frame lands on the close (~0.9x is invisible; reports `speed` and `holds: 0`); below 0.85x it refuses and asks for `--to` on an earlier word. Longer is fine (`holds` negative). A keyed overlay isn't held to this. Anything above 0 on a b-roll is the empty frame.
-- Refusals. Clipboard route (`dscript.py pins`) can't place media never on the timeline (40 of 43 in one project); `pnpm descript pin` reads the guid off the document and can (a clip imported 15 days earlier), so reach for the CLI first. Phrases resolve against the surviving script only (a pre-cut phrase after a reorder refuses); an ambiguous phrase takes `nth`/`pre`/`post`; a project that never had a pinTrack needs one clip dragged in. `--to "<phrase>"` is a real order check (`beatclock.py --find` both phrases first).
-- `--to` where the stretch has no cards. The default closes on the next card, which on a canvas walk is 20 minutes on (`holds: 398.6`). `--to` cuts the closing card in the standing look; read `ends` against the clip length in `--dry` (shorter truncates, longer freezes).
-- An alpha `.mov` needs `--keep-cameras`. `pin` hides cameras under anything taking the full frame (`camerasHidden`), and can't tell a keyed clip from b-roll. A qtrle overlay draws in the web editor only while playing: press play before judging a key. `pin` once wrote every effect enabled regardless of the layout's `isDisabled` rows.
-- No transition where the camera goes off. A smart transition there "creates some weird flicker". `pin` clears the two boundaries bracketing a clip (`transitionsCleared`); `descript transition sweep <project> <comp>` does a whole composition (`--dry` first); one boundary is `transition <card> --off`.
-- `pin rm` removes scene, registration and every layer in one write (`--at` scopes it). A pin's `sortTiebreaker` is `index + 0.5`, so any card change needs `realign()`. A placed pin on a stretch with no cards: `pin --to` cuts it.
-- The transparent plate removes a clip when nothing else does: an alpha clip over the card's exact length hands the face back. `ffmpeg -y -f lavfi -i "color=c=black@0.0:s=1920x1080:r=30:d=<s>,format=argb" -vcodec qtrle -t <s> plate.mov`; import, `media swap` the unwanted clip for it, then `rename`/`mv` the survivor (a swap keeps the OLD media's id and name). Match the card length or run a few hundredths over. Swap by media id, never name: two copies of one stock clip are routine and a name match swaps the unplaced one silently.
-- Tests: `scripts/test_pins.py <grab.json>` derives its spec from the payload (closing card drops the layer, geometry matches, no dangling scene, no id collisions). The filler pass cuts sentence-opening `now`/`so` positionally (`so that` keeps `so`).
-- A screen share pinned as long clips over a cut take drifts at every cut, and a silent re-run recorded apart has no offset: one pin per board via an `edits` batch, `pin --at <sentence> --to <next sentence> --from <screen second> --onto SCREEN`, normal speed, never a pieced track with speed changes. A project's Stock Media folder is what was auditioned: count `pinScenes` per mediaRef for what was used.
 
 ## Clips and layouts on the local route
 

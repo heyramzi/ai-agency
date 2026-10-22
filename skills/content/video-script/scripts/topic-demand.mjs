@@ -40,7 +40,7 @@ const median = (xs) => {
   const s = [...xs].sort((a, b) => a - b);
   return s[Math.floor(s.length / 2)];
 };
-const fmt = (x) => (x === null ? "  -  " : x.toFixed(2).padStart(5));
+const fmt = (x) => (x === null ? "  n/a" : x.toFixed(2).padStart(5));
 
 console.log(
   `${theirs.length} competitor videos, ${ours.length} of ours. Weak: median under 1 on 8 or more matches.\n`,

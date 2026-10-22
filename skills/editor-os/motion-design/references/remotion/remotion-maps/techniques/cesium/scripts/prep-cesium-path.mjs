@@ -70,7 +70,7 @@ const resample = (coords) => {
   return out;
 };
 
-// Moving-average smoothing — inherently continuous (no kinks). Window in points; repeat for extra glass.
+// Moving-average smoothing is inherently continuous (no kinks). Window in points; repeat for extra glass.
 const smoothMA = (coords, w, passes) => {
   let c = coords;
   for (let p = 0; p < passes; p++) {
@@ -89,7 +89,7 @@ const smoothMA = (coords, w, passes) => {
   return c;
 };
 
-const SMOOTH_W = 28; // ±2.8 km window — turns meanders into smooth flowing curves
+const SMOOTH_W = 28; // ±2.8 km window, turns meanders into smooth flowing curves
 const SMOOTH_PASSES = 2;
 const DAMP = 0.45; // keep 45% of the (already-smooth) deviation → gentle, continuous swerve
 
@@ -128,7 +128,7 @@ const bear = (a, b) => {
     Math.sin(a[1] * r) * Math.cos(b[1] * r) * Math.cos((b[0] - a[0]) * r);
   return (Math.atan2(y, x) * 180) / Math.PI;
 };
-// heading sampled every ~1.5 km — should change gradually & continuously (no big jumps = no corners)
+// heading sampled every ~1.5 km, should change gradually & continuously (no big jumps = no corners)
 const stepPts = Math.round(1.5 / STEP_KM);
 let prev = null,
   hs = [];

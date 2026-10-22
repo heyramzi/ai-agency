@@ -37,7 +37,7 @@ export const CountryLabel: React.FC<{
           alignItems: "center",
         }}
       >
-        {/* accent rule — draws out from the centre in the country's colour */}
+        {/* accent rule: draws out from the centre in the country's colour */}
         <div
           style={{
             width: 64,
