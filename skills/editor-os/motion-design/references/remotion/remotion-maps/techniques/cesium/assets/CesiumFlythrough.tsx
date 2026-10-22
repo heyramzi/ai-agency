@@ -29,6 +29,57 @@ export type CesiumFlythroughProps = {
   maximumScreenSpaceError?: number;
 };
 
+// The slice of CesiumJS this component calls. Cesium loads from a CDN script, so there is no package to import types from.
+interface CesiumViewer {
+  camera: {
+    setView(options: {
+      destination: unknown;
+      orientation: { heading: number; pitch: number; roll: number };
+    }): void;
+  };
+  scene: {
+    globe: { tilesLoaded: boolean; show: boolean; enableLighting: boolean };
+    skyAtmosphere: { show: boolean };
+    fog: { enabled: boolean };
+    verticalExaggeration: number;
+    primitives: { add(item: unknown): void };
+  };
+  imageryLayers: { addImageryProvider(provider: unknown): void };
+  creditDisplay: { addStaticCredit(credit: unknown): void };
+  terrainProvider: unknown;
+  useDefaultRenderLoop: boolean;
+  render(): void;
+}
+
+interface CesiumTileset {
+  tilesLoaded: boolean;
+}
+
+interface CesiumApi {
+  Viewer: new (container: HTMLElement | null, options: Record<string, unknown>) => CesiumViewer;
+  Cartesian3: { fromDegrees(lng: number, lat: number, altitude: number): unknown };
+  Math: { toRadians(degrees: number): number };
+  UrlTemplateImageryProvider: new (options: { url: string; maximumLevel: number }) => unknown;
+  CesiumTerrainProvider: {
+    fromUrl(url: string, options: { requestVertexNormals: boolean }): Promise<unknown>;
+  };
+  Credit: new (html: string, showOnScreen: boolean) => unknown;
+  Cesium3DTileset: {
+    fromUrl(
+      url: string,
+      options: { showCreditsOnScreen: boolean; maximumScreenSpaceError: number },
+    ): Promise<CesiumTileset>;
+  };
+}
+
+declare global {
+  interface Window {
+    Cesium?: CesiumApi;
+    CESIUM_BASE_URL?: string;
+    __CESIUM_FLYOVER__?: { C: CesiumApi; mode: FlyoverMode };
+  }
+}
+
 const MAPTILER_KEY = process.env.REMOTION_MAPTILER_KEY;
 const GOOGLE_MAPS_API_KEY = process.env.REMOTION_GOOGLE_MAPS_API_KEY;
 const CESIUM_VER = "1.143";
@@ -81,16 +132,19 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 const loadCesium = () =>
-  new Promise<any>((resolve, reject) => {
-    if ((window as any).Cesium) return resolve((window as any).Cesium);
-    (window as any).CESIUM_BASE_URL = CDN;
+  new Promise<CesiumApi>((resolve, reject) => {
+    if (window.Cesium) return resolve(window.Cesium);
+    window.CESIUM_BASE_URL = CDN;
     const css = document.createElement("link");
     css.rel = "stylesheet";
     css.href = `${CDN}Widgets/widgets.css`;
     document.head.appendChild(css);
     const script = document.createElement("script");
     script.src = `${CDN}Cesium.js`;
-    script.onload = () => resolve((window as any).Cesium);
+    script.onload = () => {
+      if (window.Cesium) resolve(window.Cesium);
+      else reject(new Error(`CesiumJS ${CESIUM_VER} loaded but did not define window.Cesium`));
+    };
     script.onerror = () => reject(new Error(`Failed to load CesiumJS ${CESIUM_VER}`));
     document.head.appendChild(script);
   });
@@ -109,8 +163,8 @@ export const CesiumFlythrough: React.FC<CesiumFlythroughProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const started = useRef(false);
-  const viewerRef = useRef<any>(null);
-  const tilesetRef = useRef<any>(null);
+  const viewerRef = useRef<CesiumViewer | null>(null);
+  const tilesetRef = useRef<CesiumTileset | null>(null);
   const frame = useCurrentFrame();
   const { durationInFrames, fps, width, height } = useVideoConfig();
   const [ready, setReady] = useState(false);
@@ -122,7 +176,7 @@ export const CesiumFlythrough: React.FC<CesiumFlythroughProps> = ({
     [path, pathSmoothingPasses],
   );
 
-  const setCamera = (C: any, viewer: any, progress: number) => {
+  const setCamera = (C: CesiumApi, viewer: CesiumViewer, progress: number) => {
     const maxTravel = Math.max(0, walker.lengthKm - lookAheadKm * 2);
     const cameraDistance = Math.min(travelKm, maxTravel) * progress;
     const camera = walker.along(cameraDistance);
@@ -146,12 +200,12 @@ export const CesiumFlythrough: React.FC<CesiumFlythroughProps> = ({
     });
   };
 
-  const tilesAreLoaded = (viewer: any) => {
+  const tilesAreLoaded = (viewer: CesiumViewer) => {
     if (mode === "landscape") return viewer.scene.globe.tilesLoaded;
     return Boolean(tilesetRef.current?.tilesLoaded);
   };
 
-  const settle = (viewer: any) =>
+  const settle = (viewer: CesiumViewer) =>
     new Promise<void>((resolve) => {
       let stable = 0;
       let ticks = 0;
@@ -238,7 +292,7 @@ export const CesiumFlythrough: React.FC<CesiumFlythroughProps> = ({
       viewer.scene.fog.enabled = true;
       viewer.scene.globe.enableLighting = false;
       viewer.scene.verticalExaggeration = verticalExaggeration;
-      (window as any).__CESIUM_FLYOVER__ = { C, mode };
+      window.__CESIUM_FLYOVER__ = { C, mode };
       viewerRef.current = viewer;
       setCamera(C, viewer, 0);
       await settle(viewer);
@@ -252,8 +306,12 @@ export const CesiumFlythrough: React.FC<CesiumFlythroughProps> = ({
     const frameHandle = delayRender(`cesium ${mode} frame ${frame}`, {
       timeoutInMilliseconds: 60000,
     });
-    const C = (window as any).__CESIUM_FLYOVER__.C;
+    const C = window.__CESIUM_FLYOVER__?.C;
     const viewer = viewerRef.current;
+    if (!C || !viewer) {
+      continueRender(frameHandle);
+      return;
+    }
     const progress = durationInFrames <= 1 ? 0 : frame / (durationInFrames - 1);
     setCamera(C, viewer, progress);
     settle(viewer).then(() => continueRender(frameHandle));

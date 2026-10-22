@@ -56,7 +56,9 @@ hide behind, so its exit is what separates an overlay from a pop. A long take ru
   and exits non-zero; run it on every portrait render (`--for tiktok` too). `n-plus-one.mp4` passed 300/1650 and
   failed it: its key moment sat below y=1436 under the Reels caption block. The numbers are a conservative
   intersection of disagreeing guides; `--calibrate` fits a real screenshot.
-- Check a label's rendered width against 1080. Colours come from `tokens.ts`. A clip carries its own `<Backdrop />`.
+- Check a label's rendered width against 1080. Colours come from `tokens.ts`; a Short's kit adds 2 to 3 taken from
+  a frame of the take, so the graphics belong to the room (`video-edit/references/shorts.md#the-look`). A clip
+  carries its own `<Backdrop />`.
   A brand mark darker than the backdrop needs a light substitute for border, glow and wires or it renders
   permanently unlit (Notion is `#000000`).
 - A wide frame has a third of the vertical budget and twice the horizontal: don't rotate a portrait layout into
@@ -81,7 +83,8 @@ hide behind, so its exit is what separates an overlay from a pop. A long take ru
 `<Shot ground="grid">` (ink, 2 parallax grids, vignette) is the default so nothing ships a silent restyle.
 `"bloom"` is the indigo `NoiseField`, dithered at 0.30 (a stock gradient bands across 1920px of near-black).
 `"daylight"` is the pale mid-grey wall, lighter panels, ink type, key light white at about a fifth, no
-`Ambient`: the long take only.
+`Ambient`: the long take only. A Short's full-frame clip takes none of these: its ground is a frame of the take,
+blurred, so the viewer never leaves the room, and a prop over the face casts a soft shadow from the room's light.
 
 `<Shot alpha>` is its own deliverable, with no ground, because it keys over the recording. Grain would haze every
 empty alpha pixel and `Ambient` is a white wash over footage, so both come out; the key light stays at about a

@@ -33,20 +33,24 @@ and tell it as a board.
 
 ## The spine
 
+Every video runs Problem, Agitate, Solution, and the board opens the same way. The author, 21 Oct
+2026: "It's always problem, amplify, solution. All our videos should follow the same framework."
 One canvas with a frame per chapter, in the script's order:
 
-1. **Before/after.** Put the viewer's pain next to the calm state they want, in their words.
-   A known meme format or 2 photos beats 2 bullet lists. The proof (a real number, a result, a
-   screenshot) sits in this frame, because the hook shows it inside 30 seconds.
-2. **The method in steps.** Numbered, with an icon and one line per step.
-3. **The deeper frame.** The structure the method sits in, such as a pyramid or a table of
+1. **The pain.** What's broken for the viewer today, in their words, as a known meme format or
+   a real screenshot (the GTD board opened on a Drake meme). No calm state yet.
+2. **The amplify.** What that pain costs if they skip this: a real number, a clock, the mess
+   piling up. The proof the hook shows inside 30 seconds sits here. The calm state they want
+   closes this frame, as the turn into the solution.
+3. **The method in steps.** Numbered, with an icon and one line per step.
+4. **The deeper frame.** The structure the method sits in, such as a pyramid or a table of
    cadences. Skip it when the topic has none. Don't invent one.
-4. **The decision flowchart.** The one mechanism a viewer can apply without the product:
+5. **The decision flowchart.** The one mechanism a viewer can apply without the product:
    diamonds for yes/no questions, boxes for where things end up. This is the frame people save,
    so it gets the most room and the cleanest layout on the board.
-5. **The tool map.** What each part of the method becomes in the product, then the demo starts.
+6. **The tool map.** What each part of the method becomes in the product, then the demo starts.
    The product first appears at about 35% of the runtime.
-6. **Tips or the close.** 3 to 5 items, back on the board after the demo.
+7. **Tips or the close.** 3 to 5 items, back on the board after the demo.
 
 The board itself is the free download ("get the flowchart"). That replaces a lead-magnet plug in
 the first 2 minutes, which is where Delivery Ceiling lost people.
@@ -83,7 +87,8 @@ out; don't fill it.
    script's runtime.
 3. There's exactly one mechanism frame: a decision flowchart with at least 2 yes/no diamonds and
    3 end states, or a split into pillars that ends in actions.
-4. The first frame holds a real proof, and the script shows it inside 30 seconds.
+4. The first frame is the pain and the second amplifies it, before any method or product. The
+   proof sits in the second, and the script shows it inside 30 seconds.
 5. The board holds at least 3 images, and every one shows something real.
 6. No 2 neighbouring frames use the same shape.
 7. All labels read in the frame's PNG at 1920x1080.

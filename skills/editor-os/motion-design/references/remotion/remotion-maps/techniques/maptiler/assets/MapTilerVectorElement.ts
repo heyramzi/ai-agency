@@ -2,6 +2,8 @@
 
 // For a source-to-end line draw, bake the selected feature to ordered GeoJSON and use RiverReveal.tsx instead.
 
+import type { Map as MapTilerMap } from "@maptiler/sdk";
+
 type VectorLayerType = "fill" | "line" | "circle" | "symbol";
 
 export type MapTilerVectorElement = {
@@ -18,7 +20,7 @@ export type MapTilerVectorElement = {
 const SOURCE_ID = "maptiler-planet";
 
 export const addMapTilerVectorElement = (
-  map: any,
+  map: MapTilerMap,
   apiKey: string,
   element: MapTilerVectorElement,
   beforeId?: string,
@@ -49,7 +51,7 @@ export const addMapTilerVectorElement = (
 };
 
 export const setVectorElementPaint = (
-  map: any,
+  map: MapTilerMap,
   layerId: string,
   paint: Record<string, unknown>,
 ) => {

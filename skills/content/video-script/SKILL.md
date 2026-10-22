@@ -11,7 +11,7 @@ The skill has 4 branches on one trunk. What to make next (the 6 pipes, the 4 gat
 
 ## The trunk
 
-**1. Anchor.** The author, 4 Oct 2026: "I need to stay humble and copy before I become good." Pick one competitor video on the subject that beat its own channel (`scripts/top-band.mjs` for a Short, `references/choosing-ideas.md` pipes 1 to 3 for long-form) and put its transcript beside the draft. Match its moves beat for beat (where it names the tool, where it counts, how long a step runs, where it asks) and swap in his substance and proof, never its words. The Sofiane batch had 40,000 words of rules behind 130-word scripts and no anchor, and came out unreadable.
+**1. Anchor.** The author, 4 Oct 2026: "I need to stay humble and copy before I become good." Pick one competitor video on the subject that beat its own channel (`pnpm corpus outliers` in `~/cutkit` for a Short, `references/choosing-ideas.md` pipes 1 to 3 for long-form) and put its transcript beside the draft. Match its moves beat for beat (where it names the tool, where it counts, how long a step runs, where it asks) and swap in his substance and proof, never its words. The Sofiane batch had 40,000 words of rules behind 130-word scripts and no anchor, and came out unreadable.
 Done when the brief names the anchor with its breakout and URL.
 
 **2. Feed evidence.** Read `community`'s `references/engagement-what-works.md` before drafting. It scores competitor posts against each account's own median and carries its measurement date. It says what the feed rewards, never what's good; the bans in `@heyramzi/lint` and `humanizer` outrank every number on it.
@@ -28,7 +28,7 @@ Done when the page is under 30 days old or was refreshed.
 
 ## The long-form body
 
-**Opens on why.** The author, 19 Sep 2026: "We always should start with why when we record a video." The first block after the cold open is the why: what's still true for them in a year if they skip this. The fear has to be already true, the viewer is the hero and you're the mentor, and emotion is spent only in the why, the stakes and the close of the proof. `reviewScript` fails a body that opens on anything else, and any block where first-person pronouns outnumber second-person. Beat sheet, structure, teach-block rules and the argument-video variant: `references/writing-the-script.md`, read before the beat sheet.
+**Problem, Agitate, Solution, every video.** The author, 21 Oct 2026: "It's always problem, amplify, solution. All our videos should follow the same framework." The why is the problem, the failure and the stakes amplify it, and the mechanism onward is the solution; the board opens in the same order (`whiteboard`, `video-board.md`). The author, 19 Sep 2026: "We always should start with why when we record a video." The first block after the cold open is the why: what's still true for them in a year if they skip this. The fear has to be already true, the viewer is the hero and you're the mentor, and emotion is spent only in the why, the stakes and the close of the proof. `reviewScript` fails a body that opens on anything else, and any block where first-person pronouns outnumber second-person. Beat sheet, structure, teach-block rules and the argument-video variant: `references/writing-the-script.md`, read before the beat sheet.
 
 **Decide the subject on a number.** The SERP decides if a subject is worth a recording day, alone. 2 lanes open: the unserved query and the stale head. Commands, thresholds and the quarantined keyword report: `references/three-run-control.md`, last section. Never take the runtime off the SERP.
 
@@ -61,7 +61,7 @@ Done when the save returns no `problems` and the overlay names exist on the shel
 - The failure told in full, every number traced to something measured, and no arithmetic on camera.
 - One portable idea named in the mechanism and pointed at as each build lands; an abstraction drawn on screen; a failure shown uncut in each build.
 - One chapter per block, named for a state (78% of the corpus publish chapters, median 7, titled in 4 words, the first ending at 4.7% of runtime).
-- `pnpm jev loop short` and `pnpm jev score opening` are hints only: the opening model failed its held-out test and the Shorts grader didn't track breakout on 20 competitor Shorts (rank correlation -0.06). The loop: `vibe-kit/ai-doc/references/content-grade.md`.
+- A Short goes through CutKit's `check_script`, and `pnpm jev score opening` is a hint only: the opening model failed its held-out test, and a craft grade didn't track breakout on 20 competitor Shorts (rank correlation -0.06).
 
 Done when `humanizer` ran over the whole thing and `concepts script` stored it.
 

@@ -12,7 +12,7 @@ export const RemotionRoot: React.FC = () => (
   <Composition
     id="MapExplainer"
     component={RiverReveal}
-    durationInFrames={12 * 30} // 12 s @ 30 fps — raise if a later country needs more room after the river arrives
+    durationInFrames={12 * 30} // 12 s @ 30 fps, raise if a later country needs more room after the river arrives
     fps={30}
     width={1920}
     height={1080}

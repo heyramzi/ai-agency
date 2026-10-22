@@ -15,7 +15,7 @@ Read `RUN.json` first. Its `format` picks the format file: [shorts.md](reference
 
 - **Descript goes through `pnpm descript`.** The browser, the published API and Underlord write outside the CLI's commit gate and get reverted or corrupted.
 The API once broke an edit that had to be re-uploaded by hand, and Underlord once littered a project with test sequences.
-  No verb for it? Write the verb in `CLIs/descript/`. Credentials, the write model and renders: [descript-cli.md](references/descript-cli.md).
+  No verb for it? Write the verb in `CLIs/descript/`. Credentials and the write model: [descript-cli.md](references/descript-cli.md); renders: [rendering.md](references/rendering.md).
 - **Every change goes through a CLI verb.** That's `editor-os <verb>` or `cut <verb>` on a local project, `pnpm descript` on a Descript one. Only the studio writes `edit.json` and `edit.notes.json`, so a hand edit races it and loses. A missing verb gets added to the CLI with a test, never worked round with a script. A render, matte or transcript that prints "Waiting for a render slot" is queued behind the Mac's 2 slots: let it wait, never kill it or start a second one.
 - **A production gets a ledger before pass 0.** `scripts/run.py` writes `RUN.md` and `RUN.json` beside the video's `plan.md` and, in the house, mirrors the rows to its task board. `next` names the pass to do and what proves it; `start` refuses a pass whose predecessor isn't done or blocked; `done` needs the proof command in `--evidence` plus `--file` (saved output) or `--run` (run.py runs it and keeps the output in `proof/`).
 
@@ -46,7 +46,7 @@ Siblings: `social` (`references/shorts-production.md` for encoding, Drive, Click
 | 0 | organise | [projects-and-media.md](references/projects-and-media.md) | `descript tracks` prints `tracks clean`, `descript lint` has no naming warning |
 | 1 | coach, then cut | [cutting.md](references/cutting.md) (coach runs first, so the raw take still exists) | script reads with no retake or false start left |
 | 2 | reorder, chapters | `cutting.md` (`arrange.py`, then a marker per section) | markers land, chapters read right |
-| 3 | rhythm, layouts | [sequencing.md](references/sequencing.md), the layouts page in the studio (`sequence.py`, then `layout pace` and `layout apply`) | `layout cards` shows a card per beat |
+| 3 | rhythm, layouts | [sequencing.md](references/sequencing.md), [pins.md](references/pins.md), the layouts page in the studio (`sequence.py`, then `layout pace` and `layout apply`) | `layout cards` shows a card per beat |
 | 4 | music | `music` (the `music-scout` agent: 3 options from Descript Stock, he keeps one) | `music offer` answered, no bed laid |
 | 5 | motion | `motion-design` | every clip rendered, watched, in Editor OS review |
 | 6 | broll | `broll` | sourced, imported, in Editor OS review |
@@ -66,5 +66,5 @@ The first thing in the first pass, before captions, a title or the plan read the
 
 A `retime` or a new take changes the words, so the review is due again: a later `retime` needs the same `--respell` pairs, and `--reviewed` comes last. Until you record the read, `title` and `final` refuse and `plan` and `cut check` warn. It's part of pass 1's proof on the local route.
 
-Checks on a finished cut (doctrine, strategy, the export checklist): [checks.md](references/checks.md). Coach workflow and cut-list method: `cutting.md`. Clipboard mechanics: `descript-cli.md`.
+Checks on a finished cut (doctrine, strategy, the export checklist): [checks.md](references/checks.md). Coach workflow and cut-list method: `cutting.md`. Clipboard mechanics: [clipboard.md](references/clipboard.md). The drive media library: [drive-library.md](references/drive-library.md).
 

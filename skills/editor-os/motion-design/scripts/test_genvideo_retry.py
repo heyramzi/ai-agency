@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prove genvideo.py retries and falls back the way packages/ai/src/video.ts does.
+"""Prove genvideo.py retries and falls back the way the app's video lanes do.
 
 usage: python3 test_genvideo_retry.py
 
