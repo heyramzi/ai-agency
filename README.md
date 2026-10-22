@@ -2,7 +2,7 @@
 
 # ai-agency
 
-**18 agent skills for Claude**, plus 6 slash commands and an agent, built for the 3 jobs an
+**16 agent skills for Claude**, plus 6 slash commands and an agent, built for the 3 jobs an
 agency repeats every week: getting found in search, making video, and delivering client work.
 One more, `ai-manager`, stops the rest of the shelf from rotting as you add to it.
 
@@ -37,7 +37,7 @@ flowchart TB
   subgraph D["Client delivery"]
     direction LR
     dc["/clickup-foundations<br/>/the-project-manager"] ~~~ d2["project-manager<br/>agent"]
-    d2 -->|routes work to| d1["clickup<br/>board"]
+    d2 -->|routes work to| d1["ClickUp Agent Kit<br/>cu + clickup skill"]
   end
   subgraph A["Across all 3"]
     direction LR
@@ -93,17 +93,15 @@ API key or a gateway.
 
 ### Client delivery
 
-| Skill | Does |
-| --- | --- |
-| [clickup](skills/delivery/clickup) | Every read and write in ClickUp through the `cu` command line, plus the browser path for templates, automations and dashboards |
-| [board](skills/delivery/board) | A task moved, specced into a brief, built into a reviewed PR, or shipped and closed |
+The ClickUp skill ships with the `cu` command line in the free
+[ClickUp Agent Kit](https://github.com/heyramzi/clickup-agent-kit), so a skill update and a `cu`
+update always land together. Install it with `npm i -g heyramzi/clickup-agent-kit`. After that,
+`cu init` connects your workspace and `cu skills install` adds the skill.
 
 The agent on top is [project-manager](agents/delivery/project-manager.md). It reads the board,
 names what's late and what's waiting on a client, and proposes 1 move per problem. It doesn't
 press the button itself.
 
-Both skills need the `cu` command line. Its install line is handed out in The Project Manager,
-lesson 2. Without it they read as documentation.
 
 ### Keeping the shelf honest
 

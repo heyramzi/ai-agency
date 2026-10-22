@@ -154,9 +154,9 @@ level fixed it and stop.
 6. Read the 10 takeaway lines back to them in order (lesson 11).
 7. Ask whether `cu` is on their machine. If they still need it, walk the lesson 10 install
    with them: `npm i -g heyramzi/clickup-agent-kit`, then `cu init` and `cu status`, then
-   `cu skills install` for the free skills, `clickup` and `board`. It is
+   `cu skills install` for the free `clickup` skill. It is
    a public repository, so there is no access to ask for and no GitHub token to make. The
-   planner, call-to-tasks and the two agents are not in it: they come with Agency Master.
+   planner and call-to-tasks are not in it: they come with Agency Master.
 8. Once `cu status` reaches their workspace, run the read commands with them:
    `cu hierarchy`, then `cu views list --list <id>` and `cu fields list --list <id>`
    on their busiest list. Propose the delete order and let them delete.

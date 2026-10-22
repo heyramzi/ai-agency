@@ -1,7 +1,7 @@
 {
   "name": "ai-agency",
-  "description": "18 agent skills: an SEO skill that takes a site from keyword research to ranked pages, a 14-skill YouTube kit that takes a video from hook to published post, and a 2-skill ClickUp kit with the project-manager agent on top. Plus 6 slash commands that run the free courses at go.upsys-consulting.com/skool on your own business, and ai-manager, which writes a skill, repairs it when a session proves it wrong, and cleans the shelf back down when it grows.",
-  "version": "0.7.0",
+  "description": "16 agent skills: an SEO skill that takes a site from keyword research to ranked pages, a 14-skill YouTube kit that takes a video from hook to published post, and a project-manager agent that runs your ClickUp once the free ClickUp Agent Kit is in. Plus 6 slash commands that run the free courses at go.upsys-consulting.com/skool on your own business, and ai-manager, which writes a skill, repairs it when a session proves it wrong, and cleans the shelf back down when it grows.",
+  "version": "0.8.0",
   "author": {
     "name": "Ramzi",
     "url": "https://github.com/heyramzi"
@@ -12,8 +12,6 @@
     "./skills/admin/ai-manager",
     "./skills/content/generate-social",
     "./skills/content/video-script",
-    "./skills/delivery/board",
-    "./skills/delivery/clickup",
     "./skills/design/whiteboard",
     "./skills/design/youtube-thumbnail",
     "./skills/editor-os/motion-design",

@@ -42,13 +42,12 @@ Ask, do not assume, and never write to their board before they have seen the cha
    owner or a member. A member token cannot create tags or fields, and that shows up
    as a `401` in the middle of session 2 rather than now.
 2. **The command line.** `cu status` proves it. If it fails, lesson 2 is where they
-   set it up: `npm i -g heyramzi/clickup-cli`, then `cu init`. The package is public,
+   set it up: `npm i -g heyramzi/clickup-agent-kit`, then `cu init`. The package is public,
    so there is nothing to ask for. Do not paste their ClickUp token for them and never
    write one into a repo.
-3. **The skills.** In Claude Code: `/plugin marketplace add heyramzi/ai-agency`, then
-   `/plugin install ai-agency@ai-agency`. The ones that run this course are
-   `clickup-cli`, `batch-workload`, `clickup-data-manager` and
-   `clickup-browser`. Never name a skill at them as a magic phrase. Describe the job.
+3. **The skills.** `cu skills install` puts the `clickup` skill in place. The planner,
+   `batch-workload`, comes with Agency Master. Never name a skill at them as a magic
+   phrase. Describe the job.
 4. **How many clients.** 1 list or 12 changes what every session costs them. Ask before
    you propose a shape.
 
