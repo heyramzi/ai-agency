@@ -2,9 +2,10 @@
 
 ## Contents
 
-[The kit](#the-kit), [Produced marks, the census shelf and the keystroke](#produced-marks-the-census-shelf-and-the-keystroke)
+[The kit](#the-kit), [On the contact frame](#on-the-contact-frame), [Produced marks, the census shelf and the keystroke](#produced-marks-the-census-shelf-and-the-keystroke)
 
-A clip cut into a read carries its own audio track. A product film mutes this whole file (`product-film.md`).
+A clip cut into a read carries its own audio track. A product film under a bed mutes this whole file; one
+scored by its contacts lives on it (`product-film.md`).
 This file is the clip's own voices. Which sound a moment on screen takes, the mix levels, density and
 licence are the `sound` skill's.
 
@@ -42,4 +43,23 @@ reads and never a literal, or the sound drifts when somebody nudges a frame. Cut
 don't score it afterwards. One voice per event, not per object (5 staggered bricks are 5 `click`s; one sweep lighting
 5 cells is one `sweep`). Nothing repeats more than 4 times in a clip. Check every tail fits before the
 clip ends (`shine` runs 54 frames; a truncated reverb is more wrong than none).
+
+## On the contact frame
+
+A sound's hit sits on the frame the motion makes contact, never on the cue that starts it. Contact is
+the last frame whose step is still a quarter of the move's biggest step: the frame the shape arrives, after
+which it only settles. "Within 4% of the target" is wrong for near-critical springs, since the last 4% crawls
+and put clicks 2 to 3 frames after the shape stopped on the Seam film. So `from` is the cue plus the
+spring's computed contact (`contact(config)` in the Seam film's `physics.ts`), never a
+typed frame. A move that must stop dead on its hit (a counter digit, a file dropping) is an ease-in
+`slam`, not a spring, because a rebound keeps the picture moving past the click. A cue whose outline keeps
+its size makes no contact and gets no sound; a click on a content fade reads early.
+
+The tolerance is 1 frame. The Seam film measured 56 hits at median 0.24 and max 0.45 frames (15 ms), so
+anything past 1 is a bug, not taste. Check it off the render, never the code: render once with the camera
+held (a moving camera changes every pixel, and the frame difference then measures the camera), write the
+intended hits from the same constants as JSON, and run
+`uv run scripts/sync.py <render.mp4> --hits hits.json --plot sync.png`. It measures each audio onset and each
+motion contact off the file and exits 1 on any sound more than `--tol` frames out. Give a morph whose
+content blurs in after its outline `"metric": "outline"`.
 
