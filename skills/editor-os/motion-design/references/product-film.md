@@ -78,11 +78,10 @@ no silence. Loudness runs -20 to -13 dBFS in the first half and -13 to -10 in th
 breaks, because a drop demands a cut. There are 2 earned lifts: 54 to 58s under the storm, and 81 to 94s
 under the closing proof and endcard. Cut the picture to the track and never change it after `beats.ts`
 exists. **A contact score**: no bed, and a click, clack or tick on every frame something makes contact (the
-snap, the press, the digit), which is what the author asked for on the Seam relaunch film (27 Oct 2026: "click
-clack sounds at the right timings, clap, clip, clop"). The clicks are the rhythm, so cues sit on a beat grid
+snap, the press, the digit). The clicks are the rhythm, so cues sit on a beat grid
 (15 frames at 120 BPM). Only a bed from the house roster (the sound library's `library.json`), never stock; it held none
 then, so that film is a contact score. One sound per contact, not per element: 14 sounds across one camera
-move rattled in the CutKit film, and a sound under another's ring (a `tick` 7 frames into `settle`) is
+move rattled in one film, and a sound under another's ring (a `tick` 7 frames into `settle`) is
 inaudible, so silence that cue. Timing and the check: `sound.md#on-the-contact-frame`.
 
 The moves that made the Seam film, as SwiftUI `(response, dampingFraction)` converted exactly to Remotion
