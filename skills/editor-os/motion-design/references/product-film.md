@@ -7,13 +7,14 @@
 [Build order](#build-order),
 [A worked build: 39 seconds and no cuts](#a-worked-build-39-seconds-and-no-cuts)
 
-A self-contained film: 30 to 120 seconds, no voice-over, no cuts, one music bed, the product the only actor.
+A self-contained film: 30 to 120 seconds, no voice-over, no cuts, the product the only actor, scored by one
+music bed or by its own contacts.
 It isn't a clip cut into a read. We measured one reference, a launch film for a table-based research product,
 95.3s at 60fps. `python3 scripts/teardown.py all <film.mp4>` reproduces every number here from any mp4
 (`cuts`, `cards`, `tempo <track>`, `palette`); run it on a film before copying its look.
 
 The rest of the skill takes its clock from the cut and says a graphic must not repeat the sentence. Here
-there's no sentence to repeat. The graphic makes the argument and the type speaks for it, while the music sets
+there's no sentence to repeat. The graphic makes the argument and the type speaks for it, while the score sets
 the clock. With the clip-cut-to-a-read playbook, a session builds 15 independent scenes and cuts them
 together, which is the failure this file prevents. The reference has no cuts in 95 seconds.
 
@@ -72,17 +73,31 @@ The type is the voice. One weight, sentence case, one line, centred, about 4% of
 tricks, no second size on screen. This contradicts `craft.md`'s labels-only rule, which protects a clip
 against a talking head. It's correct for this register and wrong for the others.
 
-The music is one bed with no stems, no drop and no silence. Loudness runs -20 to -13 dBFS in the first half
-and -13 to -10 in the second; it builds and never breaks, because a drop demands a cut. There are 2 earned
-lifts: 54 to 58s under the storm, and 81 to 94s under the closing proof and endcard. Use no sound effects.
-One per element across an uninterrupted move is a rattle (14 across one camera move rattled in the first
-cut). Cut the picture to the track, and choose the track before the first frame; never change it after
-`beats.ts` exists. `sound.md` doesn't apply.
+Pick the score before the first frame, one of two, never both. **A bed**: one track, no stems, no drop and
+no silence. Loudness runs -20 to -13 dBFS in the first half and -13 to -10 in the second; it builds and never
+breaks, because a drop demands a cut. There are 2 earned lifts: 54 to 58s under the storm, and 81 to 94s
+under the closing proof and endcard. Cut the picture to the track and never change it after `beats.ts`
+exists. **A contact score**: no bed, and a click, clack or tick on every frame something makes contact (the
+snap, the press, the digit), which is what the author asked for on the Seam relaunch film (27 Oct 2026: "click
+clack sounds at the right timings, clap, clip, clop"). The clicks are the rhythm, so cues sit on a beat grid
+(15 frames at 120 BPM). Only a bed from the house roster (the sound library's `library.json`), never stock; it held none
+then, so that film is a contact score. One sound per contact, not per element: 14 sounds across one camera
+move rattled in the CutKit film, and a sound under another's ring (a `tick` 7 frames into `settle`) is
+inaudible, so silence that cue. Timing and the check: `sound.md#on-the-contact-frame`.
+
+The moves that made the Seam film, as SwiftUI `(response, dampingFraction)` converted exactly to Remotion
+(stiffness (2π/response)², damping 4πζ/response, mass 1). Take the product's own springs for its own UI,
+since people already know that feel: open 0.32/0.88 (the one overshoot), close 0.4/1.0, resize 0.3/0.95,
+arrive 0.3/0.8, content 0.35/1.0 and 3 frames behind the shape, never bouncing. One black shape morphs
+through every state, with each state's real render revealed inside it; cutting between screenshots shows
+the states and loses the object. Film-only curves: a press 0.22/0.55 (one visible rebound reads as a key), a
+word rising into its line 0.42/0.78. The camera is a critically damped follower of each leg's target, with
+scale followed in log space and a few degrees of tilt into a fast move, so a leg cut short never jumps.
 
 ## Overrides to the rest of the skill
 
 The clock is the track's bar grid and the SRT plays no part. Rung 1 is the film (the real screen is the
-argument). Type is sentence case, set to be read. Sound is one bed. Cuts are zero. The deliverable is one film
+argument). Type is sentence case, set to be read. The score is a bed or contacts. Cuts are zero. The deliverable is one film
 whose direction is picked at the gate, with no 3 designs per beat. Unchanged: the direction gate runs first,
 real logos and screens beat abstractions, one shared motion file, every decision carries its WHY.
 
