@@ -42,15 +42,13 @@ The niche already agrees (26 Aug 2026: 627 transcripts across 13 channels). 77% 
 
 ## Reading the SERP before the subject is chosen
 
-`choosing-ideas.md` picks the subject; the SERP decides if it's worth a recording day. `yt-dlp` gives no volume and the app's `POST /api/youtube/keyword-research` is quarantined: it answered 4 different seeds with an identical volume of 140 and 7 templated ideas, and a title was chosen off it on 26 Aug 2026. A row repeating across unrelated seeds is a fallback. Decide on the SERP and say in one line that volume wasn't measured.
+`choosing-ideas.md` picks the subject; the SERP decides if it's worth a recording day. The SERP gives no volume, and the keyword report's volume is quarantined: it answered 4 different seeds with an identical 140 on 26 Aug 2026. Decide on the SERP and say in one line that volume wasn't measured. Read it onto the concept before anything is scripted, since the app refuses a script on a concept with no reading:
 
 ```bash
-yt-dlp --flat-playlist --skip-download "ytsearch20:<phrase>" --print "%(id)s" > ids.txt
-yt-dlp --skip-download --no-warnings -a ids.txt \
-  --print "%(view_count)s|%(duration)s|%(upload_date)s|%(channel)s|%(title)s"
+npx tsx scripts/youtube-serp.ts <conceptId> "<phrase>" ["<phrase>" ...]
 ```
 
-`--flat-playlist` returns `NA` for counts, hence 2 passes. Read all 4 columns: who holds the lane, how old, how the last 12 months did against them.
+Use 2 or 3 phrases a buyer types, never the product name alone. Read views, length, upload date and channel: who holds the lane, how old, how the last 12 months did against them.
 
 - Unserved query: a first page of 2-to-5-minute clips under 150 views each.
 - Stale head, the commoner case: 2 or 3 videos well clear of the rest, all a year or more old, every entrant since under a thousand. Measured 9 Sep 2026 on `airtable to google sheets`: 28,804 views on a 2:37 clip from Oct 2025 and 27,757 on a 12:06 tutorial from Dec 2022, then a tail of 927, 768, 740 down to 26.
