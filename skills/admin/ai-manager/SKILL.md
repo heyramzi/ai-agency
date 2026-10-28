@@ -39,7 +39,7 @@ how a registry doubles without improving. Clean when the shelf is the problem.
 | `critique` | one verdict per skill and agent, plus every contradiction, dead fact and gate drift the pattern scan finds, then execute | [critique.md](references/critique.md), [consistency.md](references/consistency.md) |
 | `audit` | run the gate, fix each failure at its source, re-run | above |
 | `new [name]`, `agent [name]` | a skill from a run done twice, or an agent (or the finding it's a skill) | [creation-process.md](references/creation-process.md) |
-| `heal [target]`, `log [skill]` | the 5-step loop below; one dated entry in a skill's log | [healing.md](references/healing.md) |
+| `heal [target]`, `log [skill]` | the 5-step loop below; one dated entry in a skill's log. With no target, drain the heal hooks' proposals first | [healing.md](references/healing.md#the-hooks-queue) |
 | `trigger [skill]` | a description that fires wrong or not at all | [skill-floor.md](references/skill-floor.md#triggering) |
 | `improve [skill]`, `review [target]` | run it and correct by outcome; the script, then the eight-dimension rubric | [review-rubric.md](references/review-rubric.md) |
 | `clean [folder]` | measure registry and session context, merge, delete, simplify | [cleaning.md](references/cleaning.md), [context-budget.md](references/context-budget.md) |
@@ -110,6 +110,7 @@ the 240-character law: [healing.md](references/healing.md). Node 20+, nothing in
 node scripts/heal.cjs check [paths...]         # log hygiene (exits 1 on a log past 25 entries)
 node scripts/heal.cjs log <skill> "<entry>" --apply   # dry run without --apply
 node scripts/heal.cjs fold <skill>             # entries that belong in the body now
+node scripts/heal-proposals.mjs pending        # every session's unsettled lessons, rescanned
 ```
 
 ## Before it ships
