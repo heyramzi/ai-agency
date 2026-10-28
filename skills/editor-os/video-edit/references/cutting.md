@@ -29,14 +29,14 @@ The CLI needs no AI credits, clipboard or browser.
 ```bash
 cd <the CLI directory>
 pnpm descript script <project> <comp>                 # script with cuts, speeds, cards, markers
-pnpm descript cut <project> <comp> --from "<words>" [--to "<words>"] [--in "<paragraph>"] [--nth N] --dry
+pnpm descript cut <project> <comp> --from "<words>" [--to "<words>"] [--in "<paragraph>"] [--nth N] [--dry]
 pnpm descript restore <project> <comp> "<cut words>"
 pnpm descript speed <project> <comp> 1.1 --from "<words>"
 pnpm descript verify <project>                        # open it and prove it still draws
 pnpm descript undo <project> [steps]
 ```
 
-A cut splits the paragraph; the removed half carries `isBlocked: true` (struck through, reversible), snapped to word boundaries off the alignment. `--dry` prints seconds and words and is a word-level clock the SRT lacks (use it for a clip's landings, never character interpolation).
+A cut splits the paragraph; the removed half carries `isBlocked: true` (struck through, reversible), snapped to word boundaries off the alignment. `--dry` prints seconds and words and is a word-level clock the SRT lacks (use it for a clip's landings, never character interpolation). Dry-run only when you need that clock or a target might not resolve; otherwise write and read back on a fresh dump. Each dry run reloads the whole document, and on a 69-minute project a run stalled on them (The author, 28 Oct 2026).
 
 - The needle matches case-insensitively as a SUBSTRING (`--from "So"` lands inside `also`): the `text:` each step prints is the only proof. A repeating needle is refused (`euh` in 14 paragraphs needs `--in`); `--in` narrows and stops, so `--nth` picks which (without it a filler loop converges at ~60% and looks finished). A needle can't cross a paragraph break (put `\n` where one sits), can't start with `, ` (the gate refuses "holds 1 word(s) its seconds do not": start at the space before the word), and can't cut a stub glued to its word (`G-it's`: leave it). A whole-paragraph cut needs the tau's full text, newlines included.
 - ANY editor tab open merges its copy back over your writes, and the reverted document reads healthy (42 cuts read back right and were all live on the next dump). Ask for the project closed, then prove it on a FRESH dump: `pnpm descript doc <project> --out after.json; python3 scripts/prove_cuts.py after.json needles.json` (exits 1 while a needle is live). After any `--anyway` write, recount the struck spans.
@@ -109,7 +109,7 @@ Don't cut: anything cueing what's on screen ("here we're in the Delivery space")
 OUTPUT: a JSON array only, elements `[<paragraph index as string>, "<exact text to remove>"]`. The text must be a VERBATIM substring of that paragraph, character for character, including the comma that belongs to the cut and the trailing space between 2 words; never ` ⏎ ` in a needle (split across the newline); never a needle appearing twice in its paragraph; 15 to 30 entries per 200 paragraphs. A marginal cut is a wrong cut.
 ```
 
-**Judging what comes back:** resolve every needle against the live document; drop (never guess-repair) one resolving to zero or 2 paragraphs; read each against the don't-cut list (a clause may cue a shot 3 paragraphs later). Strip a leading `, `. A chunk is one `pnpm descript edits` batch applied back to front, with `--dry` first.
+**Judging what comes back:** resolve every needle against the live document; drop (never guess-repair) one resolving to zero or 2 paragraphs; read each against the don't-cut list (a clause may cue a shot 3 paragraphs later). Strip a leading `, `. A chunk is one `pnpm descript edits` batch applied back to front.
 
 ### The ratio says whether the list is long enough
 
