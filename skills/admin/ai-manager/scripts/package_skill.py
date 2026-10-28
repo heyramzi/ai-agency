@@ -10,10 +10,25 @@ Example:
     python utils/package_skill.py skills/public/my-skill ./dist
 """
 
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
-from quick_validate import validate_skill
+
+# The registry's own gates judge the skill, so packaging can't pass one they refuse.
+VIBE_KIT = Path(__file__).resolve().parents[6]
+CHECKS = [
+    ["python3", "ai-doc/scripts/check-descriptions.py", "ai-doc", "--files"],
+    ["node", "scripts/validate-architecture.mjs", "--files"],
+]
+
+
+def validate_skill(skill_md):
+    for check in CHECKS:
+        run = subprocess.run([*check, str(skill_md)], cwd=VIBE_KIT, capture_output=True, text=True)
+        if run.returncode != 0:
+            return False, (run.stdout + run.stderr).strip()
+    return True, "Skill passes check-descriptions and validate-architecture"
 
 
 def package_skill(skill_path, output_dir=None):
@@ -46,7 +61,7 @@ def package_skill(skill_path, output_dir=None):
 
     # Run validation before packaging
     print("🔍 Validating skill...")
-    valid, message = validate_skill(skill_path)
+    valid, message = validate_skill(skill_md)
     if not valid:
         print(f"❌ Validation failed: {message}")
         print("   Please fix the validation errors before packaging.")

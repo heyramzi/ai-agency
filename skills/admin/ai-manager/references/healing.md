@@ -70,10 +70,10 @@ from one scheduled job sat in that folder with nothing reading it (28 Oct 2026).
 - A learning repeated in 3 or more files becomes one rule, and the copies become pointers.
 - An entry that hardened into how the body describes the work is folded into the body and deleted
   from the log. `fold` lists candidates but doesn't rewrite prose.
-- Past 25 entries a log in `SKILL.md` is a second body: fold, don't raise the number. Once in
-  `references/` the character count is the measure (130 one-line rules beat 25 paragraphs).
+- Past `logMaxEntries` (`ai-doc/limits.json`) a log is a second body wherever it sits: fold,
+  don't raise the number. `audit` fails it.
 - There is no `learned-patterns-archive.md`. 15 of them reached 5,296 lines holding 67
-  rules never folded anywhere; `review_skill.py` errors on one.
+  rules never folded anywhere; `audit` fails one.
 
 ## Over the ceiling: restructure, don't shave
 

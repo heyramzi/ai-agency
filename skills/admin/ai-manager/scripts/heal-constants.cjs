@@ -33,15 +33,12 @@ const MONTHS = "jan feb mar apr may jun jul aug sep oct nov dec".split(" ");
 const ENTRY_UNDATED = /^-\s+(.+)$/;
 
 /**
- * That is the signal to fold the hardened ones into the prose, not to raise the number.
+ * A full log is the signal to fold entries into the prose; a long entry is a run's story, which belongs in git.
  */
-const LOG_ENTRIES_MAX = 25;
-
-/**
- * Past this many characters an entry has stopped being a rule and started being the story of the run
- * that found it, which belongs in git.
- */
-const ENTRY_CHARS_MAX = 240;
+const {
+  logMaxEntries: LOG_ENTRIES_MAX,
+  logEntryMaxChars: ENTRY_CHARS_MAX,
+} = require("#ai-doc/limits.json");
 
 /** Entries a log needs before "no replayable ask anywhere" reads as a dropped convention. */
 const ASK_COVERAGE_FLOOR = 5;

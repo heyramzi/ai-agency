@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Audits a parsed skill against the log rules: what is missing, what to warn about, what is stale.
+ * Audits a parsed skill against the log rules: what fails, what to warn about, what is stale.
  */
 
 const {
@@ -13,23 +13,20 @@ const {
 const { daysBetween } = require("#ai-doc/skills/admin/kit/ai-manager/scripts/heal-parse.cjs");
 
 /**
- * Every CLAUDE.md already makes a session log its lessons, so a skill needs no scaffold
- * (4 Oct 2026). Its log stays short: over 25 entries is sediment.
+ * A skill keeps a log only while it holds real entries: under the cap, last in the file, never
+ * empty. The rules: ai-manager's SKILL.md, "The failure log".
  */
-const ENTRIES_MAX = 25;
-
 function audit(skill, now) {
-  const missing = [];
-  if (skill.hasLog && skill.entries.length > ENTRIES_MAX)
-    missing.push(`over ${ENTRIES_MAX} entries, fold them`);
+  const errors = [];
+  if (skill.hasLog && skill.entries.length > LOG_ENTRIES_MAX)
+    errors.push(`over ${LOG_ENTRIES_MAX} entries, fold them`);
+  // A log pointed at from prose, with no heading, has no position to get wrong.
+  if (/\n##\s+learned\s+patterns\s*$/im.test(skill.text) && !skill.logIsLast)
+    errors.push("Learned Patterns is not the last section, so appends land mid-document");
+  if (skill.hasLog && skill.entries.length === 0)
+    errors.push("Learned Patterns is empty; delete the section until there is a real entry");
 
   const warnings = [];
-  if (skill.hasLog && !skill.logIsLast) {
-    warnings.push("Learned Patterns is not the last section, so appends land mid-document.");
-  }
-  if (skill.hasLog && skill.entries.length === 0) {
-    warnings.push("Learned Patterns is empty. Seed it from the run that motivated the skill.");
-  }
   // A log of one-line rules can hold 128 entries and still be 130 lines, and warning on the count
   // there tells a maintainer to undo the fix.
   const meanChars =
@@ -67,7 +64,7 @@ function audit(skill, now) {
   const unordered = dated.some((e, i) => i > 0 && e.date > dated[i - 1].date);
   if (unordered) warnings.push("Entries are not newest first.");
 
-  return { missing, warnings, stale };
+  return { errors, warnings, stale };
 }
 
 module.exports = { audit };

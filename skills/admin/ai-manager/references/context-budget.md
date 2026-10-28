@@ -12,8 +12,8 @@
 
 | Level | Loaded | Price | Budget |
 | --- | --- | --- | --- |
-| `name` + `description` | every session, before anything is asked | about 100 tokens per asset | 240 chars |
-| `SKILL.md` body | when the skill fires, then stays for the session | under 5k tokens | 200 lines gated, aim 120 |
+| `name` + `description` | every session, before anything is asked | about 100 tokens per asset | `descriptionMaxChars` in `ai-doc/limits.json` |
+| `SKILL.md` body | when the skill fires, then stays for the session | under 5k tokens | `fileMaxLines` gated, aim 120 |
 | `references/`, `scripts/` | when read or run | zero until touched; a script costs only its output | none |
 
 Metadata is the only line item every session pays: cutting one description by 300 chars beats

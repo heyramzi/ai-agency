@@ -28,9 +28,9 @@ carries. Write it for another session: imperative, verb first, the reason in the
 the rule. Then read it back against [skill-floor.md](skill-floor.md).
 
 5. Package only for a skill leaving this workspace: `scripts/package_skill.py <skill-folder>
-[./dist]` validates frontmatter, naming and structure and zips it; a failure stops the package.
+[./dist]` runs `check-descriptions.py` and `validate-architecture.mjs` on it and zips it; a failure stops the package.
 
-Done when `review_skill.py` has no errors and the floor's checks have answers.
+Done when `audit` passes and the floor's checks have answers.
 
 ## The 4 kinds
 
