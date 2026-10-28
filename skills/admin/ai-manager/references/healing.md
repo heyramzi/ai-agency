@@ -53,6 +53,17 @@ skill. A log is `## Learned Patterns`, last in the file, seeded with real entrie
 (an empty log teaches the reader to skip the section). Past a handful it moves to
 `references/learned-patterns.md`, and the body keeps a one-line pointer.
 
+## The hooks' queue
+
+`heal-stop` blocks a session's stop on its lessons, and `heal-end` writes what the session left
+unsettled to `~/.claude/heal/proposals/`, from every repo. A session settles a signal by saying
+`healed [id]: <path>` after the fix, or `not a lesson [id]: <why>`. An unnamed edit only settles
+the signals of the skill or agent it lands in. `node scripts/heal-proposals.mjs pending` rescans each
+pending proposal with today's scanner, closes the ones that come back empty (noise a filter has
+since learned), and lists the rest. Settle each down the ladder, then
+`heal-proposals.mjs close <file> healed|dismissed <why>`. 9 days of `Command "skool" not found`
+from one scheduled job sat in that folder with nothing reading it (28 Oct 2026).
+
 ## Healing without bloat
 
 - An edit leaves the file no longer than it found it, unless the case is really new.
