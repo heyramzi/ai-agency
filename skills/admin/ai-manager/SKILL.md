@@ -18,7 +18,7 @@ asked for in passing (4 Oct 2026): source in `vibe-kit/ai-doc`, log, audit.
 ## The architecture, and the gate that holds it
 
 A skill is found by its description; every session sees all of them and there's no router agent.
-An agent's `skills:` line is what it preloads whole at spawn, 1 to 3 core skills. Any other skill
+An agent's `skills:` line is what it preloads whole at spawn, its few core skills. Any other skill
 its body names, it calls through the Skill tool when it needs it. Preloading every named skill
 is what gave `frontend-designer` 8 skills and 14.8k tokens at spawn. With nothing to preload, it's a
 persona: give it a skill or delete it.
@@ -37,7 +37,7 @@ how a registry doubles without improving. Clean when the shelf is the problem.
 | Command | Does | Open |
 |---|---|---|
 | `critique` | one verdict per skill and agent, plus every contradiction, dead fact and gate drift the pattern scan finds, then execute | [critique.md](references/critique.md), [consistency.md](references/consistency.md) |
-| `audit` | run the gate, fix each failure at its source, re-run | above |
+| `audit` | run `vibekit doctor`, fix each failure at its source, re-run | above |
 | `new [name]`, `agent [name]` | a skill from a run done twice, or an agent (or the finding it's a skill) | [creation-process.md](references/creation-process.md) |
 | `heal [target]`, `log [skill]` | the 5-step loop below; one dated entry in a skill's log. With no target, drain the heal hooks' proposals first | [healing.md](references/healing.md#the-hooks-queue) |
 | `trigger [skill]` | a description that fires wrong or not at all | [skill-floor.md](references/skill-floor.md#triggering) |
@@ -66,7 +66,7 @@ Write the scripts, references and assets first, since they decide what the body 
 (`scripts/init_skill.py <name> --path <dir>`). A Judgment skill writes its eval before the body.
 The body is last, a router, in the directory that names the slash command.
 
-Done when `review_skill.py` has no errors and every floor check has an answer.
+Done when `audit` passes and every floor check has an answer.
 
 ## Repairing
 
@@ -86,59 +86,39 @@ restructure it and don't shave ([healing.md](references/healing.md)).
 
 ## Cleaning
 
-Start with the whole machine, because one folder looks clean while the panel lists 320 skills
-for a 60-skill source (7 Oct 2026):
-
-```bash
-cd ~/vibe-kit/CLIs && pnpm --silent vibekit doctor   # copies, orphans, dead trees, sessionVisible
-python3 scripts/context_cost.py <folder>    # counts, metadata cost, every violation
-python3 scripts/dead_pointers.py <folder>   # routes into assets that no longer exist
-```
-
-Then the descriptions pass widest first, agent triage, a merge of every overlapping pair, and a
-simplification pass. Done when the registry is smaller or equal and metadata is reported before
-and after.
+Start with `audit` over the whole machine, because one folder looks clean while the panel lists
+320 skills for a 60-skill source (7 Oct 2026). Its `contextCost`, `families` and `findings` are the
+worklist. Then the descriptions pass widest first, agent triage, a merge of every overlapping pair,
+and a simplification pass. Done when the registry is smaller or equal and `contextCost` is
+reported before and after.
 
 ## The failure log
 
 No skill needs a scaffold: the standing self-healing rule already tells every session to heal.
 A lesson goes into the body as the fix. A skill keeps a `## Learned Patterns` log only when it
-has real entries the body can't hold yet: last in the file, newest first, never empty. Format and
-the 240-character law: [healing.md](references/healing.md). Node 20+, nothing installed:
-
-```bash
-node scripts/heal.cjs check [paths...]         # log hygiene (exits 1 on a log past 25 entries)
-node scripts/heal.cjs log <skill> "<entry>" --apply   # dry run without --apply
-node scripts/heal.cjs fold <skill>             # entries that belong in the body now
-node scripts/heal-proposals.mjs pending        # every session's unsettled lessons, rescanned
-```
+has real entries the body can't hold yet: last in the file, newest first, never empty, and
+`audit` fails it otherwise. Format and entry length: [healing.md](references/healing.md). Append
+with `node scripts/heal.cjs log <skill> "<entry>" --apply`, see what has hardened with `fold`, and
+drain other sessions' lessons with `node scripts/heal-proposals.mjs pending`.
 
 ## Before it ships
 
-Mechanical, free: `scripts/review_skill.py` checks frontmatter, name, description, body size,
-dead links, unreachable references and scripts an agent can't drive; exits 1 on an error.
-Judgment: the rubric in [review-rubric.md](references/review-rubric.md), when a skill is about
-to ship or fires wrong. Then retest it in a cold session: a reread passes what a cold run breaks.
-
-
+Mechanical: `audit`. Judgment: the rubric in [review-rubric.md](references/review-rubric.md), when
+a skill is about to ship or fires wrong. Then retest it in a cold session: a reread passes what a
+cold run breaks.
 ## Closing a run
 
-Every run, not only `clean`, ends with `pnpm --silent vibekit doctor` from `CLIs/`. Any finding,
-or `sessionVisible` above twice `sourceSkills`, goes in your report as a line offering a `clean`.
-Nothing else would ever tell the author the shelf has grown.
-
-If this run surfaced a failure mode not already listed, log it before finishing:
-`node scripts/heal.cjs log . "what was assumed, what to do instead" --apply`.
+Every run, not only `clean`, ends with `audit`. A failure is fixed before you stop; a finding or a
+warning goes in your report as a line offering a `clean`. Nothing else would ever tell the author the
+shelf has grown. Log a failure mode this run surfaced with `heal.cjs log`.
 
 ## Verification
 
 - [ ] Nothing existing covered 70% of it, and the search was run
 - [ ] A repair deleted what the learning contradicts
-- [ ] A clean reduced metadata, and `dead_pointers.py` reports none
-- [ ] The floor's checks all have answers, and a standard-setting skill ships its eval
-- [ ] `review_skill.py` has no errors, and a cleared-session retest ran
-- [ ] `audit` passes and the sync ran after it
-- [ ] `vibekit doctor` ran and its findings are in the report
+- [ ] A clean reduced `contextCost`, and the floor's checks all have answers
+- [ ] A standard-setting skill ships its eval, and a cleared-session retest ran
+- [ ] `audit` exits 0, its findings are in the report, and the sync ran after it
 - [ ] New failure modes appended to Learned Patterns
 
 ## Learned Patterns

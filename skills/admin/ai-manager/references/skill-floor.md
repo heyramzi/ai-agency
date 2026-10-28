@@ -1,8 +1,8 @@
 # Skill floor
 
 Load once the shape is settled, right before writing a `SKILL.md`, an agent or a rewrite. It
-carries the bar, the shapes to refuse and the reflexes no script catches. `scripts/review_skill.py
-<dir>` settles the mechanical half; act on its findings and use this for what it can't see.
+carries the bar, the shapes to refuse and the reflexes no script catches. The `audit` command
+settles the mechanical half; act on its findings and use this for what it can't see.
 
 ## Verify
 
@@ -36,8 +36,8 @@ edit that will.
 - Boundaries. It names what it doesn't own and which skill does, by name and never by path: a
   path that resolves in `ai-doc/` breaks in every flattened `.claude/skills/` projection.
 - Handoff. The last line says where the work goes next, or that it's done.
-- Frontmatter. `name` equals the directory; `description` under 240 characters, no angle
-  brackets; `allowed-tools` only where it removes a prompt hit every run;
+- Frontmatter. `name` equals the directory and `description` passes `audit`;
+  `allowed-tools` only where it removes a prompt hit every run;
   `disable-model-invocation: true` on anything only ever typed.
 - Self-healing. A `## Learned Patterns` log, if there is one, is last, newest first and seeded
   with real entries (`heal.cjs check <dir>`).

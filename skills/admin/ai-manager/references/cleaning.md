@@ -25,30 +25,27 @@ is the kit's layout; anything shallower is a stray to file into a family. Follow
 
 ## Budgets
 
-Over budget makes the matching pass mandatory. A corpus a skill reads from (a transcript set) keeps
-its size and trips the warning; say so in the pointer.
+Over budget makes the matching pass mandatory. A gated budget is a key in `ai-doc/limits.json`. A
+corpus a skill reads from (a transcript set) keeps its size and trips the warning; say so in the pointer.
 
 | Scope | Budget | Over budget |
 | --- | --- | --- |
-| `description` per asset | 240 chars (gated) | cut to what plus when |
+| `description` per asset | `descriptionMaxChars` (gated) | cut to what plus when |
 | Registry metadata | about 100 tokens per asset | descriptions pass, widest first |
-| Any `.md` in a skill, or an agent body | 200 lines (gated) | cut what the model knows, split by reader |
-| `.md` files per skill | 25 (gated) | merge or delete; one file per topic beats one big read |
+| Any `.md` in a skill, or an agent body | `fileMaxLines` (gated) | cut what the model knows, split by reader |
+| `.md` files per skill | `skillMaxFiles` (gated) | merge or delete; one file per topic beats one big read |
 | Agents per category / total | 8 / 60 | merge or delete; agent triage |
 | Skills per package | 12 | merge, or sub-package (distinct tools stay apart: Make, n8n and ClickUp) |
-| Learned Patterns log | 0 in the body, 25 in `references/` | simplification, class 1 |
+| Learned Patterns log | 0 in the body, `logMaxEntries` in `references/` (gated) | simplification, class 1 |
 | A block repeated across siblings | 3 copies | simplification, class 2 |
 | CLAUDE.md / any memory file | ~500 lines / 0 files | extract to skills; fold a memory's rule into its owner, then delete it |
 
 ## The flow
 
-1. Measure the machine, then the folder. `pnpm --silent vibekit doctor` (from `CLIs/`) finds
-   copies, orphans whose source was deleted, and dead worktrees, which a folder pass can't see.
-   `python3 scripts/context_cost.py <folder>` prints counts, always-loaded metadata,
-   the widest descriptions, the longest bodies and every violation. Work from that list.
-2. Fix hard violations (missing frontmatter, duplicate names, broken links, illegal names),
-   then `python3 scripts/dead_pointers.py <folder>`: a deleted asset leaves every prose route to it
-   silent.
+1. Measure with `pnpm --silent vibekit doctor` from `CLIs/`: copies, orphans and dead worktrees a
+   folder pass can't see, plus `contextCost` (metadata, duplicated blocks, floor warnings).
+2. Fix every gate it fails: broken links, dead pointers, duplicate names, illegal names. A
+   deleted asset leaves every prose route to it silent until then.
 3. Descriptions pass, widest first, the one edit that pays in every session
    ([context-budget.md](context-budget.md#cutting-a-description)).
 4. Triage agents and **merge overlapping skills** ([critique.md](critique.md#doing-the-merge)).
@@ -56,7 +53,7 @@ its size and trips the warning; say so in the pointer.
    (merge unless a written reason survives), over 70% redundant, but read both bodies first. The
    tell is an identical opening paragraph or siblings that each say which other to use.
 5. Simplification pass on every skill the measurement named, merged or not.
-6. Bodies pass. For a file still over 200 lines, delete what the model knows, then move whole
+6. Bodies pass. For a file still over `fileMaxLines`, delete what the model knows, then move whole
    sections with `python3 scripts/split_section.py <SKILL.md> --sections "<heading>" --into
    references/<name>.md --title "<H1>" --pointer "<one line>"`. Judge it in bytes: a split or
    joined lines pass the gate and cut nothing. A worker once passed by joining wrapped lines
@@ -69,10 +66,10 @@ its size and trips the warning; say so in the pointer.
 ## Simplification pass
 
 This asks what's inside the skills that should exist; it gets skipped because a bloated skill
-looks fine. Read [skill-floor.md](skill-floor.md) and run `review_skill.py` first. 5 classes, in payback order:
+looks fine. Read [skill-floor.md](skill-floor.md) and run `audit` first. 5 classes, in payback order:
 
 1. A failure log that became a second body. Never in `SKILL.md`: move with `split_section.py`.
-   Past 25 entries compress each to its rule: `python3 scripts/compress_log.py <skill-dir> --dry`
+   Past `logMaxEntries` compress each to its rule: `python3 scripts/compress_log.py <skill-dir> --dry`
    (drop `--dry` to apply), after committing, since git keeps the run.
 2. A block copied into siblings. Consolidate into a file every reader already loads: 27
    transition references restated the same two notes (12 KB) that `SKILL.md` already said, so
@@ -156,10 +153,9 @@ on the company page when that agent goes (5 Oct 2026). List those skills first. 
 
 ## Verification
 
-- [ ] `context_cost.py` shows no hard violations, and every agent filename equals its `name:`
-- [ ] `dead_pointers.py` reports none
+- [ ] `vibekit doctor` exits 0
 - [ ] Metadata reported before and after, and it went down; every count at budget or an approved exception
-- [ ] No `SKILL.md` carries log entries, no log is past 25, no `learned-patterns-archive.md` survives, and every compressed log was committed first
+- [ ] No `SKILL.md` carries log entries, and every compressed log was committed first
 - [ ] `duplicated blocks` went down, or each survivor has a reader with no parent to hop to
-- [ ] No banned words (`packages/lint/data/slop-words.js`); `review_skill.py` has no new findings
+- [ ] No banned words (`packages/lint/data/slop-words.js`); `contextCost` has no new warnings
 - [ ] Consumers re-synced (`pnpm vibekit sync <dir>`), no broken symlinks

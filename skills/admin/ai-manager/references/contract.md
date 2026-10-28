@@ -95,7 +95,7 @@ holds the refresh procedure.
 
 ## A copy in a consumer's `.claude/skills/` is invisible rot
 
-`vibekit sync` projects symlinks and `--prune-legacy` sweeps only the folders a manifest
+`vibekit sync` projects symlinks and `--prune-stray` sweeps only the folders a manifest
 subscribes to, so a hand-copied pack sits forever beside the live one (`adapt` appeared nine
 times). **`pnpm vibekit doctor`**, from `CLIs/`, finds real skill directories in every repo:
 `plugin-shadow`, `cross-repo-copy` (3+ repos, no vibe-kit source) and `double-projection`. `--fix`
@@ -130,8 +130,8 @@ family; four sessions each spent 3 to 5 calls on this).
   (`bash scripts/install-hooks.sh` installs it; log `~/.cache/vibekit-sync.log`). By hand, from
   `CLIs/`: `pnpm vibekit sync <project-dir>`, where a relative path resolves against `CLIs/`. A
   folder subscription (`"marketing"`) pulls it recursively.
-- The shared core in every `AGENTS.md`/`CLAUDE.md`: edit `ai-doc/references/agents-core.md`, then
-  `node ai-doc/scripts/sync-agents-core.cjs`.
+- The shared core in every `AGENTS.md`/`CLAUDE.md`: edit `ai-doc/references/agents-core.md`. The
+  `post-commit` sync stamps it; `node ai-doc/scripts/sync-agents-core.cjs` does it now.
 - Call `claude <subcommand>` as `env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u
   CLAUDE_CODE_CHILD_SESSION claude plugin install <name>@<marketplace> --scope user`: `CLAUDECODE=1`
   forces `--print` and swallows the subcommand. A new plugin isn't visible until restart.
@@ -150,15 +150,14 @@ written into only one is the bug, so read a line-count gap before assuming the s
 | --- | --- | --- |
 | `scripts/validate-architecture.mjs [--files ...]` | every frontmatter block against the sync's YAML parser, each agent's `skills:` against the skills that exist and the cap of 3 preloads, every Studio `vibekit.json` id | a block the sync can't read, or an agent that preloads a missing skill or more than 3 |
 | `ai-doc/scripts/check-agent-readme.py [--fix]` | the table and count in `agents/README.md` | drift in membership or row text |
-| `ai-doc/scripts/check-descriptions.py [--files ...]` | descriptions: a `Use when` trigger, the 240-char ceiling, no em dash or banned word from `packages/lint/data/slop-words.js`, an explicit non-Opus `model:` on an agent | a description the registry can't route on |
+| `ai-doc/scripts/check-descriptions.py [--files ...]` | descriptions: a `Use when` trigger, the 240-char ceiling, no em dash or banned word from `packages/lint/data/slop-words.js`, an explicit non-Opus `model:` on an agent (except the script's `OPUS_AGENTS`) | a description the registry can't route on |
 | `heyramzi-slop --only=dash` (`pnpm check:slop-corpus` for the whole corpus) | em and en dashes in pushed `ai-doc` markdown and every `AGENTS.md`, `CLAUDE.md` and `CODING_STANDARDS.md`; the pre-push hook runs it. Only dashes, because internal markdown may carry other slop (The author, 6 Oct 2026) | a dash anywhere in a pushed file |
 | `ai-doc/scripts/publish-public.mjs [--check]` | the manifest's skills into public `heyramzi/ai-agency`, plus the `FROZEN` set | a stale copy, a public skill with no source, a name, id, private path or monorepo-only command surviving the scrub |
 | `clickup-utils/scripts/skills.mjs check` | the ClickUp skills `clickup-utils` ships in its agent kit and pack, and the symlinks giving vibe-kit one copy | a broken link or the leak list |
 | `skills/content/social/social/scripts/linkedin-scripts/copy-score.py --check --corpus <posts.json>` | the copy scorer against its corpus | the score no longer separating each creator's best posts from worst |
 
-The description contract is also gated at write time: `ai-doc/hooks/extensions/description-gate.sh`
-runs on `Write|Edit` and refuses a skill or agent whose description breaks it, or a consumer copy
-shadowing an asset vibe-kit owns. It was added on 30 Aug 2026 after 37 descriptions had broken a
-contract written in three files and checked in none. The row-text half of the readme check came
+The description contract is also gated at commit: the pre-commit hook runs `check-descriptions.py`
+on staged skills and agents. 37 descriptions had broken a contract written in three files and
+checked in none (30 Aug 2026). The row-text half of the readme check came
 after it reported "in sync" while eight leads restated months-old descriptions: a reconciler that
 compares only names is wrong in the one way nobody checks.

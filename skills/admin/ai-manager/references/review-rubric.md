@@ -1,6 +1,6 @@
 # Review rubric
 
-The judgment half of a review. Run `scripts/review_skill.py <dir>` first; it settles frontmatter,
+The judgment half of a review. Run `audit` first; it settles frontmatter,
 body size, dead links, unreachable references and script ergonomics. [skill-floor.md](skill-floor.md)
 is the same bar as instructions for writing; this scores a finished skill. It's adapted from the
 MIT-licensed rubric in `agentskill-sh/ags`, cut to what a script can't check, plus D6 to D8.

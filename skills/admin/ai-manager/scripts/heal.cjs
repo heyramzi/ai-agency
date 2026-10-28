@@ -2,8 +2,8 @@
 "use strict";
 
 /**
- * This checks that the log scaffold is present, retrofits it where it is not, and appends entries
- * without letting the log grow into a second body.
+ * Checks each skill's failure log against the log rules, and appends entries without letting the
+ * log grow into a second body.
  */
 
 const { writeFileSync, existsSync } = require("node:fs");
@@ -23,27 +23,25 @@ const {
 } = require("#ai-doc/skills/admin/kit/ai-manager/scripts/heal-parse.cjs");
 const { audit } = require("#ai-doc/skills/admin/kit/ai-manager/scripts/heal-audit.cjs");
 const {
-  retrofit,
   sameEntry,
   appendEntry,
 } = require("#ai-doc/skills/admin/kit/ai-manager/scripts/heal-write.cjs");
 
 const USAGE = `heal.cjs: keep the failure log inside a skill honest
 
-  heal.cjs check [paths...]              Which skills carry the scaffold, which do not
-  heal.cjs retrofit <skill> [--apply]    Add the missing parts of the scaffold
+  heal.cjs check [paths...]              Which skills break the log rules
   heal.cjs log <skill> <entry> [--apply] Append a dated entry, newest first
   heal.cjs fold <skill>                  Entries old enough to belong in the body
 
 Options
-  --apply       Write the change (retrofit and log are dry runs by default)
+  --apply       Write the change (log is a dry run by default)
   --date <ymd>  Date for a logged entry (default: today, local time)
-  --long        Log an entry over 240 characters anyway
+  --long        Log an entry over ${ENTRY_CHARS_MAX} characters anyway
   --json        Machine-readable output
-  --quiet       Only skills missing something
+  --quiet       Only skills with a finding
 
-With no paths, check scans ./skills and ./.claude/skills. Exits 1 when a skill
-is missing the scaffold.`;
+With no paths, check scans ./skills and ./.claude/skills. Exits 1 when a log
+breaks a rule: over the entry cap, empty, or not the last section.`;
 
 function main(argv) {
   const flags = { apply: false, json: false, quiet: false, date: null, long: false };
@@ -87,51 +85,26 @@ function main(argv) {
 
     const results = files.map((file) => {
       const skill = read(file);
-      const { missing, warnings } = audit(skill, now);
-      return { name: skill.name, path: file, entries: skill.entries.length, missing, warnings };
+      const { errors, warnings } = audit(skill, now);
+      return { name: skill.name, path: file, entries: skill.entries.length, errors, warnings };
     });
 
     if (flags.json) {
       process.stdout.write(`${JSON.stringify({ checked: results.length, results }, null, 2)}\n`);
     } else {
       const shown = flags.quiet
-        ? results.filter((r) => r.missing.length > 0 || r.warnings.length > 0)
+        ? results.filter((r) => r.errors.length > 0 || r.warnings.length > 0)
         : results;
-      const healing = results.filter((r) => r.missing.length === 0).length;
-      process.stdout.write(`${healing}/${results.length} skills carry the failure log\n\n`);
+      const passing = results.filter((r) => r.errors.length === 0).length;
+      process.stdout.write(`${passing}/${results.length} skills pass the log rules\n\n`);
       for (const r of shown) {
-        const mark = r.missing.length === 0 ? "ok  " : "miss";
-        const detail = r.missing.length === 0 ? `${r.entries} entries` : r.missing.join(", ");
+        const mark = r.errors.length === 0 ? "ok  " : "fail";
+        const detail = r.errors.length === 0 ? `${r.entries} entries` : r.errors.join(", ");
         process.stdout.write(`  ${mark}  ${r.name}  ${detail}\n`);
         for (const w of r.warnings) process.stdout.write(`        ${w}\n`);
       }
-      const broken = results.filter((r) => r.missing.length > 0);
-      if (broken.length > 0) {
-        process.stdout.write(`\nRetrofit one with \`heal.cjs retrofit <skill> --apply\`.\n`);
-      }
     }
-    return results.some((r) => r.missing.length > 0) ? 1 : 0;
-  }
-
-  if (command === "retrofit") {
-    const [target] = rest;
-    if (!target) {
-      process.stderr.write("retrofit needs a skill directory or SKILL.md\n");
-      return 2;
-    }
-    const file = skillFile(target);
-    const skill = read(file);
-    const { missing } = audit(skill, now);
-    if (missing.length === 0) {
-      process.stdout.write(`${skill.name} already carries all four parts.\n`);
-      return 0;
-    }
-    const next = retrofit(skill, missing, now);
-    if (flags.apply) writeFileSync(file, next);
-    const prefix = flags.apply ? "added" : "would add";
-    process.stdout.write(`${prefix} to ${short(file)}: ${missing.join(", ")}\n`);
-    if (!flags.apply) process.stdout.write("\nRe-run with --apply to write it.\n");
-    return 0;
+    return results.some((r) => r.errors.length > 0) ? 1 : 0;
   }
 
   if (command === "log") {
@@ -216,4 +189,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { read, audit, retrofit, appendEntry, parseEntries, discover, daysBetween };
+module.exports = { read, audit, appendEntry, parseEntries, discover, daysBetween };

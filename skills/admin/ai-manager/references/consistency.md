@@ -21,9 +21,9 @@ Audit the source, never a projection: `ai-doc/skills/`, `ai-doc/agents/`, `ai-do
 
 | Pattern | Signal | Wrong when | Fix |
 | --- | --- | --- | --- |
-| Prose against its gate | `numbers`, then the gate's constant | A number in prose differs from what the gate enforces: `contract.md` and `skill-floor.md` said a skill holds at most 10 `.md` files while `check-skill-length.mjs` sets `MAX_FILES = 25` | `rewrite` the prose to the gate. The gate runs; the sentence doesn't |
+| Prose against its gate | `numbers`, then `ai-doc/limits.json` | A number in prose differs from what the gate enforces: `contract.md` and `skill-floor.md` said a skill holds at most 10 `.md` files while the gate allowed 25 | `rewrite` the prose to name the limit, never restate it. The gate runs; the sentence doesn't |
 | Two rulings on one point | `rg -n "<the command or noun>" ai-doc ~/*/AGENTS.md` | Two files say opposite things: `contract.md` said `pnpm vibekit sync <dir>` drops the path, 4 other places said to use it, and `pnpm --silent vibekit verify <dir>` read the path fine | `rewrite` the side the repo contradicts, else the older side by `git blame`, else `flag` |
-| Dead fact | `python3 scripts/dead_pointers.py` for asset names; file-manager's `tree_scan.py <dir> --only=refs --also=<sibling repo>` for paths | Prose names a script, path or asset that's gone: `cleaning.md` sent you to `check-lead-tables.py` (deleted 9 Sep 2026) for twelve `-lead` agents that no longer exist | `rewrite` to what replaced it, or `remove` the line |
+| Dead fact | `audit` for asset names; file-manager's `tree_scan.py <dir> --only=refs --also=<sibling repo>` for paths | Prose names a script, path or asset that's gone: `cleaning.md` sent you to `check-lead-tables.py` (deleted 9 Sep 2026) for twelve `-lead` agents that no longer exist | `rewrite` to what replaced it, or `remove` the line |
 | Trigger overlap | sort the names, read neighbours, compare descriptions | Two descriptions both half-match one prompt | `merge` or disambiguate: [critique.md](critique.md#merge-or-disambiguate) |
 | Rule a regex could hold | a ban written as a list of literal strings | Prose bans a string no gate checks | `move` it into `packages/lint`, then `remove` the prose ([contract.md](contract.md#a-skill-is-the-third-best-fix)) |
 | A copy of a fact with a home | identical opening paragraphs; one table header in 2 files; a list restating a directory or a `--help` | A copy restates a CLI, the disk or another skill's step | `remove` the copy and point at the home |
@@ -80,4 +80,4 @@ sessions.
 4. Apply the High and Medium findings: this skill executes its verdicts. Each edit goes through
    the repair loop in `SKILL.md`, so a contradiction gets its losing side deleted, not a third
    sentence added.
-5. `review_skill.py`, `audit` and the sync, as for any edit.
+5. `audit` and the sync, as for any edit.
