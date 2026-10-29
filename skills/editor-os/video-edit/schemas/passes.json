@@ -28,7 +28,7 @@
     "proves": {
       "descript": "Coach BEFORE the cut, pass 1 deterministic, pass 2 a dispatched read, proven on a fresh dump",
       "local": "`cut short` wrote the first cut: dead air, fillers and retakes out, each repeated line keeping its last whole take; the transcript was read and fixed (`editor-os transcript <name> --reviewed`); `cut check` reads clean",
-      "tella": "Dead air, fillers and retakes dropped in edit.json from the pulled words; the transcript was read and fixed (`editor-os transcript <name> --reviewed`)"
+      "tella": "Pass 1 read the pulled words (`candidates.py <project>/edit.json`, then `restate.py` for pass 2) and every candidate is an `editor-os drop <name> <from-to> ...` or a one-word dismissal: `candidates.py <project>/edit.json --check` reads 0 uncovered and `editor-os cutcheck <name>` (the word check, no render) reads PASS. The transcript was read and fixed (`editor-os transcript <name> --reviewed`)"
     },
     "commands": {
       "descript": [
@@ -42,7 +42,13 @@
         "descript edits"
       ],
       "local": ["cut short", "editor-os transcript", "cut check"],
-      "tella": ["editor-os transcript"]
+      "tella": [
+        "candidates.py",
+        "restate.py",
+        "editor-os drop",
+        "editor-os cutcheck",
+        "editor-os transcript"
+      ]
     }
   },
   {

@@ -24,12 +24,18 @@ Usage:
     # the re-run on a finished cut: live taus only
     python3 candidates.py doc.json --live
 
+    # a Tella project: its edit.json, each candidate with the span `editor-os drop` takes, and the
+    # long pauses; --check with no needles reads what edit.json already drops
+    python3 candidates.py <project>/edit.json
+    python3 candidates.py <project>/edit.json --check
+
 Exit status is 1 when --check finds an uncovered candidate.
 """
 import json
 import re
 import sys
 
+import editwords
 import schema
 
 WINDOW = 400        # a restart lands within this many characters of its attempt
@@ -232,13 +238,16 @@ def main():
     comp = argv[argv.index("--comp") + 1] if "--comp" in argv else None
     if comp in args:
         args.remove(comp)
-    blocks = load(args[0], comp, cut="--live" in argv)
+    tella = editwords.read(args[0], live="--live" in argv)
+    blocks = tella["blocks"] if tella else load(args[0], comp, cut="--live" in argv)
     cands = find(blocks)
     chars = sum(len(b) for b in blocks)
 
     if "--check" in sys.argv:
-        needles = [schema.needle_text(n) for n in schema.load(args[1], "needles")]
-        marks = masks(blocks, needles)
+        # On Tella a drop is already in edit.json, so what it drops is the cut list.
+        needles = [] if tella and len(args) < 2 else [
+            schema.needle_text(n) for n in schema.load(args[1], "needles")]
+        marks = editwords.dropped_marks(tella) if tella and not needles else masks(blocks, needles)
         missed = [(c, rest) for c in cands if (rest := live(c, blocks, marks))]
         for c, rest in missed:
             print(f"UNCOVERED b{c['b']} {c['kind']}: {c['t'][:110]!r}")
@@ -246,7 +255,10 @@ def main():
                 print(f"    still live in b{bi}: {piece[:96]!r}")
             if c["kind"] == "repeat":
                 print(f"    the keep is the LAST attempt: {c['keep'][:96]!r}")
-        cut = sum(len(n) for n in needles if any(n in b for b in blocks))
+            if tella:
+                print(f"    drop {' '.join(editwords.drop_args(tella, c['slices']))}")
+        cut = (sum(m.count(1) for m in marks) if tella and not needles
+               else sum(len(n) for n in needles if any(n in b for b in blocks)))
         print(f"\n{len(cands)} candidates, {len(missed)} uncovered")
         print(f"cut list removes {cut} of {chars} chars = {100 * cut / chars:.1f}%")
         return 1 if missed else 0
@@ -256,6 +268,12 @@ def main():
         if c["kind"] == "repeat":
             last = c["slices"][-1][0]
             print(f"{'':<15}keep {c['keep'][:96]!r}   (cut spans b{c['b']}-b{last})")
+        if tella:
+            print(f"{'':<15}drop {' '.join(editwords.drop_args(tella, c['slices']))}")
+    if tella:
+        # A pause can be a silent demo on screen, so each is listed for a look, never counted.
+        for seconds, before, after, span in editwords.pauses(tella):
+            print(f"pause {seconds:.1f}s after {before!r}, before {after!r}\n{'':<15}drop {span}")
     print(f"\n{len(cands)} candidates over {chars} chars", file=sys.stderr)
     return 0
 

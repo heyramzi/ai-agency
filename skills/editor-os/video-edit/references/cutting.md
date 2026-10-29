@@ -82,6 +82,8 @@ python3 scripts/candidates.py doc.json --check needles.json  # what the list doe
 
 Reports **repeat runs** (any 3-word run twice within 400 characters) and **truncation marks** (`--`, `...`, stumps of 1 to 3 letters).
 
+On Tella there's no doc.json: pass `<project>/edit.json` instead. Each candidate prints the span `editor-os drop <name> <from-to> ...` takes, `--check` with no needles reads what edit.json already drops, and `editor-os cutcheck <name>` reads every seam from the words, since Tella renders nothing here.
+
 - The last attempt is the keep, always. 
 Always use the last retake.
 Span runs from the first attempt to the START of the last; a stump isn't an attempt, so the span stops at the last COMPLETE one. **Never splice one attempt's head onto another's tail** (one cut shipped attempt 2's head on attempt 4's tail, 3 paragraphs cut, sentence still wrong).

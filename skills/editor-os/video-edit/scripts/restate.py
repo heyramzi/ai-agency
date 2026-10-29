@@ -9,6 +9,7 @@ that a reader can check, so pass 2 is auditable the same way.
     python3 restate.py doc.json --comp "<name or id>"   # the live script from a doc dump
     python3 restate.py blocks.json                      # or a JSON array of strings
     python3 restate.py doc.json --check needles.json    # what the cut list does not cover
+    python3 restate.py <project>/edit.json              # a Tella project's kept words, each with its `editor-os drop` span
 
 Exit status is 1 when --check finds an uncovered candidate. Every candidate is a
 needle or a dismissal, and a dismissal is one word.
@@ -23,6 +24,7 @@ import json
 import re
 import sys
 
+import editwords
 import schema
 
 WINDOW = 12         # sentences apart, past which two utterances are not each other's echo
@@ -124,7 +126,8 @@ def main():
     comp = argv[argv.index("--comp") + 1] if "--comp" in argv else None
     if comp in args:
         args.remove(comp)
-    blocks = live(args[0], comp)
+    tella = editwords.read(args[0], live=True)
+    blocks = tella["blocks"] if tella else live(args[0], comp)
     cands = find(blocks)
     chars = sum(len(b) for b in blocks)
 
@@ -145,6 +148,12 @@ def main():
         line = f"b{c['b']:<4} {c['kind']:<9} {c['t'][:100]!r}"
         if c["echo"]:
             line += f"\n{'':16}echoes {c['echo']!r} on: {c['shared']}"
+        if tella:
+            # An announce's `at` is where the phrase matched, but its text is the whole sentence.
+            at = blocks[c["b"]].rfind(c["t"], 0, c["at"] + 1)
+            at = c["at"] if at < 0 else at
+            span = editwords.drop_args(tella, [(c["b"], at, at + len(c["t"]))])
+            line += f"\n{'':16}drop {' '.join(span)}"
         print(line)
     print(f"\n{len(cands)} pass-2 candidates over {chars} chars", file=sys.stderr)
     return 0
