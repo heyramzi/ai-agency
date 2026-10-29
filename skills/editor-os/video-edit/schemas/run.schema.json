@@ -6,8 +6,11 @@
   "additionalProperties": false,
   "properties": {
     "code": { "type": "string", "minLength": 1 },
-    "route": { "enum": ["descript", "local"] },
-    "project": { "type": "string" },
+    "route": { "enum": ["descript", "local", "tella"] },
+    "project": {
+      "type": "string",
+      "description": "The video in the route's own tool: the Descript project id, or the Tella video id (vid_...)."
+    },
     "comp": { "type": "string" },
     "cut": { "type": "string" },
     "take": { "type": "string" },

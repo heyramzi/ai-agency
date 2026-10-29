@@ -25,6 +25,7 @@ ledger on disk is the record; the checklist is the view he opens.
 
     run.py init <dir> --code <code> --project <id> --comp <id>
     run.py init <dir> --code <code> --route local --cut <path/to/cut.json>
+    run.py init <dir> --code <code> --route tella --project <vid_ id>
     run.py show <dir>                       # the table, and rewrite RUN.md
     run.py comp <dir> <composition id>      # point the ledger at the composition being edited, keeping every pass
     run.py next <dir>                       # the one pass to do now
@@ -47,7 +48,7 @@ PASSES = [(p["key"], p["proves"], p["commands"]) for p in schema.passes()]
 STATE_WORD = {"done": "DONE", "started": "IN PROGRESS", "blocked": "BLOCKED", "": "OPEN"}
 
 
-ROUTES = ("descript", "local")
+ROUTES = ("descript", "local", "tella")
 
 
 def route_of(run):
@@ -165,9 +166,11 @@ def idx(arg):
 
 
 def table(run):
-    where = (f"Descript project `{run['project']}`, composition `{run['comp']}`."
-             if run.get("route", "descript") == "descript"
-             else f"Local route. The cut is `{run.get('cut', '')}`.")
+    where = {
+        "descript": lambda: f"Descript project `{run['project']}`, composition `{run['comp']}`.",
+        "local": lambda: f"Local route. The cut is `{run.get('cut', '')}`.",
+        "tella": lambda: f"Tella video `{run.get('project', '')}`.",
+    }[route_of(run)]()
     head = (f"# {run['code']} - run ledger\n\n{where}\n"
             "Written by `video-edit/scripts/run.py`. Do not edit by hand: `show` rewrites it.\n\n"
             "| # | Pass | State | Evidence |\n|---|---|---|---|\n")
