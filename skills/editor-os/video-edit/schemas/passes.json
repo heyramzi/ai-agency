@@ -5,7 +5,8 @@
     "label": "Organise",
     "proves": {
       "descript": "The Files panel skeleton and names (raw takes CAM/MIC/SCREEN at the root, everything else in a folder); tracks named CAM/CAM GS/MIC/SCREEN, one live, only the live one in the script, the green twin on CAM's clock: `descript tracks` prints clean and `descript lint` has no naming warning",
-      "local": "The take sits in its own folder beside RUN.json: camera, screen and mic files, nothing else to sort"
+      "local": "The take sits in its own folder beside RUN.json: camera, screen and mic files, nothing else to sort",
+      "tella": "`editor-os new` made the video from its Tella link, and the first pull read every clip's words and cuts into edit.json"
     },
     "commands": {
       "descript": [
@@ -16,7 +17,8 @@
         "track script",
         "track mute"
       ],
-      "local": ["take folder"]
+      "local": ["take folder"],
+      "tella": ["editor-os new", "editor-os transcript"]
     }
   },
   {
@@ -25,7 +27,8 @@
     "label": "Cut",
     "proves": {
       "descript": "Coach BEFORE the cut, pass 1 deterministic, pass 2 a dispatched read, proven on a fresh dump",
-      "local": "`cut short` wrote the first cut: dead air, fillers and retakes out, each repeated line keeping its last whole take; the transcript was read and fixed (`editor-os transcript <name> --reviewed`); `cut check` reads clean"
+      "local": "`cut short` wrote the first cut: dead air, fillers and retakes out, each repeated line keeping its last whole take; the transcript was read and fixed (`editor-os transcript <name> --reviewed`); `cut check` reads clean",
+      "tella": "Dead air, fillers and retakes dropped in edit.json from the pulled words; the transcript was read and fixed (`editor-os transcript <name> --reviewed`)"
     },
     "commands": {
       "descript": [
@@ -38,7 +41,8 @@
         "descript cut",
         "descript edits"
       ],
-      "local": ["cut short", "editor-os transcript", "cut check"]
+      "local": ["cut short", "editor-os transcript", "cut check"],
+      "tella": ["editor-os transcript"]
     }
   },
   {
@@ -47,7 +51,8 @@
     "label": "Reorder",
     "proves": {
       "descript": "Intro's second pain and the outro's double ask moved into place, then a `descript marker` chapter on every section, the first at 0:00",
-      "local": "The brief's hook opens the cut, the CTA keeps its last take, and `cut check` reads clean on the new order"
+      "local": "The brief's hook opens the cut, the CTA keeps its last take, and `cut check` reads clean on the new order",
+      "tella": "The hook opens the cut and the CTA keeps its last take. Clip order is Tella's, so a move is made there and read back with `editor-os transcript`"
     },
     "commands": {
       "descript": [
@@ -57,7 +62,8 @@
         "descript script",
         "descript marker"
       ],
-      "local": ["cut check"]
+      "local": ["cut check"],
+      "tella": ["editor-os transcript"]
     }
   },
   {
@@ -66,7 +72,8 @@
     "label": "Rhythm",
     "proves": {
       "descript": "Slots named, the visual read dispatched, then a pack layout on every card",
-      "local": "Every stretch has a pack layout, a change about every 3s and none held past 6s: `cut check` names no scene outside the pack and no long hold"
+      "local": "Every stretch has a pack layout, a change about every 3s and none held past 6s: `cut check` names no scene outside the pack and no long hold",
+      "tella": "Every stretch has a layout, set in Tella's editor: `place` doesn't send layouts to Tella yet, so he confirms them on the project page"
     },
     "commands": {
       "descript": [
@@ -77,7 +84,8 @@
         "layout apply",
         "layout cards"
       ],
-      "local": ["cut check"]
+      "local": ["cut check"],
+      "tella": ["editor-os feedback"]
     }
   },
   {
@@ -86,7 +94,8 @@
     "label": "Music",
     "proves": {
       "descript": "Three options offered, nothing laid: the brand's music style searched in Descript Stock, three tracks long enough and named for the mood pulled into Music/ and put on the project page by `editor-os music offer`. `place` lays the one he keeps with `music set`. Style `none` skips the pass",
-      "local": "Three options offered, nothing laid: the brand's style searched and put on the project page by `editor-os music offer`. `place` lays the one he keeps. Style `none` skips the pass"
+      "local": "Three options offered, nothing laid: the brand's style searched and put on the project page by `editor-os music offer`. `place` lays the one he keeps. Style `none` skips the pass",
+      "tella": "Three options offered, nothing laid: the brand's style searched and put on the project page by `editor-os music offer`. The one he keeps is laid in Tella by hand until `place` lays music. Style `none` skips the pass"
     },
     "commands": {
       "descript": [
@@ -97,7 +106,8 @@
         "music set",
         "descript music"
       ],
-      "local": ["editor-os music offer"]
+      "local": ["editor-os music offer"],
+      "tella": ["editor-os music offer"]
     }
   },
   {
@@ -106,11 +116,13 @@
     "label": "Motion",
     "proves": {
       "descript": "plan.md first, one clip per slot, watched, imported to Motion/, not placed yet",
-      "local": "plan.md first, one clip per slot, each alpha clip looked at over gray and over dark, then picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay` when it has no beat of its own"
+      "local": "plan.md first, one clip per slot, each alpha clip looked at over gray and over dark, then picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay` when it has no beat of its own",
+      "tella": "plan.md first, one clip per slot, picked onto its beat with `editor-os pick` or laid on its words with `editor-os overlay`. `place` doesn't send overlays to Tella yet, so each is added there by hand"
     },
     "commands": {
       "descript": ["fill", "roster", "watch.py", "clips.py", "descript import"],
-      "local": ["editor-os pick", "editor-os overlay"]
+      "local": ["editor-os pick", "editor-os overlay"],
+      "tella": ["editor-os pick", "editor-os overlay"]
     }
   },
   {
@@ -119,11 +131,13 @@
     "label": "B-roll",
     "proves": {
       "descript": "Found, generated or captured; licensed into the ledger; imported to B-roll/, not placed yet",
-      "local": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay` when it has no beat of its own"
+      "local": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay` when it has no beat of its own",
+      "tella": "Found, generated or captured, licensed, saved to broll/ and picked onto its beat with `editor-os pick`, or laid on its words with `editor-os overlay`. Added in Tella by hand until `place` sends overlays"
     },
     "commands": {
       "descript": ["source.py", "brollclip.py", "genvideo.py", "descript import"],
-      "local": ["editor-os pick", "editor-os overlay"]
+      "local": ["editor-os pick", "editor-os overlay"],
+      "tella": ["editor-os pick", "editor-os overlay"]
     }
   },
   {
@@ -132,7 +146,8 @@
     "label": "Review",
     "proves": {
       "descript": "The project page shows transcript, layouts, overlays and sound in order; he closes each, and plan.json holds every choice before placement",
-      "local": "The project page shows transcript, layouts, overlays and sound in order after `editor-os plan`; he closes each card"
+      "local": "The project page shows transcript, layouts, overlays and sound in order after `editor-os plan`; he closes each card",
+      "tella": "The project page shows transcript, layouts, overlays and sound in order after `editor-os plan`; he closes each card"
     },
     "commands": {
       "descript": [
@@ -142,7 +157,8 @@
         "layout apply",
         "descript pin"
       ],
-      "local": ["editor-os plan", "editor-os feedback"]
+      "local": ["editor-os plan", "editor-os feedback"],
+      "tella": ["editor-os plan", "editor-os feedback"]
     }
   },
   {
@@ -151,11 +167,13 @@
     "label": "Handoff",
     "proves": {
       "descript": "`descript background` laid ONE grid under the whole video after every layout and pin (each older grid pin deleted, bottom of every card, looped) and `lint` reads blocking 0, then `descript settings` reads clean and the project is handed over for the person's own pass. Never publish or export: they do that after watching",
-      "local": "`cut final` renders the master and its handoff file once every note is closed. Never publish: he does that after watching"
+      "local": "`cut final` renders the master and its handoff file once every note is closed. Never publish: he does that after watching",
+      "tella": "`editor-os place` sends each clip's cuts to Tella in one PATCH, after saving the old lists to tella/cuts.before.json. Never publish: he does that in Tella after watching"
     },
     "commands": {
       "descript": ["descript background", "descript lint", "descript settings", "get_project"],
-      "local": ["cut final"]
+      "local": ["cut final"],
+      "tella": ["editor-os place"]
     }
   }
 ]
