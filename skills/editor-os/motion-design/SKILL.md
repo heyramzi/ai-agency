@@ -67,7 +67,7 @@ The `motion-designer` agent runs one beat; these steps run a whole set.
 3. Run `editor-os motion place --line "<the line>"` and take its pick, or `editor-os motion --find "<the line>"` and pick the cell whose use-when line says what the beat
    needs (`editor-os motion rules` says when b-roll wins). A miss is a bespoke clip built from the kit's primitives and tokens, never a near miss, and your report names the job that's missing (`references/placement.md`).
 4. Fill it with the beat's own words (`fill <Template> --prop=value`), taking the job's first cell, or its second only for the reason its tag gives.
-5. A still per phase per clip, composited over a real frame of its second, and every frame of each reveal
+5. A still per phase per clip over a real frame of its second (`scripts/over-frame.sh <out> <frame> <clip>@<s>`), and every frame of each reveal
    (`craft.md`, verify by looking). Look at every one: the brief's face box stays clear (one set put 6 of 18 on the face). Silent invisibility survives a clean render. Then render the mp4s and, for anything meant to key, the
    MOVs (`references/render.md`). Done when nothing is invisible, cut off or unreadable.
 6. Watch every rendered file with `scripts/watch.py`, one review subagent per clip scoring 7 axes; fix the 3
