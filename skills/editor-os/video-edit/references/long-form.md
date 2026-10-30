@@ -12,6 +12,13 @@ the outro usually asks twice with the price objection between: move them with `a
 `descript move`. Then `descript marker` on each section's first line, the first at 0:00, because
 publish turns the markers into YouTube chapters. A Short never does this.
 
+The marker is the only source of a chapter card's words. Labels are 1 or 2 plain words ("Hosting"),
+about 2 to 3 minutes apart. After any marker change run `descript chapters stamp --move --prune`:
+it numbers each card from the marker order and switches the label to the app's Marker text, which
+prints the marker itself. That only works when the card starts exactly on its marker, or the label
+shows the previous chapter's name. `descript chapters` and `lint` flag any card that drifts, and
+`chapters --youtube` prints the description's list.
+
 ## Layouts
 
 The 16:9 set is the pack's Camera ladder (`Intro Zoom`, `Cam 100` to `Cam 130`), the Screen cards,
