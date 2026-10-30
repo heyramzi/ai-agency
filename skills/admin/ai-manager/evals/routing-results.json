@@ -1,0 +1,264 @@
+{
+  "date": "2026-10-30T11:03:44.763Z",
+  "model": "sonnet",
+  "maxTurns": 6,
+  "runsPerCase": 1,
+  "passed": 19,
+  "total": 26,
+  "clusters": {
+    "swift": {
+      "pass": 1,
+      "total": 4
+    },
+    "motion": {
+      "pass": 3,
+      "total": 3
+    },
+    "ui": {
+      "pass": 1,
+      "total": 3
+    },
+    "checking": {
+      "pass": 3,
+      "total": 3
+    },
+    "offers": {
+      "pass": 3,
+      "total": 3
+    },
+    "should-not": {
+      "pass": 4,
+      "total": 4
+    },
+    "agents": {
+      "pass": 4,
+      "total": 6
+    }
+  },
+  "runs": [
+    {
+      "cluster": "swift",
+      "expect": "skill:swift",
+      "query": "Seam won't build after the Swift 6 bump: 'sending self risks causing data races' in RecorderService, fix it",
+      "got": "agent:swift-engineer",
+      "firstTool": "Grep",
+      "pass": true
+    },
+    {
+      "cluster": "swift",
+      "expect": "skill:swift",
+      "query": "there's a retain cycle somewhere in Wavenote's transcription manager, memory keeps climbing",
+      "got": null,
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "swift",
+      "expect": "skill:swiftui",
+      "query": "Wavenote's note list redraws every row each time the timer ticks, why",
+      "got": null,
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "swift",
+      "expect": "skill:swiftui",
+      "query": "RecordingDetailView is 600 lines, split it into smaller views",
+      "got": null,
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "motion",
+      "expect": "skill:motion-design",
+      "query": "make a Remotion clip for beat 4, the MRR number counting up to 12k",
+      "got": "agent:motion-designer",
+      "firstTool": "Glob",
+      "pass": true
+    },
+    {
+      "cluster": "motion",
+      "expect": "skill:transitions-dev",
+      "query": "the modal on the pricing page opens with a janky fade, fix the transition",
+      "got": "skill:transitions-dev",
+      "firstTool": "Grep",
+      "pass": true
+    },
+    {
+      "cluster": "motion",
+      "expect": "skill:swift-designer",
+      "query": "in Wavenote the record button should morph into the stop button with a spring, right now it just snaps",
+      "got": "skill:swift-designer",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "ui",
+      "expect": "skill:ui-design",
+      "query": "audit the clients page in the web app, the table spacing feels off and the empty state is ugly",
+      "got": null,
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "ui",
+      "expect": "skill:ios-design",
+      "query": "the Rounds settings screen looks like a default Form, make it feel native and polished",
+      "got": null,
+      "firstTool": "Grep",
+      "pass": false
+    },
+    {
+      "cluster": "ui",
+      "expect": "skill:anti-ai-slop",
+      "query": "pick fonts and a palette for the new CutKit landing page, it can't look like every other AI site",
+      "got": "skill:anti-ai-slop",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "checking",
+      "expect": "skill:verify",
+      "query": "check the Seam menu bar change actually works in the dev build, read the logs",
+      "got": "skill:verify",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "checking",
+      "expect": "skill:device-interaction",
+      "query": "run the Rounds onboarding on the iPhone simulator, tap through and screenshot each step",
+      "got": "skill:device-interaction",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "checking",
+      "expect": "skill:browser",
+      "query": "open localhost:5173/pricing in the browser and screenshot it at mobile width",
+      "got": "skill:browser",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "offers",
+      "expect": "skill:proposal",
+      "query": "Solusign wants a quote for the onboarding automation, what should I charge them? draft the SOW",
+      "got": "skill:proposal",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "offers",
+      "expect": "skill:create-new-offer",
+      "query": "we've done the Make.com audit for 4 clients now, turn it into a proper offer in the catalog",
+      "got": "skill:create-new-offer",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "offers",
+      "expect": "skill:evaluate-pricing-change",
+      "query": "if the audit goes from 1500 to 2500, what breaks? which pages, workflows and signed contracts mention it",
+      "got": "skill:evaluate-pricing-change",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "should-not",
+      "not": [
+        "skill:verify",
+        "skill:device-interaction",
+        "skill:browser"
+      ],
+      "query": "verify the September Pennylane invoices match the Qonto debits",
+      "got": "skill:pennylane",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "should-not",
+      "not": [
+        "skill:proposal",
+        "skill:create-new-offer",
+        "skill:evaluate-pricing-change"
+      ],
+      "query": "write a LinkedIn post on how we price our offers",
+      "got": "skill:social",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "should-not",
+      "not": [
+        "skill:motion-design",
+        "skill:transitions-dev",
+        "skill:swift-designer"
+      ],
+      "query": "what did I say about the motion design idea in yesterday's voice note",
+      "got": "skill:voice-notes",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "should-not",
+      "not": [
+        "skill:swift",
+        "skill:swiftui",
+        "agent:swift-engineer"
+      ],
+      "query": "switch the swift-engineer agent's model to sonnet in its frontmatter",
+      "got": "skill:ai-manager",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "agents",
+      "expect": "skill:broll",
+      "query": "find b-roll for beat 3 of the Notion short",
+      "got": "agent:broll-scout",
+      "firstTool": "Grep",
+      "pass": true
+    },
+    {
+      "cluster": "agents",
+      "expect": "agent:broll-scout",
+      "query": "find b-roll for beats 2, 4 and 7",
+      "got": null,
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "agents",
+      "expect": "agent:sales-manager",
+      "query": "clean up the CRM, Acme has 3 duplicate deals",
+      "got": "agent:sales-manager",
+      "firstTool": "Agent",
+      "pass": true
+    },
+    {
+      "cluster": "agents",
+      "expect": "agent:operations-manager",
+      "query": "rebalance the workload on the delivery board, Yassine is overloaded this week",
+      "got": "agent:operations-manager",
+      "firstTool": "Agent",
+      "pass": true
+    },
+    {
+      "cluster": "agents",
+      "expect": "skill:music",
+      "query": "find a calm music bed for the Seam launch video",
+      "got": "skill:music",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "agents",
+      "expect": "agent:code-reviewer",
+      "query": "review my diff before I merge, is it actually production ready?",
+      "got": null,
+      "firstTool": "Bash",
+      "pass": false
+    }
+  ]
+}

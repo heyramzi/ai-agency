@@ -1,0 +1,138 @@
+[
+  {
+    "cluster": "swift",
+    "expect": "skill:swift",
+    "query": "Seam won't build after the Swift 6 bump: 'sending self risks causing data races' in RecorderService, fix it"
+  },
+  {
+    "cluster": "swift",
+    "expect": "skill:swift",
+    "query": "there's a retain cycle somewhere in Wavenote's transcription manager, memory keeps climbing"
+  },
+  {
+    "cluster": "swift",
+    "expect": "skill:swiftui",
+    "query": "Wavenote's note list redraws every row each time the timer ticks, why"
+  },
+  {
+    "cluster": "swift",
+    "expect": "skill:swiftui",
+    "query": "RecordingDetailView is 600 lines, split it into smaller views"
+  },
+
+  {
+    "cluster": "motion",
+    "expect": "skill:motion-design",
+    "query": "make a Remotion clip for beat 4, the MRR number counting up to 12k"
+  },
+  {
+    "cluster": "motion",
+    "expect": "skill:transitions-dev",
+    "query": "the modal on the pricing page opens with a janky fade, fix the transition"
+  },
+  {
+    "cluster": "motion",
+    "expect": "skill:swift-designer",
+    "query": "in Wavenote the record button should morph into the stop button with a spring, right now it just snaps"
+  },
+
+  {
+    "cluster": "ui",
+    "expect": "skill:ui-design",
+    "query": "audit the clients page in the web app, the table spacing feels off and the empty state is ugly"
+  },
+  {
+    "cluster": "ui",
+    "expect": "skill:ios-design",
+    "query": "the Rounds settings screen looks like a default Form, make it feel native and polished"
+  },
+  {
+    "cluster": "ui",
+    "expect": "skill:anti-ai-slop",
+    "query": "pick fonts and a palette for the new CutKit landing page, it can't look like every other AI site"
+  },
+
+  {
+    "cluster": "checking",
+    "expect": "skill:verify",
+    "query": "check the Seam menu bar change actually works in the dev build, read the logs"
+  },
+  {
+    "cluster": "checking",
+    "expect": "skill:device-interaction",
+    "query": "run the Rounds onboarding on the iPhone simulator, tap through and screenshot each step"
+  },
+  {
+    "cluster": "checking",
+    "expect": "skill:browser",
+    "query": "open localhost:5173/pricing in the browser and screenshot it at mobile width"
+  },
+
+  {
+    "cluster": "offers",
+    "expect": "skill:proposal",
+    "query": "Solusign wants a quote for the onboarding automation, what should I charge them? draft the SOW"
+  },
+  {
+    "cluster": "offers",
+    "expect": "skill:create-new-offer",
+    "query": "we've done the Make.com audit for 4 clients now, turn it into a proper offer in the catalog"
+  },
+  {
+    "cluster": "offers",
+    "expect": "skill:evaluate-pricing-change",
+    "query": "if the audit goes from 1500 to 2500, what breaks? which pages, workflows and signed contracts mention it"
+  },
+
+  {
+    "cluster": "should-not",
+    "not": ["skill:verify", "skill:device-interaction", "skill:browser"],
+    "query": "verify the September Pennylane invoices match the Qonto debits"
+  },
+  {
+    "cluster": "should-not",
+    "not": ["skill:proposal", "skill:create-new-offer", "skill:evaluate-pricing-change"],
+    "query": "write a LinkedIn post on how we price our offers"
+  },
+  {
+    "cluster": "should-not",
+    "not": ["skill:motion-design", "skill:transitions-dev", "skill:swift-designer"],
+    "query": "what did I say about the motion design idea in yesterday's voice note"
+  },
+  {
+    "cluster": "should-not",
+    "not": ["skill:swift", "skill:swiftui", "agent:swift-engineer"],
+    "query": "switch the swift-engineer agent's model to sonnet in its frontmatter"
+  },
+
+  {
+    "cluster": "agents",
+    "expect": "skill:broll",
+    "query": "find b-roll for beat 3 of the Notion short"
+  },
+  {
+    "cluster": "agents",
+    "expect": "agent:broll-scout",
+    "query": "find b-roll for beats 2, 4 and 7 of the Notion short"
+  },
+  {
+    "cluster": "agents",
+    "expect": "agent:sales-manager",
+    "query": "clean up the CRM, Acme has 3 duplicate deals"
+  },
+  {
+    "cluster": "agents",
+    "expect": "agent:operations-manager",
+    "query": "rebalance the workload on the delivery board, Yassine is overloaded this week"
+  },
+  {
+    "cluster": "agents",
+    "expect": "skill:music",
+    "query": "find a calm music bed for the Seam launch video"
+  },
+  {
+    "cluster": "agents",
+    "expect": "agent:code-reviewer",
+    "query": "review my diff before I merge, is it actually production ready?"
+  }
+]
