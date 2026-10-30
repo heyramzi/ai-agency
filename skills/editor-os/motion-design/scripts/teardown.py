@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = ["numpy"]
+# ///
 """Measure a motion film instead of arguing about it.
 
 Reverse-engineers the numbers that decide whether a product film works: how many cuts it has,
@@ -7,16 +10,16 @@ actually is. Every figure in references/product-film.md came out of this script.
 
 Run it on a reference before copying its look, and on your own render before calling it done.
 
-    python3 teardown.py all      <file.mp4>       # everything below, in one pass
-    python3 teardown.py cuts     <file.mp4>       # hard-cut count; a product film wants 0
-    python3 teardown.py tempo    <file.mp4|.wav>  # BPM, beat, bar -- the unit beats.ts is built in
-    python3 teardown.py cards    <file.mp4>       # every centred-text card: length, gap, cycle
-    python3 teardown.py palette  <file.mp4>       # ground, ink and the saturated windows
-    python3 teardown.py sheet    <file.mp4>       # 1fps contact sheets, to read the beat map by eye
-    python3 teardown.py camera   <file.mp4> --ss 174 --t 12   # camera velocity, settle tau, residual
-    python3 teardown.py ground   <file.mp4> --ss 181          # vignette profile and accent clusters
+    uv run teardown.py all      <file.mp4>       # everything below, in one pass
+    uv run teardown.py cuts     <file.mp4>       # hard-cut count; a product film wants 0
+    uv run teardown.py tempo    <file.mp4|.wav>  # BPM, beat, bar -- the unit beats.ts is built in
+    uv run teardown.py cards    <file.mp4>       # every centred-text card: length, gap, cycle
+    uv run teardown.py palette  <file.mp4>       # ground, ink and the saturated windows
+    uv run teardown.py sheet    <file.mp4>       # 1fps contact sheets, to read the beat map by eye
+    uv run teardown.py camera   <file.mp4> --ss 174 --t 12   # camera velocity, settle tau, residual
+    uv run teardown.py ground   <file.mp4> --ss 181          # vignette profile and accent clusters
 
-Needs ffmpeg, ffprobe and numpy. Nothing else.
+Needs ffmpeg, ffprobe and uv; uv brings numpy from the header above.
 """
 
 from __future__ import annotations
