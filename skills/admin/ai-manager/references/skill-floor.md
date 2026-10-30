@@ -96,5 +96,7 @@ sharing keywords), stored as `evals/trigger.json` (`{"query": "...", "should_tri
 run three times. Score the should-not half first: a description firing on everything displaces the
 right skill in neighbouring sessions. Tune against 60% and judge on the rest.
 
+**After changing any description, run the routing eval** (`node ai-doc/skills/admin/kit/ai-manager/scripts/routing-eval.mjs`, about 4 minutes on sonnet): the prompts in `evals/routing.json`, graded on the first Skill or Agent call within `--max-turns` (6), written to `evals/routing-results.json`. A `none (Glob)` miss means it worked the code for 6 turns and never loaded a skill.
+
 **Two descriptions that keep matching one prompt are usually one skill with two branches.**
 Merge ([critique.md](critique.md#doing-the-merge)); narrowing both leaves them overlapping.
