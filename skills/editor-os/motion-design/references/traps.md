@@ -1,7 +1,7 @@
 # Traps that render clean
 
 Read when a clip passes typecheck and exits 0 but a still or a contact sheet looks wrong, and before
-signing a clip off. None of these fails a typecheck or an exit code. Building and the review loop: `craft.md`.
+signing a clip off. Building and the review loop: `craft.md`.
 
 Code: `interpolate()` rejects a decreasing input range (screen Y falls as things rise). A `const at` inside a `.map`
 shadows the imported `at()`. An SVG `<mask>` is luminance, so draw edge fades in white. Clamp and round a
@@ -9,6 +9,8 @@ spring-driven value before a CSS percentage or `color-mix()` (past 100% voids th
 with `pathLength={1}`, `strokeDasharray={1}` and offset `1 - progress`; a dashed stroke can't reveal by offset. A
 half-way `countTo` start skips rounding and shows "4.5" all hold. Re-anchor a projection by translation only (a
 bigger size into `iso()` plus rescaled offsets applies it twice). A `translateY` on a layer with `scale` compounds.
+Hide a streamed word that hasn't arrived with `opacity: 0`, never by leaving it out, or the line reflows under the
+words already shown. A span's trailing space is stripped ("Noextracharge"), so the gap between words is a text node.
 
 Geometry: an orthogonal route whose ends share a coordinate collapses to a line. An arc ending at a station's centre
 angle ends inside it. An outline ring with a night fill is a hole, so a delivered object needs a mark inside.
@@ -28,8 +30,11 @@ means nothing happened (an accumulation's point is drawn by ADDING), and resolvi
 the clip's own point. Bring an overlay's light up about a second before its clause and start it about 0.2s before
 its first row. Nothing flashes or hard-cuts more than 3 times a second (photosensitivity; a beat-cut run or a fast
 caret breaks it). Cut into a close-up while it's still building (offset its local frame so the cut lands on the
-build's tail); a cut to a finished still reads as a slideshow. Fake motion blur from the frame alone: 2 or 3 copies
-at earlier frames with falling opacity, or a `scaleX` stretch along the travel. An entrance never slices a glyph
+build's tail), on the camera move's fastest frame, and let the new shot land a few px off and settle over about 15
+frames; a cut to a finished still or a parked camera reads as a slideshow. Fake motion blur from the frame alone: 2
+or 3 copies at earlier frames with falling opacity, or a `scaleX` stretch along the travel. Size it from camera
+speed: about d/4 px of blur for d px of travel per frame, measured at the frame's centre, none under 0.15px, and
+type stays legible up to about 6px. An entrance never slices a glyph
 (a vertical wipe through the U of a wordmark read as "the U is broken"): reveal whole letters, staggered or
 rising from under the baseline, unless the build IS the concept, like "productize" assembled through masks. A
 shadow sits on an unmasked wrapper outside the mask. A logo lands solid, by scale or position; one fading up from 0
@@ -52,4 +57,8 @@ never an empty string (a card once read "€36,000K"). A merged multi-path logo 
 `m` is absolute only at the start of its path); simple-icons lacks `openai` and `monday`
 ( covers gaps).
 Nothing the camera scales carries `will-change`: Chrome rasterises the layer once, so scaled text goes soft. Strip it
-from pasted `transitions-dev` CSS (`07-panel-reveal.css` and `16-tabs-sliding.css` both set it).
+from pasted `transitions-dev` CSS (`07-panel-reveal.css` and `16-tabs-sliding.css` both set it). Scaled type also
+pivots on its baseline and sets `text-rendering: geometricPrecision`, or the glyphs judder and boil as hinting
+re-snaps each frame (snapcn measured 0.296px of judder down to 0.005px). Remotion's `fade()` keeps the exiting scene
+at opacity 1 unless you pass `shouldFadeOutExitingScene`, so over an alpha overlay both shots show at once: use
+`slide()` with `springTiming({ damping: 200 })`, or cut.
