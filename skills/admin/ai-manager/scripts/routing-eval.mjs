@@ -3,7 +3,17 @@
 // repo and grades the first Skill or Agent call it makes.
 
 import { spawn } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
@@ -78,7 +88,11 @@ function agentPreloads() {
     const text = readFileSync(file, "utf8");
     const name = /^name:\s*(.+)$/m.exec(text)?.[1]?.trim();
     const skills = /^skills:\s*\[(.*)\]$/m.exec(text)?.[1] ?? "";
-    if (name) preloads[name] = skills.split(",").map((s) => s.trim()).filter(Boolean);
+    if (name)
+      preloads[name] = skills
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
   }
   return preloads;
 }
@@ -96,16 +110,33 @@ function buildScratch() {
 
 const routeOf = (block) => {
   if (block.name === "Skill") return `skill:${String(block.input?.skill ?? "").replace(/^\//, "")}`;
-  if (block.name === "Agent" || block.name === "Task") return `agent:${block.input?.subagent_type ?? "general-purpose"}`;
+  if (block.name === "Agent" || block.name === "Task")
+    return `agent:${block.input?.subagent_type ?? "general-purpose"}`;
   return null;
 };
 
 /** One `claude -p` run, killed as soon as the first Skill or Agent call shows up in the stream. */
 function runOnce(query, cwd, { model, maxTurns }) {
   return new Promise((resolve) => {
-    const args = ["-p", query, "--output-format", "stream-json", "--verbose", "--max-turns", String(maxTurns), "--model", model, "--add-dir", CODE_DIR,
-      "--setting-sources", "project", "--strict-mcp-config", "--no-session-persistence",
-      "--disallowedTools", ...DISALLOWED];
+    const args = [
+      "-p",
+      query,
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--max-turns",
+      String(maxTurns),
+      "--model",
+      model,
+      "--add-dir",
+      CODE_DIR,
+      "--setting-sources",
+      "project",
+      "--strict-mcp-config",
+      "--no-session-persistence",
+      "--disallowedTools",
+      ...DISALLOWED,
+    ];
     const child = spawn(CLAUDE_BIN, args, { cwd, stdio: ["ignore", "pipe", "pipe"] });
     const seen = { route: null, firstTool: null };
     let buffer = "";
@@ -166,7 +197,9 @@ async function pool(items, size, work) {
 
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
-  const cases = JSON.parse(readFileSync(CASES, "utf8")).filter((c) => !opts.filter || c.query.includes(opts.filter));
+  const cases = JSON.parse(readFileSync(CASES, "utf8")).filter(
+    (c) => !opts.filter || c.query.includes(opts.filter),
+  );
   const preloads = agentPreloads();
   const scratch = buildScratch();
   const jobs = cases.flatMap((testCase) => Array.from({ length: opts.runs }, () => testCase));
@@ -174,7 +207,9 @@ async function main() {
     const runs = await pool(jobs, opts.jobs, async (testCase) => {
       const seen = await runOnce(testCase.query, scratch, opts);
       const pass = grade(testCase, seen.route, preloads);
-      console.log(`${pass ? "PASS" : "MISS"}  ${testCase.cluster.padEnd(10)} ${(seen.route ?? `none (${seen.firstTool ?? "no tool"})`).padEnd(32)} ${testCase.query}`);
+      console.log(
+        `${pass ? "PASS" : "MISS"}  ${testCase.cluster.padEnd(10)} ${(seen.route ?? `none (${seen.firstTool ?? "no tool"})`).padEnd(32)} ${testCase.query}`,
+      );
       return { ...testCase, got: seen.route, firstTool: seen.firstTool, pass };
     });
     const clusters = {};
@@ -185,9 +220,19 @@ async function main() {
     }
     const passed = runs.filter((r) => r.pass).length;
     console.log(`\n${passed}/${runs.length} passed`);
-    for (const [name, t] of Object.entries(clusters)) console.log(`  ${name.padEnd(10)} ${t.pass}/${t.total}`);
+    for (const [name, t] of Object.entries(clusters))
+      console.log(`  ${name.padEnd(10)} ${t.pass}/${t.total}`);
     if (opts.write && !opts.filter) {
-      const report = { date: new Date().toISOString(), model: opts.model, maxTurns: opts.maxTurns, runsPerCase: opts.runs, passed, total: runs.length, clusters, runs };
+      const report = {
+        date: new Date().toISOString(),
+        model: opts.model,
+        maxTurns: opts.maxTurns,
+        runsPerCase: opts.runs,
+        passed,
+        total: runs.length,
+        clusters,
+        runs,
+      };
       writeFileSync(RESULTS, `${JSON.stringify(report, null, 2)}\n`);
       console.log(`\nwrote ${RESULTS}`);
     }
