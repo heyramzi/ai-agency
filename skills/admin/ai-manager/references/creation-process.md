@@ -67,7 +67,7 @@ An agent is a persona spawned into its own context with its own tools and budget
 name: thing-reviewer                        # equals the filename, lowercase and hyphens
 description: "..."                          # quoted; what it does and when to spawn it
 skills: [refactor, diagnose]                # what it preloads: 1 to 3 core skills
-model: sonnet                               # sonnet default, haiku for simple work, never opus
+model: opus                                 # opus default (agents-core.md); haiku only for search-and-collect with no quality call
 disallowedTools: Write, Edit, NotebookEdit  # a reviewer that can't edit
 maxTurns: 30                                # a ceiling so a bad run ends
 effort: high                                # only where depth is the deliverable
@@ -75,9 +75,10 @@ effort: high                                # only where depth is the deliverabl
 ```
 
 - The tool line is the strongest in the file: saying a reviewer can't edit is worth more than a
-  paragraph asking it not to. Use `disallowedTools` and skip the `tools` allowlist: an allowlist replaces
-  the inherited pool and silently drops every MCP tool and skill the agent leaned on, and one
-  with nothing that resolves refuses to launch. `Skill` belongs in `skills`, not `tools`.
+  paragraph asking it not to. Ban with `disallowedTools` only the tools the role must never use,
+  and give an agent that needs nearly everything no list. Never a `tools:` allow list: it replaces
+  the inherited pool and silently drops every MCP tool the agent leaned on, and `vibekit sync`
+  leaves the agent out of OpenCode, Gemini and Codex. `Skill` belongs in `skills`, not `tools`.
 - `skills:` is what the agent preloads whole at spawn, so it holds only the 1 to 3 skills used on
   almost every run. Any other skill the body names, the agent calls through the Skill tool.
 - Turn budgets held across 75 agents: 30 for a read-only reviewer, 40 for a builder, 50 for a
