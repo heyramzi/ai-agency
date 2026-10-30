@@ -13,7 +13,7 @@ The everyday registers (diagram, analogy, list, words over his face, a 3D object
 
 Landscape, 10 to 15s, no cut: one unbroken canvas the camera travels, for an argument with more than one
 step. Reference `youtube.com/watch?v=5-EFvUKqZmA` from 1:14, torn down with `ffmpeg` extraction and phase
-correlation (`python3 scripts/teardown.py sheet|camera|ground src.mp4`, about 10 minutes; `camera` and
+correlation (`uv run scripts/teardown.py sheet|camera|ground src.mp4`, about 10 minutes; `camera` and
 `ground` take `--ss`). Run it on your own render too: `SpecLongTake` measures 0 hard cuts, tau 0.46s and a
 ground swing of 75 against the reference's 76.
 

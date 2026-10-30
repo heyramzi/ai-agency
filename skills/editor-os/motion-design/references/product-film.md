@@ -10,7 +10,7 @@
 A self-contained film: 30 to 120 seconds, no voice-over, no cuts, the product the only actor, scored by one
 music bed or by its own contacts.
 It isn't a clip cut into a read. We measured one reference, a launch film for a table-based research product,
-95.3s at 60fps. `python3 scripts/teardown.py all <film.mp4>` reproduces every number here from any mp4
+95.3s at 60fps. `uv run scripts/teardown.py all <film.mp4>` reproduces every number here from any mp4
 (`cuts`, `cards`, `tempo <track>`, `palette`); run it on a film before copying its look.
 
 The rest of the skill takes its clock from the cut and says a graphic must not repeat the sentence. Here
