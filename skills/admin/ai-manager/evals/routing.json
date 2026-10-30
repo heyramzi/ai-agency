@@ -2,7 +2,7 @@
   {
     "cluster": "swift",
     "expect": "skill:swift",
-    "query": "Seam won't build after the Swift 6 bump: 'sending self risks causing data races' in RecorderService, fix it"
+    "query": "Seam won't build after the Swift 6 bump: 'sending self risks causing data races' in VoiceRecorder, fix it"
   },
   {
     "cluster": "swift",
@@ -17,7 +17,7 @@
   {
     "cluster": "swift",
     "expect": "skill:swiftui",
-    "query": "RecordingDetailView is 600 lines, split it into smaller views"
+    "query": "Wavenote's FocusView is 645 lines, split it into smaller views"
   },
 
   {
