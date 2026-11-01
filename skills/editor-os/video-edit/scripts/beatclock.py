@@ -57,9 +57,9 @@ def at(rows, needle, end=False, nth=1):
 if __name__ == "__main__":
     rows, total = load(sys.argv[1])
     if "--beat" in sys.argv:
-        k = sys.argv.index("--beat")
-        a, b = at(rows, sys.argv[k + 1]), at(rows, sys.argv[k + 2], end=True)
-        print(f"start {a:8.2f}   end {b:8.2f}   duration {b - a:6.2f}s")
+        for k in (i for i, v in enumerate(sys.argv) if v == "--beat"):
+            a, b = at(rows, sys.argv[k + 1]), at(rows, sys.argv[k + 2], end=True)
+            print(f"start {a:8.2f}   end {b:8.2f}   duration {b - a:6.2f}s   {sys.argv[k + 1]}")
     elif "--find" in sys.argv:
         k = sys.argv.index("--find")
         key = " ".join(sys.argv[k + 1].lower().split())
