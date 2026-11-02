@@ -49,8 +49,8 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 
 ## Which branch
 
-- No read (no voice-over, no face, no transcript): a product film. The type is the only voice and the clock
-  is the music; one object carries 4 to 6 beats, with no cut but the logo's. `references/product-film.md` replaces the
+- No read (no voice-over, no face, no transcript): a product film. Short cards are the only voice and the clock
+  is a licensed bed's bar grid; one object owns the frame for 4 to 6 beats. `references/product-film.md` replaces the
   clock, type and sound rules below.
 - Which cell a line gets, or what to do when none fits: `references/placement.md`.
 - A CTA, lower third or end card, evergreen and reused for years: `references/ctas.md` (someone else's channel
