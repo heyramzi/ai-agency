@@ -4,8 +4,8 @@
 
 [The kit](#the-kit), [On the contact frame](#on-the-contact-frame), [Produced marks, the census shelf and the keystroke](#produced-marks-the-census-shelf-and-the-keystroke)
 
-A clip cut into a read carries its own audio track. A product film under a bed mutes this whole file; one
-scored by its contacts lives on it (`product-film.md`).
+A clip cut into a read carries its own audio track. A product film keeps these contact clicks at half
+volume under its bed (`product-film.md#the-score`).
 This file is the clip's own voices. Which sound a moment on screen takes, the mix levels, density and
 licence are the `sound` skill's.
 
@@ -57,8 +57,8 @@ its size makes no contact and gets no sound; a click on a content fade reads ear
 
 The tolerance is 1 frame. The Seam film measured 56 hits at median 0.24 and max 0.45 frames (15 ms), so
 anything past 1 is a bug, not taste. Check it off the render, never the code: render once with the camera
-held (a moving camera changes every pixel, and the frame difference then measures the camera), write the
-intended hits from the same constants as JSON, and run
+held and any music bed muted (a moving camera changes every pixel, and a bed's drums read as hits 5 to 8
+frames off), write the intended hits from the same constants as JSON, and run
 `uv run scripts/sync.py <render.mp4> --hits hits.json --plot sync.png`. It measures each audio onset and each
 motion contact off the file and exits 1 on any sound more than `--tol` frames out. Give a morph whose
 content blurs in after its outline `"metric": "outline"`.

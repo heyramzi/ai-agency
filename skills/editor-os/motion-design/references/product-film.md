@@ -2,50 +2,66 @@
 
 ## Contents
 
-[The 5 laws](#the-5-laws), [The 6 moves, and no seventh](#the-6-moves-and-no-seventh),
+[The 6 laws](#the-6-laws), [The score](#the-score), [The 6 moves, and no seventh](#the-6-moves-and-no-seventh),
 [Overrides to the rest of the skill](#overrides-to-the-rest-of-the-skill),
 [Build order](#build-order),
-[A worked build: 39 seconds and no cuts](#a-worked-build-39-seconds-and-no-cuts)
+[A worked build: 39 seconds on one canvas](#a-worked-build-39-seconds-on-one-canvas)
 
-A self-contained film: about 25 to 30 seconds for a launch, no voice-over, no cut but the logo's, the product the only
-actor, scored by one music bed or by its own contacts.
-It isn't a clip cut into a read. We measured one reference, a launch film for a table-based research product,
-95.3s at 60fps. `uv run scripts/teardown.py all <film.mp4>` reproduces every number here from any mp4
-(`cuts`, `cards`, `tempo <track>`, `palette`); build order step 1 runs it on your reference.
+A self-contained film: about 25 to 30 seconds for a launch, no voice-over, the product the only actor, scored
+to one licensed bed. It isn't a clip cut into a read. The numbers come from 8 launch films measured on 2 Nov
+2026 (iPhone 14 Pro Dynamic Island, Raycast Pro, Raycast 2026, Arc 1.0, Linear Releases, Notion Mail,
+Cursor 2.0, Superhuman) and a 95.3s launch film for a table-based research product.
+`uv run scripts/teardown.py all <film.mp4>` reproduces every number from any mp4 (`cuts`, `cards`,
+`tempo <track>`, `palette`); build order step 1 runs it on your reference.
 
-The rest of the skill takes its clock from the cut and says a graphic must not repeat the sentence. Here
-there's no sentence to repeat. The graphic makes the argument and the type speaks for it, while the score sets
-the clock. With the clip-cut-to-a-read playbook, a session builds 15 independent scenes and cuts them
-together, which is the failure this file prevents. The reference has no cuts in 95 seconds.
+The rest of the skill takes its clock from the read and says a graphic must not repeat the sentence. Here
+there's no sentence. The product makes the argument, the cards speak for it, and the music sets the clock.
+With the clip-cut-to-a-read playbook, a session builds 15 independent scenes and cuts them together, which
+is the failure this file prevents.
 
-## The 5 laws
+## The 6 laws
 
-1. Use one camera on one canvas, and no cuts. Scene detection finds none at a 0.06 threshold. A change of
-   subject is always a move: push in, pull back, lateral drift, rack focus, gradient wipe. A scene that has to
-   appear fades up inside the moving frame. A cut tells the viewer the last shot is finished, and a move says
-   it's the same world. So the one cut is the last: a hard cut to the logo ends it.
-2. The bar is the edit unit. 133.3 BPM, beat 0.450s, **bar 1.80s**; across 32 cards the line-to-line cycle
-   clusters at 1.70 to 1.78s. One card gets one bar; the lines that carry the argument get two (3.47, 3.57,
-   4.32s measured); nothing gets less than one. Cut to the bar's length and don't snap to the downbeat (phase
-   scatters plus or minus 0.25 beat, and with no cuts there's nothing to snap). Rhythm is how long a thing
-   stays. Pick the track first, then measure its bar and build `beats.ts` in multiples of it.
-3. Inside a bar, the beats run 0.3 in, then a 1.0 hold, then 0.2 out and 0.2 empty. In fast, hold still, out
-   faster than in (weight arrives, then leaves), then a real gap of blank frame (measured 0.08 to 0.55s,
-   typically 0.20s). People cut the gap, and it's the part that matters. Crossfading A into B reads as one
-   thought being edited. A gap reads as a new thought.
-4. Tell one story, never a feature list. One object stays on screen the whole film and carries it
-   (Granola's pill, Seam's notch), through 4 to 6 beats. A beat is a claim, then the product doing exactly
-   that (real UI at real size, a cursor driving it); write each claim so the next 5 seconds can falsify it.
-   Where the product takes input, the sentence typed or dictated into it IS the pitch, so the words on screen
-   are the user's and not a caption. Many features fold into one "works with" slot that cycles real app
-   icons in place, never a beat each. The Seam master ran 70s of 12 feature captions in a row: "no real
-   storytelling" (2 Nov 2026). Past 3 type cards in a row it's a manifesto; run about 3 seconds of product
-   per 2 of type.
-5. One word carries the highlight. Plain near-black type, except one word on a pale tinted rounded
-   rectangle, wiped on from the left in about 0.2s after the line settles (`Directly.`, `already`, `CRM`,
-   `LinkedIn`). Never 2. The highlighted word can swap in place while the line stays fixed ("Do all your
-   `prospecting` in the product." to `lead research` to `lead generation` to `go-to-market`, 4
-   positionings over 3 bars).
+1. **One object owns the frame.** The iPhone's island sits centred for 20s; Linear is one graph for 21s;
+   Seam's notch never leaves. Hook with that object by 2.5s, never with a claim. A change of subject is a
+   move (push in, pull back, drift, rack focus) or the object changing state, never a cut to another world,
+   because a cut tells the viewer the last shot is finished. Talking heads and slow typed intros
+   (Superhuman, Cursor) felt slowest of the 8: none in a 30s film.
+2. **Build slow, then cut fast, on the bar grid.** Single-feature beats run about 2.2s; the montage changes
+   every 0.85 to 0.93s (at 128 BPM, a bar, then half a bar). Section changes land on bar downbeats. Cutting
+   on every onset isn't what good films do: of the 8, only Raycast Pro beat chance. Compute every cue from
+   the BPM (`Math.round(n * BAR)`), never from a typed frame.
+3. **Cards carry 1 to 4 words and alternate with the UI, never sit on top of it.** Median 2 in Raycast Pro,
+   3 to 4 in Notion. Plain speech, a question or a fact: "See that black bar?", "This used to be dead
+   space.", "Claude waits up here.", "No notch? You get a pill.", "Seam for Mac". Slogans ("Your notch, put
+   to work.") and triads ("Music, meetings, focus. All in the notch.") read as AI slop to the author and went.
+   A card runs 0.3 in, a hold, 0.2 out and 0.2 empty; the empty frames read as a new thought, where a
+   crossfade reads as one thought being edited.
+4. **Tell one story, never a feature list.** The object carries 4 to 6 beats; each is a card, then the
+   product doing exactly that (real UI at real size, a cursor driving it). Where the product takes input,
+   the sentence typed or dictated into it IS the pitch, so those words are the user's and not a caption.
+   Many features fold into the montage or a "works with" slot of real app icons, never a beat each: the
+   Seam master ran 70s of 12 feature captions in a row, "no real storytelling" (2 Nov 2026).
+5. **Show the expanded state, with real content.** An expanded view shows a feature; a compact one only
+   hints at it. Render it from the app: Seam's Claude usage came from a snapshot test feeding a fixture to
+   the view, since demo injection was debug-only. Now Playing plays the song the film is scored to, with its
+   real artist and a clock reading the song's real position at that frame. Never a fictional band.
+6. **The name lands on the loudest moment, and the ending is the music leaving.** Fade 40 dB over 4 to 8s,
+   or drop to silence, and hold the end card 3 to 4.5s. One word per card may carry a highlight: a pale
+   tinted rounded rectangle wiped on from the left in about 0.2s after the line settles. Never 2.
+
+## The score
+
+Pick the bed before the first frame, and pick the excerpt by its energy map. Print RMS per bar
+(`ffmpeg astats` per bar window), find a quiet build into a drop, and lay the film on that grid: Seam ran
+"I Do!" (Michael Ramir C., Mixkit) bars 50 to 63, two quiet bars, the drop at bar 54 under the montage, the
+music cut out before the card. Start the excerpt on a phrase so downbeats stay on the grid. Never change
+the track after `beats.ts` exists. Which licence and library: the `sound` skill.
+
+Every contact (the snap, the press, the digit) still gets a click from `sound.md`, at half volume under the
+bed. One sound per contact, not per element: 14 sounds across one camera move rattled in one
+film, and a sound under another's ring (a `tick` 7 frames into `settle`) is
+inaudible, so silence that cue. Check sync on a render with the bed muted: the bed's drums read as hits and
+put every one 5 to 8 frames "off". Timing and the check: `sound.md#on-the-contact-frame`.
 
 ## The 6 moves, and no seventh
 
@@ -56,35 +72,21 @@ together, which is the failure this file prevents. The reference has no cuts in 
 3. The gradient wipe: a blue silk mesh sweeps diagonally across the frame, covering and then uncovering it.
 4. The type dissolve: characters leave non-sequentially ("Introducing" goes to "In rod ci"), at random per
    character, never as a reverse typewriter.
-5. The parallax storm: 14 real logos drifting up at 4 depths, type pinned centre. Use it once, at the
-   loudest bar (54 to 58s).
+5. The parallax storm: 14 real logos drifting up at 4 depths. Use it once, at the loudest bar.
 6. The cursor handoff: a rendered cursor with real easing travels to a cell, a popover opens, text streams
    in. It arrives 3 to 5 frames before what it triggers, or the UI looks self-driving.
 
-**The gradient is punctuation.** It's dominant for 11.7s of 95, in 4 windows (2.4 to 5.0 title, 9.6 to 10.7 one
-wipe, 62.3 to 66.6 act break, 91.5 to 95.2 endcard). It's the only saturated frame, so it works as a full stop;
-anywhere else it means nothing. Build it as an animated mesh (mind the per-frame cost) and never as a static
-image with a scale on it: the folds move independently, which stops it reading as a PNG.
+**The gradient is punctuation.** It's dominant for 11.7s of the research film's 95, in 4 windows (title,
+one wipe, act break, end card). It's the only saturated frame, so it works as a full stop; anywhere else it
+means nothing. Build it as an animated mesh (mind the per-frame cost), never a static image with a scale on it.
 
 Colour comes down to one hue and the product. Ground `#F9FAF5` falling to `#EAEAEC` in the corners, never pure
-white. Ink `#1A1A1B`, never pure black. One hue, blue silk `#73AFCC` to white. Everything else comes from the
-product UI (avatars, score bars, real logos), so anything coloured on screen is the product: value before hue
-at its strictest.
+white. Ink `#1A1A1B`, never pure black. One hue. Everything else comes from the product UI (avatars, score
+bars, real logos), so anything coloured on screen is the product: value before hue at its strictest.
 
 The type is the voice. One weight, sentence case, one line, centred, about 4% of frame height, no tracking
 tricks, no second size on screen. This contradicts `craft.md`'s labels-only rule, which protects a clip
 against a talking head. It's correct for this register and wrong for the others.
-
-Pick the score before the first frame, one of two, never both. **A bed**: one track, no stems, no drop and
-no silence. Loudness runs -20 to -13 dBFS in the first half and -13 to -10 in the second; it builds and never
-breaks, because a drop demands a cut. There are 2 earned lifts: 54 to 58s under the storm, and 81 to 94s
-under the closing proof and endcard. Cut the picture to the track and never change it after `beats.ts`
-exists. **A contact score**: no bed, and a click, clack or tick on every frame something makes contact (the
-snap, the press, the digit). The clicks are the rhythm, so cues sit on a beat grid
-(15 frames at 120 BPM). Only a bed from the house roster (the sound library's `library.json`), never stock; it held none
-then, so that film is a contact score. One sound per contact, not per element: 14 sounds across one camera
-move rattled in one film, and a sound under another's ring (a `tick` 7 frames into `settle`) is
-inaudible, so silence that cue. Timing and the check: `sound.md#on-the-contact-frame`.
 
 The moves that made the Seam film, as SwiftUI `(response, dampingFraction)` converted exactly to Remotion
 (stiffness (2π/response)², damping 4πζ/response, mass 1). Take the product's own springs for its own UI,
@@ -100,27 +102,30 @@ scale followed in log space and a few degrees of tilt into a fast move, so a leg
 
 ## Overrides to the rest of the skill
 
-The clock is the track's bar grid and the SRT plays no part. Rung 1 is the film (the real screen is the
-argument). Type is sentence case, set to be read. The score is a bed or contacts. The only cut is to the logo. The deliverable is one film
-whose direction is picked at the gate, with no 3 designs per beat. Unchanged: the direction gate runs first,
-real logos and screens beat abstractions, one shared motion file, every decision carries its WHY.
+The clock is the bed's bar grid and the SRT plays no part. Rung 1 is the film (the real screen is the
+argument). Type is sentence case, set to be read. Cuts land on section downbeats and the end card. The
+deliverable is one film whose direction is picked at the gate, with no 3 designs per beat. Unchanged: the
+direction gate runs first, real logos and screens beat abstractions, one shared motion file, every decision
+carries its WHY.
 
 ## Build order
 
 0. Direction gate, one still per look.
-1. Reverse engineer a reference: `yt-dlp` it, `teardown.py sheet` (a timecoded frame every 0.5s), then write
-   its beat table (time, what's on screen, the realism device, the transition) and copy its structure.
-   Granola's 21s launch reads: keycaps with side walls and motion blur, a glowing pill over a real Claude chat
-   box, the dictated text that is the instructions, a "works in any app" icon slot, a hard cut to the logo.
-2. Choose the track, `teardown.py tempo <track>`; everything is a multiple of that bar.
-3. Plan the story in a text file before any code: the one object, then each beat's claim (one highlight word
-   marked) beside its proof. If it doesn't read as a story there, no motion rescues it.
-4. Lay the canvas out in space before animating, so the camera travels between screens uncut. Check every
+1. Watch more than one launch film, and reverse engineer the closest: `yt-dlp` it, `teardown.py sheet` (a
+   timecoded frame every 0.5s), then write its beat table (time, what's on screen, the realism device, the
+   transition) and copy its structure. Granola's 21s launch reads: keycaps with side walls and motion blur,
+   a glowing pill over a real Claude chat box, the dictated text that is the instructions, a "works in any
+   app" icon slot, a hard cut to the logo.
+2. Choose the bed and its excerpt: `teardown.py tempo <track>` and RMS per bar. Everything is a multiple of
+   that bar.
+3. Plan the story in a text file before any code: the one object, then each beat's card beside its proof.
+   If it doesn't read as a story there, no motion rescues it.
+4. Lay the canvas out in space before animating, so the camera travels between screens. Check every
    render and fixture you'll reuse for placeholder geometry.
-5. Camera path, then screens, then type last (pinned to the frame and independent of the canvas).
-6. Still every claim's hold frame and every proof's resolve frame, and look at all of them. Frame 0 too:
-   it's the thumbnail and the file's first frame, so start the first line's entrance about 0.5s before 0 and
-   it already reads there. A bare ground at frame 0 ships a blank thumbnail.
+5. Camera path, then screens, then cards last.
+6. Still every card's hold frame and every proof's resolve frame, and look at all of them. Frame 0 too:
+   it's the thumbnail, so the object is already there and the first card's entrance starts about 0.5s
+   before 0. A bare ground at frame 0 ships a blank thumbnail.
 7. Watch the whole file once at speed with sound on: the only check that catches a bar that drags or a move
    that reads as a cut.
 
@@ -129,25 +134,22 @@ asset authenticity), `github.com/heygen-com/hyperframes` (oversized cursor, type
 and Remotion's `3d.md` for physical keycaps (vendored at `remotion/remotion-markup/3d.md`).
 
 It fails 4 ways, and each has a check. A feature list: more than 6 beats or past 30s, so fold features into
-the works-with slot. A slideshow: `teardown.py cuts` reads zero except the logo cut. The type outruns the
-product: product time runs about half again the type time. The bars drift (one card at 1.4s, the next at
-2.6s): `teardown.py cards` on your render should show a flat cycle column.
+the montage. A slideshow: `teardown.py cuts` finds cuts off the downbeats or away from the object. Slop
+copy: a card past 5 words, a slogan or a triad. The cards outrun the product: product time runs about half
+again the card time.
 
-Done when: one object carries 4 to 6 beats, no cut but the logo's, a flat cycle column, product time above
-type time, and one watch at speed.
+Done when: one object owns the frame from 2.5s, 4 to 6 beats, every cue on the bar grid, cards of 1 to 4
+words between the UI, the name on the loudest bar, the music leaving at the end, and one watch at speed.
 
-## A worked build: 39 seconds and no cuts
+## A worked build: 39 seconds on one canvas
 
 A screen-recorder app: 39.2s at 30fps, with 8 claims over 4 live screens and one bed.
 
 - The bar is the clock. The bed measured 124.02 BPM, so a bar is 1.935s or 58.06 frames. Round once per
   bar with `Math.round(n * BAR)`; round per beat and a fractional bar summed 30 times drifts a frame a bar.
-  The first guess borrowed the reference's 54-frame bar and the cards sat short of the music. The 3 opening
-  lines hold 0.75 bar (2 or 3 words read in 1.4s), later claims one bar, proofs 2 to 3, the dullest proof (a
-  chat) at 1.5x.
+  The first guess borrowed the reference's 54-frame bar and the cards sat short of the music.
 - Claims and proofs share one canvas, screens 3000 world pixels apart. During a claim the camera is between
-  2 stations and neither phone is in frame, so the claim gets a blank frame without a cut. It leaves 22
-  frames before each claim lands.
+  2 stations and neither phone is in frame, so the card gets a blank frame without a cut.
 - The proofs are live code. The first cut faded between PNGs in device mockups, so nothing on screen did
   what the type said. Port the product's own screens (an AI writing a script, a teleprompter following a
   voice, review striking retakes). People believe a claim when the next 5 seconds show it happening.
@@ -163,6 +165,5 @@ A screen-recorder app: 39.2s at 30fps, with 8 claims over 4 live screens and one
   pos += v * dt;
   ```
 - Fit the film to the music by cutting shots. The first version ran 29.5 bars with a slow bar and a half
-  between the last proof and the end card. Cutting it and starting the bed 8 bars in (a whole phrase, so
-  downbeats stay on the grid) put the bed's lift on the last proof. Measure each bar's RMS with `ffmpeg
-  astats` before picking the start.
+  between the last proof and the end card. Cutting it and starting the bed 8 bars in put the bed's lift on
+  the last proof.
