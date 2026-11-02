@@ -7,11 +7,11 @@
 [Build order](#build-order),
 [A worked build: 39 seconds and no cuts](#a-worked-build-39-seconds-and-no-cuts)
 
-A self-contained film: 30 to 120 seconds, no voice-over, no cuts, the product the only actor, scored by one
-music bed or by its own contacts.
+A self-contained film: about 25 to 30 seconds for a launch, no voice-over, no cut but the logo's, the product the only
+actor, scored by one music bed or by its own contacts.
 It isn't a clip cut into a read. We measured one reference, a launch film for a table-based research product,
 95.3s at 60fps. `uv run scripts/teardown.py all <film.mp4>` reproduces every number here from any mp4
-(`cuts`, `cards`, `tempo <track>`, `palette`); run it on a film before copying its look.
+(`cuts`, `cards`, `tempo <track>`, `palette`); build order step 1 runs it on your reference.
 
 The rest of the skill takes its clock from the cut and says a graphic must not repeat the sentence. Here
 there's no sentence to repeat. The graphic makes the argument and the type speaks for it, while the score sets
@@ -23,7 +23,7 @@ together, which is the failure this file prevents. The reference has no cuts in 
 1. Use one camera on one canvas, and no cuts. Scene detection finds none at a 0.06 threshold. A change of
    subject is always a move: push in, pull back, lateral drift, rack focus, gradient wipe. A scene that has to
    appear fades up inside the moving frame. A cut tells the viewer the last shot is finished, and a move says
-   it's the same world.
+   it's the same world. So the one cut is the last: a hard cut to the logo ends it.
 2. The bar is the edit unit. 133.3 BPM, beat 0.450s, **bar 1.80s**; across 32 cards the line-to-line cycle
    clusters at 1.70 to 1.78s. One card gets one bar; the lines that carry the argument get two (3.47, 3.57,
    4.32s measured); nothing gets less than one. Cut to the bar's length and don't snap to the downbeat (phase
@@ -33,12 +33,14 @@ together, which is the failure this file prevents. The reference has no cuts in 
    faster than in (weight arrives, then leaves), then a real gap of blank frame (measured 0.08 to 0.55s,
    typically 0.20s). People cut the gap, and it's the part that matters. Crossfading A into B reads as one
    thought being edited. A gap reads as a new thought.
-4. Run claim then proof, 7 times. A typographic claim takes one bar on a blank frame, with one centred line
-   and no product visible. Then the product does exactly that (4 to 8s, real UI at real size, a cursor driving
-   it). Claims may pair as setup and turn ("Don't call the main line." then "Directly."). The reference hits
-   3 in a row twice, its ceiling, because past 3 the type has outrun the product and it's a manifesto. Run
-   about 3 seconds of product per 2 of type. Write each claim so the next 5 seconds can falsify it. A tour
-   without the claim line is a screen recording.
+4. Tell one story, never a feature list. One object stays on screen the whole film and carries it
+   (Granola's pill, Seam's notch), through 4 to 6 beats. A beat is a claim, then the product doing exactly
+   that (real UI at real size, a cursor driving it); write each claim so the next 5 seconds can falsify it.
+   Where the product takes input, the sentence typed or dictated into it IS the pitch, so the words on screen
+   are the user's and not a caption. Many features fold into one "works with" slot that cycles real app
+   icons in place, never a beat each. The Seam master ran 70s of 12 feature captions in a row: "no real
+   storytelling" (2 Nov 2026). Past 3 type cards in a row it's a manifesto; run about 3 seconds of product
+   per 2 of type.
 5. One word carries the highlight. Plain near-black type, except one word on a pale tinted rounded
    rectangle, wiped on from the left in about 0.2s after the line settles (`Directly.`, `already`, `CRM`,
    `LinkedIn`). Never 2. The highlighted word can swap in place while the line stays fixed ("Do all your
@@ -87,27 +89,34 @@ inaudible, so silence that cue. Timing and the check: `sound.md#on-the-contact-f
 The moves that made the Seam film, as SwiftUI `(response, dampingFraction)` converted exactly to Remotion
 (stiffness (2π/response)², damping 4πζ/response, mass 1). Take the product's own springs for its own UI,
 since people already know that feel: open 0.32/0.88 (the one overshoot), close 0.4/1.0, resize 0.3/0.95,
-arrive 0.3/0.8, content 0.35/1.0 and 3 frames behind the shape, never bouncing. One black shape morphs
-through every state, with each state's real render revealed inside it; cutting between screenshots shows
-the states and loses the object. Film-only curves: a press 0.22/0.55 (one visible rebound reads as a key), a
+arrive 0.3/0.8, content 0.35/1.0 and 3 frames behind the shape, never bouncing. One black shape, in its
+real outline (SKILL.md rule 3), morphs through every form the product takes, notch to floating pill
+included ("we need to show that it can morph into a pill as well"); a cut between forms loses the object.
+Anything alive inside it plays as a 30fps frame sequence from the app's own renderer (a snapshot test that
+freezes time per frame). 2 stills crossfaded to fake the voice glow read as "the waveform does not look
+photorealistic at all" (2 Nov 2026). Film-only curves: a press 0.22/0.55 (one visible rebound reads as a key), a
 word rising into its line 0.42/0.78. The camera is a critically damped follower of each leg's target, with
 scale followed in log space and a few degrees of tilt into a fast move, so a leg cut short never jumps.
 
 ## Overrides to the rest of the skill
 
 The clock is the track's bar grid and the SRT plays no part. Rung 1 is the film (the real screen is the
-argument). Type is sentence case, set to be read. The score is a bed or contacts. Cuts are zero. The deliverable is one film
+argument). Type is sentence case, set to be read. The score is a bed or contacts. The only cut is to the logo. The deliverable is one film
 whose direction is picked at the gate, with no 3 designs per beat. Unchanged: the direction gate runs first,
 real logos and screens beat abstractions, one shared motion file, every decision carries its WHY.
 
 ## Build order
 
 0. Direction gate, one still per look.
-1. Choose the track, `teardown.py tempo <track>`; everything is a multiple of that bar.
-2. Write all claim lines first as a flat list of 9 to 12, with the one highlight word marked. If it
-   doesn't read as an argument in a text file, no motion rescues it.
-3. Pair each claim with its proof on one page.
-4. Lay the canvas out in space before animating, so the camera travels between screens uncut.
+1. Reverse engineer a reference: `yt-dlp` it, `teardown.py sheet` (a timecoded frame every 0.5s), then write
+   its beat table (time, what's on screen, the realism device, the transition) and copy its structure.
+   Granola's 21s launch reads: keycaps with side walls and motion blur, a glowing pill over a real Claude chat
+   box, the dictated text that is the instructions, a "works in any app" icon slot, a hard cut to the logo.
+2. Choose the track, `teardown.py tempo <track>`; everything is a multiple of that bar.
+3. Plan the story in a text file before any code: the one object, then each beat's claim (one highlight word
+   marked) beside its proof. If it doesn't read as a story there, no motion rescues it.
+4. Lay the canvas out in space before animating, so the camera travels between screens uncut. Check every
+   render and fixture you'll reuse for placeholder geometry.
 5. Camera path, then screens, then type last (pinned to the frame and independent of the canvas).
 6. Still every claim's hold frame and every proof's resolve frame, and look at all of them. Frame 0 too:
    it's the thumbnail and the file's first frame, so start the first line's entrance about 0.5s before 0 and
@@ -115,11 +124,17 @@ real logos and screens beat abstractions, one shared motion file, every decision
 7. Watch the whole file once at speed with sound on: the only check that catches a bar that drags or a move
    that reads as a cut.
 
-It fails 3 ways, and each has a check. A slideshow: `teardown.py cuts` should read zero. The type outruns
-the product: product time runs about half again the type time. The bars drift (one card at 1.4s, the next at
+Outside packs hold patterns worth stealing: `github.com/vibe-motion/skills` (story-pattern beat tables,
+asset authenticity), `github.com/heygen-com/hyperframes` (oversized cursor, typed prompt, motion doctrine),
+and Remotion's `3d.md` for physical keycaps (vendored at `remotion/remotion-markup/3d.md`).
+
+It fails 4 ways, and each has a check. A feature list: more than 6 beats or past 30s, so fold features into
+the works-with slot. A slideshow: `teardown.py cuts` reads zero except the logo cut. The type outruns the
+product: product time runs about half again the type time. The bars drift (one card at 1.4s, the next at
 2.6s): `teardown.py cards` on your render should show a flat cycle column.
 
-Done when: zero cuts, a flat cycle column, product time above type time, and one watch at speed.
+Done when: one object carries 4 to 6 beats, no cut but the logo's, a flat cycle column, product time above
+type time, and one watch at speed.
 
 ## A worked build: 39 seconds and no cuts
 

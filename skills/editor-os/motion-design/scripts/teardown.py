@@ -15,7 +15,7 @@ Run it on a reference before copying its look, and on your own render before cal
     uv run teardown.py tempo    <file.mp4|.wav>  # BPM, beat, bar -- the unit beats.ts is built in
     uv run teardown.py cards    <file.mp4>       # every centred-text card: length, gap, cycle
     uv run teardown.py palette  <file.mp4>       # ground, ink and the saturated windows
-    uv run teardown.py sheet    <file.mp4>       # 1fps contact sheets, to read the beat map by eye
+    uv run teardown.py sheet    <file.mp4>       # a timecoded frame every 0.5s, to write the beat table
     uv run teardown.py camera   <file.mp4> --ss 174 --t 12   # camera velocity, settle tau, residual
     uv run teardown.py ground   <file.mp4> --ss 181          # vignette profile and accent clusters
 

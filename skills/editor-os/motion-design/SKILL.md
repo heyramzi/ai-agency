@@ -40,7 +40,9 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    Make gets the scenario running, a course gets the lesson page inside it (`broll` 2b). A logo is the
    real mark (simple-icons, else a logo API by domain, never an image search). A product that exists (Claude,
    ClickUp, Descript, a real app screen) is its real UI cropped to the one field the line is about, readable at
-   phone width, never a brand-styled glass card or a whole table pasted in. Brand cards are for ideas and claims. 15 correct clips that each open on an
+   phone width, never a brand-styled glass card or a whole table pasted in. A stand-in for a physical or product shape takes its
+   real outline: a snapshot test that used a black rectangle for the MacBook camera notch put a square box
+   in a launch film, so check a render or fixture for placeholder geometry before you reuse it. Brand cards are for ideas and claims. 15 correct clips that each open on an
    empty frame make a slideshow. Aim for a single world, a motif that changes and one motion language
    (`motion.ts`, `references/craft.md`). A motif that returns is one component with fixed node positions
    (one rail component did): centred on the count, a fourth node moved the first three.
@@ -48,7 +50,7 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 ## Which branch
 
 - No read (no voice-over, no face, no transcript): a product film. The type is the only voice and the clock
-  is the music; the reference films have zero cuts in 95 seconds. `references/product-film.md` replaces the
+  is the music; one object carries 4 to 6 beats, with no cut but the logo's. `references/product-film.md` replaces the
   clock, type and sound rules below.
 - Which cell a line gets, or what to do when none fits: `references/placement.md`.
 - A CTA, lower third or end card, evergreen and reused for years: `references/ctas.md` (someone else's channel
