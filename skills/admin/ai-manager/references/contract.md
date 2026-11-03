@@ -105,7 +105,7 @@ directories, among them 139 impeccable **v2.1.1** sub-skills across 9 repos whil
 other directories under `.agents/` are dead.
 
 **Every repo takes its agents and skills from vibe-kit** through `vibekit.json`. A repo keeps its
-own only for a job no other repo has (r-hub's `taxes-irs`, an app's `ship`), named under
+own only for a job no other repo has (an app's `ship`), named under
 `claude.local`. Anything else is a vibe-kit gap: add it to `ai-doc/` and subscribe. A downloaded
 `frontend-developer` for React sat in the SvelteKit `heyramzi-website` beside the kit's
 `frontend-designer` until 8 Oct 2026. Doctor reports an undeclared local agent as an `orphan`.
