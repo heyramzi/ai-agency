@@ -157,7 +157,7 @@ Reel flags: `--take` to force the pairing, `--keep-scratch` to retain the phone 
 second track, `--silence-gaps`, `--codec`, `--archive DIR`, `--card PATH`, `--output PATH`.
 Note flags: `--title`, `--vad-threshold` (0.5), `--min-silence-ms` (400), `--pad` (0.25),
 `--bitrate` (24k), `--lang` (auto, so French and English both work), `--keep-original`,
-`--no-note`, `--vault DIR`.
+`--no-note`, `--vault DIR` (default `vault` in the current folder, or `DJI_NOTE_VAULT`).
 
 Reel output lands beside the source as `NAME-dji.MOV`. **The original is never modified**, so a
 bad run costs nothing but disk. Note output lands in the day's archive folder and the vault.
