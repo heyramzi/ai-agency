@@ -154,5 +154,20 @@
     "cluster": "search",
     "expect": "skill:seo",
     "query": "refresh this post so it gets cited by ChatGPT: getseam.app/blog/voice-to-text-mac"
+  },
+  {
+    "cluster": "improve-codebase",
+    "expect": "skill:improve",
+    "query": "audit the whole ui repo and tell me what's worth fixing, then write plans a cheaper agent can execute"
+  },
+  {
+    "cluster": "improve-codebase",
+    "expect": "skill:improve",
+    "query": "where should we take client-glance next? look at the code and give me grounded options, not generic ideas"
+  },
+  {
+    "cluster": "improve-codebase",
+    "expect": "skill:refactor",
+    "query": "the sync module in to-sheets is a pile of pass-throughs, simplify its boundaries"
   }
 ]
