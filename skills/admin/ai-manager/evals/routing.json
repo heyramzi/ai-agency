@@ -134,5 +134,25 @@
     "cluster": "agents",
     "expect": "agent:code-reviewer",
     "query": "review my diff before I merge, is it actually production ready?"
+  },
+  {
+    "cluster": "search",
+    "expect": "skill:aso",
+    "query": "Wavenote's App Store keywords field feels weak, find better app store keywords and write them back"
+  },
+  {
+    "cluster": "search",
+    "expect": "skill:aso",
+    "query": "audit this listing https://apps.apple.com/us/app/otter-transcribe-voice-notes/id1276437113"
+  },
+  {
+    "cluster": "search",
+    "expect": "skill:seo",
+    "query": "what should clientglance.com write next to rank on Google? impressions are high but clicks are zero"
+  },
+  {
+    "cluster": "search",
+    "expect": "skill:seo",
+    "query": "refresh this post so it gets cited by ChatGPT: getseam.app/blog/voice-to-text-mac"
   }
 ]
