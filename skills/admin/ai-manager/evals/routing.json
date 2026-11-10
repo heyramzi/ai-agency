@@ -169,5 +169,20 @@
     "cluster": "improve-codebase",
     "expect": "skill:refactor",
     "query": "the sync module in to-sheets is a pile of pass-throughs, simplify its boundaries"
+  },
+  {
+    "cluster": "launch-film",
+    "expect": "skill:video-reverse-engineer",
+    "query": "we relaunch ClickUp to Sheets on Product Hunt Saturday, start the launch film from the best launch videos out there"
+  },
+  {
+    "cluster": "launch-film",
+    "expect": "skill:video-reverse-engineer",
+    "query": "tear down the Notion Mail and Linear launch videos and tell me what our V1 film is missing"
+  },
+  {
+    "cluster": "launch-film",
+    "expect": "skill:reverse-engineer",
+    "query": "reverse engineer how Screen Studio's auto-zoom works so we can build it into CutKit"
   }
 ]
