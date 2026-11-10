@@ -12,7 +12,7 @@ to one licensed bed. It isn't a clip cut into a read. The numbers come from 8 la
 2026 (iPhone 14 Pro Dynamic Island, Raycast Pro, Raycast 2026, Arc 1.0, Linear Releases, Notion Mail,
 Cursor 2.0, Superhuman) and a 95.3s launch film for a table-based research product.
 `uv run scripts/teardown.py all <film.mp4>` reproduces every number from any mp4 (`cuts`, `cards`,
-`tempo <track>`, `palette`); build order step 1 runs it on your reference.
+`tempo <track>`, `palette`); run it on your own render before calling it done.
 
 The rest of the skill takes its clock from the read and says a graphic must not repeat the sentence. Here
 there's no sentence. The product makes the argument, the cards speak for it, and the music sets the clock.
@@ -111,9 +111,8 @@ carries its WHY.
 ## Build order
 
 0. Direction gate, one still per look.
-1. Watch more than one launch film, and reverse engineer the closest: `yt-dlp` it, `teardown.py sheet` (a
-   timecoded frame every 0.5s), then write its beat table (time, what's on screen, the realism device, the
-   transition) and copy its structure. Granola's 21s launch reads: keycaps with side walls and motion blur,
+1. Tear down the films in its class and write the beat sheet with the `video-reverse-engineer` skill,
+   then copy the closest one's structure. Granola's 21s launch reads: keycaps with side walls and motion blur,
    a glowing pill over a real Claude chat box, the dictated text that is the instructions, a "works in any
    app" icon slot, a hard cut to the logo.
 2. Choose the bed and its excerpt: `teardown.py tempo <track>` and RMS per bar. Everything is a multiple of
