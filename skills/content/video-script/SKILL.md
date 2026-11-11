@@ -11,7 +11,7 @@ The skill has 4 branches on one trunk. What to make next (the 6 pipes, the 4 gat
 
 ## The trunk
 
-**1. Anchor.** The author, 4 Oct 2026: "I need to stay humble and copy before I become good." Pick one competitor video on the subject that beat its own channel (`pnpm corpus outliers` in `~/cutkit` for a Short, `references/choosing-ideas.md` pipes 1 to 3 for long-form) and put its transcript beside the draft. Match its moves beat for beat (where it names the tool, where it counts, how long a step runs, where it asks) and swap in his substance and proof, never its words. The Sofiane batch had 40,000 words of rules behind 130-word scripts and no anchor, and came out unreadable.
+**1. Anchor.** The author, 4 Oct 2026: "I need to stay humble and copy before I become good." Pick one competitor video on the subject that beat its own channel (`pnpm corpus outliers` in `~/apple-apps/products/cutkit` for a Short, `references/choosing-ideas.md` pipes 1 to 3 for long-form) and put its transcript beside the draft. Match its moves beat for beat (where it names the tool, where it counts, how long a step runs, where it asks) and swap in his substance and proof, never its words. The Sofiane batch had 40,000 words of rules behind 130-word scripts and no anchor, and came out unreadable.
 Done when the brief names the anchor with its breakout and URL.
 
 **2. Feed evidence.** Read `community`'s `references/engagement-what-works.md` before drafting. It scores competitor posts against each account's own median and carries its measurement date. It says what the feed rewards, never what's good; the bans in `@heyramzi/lint` and `humanizer` outrank every number on it.
