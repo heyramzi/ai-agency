@@ -93,7 +93,7 @@ function main(argv) {
   return command ? 2 : 0;
 }
 
-// The real path: settings name ~/vibe-kit, a link to vibe-kit, and import.meta.url is resolved.
+// The real path: settings may reach this file through a linked folder, and import.meta.url is resolved.
 if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   process.exitCode = main(process.argv.slice(2));
 }
