@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prove candidates.py and restate.py read a Tella project's edit.json. usage: test_editwords.py
 
-TSK-1444: on Tella there is no doc.json, only the words `editor-os new` pulled into edit.json. The
+On Tella there is no doc.json, only the words `editor-os new` pulled into edit.json. The
 words below are the recorded test clip's (29 Oct 2026), on the cut clock. Its three attempts at
 "between newsletters, client emails" are the repeat pass 1 has to find, as a span `drop` takes.
 """
