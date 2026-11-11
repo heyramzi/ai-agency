@@ -33,9 +33,7 @@ and tell it as a board.
 
 ## The spine
 
-Every video runs Problem, Agitate, Solution, and the board opens the same way. The author, 21 Oct
-2026: "It's always problem, amplify, solution. All our videos should follow the same framework."
-One canvas with a frame per chapter, in the script's order:
+Every video runs Problem, Agitate, Solution, and the board opens the same way. One canvas with a frame per chapter, in the script's order:
 
 1. **The pain.** What's broken for the viewer today, in their words, as a known meme format or
    a real screenshot (the GTD board opened on a Drake meme). No calm state yet.

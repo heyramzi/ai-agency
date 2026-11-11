@@ -16,8 +16,7 @@ so the sound a clip names is the same sound every time. The kit this was measure
 cut from 12 sounds 2 finished edits used, plus 2 sine marks: `tick` `dot` `click` | `enter` `exit`
 `sweep` `climb` `release` | `sub` | `shine` `settle` | `stamp` `bloom`.
 
-The oscillators went on 8 Sep 2026. The kit was 17 sine voices on one chord: *"I don't like the
-sounds used in the motion design. These are not classical YouTube video editing sounds."* It's checkable: a
+No oscillators: 17 sine voices on one chord didn't sound like YouTube editing. It's checkable: a
 human edit puts almost nothing in 600 to 4000Hz (where a voice carries intelligibility) and splits events into
 air above and weight below, while the sine kit sat at 20% presence with zero energy above 2.5kHz and read as UI.
 
@@ -31,8 +30,7 @@ voice at zero calls in `src/` is the next to go: the kit went from 18 names to 1
 census kit beat 2 Mixkit-pool kits (*"I think the ones of today are actually good"*, then *"but maybe we
 have a little bit too many"*).
 
-Match the voice's contour to the graphic's shape.
-A trend chart under `sweep` doesn't convey growth, so the shape's motion has to follow the sound.
+Match the voice's contour to the graphic's shape: a trend chart under `sweep` doesn't convey growth.
 Grows, climbs or fills: `climb` (cut to *end* on the beat). Passes or scans laterally:
 `sweep`. Lands: `click` (plus `sub` for weight). One small repeated event: `tick`. Leaves or empties:
 `release` or `exit`. Resolves or holds: `settle`. A shape no voice matches gets a recorded source added to

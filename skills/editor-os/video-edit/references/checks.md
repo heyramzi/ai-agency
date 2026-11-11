@@ -20,10 +20,10 @@ Did the take obey the rules the script was written under? Source: `video-script`
 - D6. Every number has an artefact. Fail on a figure spoken with no proof named or shown; one invented figure costs the position.
 - D7. Runtime and word budget. 3,600 to 4,200 words at 190 to 200 wpm is about 19 minutes (beat 29 in the control). Fail over 4,500 *delivered* words, after retakes are discounted; report raw and discounted separately, judge the discounted.
 - D8. The hook is the planned hook. The first 30 seconds are `video-script`'s hook branch, wording load-bearing. Fail if the quoted cold-open lines were paraphrased; `n/a` if a different hook was kept (say which shipped).
-- D9. First person at zero. Count I, I'm, I'll, I've, my, mine, me, we, our against you, your, yourself. 4 Shorts (20 Aug 2026) measured 12 against 63, and 2 had a literal zero. `take-stats.py` returns `firstPerson`, `secondPerson`, `firstPersonHits` (each with the sentence to rewrite) and `firstPersonInOpen`. Fail on first person outside 4 jobs (a hedge on his own number, the DM ask, an assignment, a line somebody else said, plus D2's failure block), and on any in the open (first 30 s long-form, first sentence of a Short). Quote the worst and write the "you" sentence. Source: `humanizer` "On camera, every I is a you"; 20 Aug 2026: "People don't care about me. Every I should be a you."
+- D9. First person at zero. Count I, I'm, I'll, I've, my, mine, me, we, our against you, your, yourself. 4 Shorts (20 Aug 2026) measured 12 against 63, and 2 had a literal zero. `take-stats.py` returns `firstPerson`, `secondPerson`, `firstPersonHits` (each with the sentence to rewrite) and `firstPersonInOpen`. Fail on first person outside 4 jobs (a hedge on his own number, the DM ask, an assignment, a line somebody else said, plus D2's failure block), and on any in the open (first 30 s long-form, first sentence of a Short). Quote the worst and write the "you" sentence. Source: `humanizer` ("On camera, every I is a you").
 - D10. The story gate (computed, not read): `python3 .claude/skills/video-script/scripts/story_metrics.py transcript.txt --duration <seconds> --grade` returns 7 rules, each with the breaking sentence and its percentile over 627 videos. Fail on every FAIL row (banned throat-clearing, a re-hook with no fact across the seam, over 3 negation pivots, hedging above corpus p90, 831 s with no question reopened, contrast below p10). WARN goes under "Also seen". `n/a` when the transcript has no punctuation (yt-dlp captions; Descript exports are punctuated). Quote the printed sentence, never the count alone. None of these axes separated a winner from a control, so a fail is a retention finding, never a reach one: say so in the report.
 
-`take-stats.py`'s word lists and all of `story_metrics.py`'s pattern lists are English-only: on a French take they read false-zero passes (10 Sep 2026).
+`take-stats.py`'s word lists and all of `story_metrics.py`'s pattern lists are English-only: on a French take they read false-zero passes.
 
 ## Strategy checks
 
@@ -103,7 +103,7 @@ pnpm descript settings after.json                 # or a document saved by `doc 
 | Layer order | twin, graphic, camera | `cards[].layers[]`, 0 nearest |
 | Frame | 1920x1080 or larger | `compositions[].videoMetadata` |
 
-Studio sound sits near 50%, other audio stays low, and the green screen and the regular screen share the same uplighting and skin-smoothing settings.
+Studio sound sits near 50%, other audio stays low, and the green screen and the regular screen share the same uplighting and skin-smoothing settings (10 / 50 / 0 background brightness).
 A percentage is a number and never a taste: one b-roll clip at 70% is a fault, and cards differing on one look row read as "the face flickers", so the gate compares twins card by card. Shadow, Border and corner radius belong to the layout and are held to nothing.
 
 The command can't see the key itself (a clean edge on a busy frame is a look), the captions, chapters and end card; the cut's checks are in [cutting.md](cutting.md). Repairs:

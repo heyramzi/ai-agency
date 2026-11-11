@@ -1,7 +1,7 @@
 # Shorts script
 
 One reference for the whole job: the structure, the corpus of hooks that ran, and the note shape.
- So
+A Short written with none of them loaded comes out as an essay paragraph. So
 the pieces specific to a whole Short live here, and this is the one to load when somebody says
 "create a short". The truth rule and the voice pass are the trunk's, in `SKILL.md`, and outrank
 everything here.
@@ -36,7 +36,7 @@ rewrite it.
    the 30 shapes reverse-engineered from 475 banded openings plus our own posts. Then write 3
    variants on different mechanisms and rate each one for drop-off, per [video-hooks.md](video-hooks.md).
    Write the 2nd beat too: the doubt the viewer already has, said out loud. Then run the 7 moves
-   in the library's Part 0, the fixes he made live on 5 Oct 2026 when the written hooks didn't hold.
+   in the library's Part 0, the fixes he makes on camera when a written hook doesn't hold.
 3. **Build the body on the anchor's structure**, using [shorts-structures.md](shorts-structures.md):
    outcome hook, named method (only a name you'd say anyway, like "money first": "I call my fix
    the one library rule" is a label made up for a checker), 2 or 3 steps each carrying an example, a flip at about 25 seconds
@@ -53,8 +53,7 @@ rewrite it.
    "and". 2 hits stay when you'd defend them out loud, because the top band runs on both: a
    "here's how" opener and a 2-beat slogan ("one library, one rule"). Count steps the way the
    top band does, "step 1, step 2, step 3" out loud. Then CutKit's `check_script`: nothing is
-   filed under a B (B- fails). The author, 6 Oct 2026, on a batch that sat at F: "don't stop until
-   they all have at least B or A." The grade is the floor, not the test. It doesn't track
+   filed under a B (B- fails), so keep rewriting until every script in the batch has B or A. The grade is the floor, not the test. It doesn't track
    breakout (rank correlation -0.06 on 20 competitor Shorts) and gave S12 a B- when the author called it unreadable, so
    the truth rule still outranks it and the last test is yours: read it out loud to someone
    who's never heard of the subject. A batch fanned out to subagents goes to `video-producer`, never general-purpose.
@@ -68,7 +67,7 @@ rewrite it.
    the code's letter: `S` Skills, `C` ClickUp, `A` AI and agents, `L` Lifestyle, `P` Product, `M`
    Mindset. A push with a title that exists updates that script, never adds a copy. Open a `to do`
    task on the Socials list whose description says `Script: CutKit > CODE`.
-6b. **Build what's on screen before the take.** The author, 4 Oct 2026: whoever writes the Short
+6b. **Build what's on screen before the take.** Whoever writes the Short
    also makes the visuals, the dashboards and screens he shows as b-roll, overlays or a screen share.
    A re-check line that says "have a dashboard on screen" hands him the build. So give every line that
    shows something one of 3 sources. A real screen is a product he owns or a demo workspace, never a

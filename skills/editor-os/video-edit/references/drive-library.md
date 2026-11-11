@@ -20,10 +20,10 @@ pnpm descript library import sounds.json --folder "Sound Signature"
 - Names say what the file is. `02_broll_run-park_4k.mov` is 2160x3840 (vertical): read size off `assetJson.quality.original.video` and rename at the source too.
 - `Sounds/` uses the kit vocabulary: `whoosh`, `whoosh-hi`, `whoosh-mid`, `whoosh-deep`, `swish`, `zoom`, `riser`, `readout`, `shuffle`, `ui`, `chime`, `chime-soft`, `mouse` (the one voice only the pack plays). The pack carries 11 of them (everything except `zoom` and `chime`); see the layouts page in the studio.
  The names are the sound library's JSON
-, also the app's Descript kit shelf: one name from census to timeline (it held `Chime Light` and `Whip Low Whoosh` until 8 Sep 2026). `Sound Signature` became `Sounds` on 9 Sep 2026 to match the project.
-- A flat panel of upload names means the client couldn't load the document, and the project isn't messy. On 9 Sep 2026 the drive media endpoint answered 503 (`suppressing local load failure`) and the panel fell back to`brand-testimonials-highlight.mp4`
- while the document said `Products/Brand/Testimonials Highlight.mp4`. Run `pnpm descript tree` before calling a project disorganised.
-- Deleting an asset breaks every project that adopted it. `Extra Fast Multimedia Whoosh 3` was uploaded into the layouts project (`lookup_key` names its `projectId`) but adopted by a video project; deleting it from the pack on 8 Sep 2026 left a media reference whose `assetGuid` resolved to nothing (a spinning Files row). Repair touches no card:
+, also the app's Descript kit shelf: one name from census to timeline.
+- A flat panel of upload names means the client couldn't load the document, and the project isn't messy. When the drive media endpoint answers 503 (`suppressing local load failure`), the panel falls back to names like`brand-testimonials-highlight.mp4`
+ while the document says `Products/Brand/Testimonials Highlight.mp4`. Run `pnpm descript tree` before calling a project disorganised.
+- Deleting an asset breaks every project that adopted it. `Extra Fast Multimedia Whoosh 3` was uploaded into the layouts project (`lookup_key` names its `projectId`) but adopted by a video project; deleting it from the pack left a media reference whose `assetGuid` resolved to nothing (a spinning Files row). Repair touches no card:
 
 ```bash
 pnpm descript pull <video> "Multimedia Whoosh" --out /tmp     # the artifact usually survives

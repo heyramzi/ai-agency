@@ -27,8 +27,3 @@ The wall a viewer reads while you talk over it. Pick the branch by how it reache
 4. Look at it before you call it done. Shoot every frame and read the PNGs, since the source
    alone proves little. A YouTube board is done when the eval in `video-board.md` passes; the other
    branches carry their own check in their reference.
-
-## Learned Patterns
-
-The live-iPad branch's failure modes, newest first, in
-[references/learned-patterns.md](references/learned-patterns.md): read before a run, append after one.

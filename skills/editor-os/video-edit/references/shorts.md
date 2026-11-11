@@ -49,8 +49,7 @@ the sync check: [sequencing.md](sequencing.md#clips-and-layouts-on-the-local-rou
 ## The look
 
 The bar is two Claude-edited Shorts: @justyn.ai `7696963836116520213` and @claragig `7697241833600077078`. A blind
-read put ours under both for the same reasons,
-and the fix is art direction, not more inserts: every graphic looks made for this room by one designer.
+read put ours under both for the same reasons, and the fix is art direction, not more inserts: every graphic looks made for this room by one designer.
 
 - **Colour from the room.** Pull a frame of the take and take 2 to 3 colours from the set and the wardrobe. The
   kit is those plus the brand's neutrals and accent. A graphic colour that's nowhere in the frame needs a reason.- **Quiet captions, rare big type.** One small caption style for the whole video (about 4 to 6% of frame height),
@@ -67,11 +66,13 @@ These are brackets, not gates: a beat can step outside one, and its slot's `reas
 ## Overlays and b-roll before motion
 
 A Short's b-roll runs as one chain: each overlay runs until the next one starts, with no `Shorts Head` scene in
-between. His face comes back only after the Title and for the closing lines and the CTA.A chained clip never freezes and never slows past 0.75x. When the shot is too short for its stretch, fetch a longer
+between. His face comes back only after the Title and for the closing lines and the CTA, since cutting back to the face between clips reads as jumps.
+A chained clip never freezes and never slows past 0.75x. When the shot is too short for its stretch, fetch a longer
 cut of the same stock shot (`source.py fetch` with a longer `--dur` from the same URL in `sources.json`), or lay a
 second clip that matches the words said there. A `-held` copy with a frozen last frame reads as stuck.
 B-roll sits on `Shorts Green Screen` with his face at the bottom, never `Shorts Full Screen Insert`, which hides
-it.A beat that names a tool, app or screen gets the real thing: its logo, or its UI cropped to one field that
+it.
+A beat that names a tool, app or screen gets the real thing: its logo, or its UI cropped to one field that
 reads at phone width. A named object, idea or claim gets a prop from the kit that acts on the word: a dropdown
 picked, a knob turned, a card struck through, a toggle flipped, a button clicked. Stock footage of people is fine
 in light doses, about a quarter of the inserts at most; more reads as nobody's world.
@@ -105,5 +106,6 @@ Cut the fluff and make the calls yourself: the brief's hook opens, a line said t
 whole take, a CTA said twice keeps the second unless the brief names one. Fit under 60s by cutting, not by speeding up. The planner works to `TARGET` in the edit tool's `plan.ts` (first cut,
 words per minute, length) and `editor-os verify` flags a miss. Leave those numbers out of a brief.
 
-The last kept range runs to the end of the closing sentence plus about 0.3s of breath, never to the CTA keyword. Check its end against the transcript words, because the range's own `quote` can still list words the cut dropped.
-One take is one Short: the camera decides the count, never the transcript.
+The last kept range runs to the end of the closing sentence plus about 0.3s of breath, never to the CTA keyword. Check its end against the transcript words, because the range's own `quote` can still list words the cut dropped (a range ending on "reply edit" lost "and I'll be in your DMs" while its `quote` still said "in your").
+
+One take is one Short: the camera decides the count, never the transcript: a 291s take with 5 lessons in it is still one Short.

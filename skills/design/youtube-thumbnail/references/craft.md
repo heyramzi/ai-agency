@@ -31,9 +31,8 @@ lights: key (soft, from the side the face turns toward), rim (harder, cooler, be
 opposite shoulder), spill (from the floating object onto the near shoulder). The dark ground
 carries one soft bloom and no black fill.
 
-The note on the kept frame: *"the quality of my face and skin looks enhanced without feeling too
-much like AI."* Nothing touched the face; the dark defocused ground plus the rim did it.
-So grade, never regenerate: re-light and colour the photograph; once the model resamples skin
+On the kept frame the skin read enhanced without looking like AI, and nothing touched the face:
+the dark defocused ground plus the rim did it. So grade, never regenerate: re-light and colour the photograph; once the model resamples skin
 it goes plastic, and skin is the first thing a viewer checks.
 
 ## 3. A floating object needs all 4
@@ -85,12 +84,10 @@ Avoid: a flat cut-out pasted look, an object square-on to camera, a logo bug bes
 - Find the shadow. No shadow, no object.
 - Squint at the planes. 3 tonal groups at 3 sharpnesses means the stack is there.
 
-## The orbit treatment (approved 26 Aug 2026)
+## The orbit treatment (approved)
 
 Translucent panels caught mid-turn around the subject at different angles and depths, each spilling
 a soft prismatic bloom onto him; near-black ground, one key, rim down the jaw.
-The verdict: "I do like this concept. It could be used in the future, just not this time, but I
-like the rotating things around me. It looks cool."
 It's a treatment, so reusable across a wall, while the composition changes per video. 2
 conditions: the panels carry no glyphs (it's a texture, and a document would read as content), and there are 3 or 4
 (the 2-element law counts the orbit as one element). It's generated, his photograph is the

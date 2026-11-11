@@ -11,10 +11,8 @@ Read it at plan time, and again before you write any clip's header.
 ## The direction gate (step zero)
 
 Nothing is built until the owner has picked a look. A 20-clip operations set went all the way into the
-editor before the owner saw one frame. Verdict, 25 Aug 2026: *"I don't like at all any of
-the designs we have created sadly. They are all ugly and too complex. We need to go a little bit more
-minimal. It looks amateur if you watch what you do. The skill should offer me one or two angles or three
-angles in the beginning in an HTML."*
+editor before the owner saw one frame, and every clip was called ugly, too complex and amateur.
+Offer 2 or 3 angles in an HTML page first.
 
 1. Pick 2 or 3 directions for the whole video, disagreeing on ink, subject or ground.
 2. Render one still per direction, of the same beat (`remotion still` on a throwaway comp, or hand SVG).

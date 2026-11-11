@@ -101,4 +101,6 @@ mirror of each agent under `reference/degraded/`. An agent with no degraded path
 silently does nothing on half the machines it reaches.
 
 Placement: [contract.md](contract.md). After adding, renaming or deleting one, run
-`ai-doc/scripts/check-agent-readme.py --fix`, then `node scripts/validate-architecture.mjs`.
+`ai-doc/scripts/check-agent-readme.py --fix`, then `node scripts/validate-architecture.mjs`. A new
+agent answers `agent type not found` until its projection registers, so point general-purpose at
+its file meanwhile.

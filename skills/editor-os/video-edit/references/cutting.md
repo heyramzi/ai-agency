@@ -84,8 +84,7 @@ Reports **repeat runs** (any 3-word run twice within 400 characters) and **trunc
 
 On Tella there's no doc.json: pass `<project>/edit.json` instead. Each candidate prints the span `editor-os drop <name> <from-to> ...` takes, `--check` with no needles reads what edit.json already drops, and `editor-os cutcheck <name>` reads every seam from the words, since Tella renders nothing here.
 
-- The last attempt is the keep, always. 
-Always use the last retake.
+- The last attempt is the keep, always.
 Span runs from the first attempt to the START of the last; a stump isn't an attempt, so the span stops at the last COMPLETE one. **Never splice one attempt's head onto another's tail** (one cut shipped attempt 2's head on attempt 4's tail, 3 paragraphs cut, sentence still wrong).
 - Search the JOINED script, never block by block: Descript breaks at the pause before a restart, so the restart sits in the next paragraph (one script's 41k characters: 99 repeat runs vs 40, 37 crossing a break). A span over 3 paragraphs is 3 needles; `--check` subtracts every needle from each block and prints what's live.
 - Every candidate is a needle or a one-word dismissal. On M0 L1 the shipped list left 16 uncovered, and 10 of those were real (a 4-attempt opening, `This is not a sales pitch` 6 times). Dismiss anaphora and deliberate emphasis. Dismiss lists that share an opener too. Leave small stutters (`s- `, `add-- `) whose clean needle is ambiguous.
@@ -95,7 +94,7 @@ Span runs from the first attempt to the START of the last; a stump isn't an atte
 
 ### Pass 2: the meaning (read, dispatched)
 
-Delete the sentence, read its 2 neighbours, name what the viewer lost; nothing lost is a cut. A digression is well-formed, so no score finds it. Dispatch one Sonnet subagent over the WHOLE live script (a callback over a split is invisible), reporting **50 paragraphs at a time** so each chunk is applied while it reads on.
+Delete the sentence, read its 2 neighbours, name what the viewer lost; nothing lost is a cut. A digression is well-formed, so no score finds it. Dispatch one Sonnet subagent over the WHOLE live script (a callback over a split is invisible), reporting **50 paragraphs at a time** so each chunk is applied while it reads on (one pass went 18 silent minutes on 308 paragraphs).
 
 What goes: **announcements** ("If you see yourself in one of these bullet points..."; not when it cues a visual), **second utterances of one idea** (keep the strongest), **hedges and disclaimers** (once is positioning), **digressions** (rationale that justifies a choice stays), and **the speaker** (every sentence whose subject is the person on camera: write the viewer sentence carrying the same information; none exists, cut it). `restate.py` is the backstop that runs after the pass (`python3 scripts/restate.py doc.json --check needles.json`). A flag points at a paragraph and gives no verdict on a sentence: read it down to the clause (one steering way is the teaching, two is padding, the simile padding on the padding). List every pass-2 cut in the run report.
 
