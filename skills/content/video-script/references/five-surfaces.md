@@ -4,8 +4,8 @@ A long-form video isn't finished when the script is. It's finished when someone 
 
 | Surface | Holds | Written by |
 | --- | --- | --- |
-| The concept, in the app | Brief, keyword evidence, packaging, the script | `POST /api/youtube/concepts`, then `PUT .../script` |
-| The ClickUp task | Production state, dates, holder, batch | `POST /api/youtube/concepts/<id>/production-task` |
+| The concept, in the app | Brief, keyword evidence, packaging, the script | `POST /api/v1/youtube/concepts`, then `PUT .../script` |
+| The ClickUp task | Production state, dates, holder, batch | `POST /api/v1/youtube/concepts/<id>/production-task` |
 | The board fields | Publishing, Format, Socials, BATCH, Points, Descript | `cu task field set` |
 | The Descript project | The take, once it exists | `pnpm descript project new` |
 | The calendar | The calendar row | by hand |
@@ -20,13 +20,13 @@ API=http://localhost:3160          # prod refuses anything the last deploy doesn
 
 # 1. concept (brief and keyword evidence) -> id
 curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
-  -X POST "$API/api/youtube/concepts" --data-binary @concept.json
+  -X POST "$API/api/v1/youtube/concepts" --data-binary @concept.json
 # 2. the written script
 curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
-  -X PUT "$API/api/youtube/concepts/<id>/script" --data-binary @script.json
+  -X PUT "$API/api/v1/youtube/concepts/<id>/script" --data-binary @script.json
 # 3. board task (also writes the concept URL into `Link`) -> taskId
 curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
-  -X POST "$API/api/youtube/concepts/<id>/production-task" -d '{}'
+  -X POST "$API/api/v1/youtube/concepts/<id>/production-task" -d '{}'
 # 4. the name carries the code, the fields carry the schedule
 cu task update <taskId> --name "C52 - <title>" --description "$(cat brief.md)" --markdown \
   --due-date 2026-12-09
@@ -45,7 +45,7 @@ cu task field set <taskId> --field 632095f8-6949-40f7-88dc-7737203ab5c0 \
   --value "https://web.descript.com/<projectId>"
 # 6. relink, so productionTask.name matches the renamed board task
 curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
-  -X POST "$API/api/youtube/concepts/<id>/production-task" -d '{"taskId":"<taskId>"}'
+  -X POST "$API/api/v1/youtube/concepts/<id>/production-task" -d '{"taskId":"<taskId>"}'
 ```
 
  ClickUp wins on any disagreement, so write the row after the board.

@@ -27,7 +27,7 @@ rewrite it.
    Keep the analogy he reached for live, because that's usually the angle nobody else has. Then the truth rule, which is the trunk's and outranks everything here: every
    name, command and "I did" is checked today, or the re-check block says what to do before shooting.
 1b. **Start from an outlier, never a blank page** (`SKILL.md`, the trunk). `pnpm corpus outliers
-   --watchlist` in `~/cutkit` lists Shorts at 5x or more of their own channel's median,
+   --watchlist` in `~/apple-apps/products/cutkit` lists Shorts at 5x or more of their own channel's median,
    from the last 90 days, on 10k to 250k accounts, where the idea carried the video and not the
    name. Take the one closest to the subject and write beside it, beat for beat. Nothing close
    (try `--all`, or `--days 365`): `node scripts/top-band.mjs <niche words> --n 8` ranks every size. Copy its moves, never its words: they name the tool in its own sentence, count out
@@ -61,7 +61,7 @@ rewrite it.
 6. **Take the code** off `social`'s `scripts/ledger.json` plus the closed Socials tasks,
    never off memory. Then file it in CutKit, never Apple Notes. The script library is CutKit,
    so it's on his phone's teleprompter:
-   `node ~/cutkit/ios/cli/cutkit-scripts.mjs push <clean-read-file> --title "CODE · name" --label "<pillar>"`
+   `node ~/apple-apps/products/cutkit/ios/cli/cutkit-scripts.mjs push <clean-read-file> --title "CODE · name" --label "<pillar>"`
    The body is the clean read only, because the phone reads the whole body out loud. Everything
    below the `---` in the note shape (metadata row, re-check block, TikTok cut, description, first
    comment, hashtags) goes in the Socials task description instead. The pillar label comes from

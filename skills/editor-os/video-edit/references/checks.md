@@ -112,7 +112,7 @@ The command can't see the key itself (a clean edge on a busy frame is a look), t
 pnpm descript studio <p> <track|media> --on --intensity 0.5      # Studio Sound
 pnpm descript gaps close <p> <comp> --over 0.7 --keep 0.3 --edges
 pnpm descript layer effect <p> <comp> <card> <layer> uplighting --value "[0.1,0.5,0,0.05,-0.05,0]"
-pnpm descript layer copy <p> <comp> <card> <layer> --to all      # one look onto every card
+pnpm descript layer copy <p> <comp> <card> <layer> --to all      # one look onto every card; --to a,b,c or `selected` + --layout/--from/--until also one commit
 pnpm descript layer set <p> <comp> <card|all> <layer> --to 0     # stack position, 0 is top, -1 the bottom
 pnpm descript layer sweep <p> <comp>                             # hidden duplicate cameras
 pnpm descript resize <p> <comp> 1920x1080
