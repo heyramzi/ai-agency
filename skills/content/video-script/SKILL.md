@@ -11,28 +11,28 @@ The skill has 4 branches on one trunk. What to make next (the 6 pipes, the 4 gat
 
 ## The trunk
 
-**1. Anchor.** The author, 4 Oct 2026: "I need to stay humble and copy before I become good." Pick one competitor video on the subject that beat its own channel (`pnpm corpus outliers` in `~/apple-apps/products/cutkit` for a Short, `references/choosing-ideas.md` pipes 1 to 3 for long-form) and put its transcript beside the draft. Match its moves beat for beat (where it names the tool, where it counts, how long a step runs, where it asks) and swap in his substance and proof, never its words. The Sofiane batch had 40,000 words of rules behind 130-word scripts and no anchor, and came out unreadable.
+**1. Anchor.** Copy before you're good. Pick one competitor video on the subject that beat its own channel (`pnpm corpus outliers` in `~/apple-apps/products/cutkit` for a Short, `references/choosing-ideas.md` pipes 1 to 3 for long-form) and put its transcript beside the draft. Match its moves beat for beat (where it names the tool, where it counts, how long a step runs, where it asks) and swap in his substance and proof, never its words. The Sofiane batch had 40,000 words of rules behind 130-word scripts and no anchor, and came out unreadable.
 Done when the brief names the anchor with its breakout and URL.
 
 **2. Feed evidence.** Read `community`'s `references/engagement-what-works.md` before drafting. It scores competitor posts against each account's own median and carries its measurement date. It says what the feed rewards, never what's good; the bans in `@heyramzi/lint` and `humanizer` outrank every number on it.
 Over 30 days old, collect the feed again before trusting the page.
 Done when the page is under 30 days old or was refreshed.
 
-**3. True before written.** Go as hard as you like on the mechanism, but a number nobody measured, a story that didn't happen or a stake that doesn't exist isn't available on any branch. Invented drama also reads generic, since a model reaching for stakes reaches for the average ones. Proof frame: `references/video-hooks.md`.
+**3. True before written.** Go as hard as you like on the mechanism, but a number nobody measured, a story that didn't happen or a stake that doesn't exist isn't available on any branch. Read each product claim off its source that session: a price off the vendor's live page, a UI off the component. Invented drama also reads generic, since a model reaching for stakes reaches for the average ones. Proof frame: `references/video-hooks.md`.
 
 **4. 6 story locks** over the finished bullets, one pass each, no beat moving: `references/story-locks.md`. On a body, 3 land hardest: thought narration, embedded truths and contrast words. They buy retention, not reach (the best held in 9 of 13 channels, a coin). Cap the negation pivot ("it's not a project, it's a wish") at one per script, short and concrete; several in 90 seconds is the loudest sign a machine wrote it.
 
-**5. Cold read.** Give the finished script to a fresh Haiku subagent with no context, as a stranger hearing it once. It names the action with its tools, says whether it could do it tonight and who it'd send it to, and quotes its hardest sentence. Rewrite whatever it can't name. It reads and never writes. On 4 Oct it rated old S12 3/5 and quoted the sentence the author had flagged (CutKit gave B-), and the rewrite 5/5. It tests whether people understand you, not reach (a 66x breakout got 2/5 because it shows its code on screen), so the anchor decides structure. Done when it names the action and a re-read passes.
+**5. Cold read.** Give the finished script to a fresh Haiku subagent with no context, as a stranger hearing it once. It names the action with its tools, says whether it could do it tonight and who it'd send it to, and quotes its hardest sentence. Rewrite whatever it can't name. It reads and never writes. It caught a script CutKit graded B- that the author called unreadable. It tests whether people understand you, not reach (a 66x breakout got 2/5 because it shows its code on screen), so the anchor decides structure. Done when it names the action and a re-read passes.
 
-**6. Voice.** `humanizer` runs over the finished script before anyone reads it on camera, after opening `voice-measured.md`. Count first-person pronouns first: zero on a hook; `references/writing-the-script.md` says where a few are allowed in a body. Done when `npx heyramzi-slop <file>` exits 0.
+**6. Voice.** `humanizer` runs over the finished script before anyone reads it on camera, after opening `voice-measured.md`. Count first-person pronouns first: zero on a hook; `references/writing-the-script.md` says where a few are allowed in a body. A dictated take is the script: strip the restarts, change nothing else, and report a gate hit on his sentence instead of rewriting it. Done when `npx heyramzi-slop <file>` exits 0.
 
 ## The long-form body
 
-**Problem, Agitate, Solution, every video.** The author, 21 Oct 2026: "It's always problem, amplify, solution. All our videos should follow the same framework." The why is the problem, the failure and the stakes amplify it, and the mechanism onward is the solution; the board opens in the same order (`whiteboard`, `video-board.md`). The author, 19 Sep 2026: "We always should start with why when we record a video." The first block after the cold open is the why: what's still true for them in a year if they skip this. The fear has to be already true, the viewer is the hero and you're the mentor, and emotion is spent only in the why, the stakes and the close of the proof. `reviewScript` fails a body that opens on anything else, and any block where first-person pronouns outnumber second-person. Beat sheet, structure, teach-block rules and the argument-video variant: `references/writing-the-script.md`, read before the beat sheet.
+**Problem, Agitate, Solution, every video.** The why is the problem, the failure and the stakes amplify it, and the mechanism onward is the solution; the board opens in the same order (`whiteboard`, `video-board.md`). The first block after the cold open is the why: what's still true for them in a year if they skip this. The fear has to be already true, the viewer is the hero and you're the mentor, and emotion is spent only in the why, the stakes and the close of the proof. `reviewScript` fails a body that opens on anything else, and any block where first-person pronouns outnumber second-person. Beat sheet, structure, teach-block rules and the argument-video variant: `references/writing-the-script.md`, read before the beat sheet.
 
 **Decide the subject on a number.** The SERP decides if a subject is worth a recording day, alone. 2 lanes open: the unserved query and the stale head. Commands, thresholds and the quarantined keyword report: `references/three-run-control.md`, last section. Never take the runtime off the SERP.
 
-**Runtime, beats and asks are measured.** 158 to 185 beats (about 19 minutes), one outbound ask in the last 20 seconds and the viewer's own failure told in full. Evidence and the 3 ask categories: `references/three-run-control.md`, read when a script runs long or an ask placement is argued.
+**Runtime, beats and asks are measured.** 158 to 185 beats (about 19 minutes), one outbound ask in the last 20 seconds and the viewer's own failure told in full. Check the product's status before writing its ask. Evidence and the 3 ask categories: `references/three-run-control.md`, read when a script runs long or an ask placement is argued.
 
 **Series buy reach once.** Episode one is the reach event, later ones convert the audience it captured. 6 ran 17,874, 11,425, 4,144, 5,209, 960 and 2,258. Front-load accordingly.
 
@@ -43,7 +43,7 @@ A video has exactly one script and it lives on its record. Saving it runs the ar
 
 A build video carries its prompts. A block's `prompts` is a list of `{ step, prompt }` pairs in the order pasted into Claude, each adding one thing to what the last built.
 
-A take too long for one sitting is recorded in parts. Set `part` (1, 2, 3) on each block, and each part ships as its own upload. The author, 24 Sep 2026, on the Claude Code course: 3 parts, "because it would be super long otherwise."
+A take too long for one sitting is recorded in parts. Set `part` (1, 2, 3) on each block, and each part ships as its own upload.
 
 The description is stored with the script, before the take. Write the composer's plan (asks, contents line, chapters from `startsAt`, `durationSeconds`, plus `part` and `title` for a split video) and store `{"description": [...]}` through `concepts set <id> --metadata-file`. The rules are in `youtube`'s `references/description-block.md`, and `heyramzi-slop` runs over it.
 
@@ -64,7 +64,3 @@ Done when the save returns no `problems` and the overlay names exist on the shel
 - A Short goes through CutKit's `check_script`, and `pnpm jev score opening` is a hint only: the opening model failed its held-out test, and a craft grade didn't track breakout on 20 competitor Shorts (rank correlation -0.06).
 
 Done when `humanizer` ran over the whole thing and `concepts script` stored it.
-
-## Learned Patterns
-
-Failure modes live in `references/learned-patterns.md`, newest first. Correct a stale finding here in the same session,

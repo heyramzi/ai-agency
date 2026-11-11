@@ -56,9 +56,12 @@ function audit(skill, now) {
         `Add it when a prompt caused the failure.`,
     );
   }
+  // A failure, not a warning: `vibekit doctor` surfaces only fails, so a warning let 190 entries sit.
   const stale = skill.entries.filter((e) => e.date && daysBetween(e.date, now) > FOLD_AFTER_DAYS);
   if (stale.length > 0) {
-    warnings.push(`${stale.length} entries older than ${FOLD_AFTER_DAYS} days. Run \`fold\`.`);
+    errors.push(
+      `${stale.length} entries older than ${FOLD_AFTER_DAYS} days: fold each into the body or delete it`,
+    );
   }
   const dated = skill.entries.filter((e) => e.date);
   const unordered = dated.some((e, i) => i > 0 && e.date > dated[i - 1].date);

@@ -16,7 +16,8 @@ once and pass it as `--room` for that run rather than writing it to disk.
 second board from the same origin lands on top of the first. Give each its own band (`const TOP =
 1750`, mapped over the elements on export). `pnpm build` checks every board's bounding box against
 every other and exits non-zero on an overlap, so a clash fails the build instead of messing up the
-canvas. Take the band next to the boards it ships with: the allocation is mapped at the top of
+canvas. It reads `x + width`, and `line()` and `arrow()` keep `x` at the start point with an
+absolute `width`, so a right-to-left stroke's box runs the wrong way. Take the band next to the boards it ships with: the allocation is mapped at the top of
 `src/boards.ts` and sets that share a room are packed one after another. A band reserved for a board
 on another canvas is a hole, and a hole reads as a push that half arrived.
 
@@ -46,9 +47,10 @@ band held two boards and one was being replaced.
 `push` broadcasts cumulatively, one element at a time, so the array order is the order the board
 draws itself: write elements in spoken order and the push is the animation. Set `--pace` so
 `elements * pace` lands just under the script's length (53 elements at 700ms is about 37 seconds).
-Far-side reconciliation merges by element id and ids are deterministic across builds, so Pencil
-drawings made during a push survive and a re-push replaces a board's own elements instead of
-duplicating them.
+Far-side reconciliation merges by element id and ids are `<board>-<index>`, deterministic across
+builds, so Pencil drawings made during a push survive and a re-push replaces a board's own elements
+instead of duplicating them. A rename or a split changes every id, so the re-push lands a second
+copy beside the first: say so, since clearing the old one isn't yours to do.
 
 ## The contact sheet
 

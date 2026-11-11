@@ -71,11 +71,11 @@ A short is 11 bricks in 5 categories: Format; Idea (topic, seed, substance); Hoo
 
 ## The note shape
 
-Since 1 Oct 2026 only the clean read goes to CutKit; the rest rides on the Socials task.
+Only the clean read goes to CutKit; the rest rides on the Socials task.
 
 - `CLEAN READ` sits directly under the title. He shoots off the note, so the teleprompter version must be on screen when it opens. A note without one gets one written from its cued lines. Everything else (metadata row, hook, re-check block, TikTok cut, cued version) sits below a `---`.
 - `INTRO`, `MEAT` and `OUTRO` with timings; the MEAT is bullets. The speaker reads the first and last lines as written and says the middle his own way, so a scripted middle flattens the register. The closing line is shared word for word with the pinned post and first DM, so rewording it on camera breaks surfaces that deliberately say one thing.
-- A conditional qualifies the audience and opens no gap. Batch 2, 9 Sep 2026: 7 notes written to that sentence alone gave 7 flat openings, no named lever, no variants, 3 over the 8-to-15-word budget, 2 text hooks copied from the title. Before filing, the opening has a named lever, 3 rated variants and 3 agreeing surfaces.
+- A conditional qualifies the audience and opens no gap. In one batch, 7 notes written to that sentence alone gave 7 flat openings, no named lever, no variants, 3 over the 8-to-15-word budget, 2 text hooks copied from the title. Before filing, the opening has a named lever, 3 rated variants and 3 agreeing surfaces.
 - Under the timings: the metadata row, `Lives at:`, word count against target pace, tags, and a `RE-CHECK BEFORE SHOOTING` block holding what goes wrong if it's said differently. Read the newest note in the live batch first, because corrections accumulate there.
 
 ## YouTube Shorts facts

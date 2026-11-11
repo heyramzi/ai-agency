@@ -82,12 +82,11 @@ text, a flat cut-out look, an object square-on, fused or extra fingers.
 
 For a background that's a real artifact worth keeping verbatim (screenshot, board, document,
 dashboard): generating it invents the on-screen text, handing the face over redraws him, and compositing
-keeps both real.
-On the "Ops Ceiling" frames, 26 Aug 2026: the AI-faced renders were rejected, the composite of the
-real face over the real workload screenshot was kept.
+keeps both real. On a product's own price table, put his real photo beside the real capture: an
+open palm under a tilted table reads as him holding it.
 
 The winning recipe is both moves. A flat real screen on a flat `--photo` plate looks amateur; a
-fully generated frame invents the screen. Kept 26 Aug 2026 on "hiring won't fix it" and Glance's
+fully generated frame invents the screen. Kept on "hiring won't fix it" and Glance's
 "clients see this":
 
 1. Edit-pass the scene. Feed in his real base frame and get it back with the face kept pixel for pixel,
@@ -99,10 +98,7 @@ fully generated frame invents the screen. Kept 26 Aug 2026 on "hiring won't fix 
    portal's 33% / 3 tasks / 38h).
 
 The flat composite is the fallback for when there's no room to generate and the data must fill the
-frame.
-Same day, on a flat cut-out over a flat screenshot: "you're just slapping the image like that... it
-looks extremely shit."
-3 layers with `magick`, then the type through `composeThumbnail`:
+frame, and a flat cut-out over a flat screenshot reads as slapped on. 3 layers with `magick`, then the type through `composeThumbnail`:
 
 ```bash
 magick screenshot.png -resize 1280x720^ -gravity center -extent 1280x720 bg.png   # real background
@@ -139,7 +135,10 @@ with a `cutout <in.png> <out.png>` helper (Apple's
 `VNGenerateForegroundInstanceMaskRequest`, free, no key, no upload), set real Manrope 800 through
 headless Chrome, stack plate, type, subject. A band bleeding off the edge and dying behind his head
 reads as in the room; on top it reads as a label. Occlude the plate, never a glyph: the first
-composite hid the full stop after "it." behind the card and read as a typo. Under 4 words on a
+composite hid the full stop after "it." behind the card and read as a typo. `behindSubject` says
+`behind` even when the subject covers 4 letters of a 2-line block, so read the composed frame and
+drop to one line. To relabel a frame with its label burned in, blend each column linearly between
+the 2 rows just outside the block. Under 4 words on a
 solid tab the model sets type reliably; when it must be exactly the brand's, composite it. Font:
 Manrope 800.
 

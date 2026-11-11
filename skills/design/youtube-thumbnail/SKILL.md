@@ -65,8 +65,3 @@ subject, title, thumbnail, hook; `video-script` owns the subject.
 **A frame that shipped edits a template; a rejected one edits its `negatives`.** Write both into
 `thumbnail-templates.ts` before the turn ends, with the date and the one thing the run taught,
 and the generator reads the templates, never the pattern list.
-
-## Learned Patterns
-
-New failure modes go in [`references/learned-patterns.md`](references/learned-patterns.md), newest
-first. Read it before a run and append after one when a run surfaces something new.

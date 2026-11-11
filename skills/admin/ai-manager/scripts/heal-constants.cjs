@@ -44,10 +44,10 @@ const {
 const ASK_COVERAGE_FLOOR = 5;
 
 /**
- * An entry this old has either changed how the body describes the work, or it
- * never mattered. Either way it stops earning its line.
+ * Past this an entry belongs in the body or nowhere. At 180 days, 17 logs held 190 entries
+ * back to August with no warning (11 Nov 2026).
  */
-const FOLD_AFTER_DAYS = 180;
+const FOLD_AFTER_DAYS = 30;
 
 module.exports = {
   LOG_HEADING,

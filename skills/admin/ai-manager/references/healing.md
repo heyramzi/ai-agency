@@ -68,8 +68,10 @@ from one scheduled job sat in that folder with nothing reading it (28 Oct 2026).
 
 - An edit leaves the file no longer than it found it, unless the case is really new.
 - A learning repeated in 3 or more files becomes one rule, and the copies become pointers.
-- An entry that hardened into how the body describes the work is folded into the body and deleted
-  from the log. `fold` lists candidates but doesn't rewrite prose.
+- An entry stays in the log 30 days at most. By then it's either true, so it goes into the body
+  as the rule, or it isn't (the tool, flag or file it names is gone, or the body already says
+  it), so it's deleted. `check` fails a log holding one, `fold` lists them, and neither rewrites
+  prose.
 - Past `logMaxEntries` (`ai-doc/limits.json`) a log is a second body wherever it sits: fold,
   don't raise the number. `audit` fails it.
 - There is no `learned-patterns-archive.md`. 15 of them reached 5,296 lines holding 67

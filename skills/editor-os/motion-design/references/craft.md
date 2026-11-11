@@ -42,7 +42,7 @@ The eye reads acceleration before colour, so clips with their own inline springs
 **Journeys interpolate, arrivals spring.** A spring at every waypoint turns a route into arrivals. Add a
 missing curve to `motion.ts` with its own WHY; an inline curve starts the drift again.
 
-**Design both ends**. A clip built entry-first stops; it doesn't end. Name the exit in the
+**Design both ends**, entry and exit, always. A clip built entry-first stops; it doesn't end. Name the exit in the
 header comment, one of three: depart (under `DEPART`), resolve and hold (settle, then `HOLD`), or hand over
 (everything goes but the one mark the next clip inherits, the default in a set). An alpha clip has no ground to
 hide behind, so its exit is what separates an overlay from a pop. A long take runs on its own 4 camera helpers,
@@ -99,6 +99,7 @@ reading prose has stopped listening. That's a clip that **replaces** the picture
 is sentence case, set to be read (`registers.md`); a product film's type is the voice (`product-film.md`).
 
 Text a person would type into a drawn UI (a chat message, a prompt, a search, a form field) is the real example, never a summary in labels or placeholders. The labels-only rule is for captions, not for what's inside the UI: a bubble that says "Who I am · What I do · What I want" becomes "Hi, I run a 6-person bookkeeping firm in Lyon. Help me write a reminder to a client who is late on documents."
+
 House face only: `BRAND_FONT`, with `useBrandFont()` called once in the composition (`src/font.ts` in the kit);
 Clash Display got "stick to our fonts". The generated brand lists one static 400 file, so a heavier weight is a
 faked bold: load the variable Satoshi (300 to 900). A font loaded inside one clip family

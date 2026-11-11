@@ -128,7 +128,8 @@ The 4 signals, in order of how often they are right:
 
 ### Merge, or disambiguate
 
-Read both bodies before merging on description overlap alone. Two skills can read 70%
+Read both bodies before merging on description overlap alone, and compare mechanisms, never line
+counts (an 82-line outside skill held 6 things a 484-line one lacked). Two skills can read 70%
 identical and be fully complementary, because the overlap is in the domain vocabulary while the
 inputs differ: the old `improve-codebase-architecture` took a whole codebase, the old
 `code-refactoring` took a diff, a file or a folder. A pair like that is not two descriptions

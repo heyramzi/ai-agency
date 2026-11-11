@@ -18,7 +18,7 @@ descript pull <project> IMG_0015 --seconds 60   # the ORIGINAL take, never a ren
 - Download is 8 ranged connections (the signed Google Storage URL throttles per connection and signs `host` only): 442 s cut 135 s at 7.8 MB/s, 1834 s cut 298 s at 6.7 MB/s, one stream ~45 min. `--connections 1` is the old stream. A download that dies about 30 s in (`error: terminated`, on a 2.6 GB master) resumes from the offset written; never re-render, since the job stays downloadable about 23 hours (`descript job <id> --download`).
 - Cloud renders: a 442 s cut took 22 min, 1367 s about 22 min and 1834 s 17 min. Render time tracks runtime, bytes don't (8.6 Mbps on the 1834 s cut, 29.0 on the 1367 s one): quote no GB figure before it lands.
 
-**4K comes off a local export first, the cloud second.** The lock is gone since 10 Sep 2026 (`descript_creator_v3`: both rows `aria-disabled="false"`).
+**4K comes off a local export first, the cloud second.** 4K isn't locked (`descript_creator_v3`: both rows `aria-disabled="false"`).
 
 ```
 pnpm descript export local <project> [composition] --resolution 4K --quality high

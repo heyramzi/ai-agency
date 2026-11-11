@@ -47,7 +47,7 @@ The phrase bank collides with this lock. `here's the thing`, `it turns out`, `he
 - Main points only; overused, `but` reads as friction.
 - `it turns out` is banned by the slop list; the other 5 are ordinary English.
 - "Not X, but Y" is still the negation pivot (cap in `video-hooks.md`), and this lock is the commonest way a draft grows a second one.
-- Don't chase `contrastSentencePct` with one construction. 6 beats got "instead of" and `heyramzi-slop` flagged it as a review pivot 6 times (9 Sep 2026). Spread it across but, yet, although, whereas, except, and run the slop linter after the grader.
+- Don't chase `contrastSentencePct` with one construction. 6 beats got "instead of" and `heyramzi-slop` flagged it as a review pivot 6 times. Spread it across but, yet, although, whereas, except, and run the slop linter after the grader.
 
 ## The measured results
 

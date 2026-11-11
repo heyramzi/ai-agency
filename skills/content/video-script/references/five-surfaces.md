@@ -53,7 +53,7 @@ curl -sS -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
 
 - `cu task field set` on a `labels` field needs a JSON array of option ids, and `cu fields list` doesn't show them. Read `GET /list/<id>/field` on the ClickUp API with the token in `~/.config/clickup/`. A plain label answers `Value must be an array`.
 - The dev server is the writer, never prod.
-- One name across all 5 surfaces. The task is `CODE - Title` and the concept the title alone. The Descript project and its composition are both `CODE · Working Title`, 2 to 6 words, and the sequence `SEQ CODE · Working Title` (the rules: `video-edit/references/projects-and-media.md`). All 7 videos in flight on 26 Aug 2026 kept Descript's import name.
+- One name across all 5 surfaces. The task is `CODE - Title` and the concept the title alone. The Descript project and its composition are both `CODE · Working Title`, 2 to 6 words, and the sequence `SEQ CODE · Working Title` (the rules: `video-edit/references/projects-and-media.md`). Rename the composition too, or it keeps Descript's import name.
 - Assign the code off the whole registry. `[Language][Pillar][NN]`, pillars SCALPM. List every code including closed tasks (`cu tasks --list 901507318169 --closed --json`) and take the next free number in that pillar. `NN` is an id, so never renumber a gap. 3 live collisions came from skipping this.
 - Doctrine lives here, and the generator is a runtime copy.
 - Course lesson files are the curriculum record and never a second script: module, surface, status, runtime, takeaways, recording notes. A lesson that's also a YouTube video keeps its spoken beats in one place and the other links to it.

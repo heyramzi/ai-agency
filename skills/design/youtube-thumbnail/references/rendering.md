@@ -13,9 +13,7 @@ likeness is perfect because it isn't one.
 ```
 
 `cutSubject` lifts the subject off the RENDERED plate, so a generated frame holds zero photographed
-pixels of him.
-The verdict, 26 Aug 2026, on a frame built from `deadpan-wide-left-02`: "it doesn't look like me at
-all. It looks AI generated way too much." No model choice fixes it.
+pixels of him. It reads as AI and not as him, and no model choice fixes it.
 Generate only what can't be photographed (an object, a figure, a room we don't have). When the
 background must be a **real artifact** (screenshot, board, dashboard), composite his cut-out face
 onto it.
@@ -33,7 +31,7 @@ filled in, brow heavied). Gemini returns the photographed face unchanged in both
 **That ban is this skill's, it's about the face, and it holds:** a thumbnail carrying him goes to
 `gemini-3.1-flash-image`, always. Objects and illustration with nobody in frame may go to
 `gpt-image-2` where a call site names it. Seeds don't work: `generationConfig.seed` is accepted
-and ignored (same seed twice, hashes differ, 19 Aug 2026), so the substitute is the edit pass. No
+and ignored (same seed twice, hashes differ), so the substitute is the edit pass. No
 Gemini image model returns alpha: key the backdrop off with `logo3d/key.ts`.
 
 ## "This one, but ___": the edit pass
@@ -42,7 +40,7 @@ Don't re-render the brief (no seed means a different face, card and crop). **Han
 back as the first attached image and edit it.** The same pass builds a cinematic frame from a flat
 plate: hand a flatly-lit `--photo` plate, tell it to keep face, hair, beard, expression, hand and
 pose pixel for pixel, and transform the rest (a near-black defocused studio, warm rim, glowing
-panels). Verified 26 Aug 2026 on the "hiring won't fix it" base: 4 samples, face held in all
+panels). Verified on the "hiring won't fix it" base: 4 samples, face held in all
 4. Call `generateImage(router, { references: [{bytes, mediaType}], tier: "large" })`, then set the
 type. Say "keep his facial detail, do not plasticise the skin."
 

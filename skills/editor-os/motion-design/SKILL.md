@@ -77,5 +77,3 @@ The `motion-designer` agent runs one beat; these steps run a whole set.
 7. Hand the clips to your editor, named `N [mm-ss] Description.mp4` with a letter suffix for alternatives on
    one beat (`2a`, `2b`). Importing a clip isn't placing it: put each on the timeline at its phrase and check.
    Done when each clip sits on the timeline at its phrase.
-8. Write down any failure mode this run surfaced, dated, and read it before the next run.
-

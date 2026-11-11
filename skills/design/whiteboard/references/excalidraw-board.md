@@ -29,15 +29,13 @@ are top-left, y down, all absolute: name the x constants and hang items off them
 Colours are 2 constants in `src/scene.ts`, `INK` for strokes and labels and `HIGHLIGHT` for the
 marker pass. Derive both from your brand tokens, and re-derive them if the palette moves.
 
-**The look is hand-drawn, and it's a switch.** `LOOK` in `src/scene.ts` is `hand` since 10 Sep 2026
-(rough.js strokes, Excalifont). The author, on a board built the other way: *"instead of choosing drawing
-based designs and circles you chose very sharp shapes, I want to always in Excalidraw use this type of
-shape, that's more like drawing."* `clean` is kept only for a figure inside a page. Change `LOOK` and
-rebuild; setting roughness or `fontFamily` on an element makes boards drift apart. **Draw with
-circles and open strokes**: a transparent circle with its caption beside it, an arrow with a word on
-it, the terra ring for the one number that matters. A saturated fill behind a rounded box reads as a
-UI component, the look he rejected. In Whimsical, pass `deco: "outline"` with the hue and keep notes
-white or smoke (24 Aug 2026: *"I use outline and light color in designs in whimsical"*).
+**The look is hand-drawn, and it's a switch.** `LOOK` in `src/scene.ts` is `hand` (rough.js
+strokes, Excalifont). `clean` is kept only for a figure inside a page. Change `LOOK` and rebuild;
+setting roughness or `fontFamily` on an element makes boards drift apart. **Draw with circles and
+open strokes**: a transparent circle with its caption beside it, an arrow with a word on it, the
+terra ring for the one number that matters. Sharp shapes and a saturated fill behind a rounded box
+read as a UI component, not a drawing. In Whimsical, pass `deco: "outline"` with the hue and keep
+notes white or smoke.
 
 ## Colour and layout
 
@@ -53,12 +51,11 @@ white or smoke (24 Aug 2026: *"I use outline and light color in designs in whims
   (`textWidth()` runs about a fifth narrow on Excalifont, so leave more room right of a hand-look
   label); half-width plus radius sets the offset. The most common defect, and `check-layout.mjs` catches it.
 - **Analogy with the real name under it, smaller.** "The stockroom", then "Supabase", then "a
-  database, with logins". A table of analogies gets a "Means" column beside "Picture it". The author, 23 Sep
-  2026: *"I love the analogies, but also make sure that you put what it actually is."* Mapping rules:
-  the Analogies section of `motion-design`'s `references/registers.md`.
+  database, with logins". A table of analogies gets a "Means" column beside "Picture it". Mapping rules: the Analogies section of `motion-design`'s `references/registers.md`.
 - **Rings and underlines are the emphasis budget**: one `ring` for the number the board is built
   around, `underline` for a title and a ruled-off total. Over two rings and none mean anything.
-- **Show arithmetic as a sum**, parts then a rule then the result.
+- **Show arithmetic as a sum**, parts then a rule then the result, but only when the board means a
+  sum: `+` and `=` between 2 lists reads as a calculation nobody asked for, so show the count.
 - **Talking points ride along as their own board at negative x**, built with `paragraph` (top-left
   anchor) and pushed separately. Bullets: the open and close are said as written and the middle live,
   so a written middle gets read aloud (`video-script`, `references/shorts-structures.md`).
@@ -71,7 +68,7 @@ Measured 24 Aug 2026 on Matis Clouet's `09a_B8KZURM`: 19:22, 5,011 words, 29k vi
 under 4k subscribers, the whole runtime one canvas on a shared screen walked node by node.
 
 - **A video gets exactly one diagram**, beats as bands in the spoken order (`pieces` in
-  `src/boards.ts`). 24 Aug 2026: *"You should never ever create multiple diagrams for one video."*
+  `src/boards.ts`).
 - **The diagram is the *what*, the tool is the *how***; a beat only a click can show belongs in a different video.
 - **Screenshots are proof, not navigation**: a framed still that proves a claim, cut in and out.
 - **Board 1 carries the idea every later board restates.**
@@ -93,13 +90,12 @@ Take a route as the last step of every board, unprompted, and say what landed an
 
 | Route | Command | When |
 | --- | --- | --- |
-| Push into the room | `pnpm push <board>` | Somebody is in the room; arrives composed |
+| Push into the room | `pnpm push <board>` | Somebody is in that room; no other canvas sees it |
 | Clipboard | `pnpm copy <piece>` | Any open canvas, local file included |
-| Files | `pnpm build <board>` | `out/<board>.excalidraw`: drag onto Excalidraw or open in ExcalidrawZ |
+| Files | `pnpm build <board>` | `out/<board>.excalidraw`: drag onto Excalidraw or open in ExcalidrawZ (a file written into its iCloud folder doesn't appear) |
 | Contact sheet | `pnpm render all --scale 1 && pnpm gallery` | Find a board by sight; rebuild in the session that changes one |
 
-Pushing is optional. *"the skill does not need to push to the room. It can create locally and then I
-can copy paste or drag and drop into Excalidraw."* (24 Aug 2026). Mechanics: [delivery.md](delivery.md).
+Pushing is optional: a local build to copy or drag in is a full delivery. Mechanics: [delivery.md](delivery.md).
 
 ```bash
 pnpm typecheck && pnpm build <board>
@@ -115,7 +111,3 @@ caption on a circle, and the mistake shows only on the iPad in front of a camera
 - [ ] Element order is the spoken order, and `elements * pace` fits the script
 - [ ] One ring, around the number the board exists for
 - [ ] No room link in any summary or committed file
-
-## Learned Patterns
-
-[learned-patterns.md](learned-patterns.md), newest first: read before a run, append after one.
