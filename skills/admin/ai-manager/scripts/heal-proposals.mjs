@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // The heal backstop's queue: every session's unsettled lessons, written by hooks/extensions/heal-end.mjs.
 
-import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { unsettled } from "#ai-doc/hooks/extensions/heal-end.mjs";
@@ -93,6 +93,7 @@ function main(argv) {
   return command ? 2 : 0;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+// The real path: settings name ~/vibe-kit, a link to vibe-kit, and import.meta.url is resolved.
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   process.exitCode = main(process.argv.slice(2));
 }
