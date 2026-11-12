@@ -33,7 +33,7 @@ is the failure this file prevents.
 3. **Cards carry 1 to 4 words and alternate with the UI, never sit on top of it.** Median 2 in Raycast Pro,
    3 to 4 in Notion. Plain speech, a question or a fact: "See that black bar?", "This used to be dead
    space.", "Claude waits up here.", "No notch? You get a pill.", "Seam for Mac". Slogans ("Your notch, put
-   to work.") and triads ("Music, meetings, focus. All in the notch.") read as AI slop to the author and went.
+   to work.") and triads ("Music, meetings, focus. All in the notch.") read as AI slop and were cut.
    A card runs 0.3 in, a hold, 0.2 out and 0.2 empty; the empty frames read as a new thought, where a
    crossfade reads as one thought being edited.
 4. **Tell one story, never a feature list.** The object carries 4 to 6 beats; each is a card, then the
