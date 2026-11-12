@@ -25,6 +25,8 @@ Tracks. A sequence's tracks are `sequenceScenes` (reached from the sequence medi
 - Only the live track in the script. `includeTranscript` is "Include in script"; a camera left in puts a second, worse transcript under every word. `track script <track> --off` on every non-mic track.
 - `CAM GS` on CAM's clock within half a frame and the same media offset (`at` is read off the silent lead-in tau), or every Text card draws a body a frame off its face. Missing: `track add <seq> "CAM GS" --media <camera file>` with CAM's offsets (the key is the layer's `backgroundRemoval`, which `comp fill` stamps hidden).
 
+After a CLI re-track or `verify`, read the `speakers` counts: the app can strip a recording's alignment (12 Oct 2026). A voice at 0 words gets `words restore --before EDITOR/ALIGNMENT/UPDATE_ALIGNMENT`, then the respells.
+
 | The app shows | The document holds |
 | --- | --- |
 | Track label | `sequenceScenes[].name` |
