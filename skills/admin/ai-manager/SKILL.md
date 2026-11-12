@@ -3,7 +3,7 @@ name: ai-manager
 description: "Writes, repairs and cleans skills and agents. Use when writing or editing a skill or agent, when one fires wrong, before it ships, or when the skill list holds duplicates or far more skills than the source."
 author: "Anthropic"
 license: Complete terms in LICENSE.txt
-argument-hint: "[critique · audit · new|agent · trigger|improve · heal|log · clean · review|package] [target]"
+argument-hint: "[critique · audit · new|agent · trigger|improve · heal|log · taste · clean · review|package] [target]"
 tags: [makes, agents]
 lane: judgment
 ---
@@ -40,12 +40,13 @@ how a registry doubles without improving. Clean when the shelf is the problem.
 | `audit` | run `vibekit doctor`, fix each failure at its source, re-run | above |
 | `new [name]`, `agent [name]` | a skill from a run done twice, or an agent (or the finding it's a skill) | [creation-process.md](references/creation-process.md) |
 | `heal [target]`, `log [skill]` | the 5-step loop below; one dated entry in a skill's log. With no target, drain the heal hooks' proposals first | [healing.md](references/healing.md#the-hooks-queue) |
+| `taste [repo]`, `taste prune` | a session's design corrections, said or silently edited, to rules in that repo's `DESIGN.md`, proposed then written on approval | [design-taste.md](references/design-taste.md) |
 | `trigger [skill]` | a description that fires wrong or not at all | [skill-floor.md](references/skill-floor.md#triggering) |
 | `improve [skill]`, `review [target]` | run it and correct by outcome; the script, then the eight-dimension rubric | [review-rubric.md](references/review-rubric.md) |
 | `clean [folder]` | measure registry and session context, merge, delete, simplify | [cleaning.md](references/cleaning.md), [context-budget.md](references/context-budget.md) |
 | `package [skill]` | validate and zip for outside this workspace | `scripts/package_skill.py` |
 
-With no argument: a correction is `heal`, something missing is `new`, bad names, overlap or two
+With no argument: a correction is `heal` (one project's look is `taste`), something missing is `new`, bad names, overlap or two
 files disagreeing is `critique`, size is `clean`, a broken agent link is `audit`. Heal continuously; critique and
 clean as a pass over the whole tree.
 
