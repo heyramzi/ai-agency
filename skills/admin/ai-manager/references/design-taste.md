@@ -1,7 +1,7 @@
 # Design taste
 
 Open this when a correction is about how one project looks or moves: a value, a surface, a spacing,
-a curve. It goes to that repo's `DESIGN.md`, never into a shared skill, because Client Glance's card
+a curve. It goes to that repo's `DESIGN.md`, never into a shared skill, because Glance's card
 shadow isn't a rule for CBAM. A correction that holds for every project goes to the skill that owns
 it (`ui-design`, `transitions-dev`, `anti-ai-slop`) through the normal heal loop.
 
