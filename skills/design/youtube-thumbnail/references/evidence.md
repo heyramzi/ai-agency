@@ -12,7 +12,7 @@ npx tsx scripts/competitor-intel/thumbnails.ts <slug>
 ```
 
 Slugs: `matt-gray`, `ali-abdaal`, `chase-ai`, `liam-ottley`, `systems-made-better`,
-`nick-puru`, `ross-harkness`, `michele-torti`, `jordan-ross`, and your own. The same findings sit in `vibe-kit/ai-doc/references/competitor-evidence.md`, which `video-script` and `social` (`references/shorts-production.md`, `references/writing-posts.md`) also read.
+`nick-puru`, `ross-harkness`, `michele-torti`, `jordan-ross`, and your own. The same findings sit in `kit/ai-doc/references/competitor-evidence.md`, which `video-script` and `social` (`references/shorts-production.md`, `references/writing-posts.md`) also read.
 
 **Single-channel lever, type in the top half.**
 Our own channel only,

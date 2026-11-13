@@ -20,7 +20,7 @@ onto it.
 
 ## Which model
 
-**Model, tier, price and ban live in** `vibe-kit/ai-doc/references/image-generation.md`. Ask
+**Model, tier, price and ban live in** `kit/ai-doc/references/image-generation.md`. Ask
 `@heyramzi/utils/ai` for a tier, never type an id. `large` (Nano Banana Pro) is banned, so `--model=pro`
 throws. `render-thumbnail.ts` draws on `medium` and takes `--model=<id>` for a test only.
 
@@ -60,22 +60,13 @@ A concept with a `templateId` renders from [`templates.md`](templates.md) and ig
 (`buildPrompt` hands off to `compileTemplatePrompt`). The template names the provider, so
 `--provider=` is for a deliberate comparison only.
 
-## The client and the key order
+## The client and the key
 
 Put every image caller behind **one module**; don't build a provider by hand or add a key.
-It walks 3 lanes in order and only changes lane when the lane failed: a quota answer (429, or a
-403 naming `RESOURCE_EXHAUSTED`) or a rejected key (401, or a 400 naming the key). A malformed
-request is returned as is, since retrying it just spends the next key.
-
-1. `GOOGLE_GENERATIVE_AI_API_KEY`: direct to Google AI Studio, the priority lane.
-2. `GOOGLE_GENERATIVE_AI_API_KEY_BACKUP`: a second direct key. Leave unset rather than set a dead one.
-3. `CF_AIG_*`: the Cloudflare AI Gateway, holding its own Google key.
-
-State, 26 Aug 2026: the direct key isn't in `app/.env.local`, so every image call lands on lane
-3, the lane every verified render was drawn on. OpenAI has no gateway lane: a direct `fetch` on
+Gemini draws on `AI_BASE_URL` and `AI_API_KEY` (the AI gateway). OpenAI is a direct call on
 `OPENAI_API_KEY`, billed by returned tokens at $30 per 1M image output (platform.openai.com/docs/pricing,
 26 Aug 2026). That comes to about $0.008 low, $0.032 medium and $0.125 high at 1536x1024. No frame carrying him goes there.
-Lock the lane order with a test and keep it identical in any second caller.
+Keep any second caller on the same module.
 
 ## Filing the result
 

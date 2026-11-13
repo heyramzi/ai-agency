@@ -53,7 +53,7 @@ the render path copy the execution rules. **Change one, change the others in the
    `rendering.md` and `composites.md` (when the frame carries a logo, card, screenshot or overlay type). Done when every critique line passes on the finished frame, at full resolution.
 
 Before delivery, and before any repackage goes live, title and frame together grade 8 or more on
-`pnpm jev loop packaging title.txt --thumb frame.jpg` (loop: `vibe-kit/ai-doc/references/content-grade.md`).
+`pnpm jev loop packaging title.txt --thumb frame.jpg` (loop: `kit/ai-doc/references/content-grade.md`).
 
 ## After it ships
 
