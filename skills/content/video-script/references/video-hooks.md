@@ -3,7 +3,7 @@
 The opening decides whether people stay. It doesn't decide how many arrive. Across 27 transcripts (Matt Gray), then 627 transcripts across 13 channels (26 Aug 2026), opening length (107 vs 106 words) and first-number arrival (22.2s vs 23.9s) show zero correlation with views.
 
 - The hook opens the loop and can't close it. [storytelling](~/vibe-kit/ai-doc/references/storytelling.md) owns what keeps people past the open.
-- Low views is never a hook problem. Check the subject (`choosing-ideas.md`), rewrite the title and regenerate the thumbnail (`youtube-thumbnail`). `vibe-kit/ai-doc/references/competitor-evidence.md` has the 2 title levers that survived the control test. `scripts/teardown.py <url>` prints a reference video's first 30 seconds and its first-number moment.
+- Low views is never a hook problem. Check the subject (`choosing-ideas.md`), rewrite the title and regenerate the thumbnail (`youtube-thumbnail`). `kit/ai-doc/references/competitor-evidence.md` has the 2 title levers that survived the control test. `scripts/teardown.py <url>` prints a reference video's first 30 seconds and its first-number moment.
 - A dip right after an off-target spike is a cohort problem. The next videos get served to the borrowed audience and land flat, so leave a working format alone. Judge the spike on joins, not views:
  Hypothesis from a course newsletter, not control-tested.
 

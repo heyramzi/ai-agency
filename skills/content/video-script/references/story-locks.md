@@ -34,7 +34,7 @@ Attention runs out at every section boundary. A loop opener closes the block and
 
 The source teaches one every 20 to 30 seconds on a Short and every 60 to 90 on long-form. Measured 29 Aug 2026 on 339 punctuated long-form transcripts, the niche median gap is 230 seconds (p10 85, p75 377). The house target is no stretch past 300 seconds, and the grader fails only past 831. On a Short the ~25-second flip stands, unmeasured.
 
-The phrase bank collides with this lock. `here's the thing`, `it turns out`, `here's the problem`, `the truth is` are throat-clearing in `vibe-kit/packages/lint/data/slop-words.js`, and "here is what nobody talks about" is `the-part-nobody`. The ban catches the version of the move that carries no information.
+The phrase bank collides with this lock. `here's the thing`, `it turns out`, `here's the problem`, `the truth is` are throat-clearing in `kit/packages/lint/data/slop-words.js`, and "here is what nobody talks about" is `the-part-nobody`. The ban catches the version of the move that carries no information.
 
 > **Delete the transition. A question or fact still standing was a re-hook; if the sentence disappears, it was throat-clearing.**
 
