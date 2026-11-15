@@ -91,7 +91,7 @@
     {
       "name": "video-edit",
       "area": "editor-os",
-      "description": "Runs the passes of a video edit: ledger, cuts, layouts, clips, checks, DJI lav sync, Shorts or long-form, local or Descript. Use when a raw take needs cutting, a worker gets edit passes, or a reel used a lav.",
+      "description": "Runs the passes of a video edit: ledger, cuts, layouts, clips, checks, DJI lav sync, Shorts or long-form, local, Descript or Tella. Use when a raw take or a Tella video needs cutting, a worker gets edit passes, or a reel used a lav.",
       "skill_md": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/skills/editor-os/video-edit/SKILL.md",
       "folder": "https://github.com/heyramzi/ai-agency/tree/main/skills/editor-os/video-edit",
       "zip": "https://raw.githubusercontent.com/heyramzi/ai-agency/main/zips/video-edit.zip"

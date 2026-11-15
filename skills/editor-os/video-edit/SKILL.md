@@ -1,6 +1,6 @@
 ---
 name: video-edit
-description: "Runs the passes of a video edit: ledger, cuts, layouts, clips, checks, DJI lav sync, Shorts or long-form, local or Descript. Use when a raw take needs cutting, a worker gets edit passes, or a reel used a lav."
+description: "Runs the passes of a video edit: ledger, cuts, layouts, clips, checks, DJI lav sync, Shorts or long-form, local, Descript or Tella. Use when a raw take or a Tella video needs cutting, a worker gets edit passes, or a reel used a lav."
 tags: [drives, descript, video]
 lane: general
 ---
@@ -9,7 +9,7 @@ lane: general
 
 A take becomes a finished cut in 9 passes, 0 to 8, each timed against the one before. Out of order, you build motion for a frame that's about to move or lay a bed before the cut ends where it will stay.
 
-Read `RUN.json` first. Its `format` picks the format file: [shorts.md](references/shorts.md) for `vertical`, [long-form.md](references/long-form.md) for `wide`. Its `route` is `local` (the take on disk, every Short today) or `descript`. On the local route, close each pass on the proof `next` names (the take folder, `cut short`, `cut check`, `check.txt`, `music offer`, `pick` plus the alpha check, `plan`, `cut final`), never a Descript command or `--anyway`. Its verbs: `retime`, `keep` and `tighten` in [cutting.md](references/cutting.md#the-local-route-cuts), `verify`, `cutcheck` and `final` in [checks.md](references/checks.md#the-local-cut-checks), `pick`, `overlay` and `layout` in [sequencing.md](references/sequencing.md#clips-and-layouts-on-the-local-route).
+Read `RUN.json` first. Its `format` picks the format file: [shorts.md](references/shorts.md) for `vertical`, [long-form.md](references/long-form.md) for `wide`. Its `route` is `local` (the take on disk, every Short today) or `descript`. On the local route, close each pass on the proof `next` names (the take folder, `cut short`, `cut check`, `check.txt`, `music offer`, `pick` plus the alpha check, `plan`, `cut final`), never a Descript command or `--anyway`. Its verbs: `retime`, `keep` and `tighten` in [cutting.md](references/cutting.md#the-local-route-cuts), `verify`, `cutcheck` and `final` in [checks.md](references/checks.md#the-local-cut-checks), `pick`, `overlay` and `layout` in [sequencing.md](references/sequencing.md#clips-and-layouts-on-the-local-route). A Tella video's `place` is read back through Tella's frames and seams: [checks.md](references/checks.md#the-tella-route-checks).
 
 ## Rules for every pass
 
@@ -32,6 +32,7 @@ python3 $R block $D <n> --why "<the one-action unblock>"
 - **A name carries its number and timecode**, `N [MM-SS] Description.ext`, and every `[mm-ss]` quoted downstream comes from `layout cards`, never the raw take (a cut moved every second). Rules: [projects-and-media.md](references/projects-and-media.md).
 - **Export only after his human pass**, never automatically.
   Read the state back from outside the tool that wrote it after every pass: a tool reporting success isn't evidence. The project stays his to watch.
+  Each pass's report names what changed, what you read back, watched or listened to, and what you didn't check: "seams not listened to" in four words beats a clean report that implies it.
 
 Siblings: `social` (`references/shorts-production.md` for encoding, Drive, ClickUp and calendar; captions), `video-script` (the script), `broll` (a shot that exists), `motion-design` (a clip that's built).
 

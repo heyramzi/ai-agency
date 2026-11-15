@@ -4,7 +4,7 @@
 
 [Doctrine checks](#doctrine-checks), [Strategy checks](#strategy-checks),
 [The writing score, out of 10](#the-writing-score-out-of-10), [The local cut checks](#the-local-cut-checks),
-[The export gate](#the-export-gate)
+[The Tella route checks](#the-tella-route-checks), [The export gate](#the-export-gate)
 
 A check returns `pass`, `fail` or `n/a`, and a `fail` names its source file. A check that can't name its source is an opinion and stays out of the report. A published video is never the proof a flag is fine: past edits carry their own faults, so read them for shape only (chapters, card pace, where motion sits), and fix the flag or prove the check wrong. Open this when coaching a take (the first 3 sections), after any local cut, and before any export (the last).
 
@@ -72,6 +72,23 @@ W1 to W7 read straight off the doctrine verdicts so the score can't disagree wit
   failing cut also gets a filmstrip PNG for a visual jump or a hidden caption, which no number
   catches. Fix, save once, and check again. After 3 tries that still fail, stop and tell the person
   which cuts and why, in plain words. They only polish, so they never see a preview that failed.
+
+## The Tella route checks
+
+`place` printing what it sent is the claim, not the proof. Tella renders nothing on disk, so read
+the video back through Tella's MCP (same key, `https://api.tella.com/mcp`):
+
+- **Every section change**: a frame just before, at and just after each section's start
+  in one `get_filmstrip` per clip (`clipId`, `timesMs` on the clip's playback clock, `subtitles: true`),
+  or one `get_clip_frame` (`startTimeMs`) for a single still. Each shows its card's favorite, with no
+  blank, stretched or base-layout flash.
+- **The open**: `get_filmstrip` with `intervalMs: 250` over the first 3 s. The hook reads with the sound off.
+- **Every overlay**: a frame mid-overlay, with its alpha drawn and the face clear.
+- **The seams**: `get_clip_preview` returns an MP4 URL with the clip's audio. Cut each seam's few
+  seconds to audio (`ffmpeg -ss <s> -t 6 -i preview.mp4 -vn seam.mp3`) and listen once. A clipped word
+  moves the drop by a whole word in edit.json, then `place` again.
+
+The report says which of the four ran. A seam you didn't listen to is named as unheard.
 
 ## The export gate
 
