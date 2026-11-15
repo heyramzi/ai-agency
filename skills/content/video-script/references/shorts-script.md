@@ -48,7 +48,7 @@ rewrite it.
    with timings, the text hook, the first frame, `RE-CHECK BEFORE SHOOTING`, the TikTok cut,
    description, first comment and hashtags. Read the newest note in the live batch first, because
    its re-check block is where corrections pile up.
-5. **Run the gate.** `npx heyramzi-slop <file> --register=shorts` on the clean read, then the
+5. **Run the gate.** `npx -y -p @heyramzi/lint heyramzi-slop <file> --register=shorts` on the clean read, then the
    `humanizer` read by eye. Fix a rate by rewriting the sentence, never by gluing 2 together with
    "and". 2 hits stay when you'd defend them out loud, because the top band runs on both: a
    "here's how" opener and a 2-beat slogan ("one library, one rule"). Count steps the way the

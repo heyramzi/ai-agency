@@ -24,7 +24,7 @@ Done when the page is under 30 days old or was refreshed.
 
 **5. Cold read.** Give the finished script to a fresh Haiku subagent with no context, as a stranger hearing it once. It names the action with its tools, says whether it could do it tonight and who it'd send it to, and quotes its hardest sentence. Rewrite whatever it can't name. It reads and never writes. It caught a script CutKit graded B- that the author called unreadable. It tests whether people understand you, not reach (a 66x breakout got 2/5 because it shows its code on screen), so the anchor decides structure. Done when it names the action and a re-read passes.
 
-**6. Voice.** `humanizer` runs over the finished script before anyone reads it on camera, after opening `voice-measured.md`. Count first-person pronouns first: zero on a hook; `references/writing-the-script.md` says where a few are allowed in a body. A dictated take is the script: strip the restarts, change nothing else, and report a gate hit on his sentence instead of rewriting it. Done when `npx heyramzi-slop <file>` exits 0.
+**6. Voice.** `humanizer` runs over the finished script before anyone reads it on camera, after opening `voice-measured.md`. Count first-person pronouns first: zero on a hook; `references/writing-the-script.md` says where a few are allowed in a body. A dictated take is the script: strip the restarts, change nothing else, and report a gate hit on his sentence instead of rewriting it. Done when `npx -y -p @heyramzi/lint heyramzi-slop <file>` exits 0.
 
 ## The long-form body
 

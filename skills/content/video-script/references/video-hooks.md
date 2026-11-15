@@ -83,6 +83,6 @@ Write the first frame, the on-screen title text and the spoken line. A viewer wh
 3. Find the true number first. Nothing measured and screenshottable means say so and stop.
 4. Write 3 variants on different mechanisms, each rated on mechanism, word count and drop-off risk, with a reason.
 5. Read them aloud. One breath, or it isn't a hook.
-6. Run `humanizer` with a real speech sample, then `npx heyramzi-slop <file> --fix` until it exits 0.
+6. Run `humanizer` with a real speech sample, then `npx -y -p @heyramzi/lint heyramzi-slop <file> --fix` until it exits 0.
 
 Done when all 6 ran and every number in the open traces to a source or a screen. Also confirm: first-person count across the script is zero or each survivor is a hedge on his own number, a lived result handed over with "here's how you can do it too", an assignment or a quote; the hook promises the answer and never gives it; a counted promise is paid by that many named beats; the item carrying the result sits last in a counted list; at most one negation pivot; and on a Short the stakes carry a character, something at risk and a clock.
