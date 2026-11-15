@@ -79,7 +79,7 @@
     "proves": {
       "descript": "Slots named, the visual read dispatched, then a pack layout on every card",
       "local": "Every stretch has a pack layout, a change about every 3s and none held past 6s: `cut check` names no scene outside the pack and no long hold",
-      "tella": "Every stretch has a layout, set in Tella's editor: `place` doesn't send layouts to Tella yet, so he confirms them on the project page"
+      "tella": "Every stretch has a layout beat in beats.json `layouts`, picked from the cards Tella shows (layouts.md, The Tella route), with a `Chapter Card` where each chapter starts. `editor-os plan` brings them in, and `editor-os place` prints the sections and clips it sent"
     },
     "commands": {
       "descript": [
@@ -91,7 +91,7 @@
         "layout cards"
       ],
       "local": ["cut check"],
-      "tella": ["editor-os feedback"]
+      "tella": ["editor-os plan", "editor-os place", "editor-os feedback"]
     }
   },
   {
@@ -174,7 +174,7 @@
     "proves": {
       "descript": "`descript background` laid ONE grid under the whole video after every layout and pin (each older grid pin deleted, bottom of every card, looped) and `lint` reads blocking 0, then `descript settings` reads clean and the project is handed over for the person's own pass. Never publish or export: they do that after watching",
       "local": "`cut final` renders the master and its handoff file once every note is closed. Never publish: he does that after watching",
-      "tella": "`editor-os place` sends each clip's cuts to Tella in one PATCH, after saving the old lists to tella/cuts.before.json. Never publish: he does that in Tella after watching"
+      "tella": "`editor-os place` set the 16:9 canvas, sent each clip's cuts, started a new clip at each Chapter Card and sent the layout sections, and its printed line is the evidence. The old cuts and sections sit in tella/, and `editor-os place <name> --restore` puts them back. Never publish: he does that in Tella after watching"
     },
     "commands": {
       "descript": ["descript background", "descript lint", "descript settings", "get_project"],
