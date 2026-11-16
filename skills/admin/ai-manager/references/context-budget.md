@@ -70,7 +70,9 @@ server's instructions load whole. Make alone is 111 tools for 3 calls a month.
 
 ## Zero-use is the prune list
 
-`~/.claude.json` `skillUsage` has `usageCount` and `lastUsedAt` per skill across the machine. On
+`~/.claude.json` `skillUsage` has `usageCount` and `lastUsedAt` per skill across the machine. It
+counts only Skill tool calls, so a skill an agent preloads reads 0 (broll, tesseract-video and
+ios-design did, 16 Oct 2026): check every agent's `skills:` line before calling one unused. On
 18 Sep 2026 the largest product repo projected 120 skills for about 9,500 always-on tokens (1%
 of a 1M window), and 36 had never fired, about 2,800 tokens a session. Bodies cost nothing until
 a skill fires. A hosted skills library (a Postgres service, an MCP `search_skills`, an LLM ranker)
