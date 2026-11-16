@@ -69,7 +69,7 @@ to the elements plus `--padding` (default 32) at `--scale` (default 2), to `out/
 Figures are registered in `src/figures.ts`, sit at the origin of their own canvas, take no band, and
 are reskinned with `handLook()` once per figure. Then, from `app/cli`:
 
-`pnpm cli storage upload --file out/png/<name>.png --path email/lessons/<name>-v1.png --bucket brand-assets`
+`bun run cli storage upload --file out/png/<name>.png --path email/lessons/<name>-v1.png --bucket brand-assets`
 
 It serves at
 `https://<your-app>/api/brand-assets/email/lessons/<name>-v1.png`

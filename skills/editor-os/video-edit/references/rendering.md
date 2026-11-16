@@ -21,10 +21,10 @@ descript pull <project> IMG_0015 --seconds 60   # the ORIGINAL take, never a ren
 **4K comes off a local export first, the cloud second.** 4K isn't locked (`descript_creator_v3`: both rows `aria-disabled="false"`).
 
 ```
-pnpm descript export local <project> [composition] --resolution 4K --quality high
-pnpm descript export local <project> --resolution 2K --scope scene --dry    # click nothing
-pnpm descript export local <project> --via orca --page <id>                 # drive HIS browser
-pnpm descript export local <project> --keep                                 # leave the window up
+bun run descript export local <project> [composition] --resolution 4K --quality high
+bun run descript export local <project> --resolution 2K --scope scene --dry    # click nothing
+bun run descript export local <project> --via orca --page <id>                 # drive HIS browser
+bun run descript export local <project> --keep                                 # leave the window up
 ```
 
 | | Local export | Cloud publish |
@@ -37,7 +37,7 @@ pnpm descript export local <project> --keep                                 # le
 The cloud mints the share URL and is the fallback when local refuses a clip. `pnpm youtube:master` restamps bt709 either way. The colour tag isn't decidable from the render alone: `pull` the original, compare one frame's saturation; only if they diverge, retag (re-encodes nothing): `ffmpeg -i master.mp4 -c copy -color_primaries bt709 -color_trc bt709 -colorspace bt709 out.mp4`.
 
 - Local export needs a real click and a living tab. A synthetic `element.click()` flips the button to `Loading` and writes no file; closing the tab or restarting the browser kills the encode silently. So it runs in a Chrome of its own by default (`--via chrome`: `/Applications/Google Chrome.app`, profile `~/.cache/descript-cli/chrome`, DevTools port 3348, signed in by writing the `stytch_session` cookie, driven over CDP). `--via orca` holds his front tab for the whole encode, and its confirm and editor buttons are both `Export`. **Not headless**: WebCodecs falls back to a software encoder.
-- The driver closes its own tab. 3 leaked tabs made Descript refuse a fourth with `Project is taking longer than expected to initialize` for 11 minutes; `openChrome` clears tabs on that project's URL first. An expired cookie shows a sign-in screen (`pnpm descript auth capture`); a fresh profile takes 2 minutes the first run.
+- The driver closes its own tab. 3 leaked tabs made Descript refuse a fourth with `Project is taking longer than expected to initialize` for 11 minutes; `openChrome` clears tabs on that project's URL first. An expired cookie shows a sign-in screen (`bun run descript auth capture`); a fresh profile takes 2 minutes the first run.
 - The file sits at 0 bytes for the whole encode (1:05 at 4K: 5 minutes at 0, then 221 MB). Empty is progress; a `--timeout` shorter than the encode reports a failure over a good run. Never click Export again (the second never gets its own file; the command refuses it). Never run a local export and a cloud `publish --download` of one composition together: both write that name into `~/Downloads` (11 Sep).
 - It can refuse a clip with a toast (`Couldn't process "<take>.mov" during export`, a 43-minute HEVC 4K take, though a 2-second scene exported fine): publish that cut in the cloud.
 - Maximum everything. Video rows default to 4K and High; `export local` also opens Advanced and sets stereo, 48 kHz and the top audio bitrate (256 kbps; the app ships 128). Quality rows are bitrates scaling with resolution (4K: High 30, Recommended 20, Low 10 Mbps; 1080p: 21, 14, 7). `--quality` defaults to `high`.

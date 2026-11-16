@@ -15,17 +15,17 @@ Usage:
     python3 cutspec.py raw doc.json raw.txt              # the raw script, one Descript line per line
     python3 cutspec.py check raw.txt spec.txt            # resolve, print flagged seams, the ratio
     python3 cutspec.py check raw.txt spec.txt --read     # also print the surviving script
-    python3 cutspec.py edits raw.txt spec.txt out.json   # the batch for `pnpm descript edits`
+    python3 cutspec.py edits raw.txt spec.txt out.json   # the batch for `bun run descript edits`
 
 `edits` is written for a composition still holding the raw script as ONE paragraph: cuts go back
 to front, scoped to the first line, so every needle reads in one paragraph only. After a bad pass,
-`pnpm descript undo <project> <n>` back to raw first, never a pile of restores.
+`bun run descript undo <project> <n>` back to raw first, never a pile of restores.
 
 The method. A candidate from `candidates.py` isn't a cut: it flags lists as well as retakes, and
 on 23 Sep 2026 a worker that cut all 299 left 187 broken joins ("Opus is when someone has to do
 200 mini tasks"). So Claude reads the raw script and writes this spec. Keep the last attempt whole.
 `check` flags every join that isn't a sentence boundary, filler, or an abandoned try at the kept
-words. Read each one, mark the fine ones `#ok`, and ship at 0 unread. Then `pnpm descript edits
+words. Read each one, mark the fine ones `#ok`, and ship at 0 unread. Then `bun run descript edits
 <project> <comp> out.json --dry` (0 refused), the real run, and `seams.py` on a fresh dump.
 
 A cut never starts on a comma glued to the word before it: the CLI snaps back over that word's

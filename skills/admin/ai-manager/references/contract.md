@@ -97,7 +97,7 @@ holds the refresh procedure.
 
 `vibekit sync` projects symlinks and `--prune-stray` sweeps only the folders a manifest
 subscribes to, so a hand-copied pack sits forever beside the live one (`adapt` appeared nine
-times). **`pnpm vibekit doctor`**, from `CLIs/`, finds real skill directories in every repo:
+times). **`bun run vibekit doctor`**, from `CLIs/`, finds real skill directories in every repo:
 `plugin-shadow`, `cross-repo-copy` (3+ repos, no vibe-kit source) and `double-projection`. `--fix`
 needs `--only <kind>` or `--name <list>`; deleted files are git-tracked. The first run cleared 145
 directories, among them 139 impeccable **v2.1.1** sub-skills across 9 repos while the plugin was at
@@ -125,10 +125,10 @@ and to invoke `impeccable:<command>` through the Skill tool before changing anyt
 `readlink -f .claude/skills/<name>/SKILL.md`**, never by guessing the path (skills sit inside a
 family; four sessions each spent 3 to 5 calls on this).
 
-- Inside vibe-kit: `cd CLIs && pnpm vibekit sync ..`. vibe-kit is a consumer of its own `vibekit.json`.
+- Inside vibe-kit: `cd CLIs && bun run vibekit sync ..`. vibe-kit is a consumer of its own `vibekit.json`.
 - A commit touching `ai-doc/` syncs every consumer through vibe-kit's `post-commit` hook
   (`bash scripts/install-hooks.sh` installs it; log `~/.cache/vibekit-sync.log`). By hand, from
-  `CLIs/`: `pnpm vibekit sync <project-dir>`, where a relative path resolves against `CLIs/`. A
+  `CLIs/`: `bun run vibekit sync <project-dir>`, where a relative path resolves against `CLIs/`. A
   folder subscription (`"marketing"`) pulls it recursively.
 - The shared core in every `AGENTS.md`/`CLAUDE.md`: edit `ai-doc/references/agents-core.md`. The
   `post-commit` sync stamps it; `node ai-doc/scripts/sync-agents-core.cjs` does it now.

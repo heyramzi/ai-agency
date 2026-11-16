@@ -53,7 +53,7 @@ server's instructions load whole. Make alone is 111 tools for 3 calls a month.
 
 | Source | Lever |
 | --- | --- |
-| claude.ai connectors | `"ENABLE_CLAUDEAI_MCP_SERVERS": "false"` in `~/.claude/settings.json` `env`; a CLI covers each (`gws`, `cu`, `make`, `pnpm descript`). One session opts in with `ENABLE_CLAUDEAI_MCP_SERVERS=true claude`. An unused one is removed on claude.ai Settings → Connectors (his click) |
+| claude.ai connectors | `"ENABLE_CLAUDEAI_MCP_SERVERS": "false"` in `~/.claude/settings.json` `env`; a CLI covers each (`gws`, `cu`, `make`, `bun run descript`). One session opts in with `ENABLE_CLAUDEAI_MCP_SERVERS=true claude`. An unused one is removed on claude.ai Settings → Connectors (his click) |
 | Desktop app sessions | per session, `mcp__ccd_connectors__set_session_connector_enabled`; desktop extensions (Control Chrome, Control your Mac) in the app's Settings → Extensions |
 | Claude in Chrome | `claudeInChromeDefaultEnabled: false` in `~/.claude.json`, then `claude --chrome` per session |
 | User and project servers | `mcpServers` in `~/.claude.json`, top level and under `projects[path]`; prune matching `disabledMcpServers` |

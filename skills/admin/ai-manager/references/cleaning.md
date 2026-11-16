@@ -42,7 +42,7 @@ corpus a skill reads from (a transcript set) keeps its size and trips the warnin
 
 ## The flow
 
-1. Measure with `pnpm --silent vibekit doctor` from `CLIs/`: copies, orphans and dead worktrees a
+1. Measure with `bun run vibekit doctor` from `CLIs/`: copies, orphans and dead worktrees a
    folder pass can't see, plus `contextCost` (metadata, duplicated blocks, floor warnings).
 2. Fix every gate it fails: broken links, dead pointers, duplicate names, illegal names. A
    deleted asset leaves every prose route to it silent until then.
@@ -158,4 +158,4 @@ on the company page when that agent goes (5 Oct 2026). List those skills first. 
 - [ ] No `SKILL.md` carries log entries, and every compressed log was committed first
 - [ ] `duplicated blocks` went down, or each survivor has a reader with no parent to hop to
 - [ ] No banned words (`packages/lint/data/slop-words.js`); `contextCost` has no new warnings
-- [ ] Consumers re-synced (`pnpm vibekit sync <dir>`), no broken symlinks
+- [ ] Consumers re-synced (`bun run vibekit sync <dir>`), no broken symlinks

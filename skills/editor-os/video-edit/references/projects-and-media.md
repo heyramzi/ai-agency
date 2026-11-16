@@ -1,6 +1,6 @@
 # Projects and media: organise, name, tracks
 
-Open this for pass 0 (organise), pass 8 (handoff), before an import, and before touching Studio Sound. `pnpm descript --help` lists the verbs; this holds what it can't say. Credentials and the write model: [descript-cli.md](descript-cli.md).
+Open this for pass 0 (organise), pass 8 (handoff), before an import, and before touching Studio Sound. `bun run descript --help` lists the verbs; this holds what it can't say. Credentials and the write model: [descript-cli.md](descript-cli.md).
 
 ## Verbs with a trap
 
@@ -19,7 +19,7 @@ Open this for pass 0 (organise), pass 8 (handoff), before an import, and before 
 
 Tracks. A sequence's tracks are `sequenceScenes` (reached from the sequence mediaRef through `audio.trackSceneIds`), so `tree` and `comps` never show them. Names are `CAM`, `CAM GS`, `MIC`, `SCREEN`, in timeline order. `CAM GS` is the keyed (green-removed) twin, drawn as the body over text by 8 of the pack's cards.
 
-`descript tracks <project>` ends on `tracks clean` or a fault per line; **pass 0 is done when it reads clean and `pnpm descript lint <project>` prints no naming warning**, and `run.py` takes both outputs as evidence. 3 gates:
+`descript tracks <project>` ends on `tracks clean` or a fault per line; **pass 0 is done when it reads clean and `bun run descript lint <project>` prints no naming warning**, and `run.py` takes both outputs as evidence. 3 gates:
 
 - One live track and the rest muted: the mic if there is one, otherwise the camera. 2 unmuted captures of one room is comb filtering, invisible in a waveform and listed by `tracks`. A muted track keeps gain 1, so reading gain finds every track live.
 - Only the live track in the script. `includeTranscript` is "Include in script"; a camera left in puts a second, worse transcript under every word. `track script <track> --off` on every non-mic track.
@@ -73,7 +73,7 @@ A name splits its parts with ` · ` (space, middle dot, space). Never ` - ` betw
 - Other areas use the same separator: `<Client> · <Topic>`, `<Subject> · <Kind>` (`Seam · Ads`, `Testimonial · Dylan Camara`), a course `<Course> · <Version> · <Language>`.
 - `Untitled Project`, or anything you can't name with confidence: leave the name and list it in the report.
 
-Name it at creation, a long-form straight into its area's `In Production` (`pnpm descript project new "<name>" --folder "<area>/In Production"`): a rename leaves quoting docs stale, and re-importing duplicates media still wired into compositions.
+Name it at creation, a long-form straight into its area's `In Production` (`bun run descript project new "<name>" --folder "<area>/In Production"`): a rename leaves quoting docs stale, and re-importing duplicates media still wired into compositions.
 
 ### Inside a project: the Files panel
 
@@ -120,7 +120,7 @@ Not in the cut/  ALT 4K [salvage 1-05, 1-13, 3-41].MOV
 
 A top-level area is `NN Name`: 2 digits, a space, a plain name. No emoji, no brand prefix, no ` - ` after the number. A YouTube area holds exactly 2 folders, `In Production` and `Published`, filed by status and never by topic, because the code letter already says the topic and sorting by name groups the letters. A project moves once, from `In Production` to `Published`, the day the video goes live. Other areas keep plain-named subfolders, numbered only for a course module order. No project ever sits at the drive root.
 
-`pnpm descript folders --lint` checks every area and project name against these rules; run it after a drive move.
+`bun run descript folders --lint` checks every area and project name against these rules; run it after a drive move.
 
 ### iPhone footage
 
@@ -131,4 +131,4 @@ A top-level area is `NN Name`: 2 digits, a space, a plain name. No emoji, no bra
 
 ## Done when
 
-`tracks` and `settings` read clean; `pnpm descript lint <project>` prints no naming warning; every `[mm-ss]` came from `layout cards`; `tree` shows each file under its intended name; any composition touched was checked against `publishes`; any composition created carries the orientation the take was shot in.
+`tracks` and `settings` read clean; `bun run descript lint <project>` prints no naming warning; every `[mm-ss]` came from `layout cards`; `tree` shows each file under its intended name; any composition touched was checked against `publishes`; any composition created carries the orientation the take was shot in.

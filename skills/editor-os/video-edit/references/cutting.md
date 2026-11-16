@@ -28,18 +28,18 @@ The CLI needs no AI credits, clipboard or browser.
 
 ```bash
 cd <the CLI directory>
-pnpm descript script <project> <comp>                 # script with cuts, speeds, cards, markers
-pnpm descript cut <project> <comp> --from "<words>" [--to "<words>"] [--in "<paragraph>"] [--nth N] [--dry]
-pnpm descript restore <project> <comp> "<cut words>"
-pnpm descript speed <project> <comp> 1.1 --from "<words>"
-pnpm descript verify <project>                        # open it and prove it still draws
-pnpm descript undo <project> [steps]
+bun run descript script <project> <comp>                 # script with cuts, speeds, cards, markers
+bun run descript cut <project> <comp> --from "<words>" [--to "<words>"] [--in "<paragraph>"] [--nth N] [--dry]
+bun run descript restore <project> <comp> "<cut words>"
+bun run descript speed <project> <comp> 1.1 --from "<words>"
+bun run descript verify <project>                        # open it and prove it still draws
+bun run descript undo <project> [steps]
 ```
 
 A cut splits the paragraph; the removed half carries `isBlocked: true` (struck through, reversible), snapped to word boundaries off the alignment. `--dry` prints seconds and words and is a word-level clock the SRT lacks (use it for a clip's landings, never character interpolation). Dry-run only when you need that clock or a target might not resolve; otherwise write and read back on a fresh dump. Each dry run reloads the whole document, and on a 69-minute project a run stalled on them.
 
 - The needle matches case-insensitively as a SUBSTRING (`--from "So"` lands inside `also`): the `text:` each step prints is the only proof. A repeating needle is refused (`euh` in 14 paragraphs needs `--in`); `--in` narrows and stops, so `--nth` picks which (without it a filler loop converges at ~60% and looks finished). A needle can't cross a paragraph break (put `\n` where one sits), can't start with `, ` (the gate refuses "holds 1 word(s) its seconds do not": start at the space before the word), and can't cut a stub glued to its word (`G-it's`: leave it). A whole-paragraph cut needs the tau's full text, newlines included.
-- ANY editor tab open merges its copy back over your writes, and the reverted document reads healthy (42 cuts read back right and were all live on the next dump). Ask for the project closed, then prove it on a FRESH dump: `pnpm descript doc <project> --out after.json; python3 scripts/prove_cuts.py after.json needles.json` (exits 1 while a needle is live). After any `--anyway` write, recount the struck spans.
+- ANY editor tab open merges its copy back over your writes, and the reverted document reads healthy (42 cuts read back right and were all live on the next dump). Ask for the project closed, then prove it on a FRESH dump: `bun run descript doc <project> --out after.json; python3 scripts/prove_cuts.py after.json needles.json` (exits 1 while a needle is live). After any `--anyway` write, recount the struck spans.
 - Repair the alignment before the cut, or the cut is fiction. A transcript can carry right words over wrong times (one transcript had 4,334 of 7,014 words under 11 ms). Pass 1 there reported 0.05 to 0.2 s for 30-character spans; repaired, 100 needles read a median 5.6 s, 668 s total. A cut whose seconds don't match its words is the alarm. A duration drop much larger than the characters cut means missing content.
 - After `gaps close`, a needle can't cross the tau splits it made: write a second batch as per-tau pieces with `in` on any needle under 60 characters. **Cutting after stamping strands every card whose anchor tau the cut blocks** (25, both CTAs; `layout cards` prints `-`; only `--split` places a new live card). Cut first.
 - No verb for it? The clipboard carries the edit and ships Ignores: [clipboard.md](clipboard.md). A pass the CLI can't do is a verb to write.
@@ -110,7 +110,7 @@ Don't cut: anything cueing what's on screen ("here we're in the Delivery space")
 OUTPUT: a JSON array only, elements `[<paragraph index as string>, "<exact text to remove>"]`. The text must be a VERBATIM substring of that paragraph, character for character, including the comma that belongs to the cut and the trailing space between 2 words; never ` ⏎ ` in a needle (split across the newline); never a needle appearing twice in its paragraph; 15 to 30 entries per 200 paragraphs. A marginal cut is a wrong cut.
 ```
 
-**Judging what comes back:** resolve every needle against the live document; drop (never guess-repair) one resolving to zero or 2 paragraphs; read each against the don't-cut list (a clause may cue a shot 3 paragraphs later). Strip a leading `, `. A chunk is one `pnpm descript edits` batch applied back to front.
+**Judging what comes back:** resolve every needle against the live document; drop (never guess-repair) one resolving to zero or 2 paragraphs; read each against the don't-cut list (a clause may cue a shot 3 paragraphs later). Strip a leading `, `. A chunk is one `bun run descript edits` batch applied back to front.
 
 ### The ratio says whether the list is long enough
 
@@ -142,8 +142,8 @@ A TAU keeps its own `audioSegment`, so non-monotonic offsets are legal; cuts shi
 The rule: every word gap over 0.8 s comes down to 0.8 s, which is `--over 0.81 --keep 0.4` (the CLI needs `over` above twice `keep`). It's the LAST step of the cut pass and runs again after any later `cut`. **`--edges` is required on a finished cut**: a pause that `borders a cut` is skipped otherwise, and those are the longest (one cut: 21.0 s and 14.4 s; plain `close` recovered 5.5 s and reported success, `--over 0.7 --keep 0.3 --edges` took 20 pauses to none, 89.3 s off 25 minutes). Read the `kept` column before believing `saved`; `unmatched word` stays protected; a later `restore` comes back beside a hole.
 
 ```bash
-pnpm descript gaps close <project> <comp> --over 0.81 --keep 0.4 --edges
-pnpm descript gaps <project> <comp> --over 0.81                         # proof: nothing left
+bun run descript gaps close <project> <comp> --over 0.81 --keep 0.4 --edges
+bun run descript gaps <project> <comp> --over 0.81                         # proof: nothing left
 python3 scripts/silences.py calibrate <export.mp4> doc.json "<comp>"   # the room's threshold, not -32 dB
 python3 scripts/silences.py deadair <export.mp4> doc.json "<comp>" --keep 0.35   # per-tau cut list
 python3 scripts/beatclock.py doc.json --beat "first words" "last words"

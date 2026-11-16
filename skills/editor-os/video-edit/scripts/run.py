@@ -31,7 +31,7 @@ ledger on disk is the record; the checklist is the view he opens.
     run.py next <dir>                       # the one pass to do now
     run.py start <dir> 3
     run.py done <dir> 3 --evidence "layout cards: 47/47 stamped" --file cards.txt
-    run.py done <dir> 0 --evidence "descript tracks clean" --run "pnpm descript tracks <id>"
+    run.py done <dir> 0 --evidence "descript tracks clean" --run "bun run descript tracks <id>"
     run.py block <dir> 7 --why "publish dies at 57s on a CLI-stamped composition"
     run.py board <dir> --task 86cb8wak7     # mirror the table to the task's checklist, and keep it so
 """

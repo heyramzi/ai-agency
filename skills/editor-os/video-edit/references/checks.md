@@ -95,15 +95,15 @@ The report says which of the four ran. A seam you didn't listen to is named as u
 Before export, on every video:
 
 ```bash
-pnpm descript settings <project> [composition]    # settings 1-13 below, then the faults; exits red while one is left
-pnpm descript settings after.json                 # or a document saved by `doc --out`
+bun run descript settings <project> [composition]    # settings 1-13 below, then the faults; exits red while one is left
+bun run descript settings after.json                 # or a document saved by `doc --out`
 ```
 
 **Audio** (Select All scenes, every time; per scene you fix it 4 times and miss the 5th): (1) Studio Sound on, 50% (60-70% only if muffled, above sounds like a phone call); (2) Lower other audio on, volume 10%; (3) word gaps over 0.7 s down to 0.3 s; (4) one live track, the microphone, every other muted AND out of the script (a muted track still in the script comes back at export).
 
 **Face** (same numbers on CAM and CAM GS, on every card: Descript shows one layer's panel at a time, so the card before can carry a default nobody touched; the CRM cut had default Uplighting on four): (5) Uplighting strength 10%, foreground 50%, background 0%; (6) skin smoothing 10%; (7) blur speaker background one value everywhere; (8) color adjustments None (a grade belongs to the shoot); (9) green screen on for CAM GS, off for CAM.
 
-**Green screen stack:** (10) CAM GS on top, text or shape under, CAM at the back (index 0 is nearest the viewer); (11) CAM GS in CAM's box: `pnpm descript layer copy <p> <comp> <card> <layer> --to all`, never eyeballed; (12) no leftover duplicate cameras (a restamp switches the old one off and leaves it: 3 restamps leave 3 hidden cameras). The twin must sit on CAM's clock to half a frame: `tracks` gates it, `track shift <project> "CAM GS" --to CAM` repairs it ([projects-and-media.md](projects-and-media.md)).
+**Green screen stack:** (10) CAM GS on top, text or shape under, CAM at the back (index 0 is nearest the viewer); (11) CAM GS in CAM's box: `bun run descript layer copy <p> <comp> <card> <layer> --to all`, never eyeballed; (12) no leftover duplicate cameras (a restamp switches the old one off and leaves it: 3 restamps leave 3 hidden cameras). The twin must sit on CAM's clock to half a frame: `tracks` gates it, `track shift <project> "CAM GS" --to CAM` repairs it ([projects-and-media.md](projects-and-media.md)).
 
 **Frame and finish:** (13) frame 1920x1080 or larger (and read `videoMetadata` before any export: a 1280x720 canvas threw away a 4K take); (14) smart transition in and out wherever the shot changes; (15) names spelled right (ClickUp); (16) watch the whole video once with sound. **Update the captions before EVERY export and before each platform render** (a cut moves every word; the caption layer keeps old text and timings; YouTube and TikTok are separate exports). A cut's length comes off `layout cards` or the last timecode, never the music bed's seconds (the bed is 181 s under a 2:21 cut).
 
@@ -126,14 +126,14 @@ A percentage is a number and never a taste: one b-roll clip at 70% is a fault, a
 The command can't see the key itself (a clean edge on a busy frame is a look), the captions, chapters and end card; the cut's checks are in [cutting.md](cutting.md). Repairs:
 
 ```bash
-pnpm descript studio <p> <track|media> --on --intensity 0.5      # Studio Sound
-pnpm descript gaps close <p> <comp> --over 0.7 --keep 0.3 --edges
-pnpm descript layer effect <p> <comp> <card> <layer> uplighting --value "[0.1,0.5,0,0.05,-0.05,0]"
-pnpm descript layer copy <p> <comp> <card> <layer> --to all      # one look onto every card; --to a,b,c or `selected` + --layout/--from/--until also one commit
-pnpm descript layer set <p> <comp> <card|all> <layer> --to 0     # stack position, 0 is top, -1 the bottom
-pnpm descript layer sweep <p> <comp>                             # hidden duplicate cameras
-pnpm descript resize <p> <comp> 1920x1080
-pnpm descript track mute <p> <track>                             # leave one live track
+bun run descript studio <p> <track|media> --on --intensity 0.5      # Studio Sound
+bun run descript gaps close <p> <comp> --over 0.7 --keep 0.3 --edges
+bun run descript layer effect <p> <comp> <card> <layer> uplighting --value "[0.1,0.5,0,0.05,-0.05,0]"
+bun run descript layer copy <p> <comp> <card> <layer> --to all      # one look onto every card; --to a,b,c or `selected` + --layout/--from/--until also one commit
+bun run descript layer set <p> <comp> <card|all> <layer> --to 0     # stack position, 0 is top, -1 the bottom
+bun run descript layer sweep <p> <comp>                             # hidden duplicate cameras
+bun run descript resize <p> <comp> 1920x1080
+bun run descript track mute <p> <track>                             # leave one live track
 ```
 
 Lower other audio has no verb: set it once per composition on All scenes in the app.

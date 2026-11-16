@@ -5,12 +5,12 @@ Open this before reorganising "My media", importing to the shelf, or deleting a 
 ## The drive media library
 
 ```bash
-pnpm descript library                                  # the tree, with paths and ids
-pnpm descript library mkdir "Backgrounds"              # --parent nests it
-pnpm descript library rename "brand-grid-3840x2160.mov" "Brand Grid Dark.mov"
-pnpm descript library mv "Brand Grid Dark.mov,Brand Grid Light.mov" Backgrounds
-pnpm descript library rm "ZZ probe"                    # a folder takes its contents with it
-pnpm descript library import sounds.json --folder "Sound Signature"
+bun run descript library                                  # the tree, with paths and ids
+bun run descript library mkdir "Backgrounds"              # --parent nests it
+bun run descript library rename "brand-grid-3840x2160.mov" "Brand Grid Dark.mov"
+bun run descript library mv "Brand Grid Dark.mov,Brand Grid Light.mov" Backgrounds
+bun run descript library rm "ZZ probe"                    # a folder takes its contents with it
+bun run descript library import sounds.json --folder "Sound Signature"
 ```
 
 - `/v2/drives/{id}/assets` is the wrong place to read a name: `metadata.default_display_name` is the upload name, forever. Read `library`.
@@ -22,13 +22,13 @@ pnpm descript library import sounds.json --folder "Sound Signature"
  The names are the sound library's JSON
 , also the app's Descript kit shelf: one name from census to timeline.
 - A flat panel of upload names means the client couldn't load the document, and the project isn't messy. When the drive media endpoint answers 503 (`suppressing local load failure`), the panel falls back to names like`brand-testimonials-highlight.mp4`
- while the document says `Products/Brand/Testimonials Highlight.mp4`. Run `pnpm descript tree` before calling a project disorganised.
+ while the document says `Products/Brand/Testimonials Highlight.mp4`. Run `bun run descript tree` before calling a project disorganised.
 - Deleting an asset breaks every project that adopted it. `Extra Fast Multimedia Whoosh 3` was uploaded into the layouts project (`lookup_key` names its `projectId`) but adopted by a video project; deleting it from the pack left a media reference whose `assetGuid` resolved to nothing (a spinning Files row). Repair touches no card:
 
 ```bash
-pnpm descript pull <video> "Multimedia Whoosh" --out /tmp     # the artifact usually survives
-pnpm descript import <video> fix.json                          # a fresh copy, under a temp name
-pnpm descript media swap <video> "Extra Fast Multimedia Whoosh 3" "whoosh-fix-donor.wav"
+bun run descript pull <video> "Multimedia Whoosh" --out /tmp     # the artifact usually survives
+bun run descript import <video> fix.json                          # a fresh copy, under a temp name
+bun run descript media swap <video> "Extra Fast Multimedia Whoosh 3" "whoosh-fix-donor.wav"
 ```
 
   `media swap` puts the new asset under the id the cards reference, so pins keep place and gain, and it consumes the donor. A reference with no `assetJson` isn't proof of breakage (drive-library adoptions carry none, like both CTA movs there); the test is whether its `assetGuid` appears in `assets <project>`.

@@ -12,7 +12,7 @@ Stamping looks over cards: the layouts page in the studio.
 
 ## The gates
 
-`sequence.py audit` reads the speed-adjusted play clock off a `dscript grab` payload or a `pnpm descript doc` export. It exits 1 on any of three:
+`sequence.py audit` reads the speed-adjusted play clock off a `dscript grab` payload or a `bun run descript doc` export. It exits 1 on any of three:
 
 - **A state change every 7 s or better, median.** A state change is a card or a clip arriving; a jump cut isn't one (same frame 2 words later).
 - **20% to 50% of runtime under a full-frame overlay.** Under 20% it's a face talking; over 50% nobody feels present. A build-along is legitimately 60% screen: read the gate as "why is this one different".
@@ -27,7 +27,7 @@ Stamping looks over cards: the layouts page in the studio.
 | coverage | 24% | 9% |
 | still stretches over 12 s | 6 | 4 (one 18:47 long) |
 
-`balance` reads the distribution, because an average isn't a rhythm. `pnpm descript doc <project> --out doc.json` then `python3 scripts/sequence.py balance doc.json` (it needs the real document). An 18:50 cut passed `audit` (median 7.1 s, 20% coverage) while `balance` found 4 minutes with nothing on screen, the thinnest fifth holding 7% of the dressing, and 74% of runtime silent (longest 2:50) (17 state changes in minute one, three in minute sixteen: 2 edits joined). Run `audit` and `balance` on every finished edit; read the per-minute table and skip the verdict line.
+`balance` reads the distribution, because an average isn't a rhythm. `bun run descript doc <project> --out doc.json` then `python3 scripts/sequence.py balance doc.json` (it needs the real document). An 18:50 cut passed `audit` (median 7.1 s, 20% coverage) while `balance` found 4 minutes with nothing on screen, the thinnest fifth holding 7% of the dressing, and 74% of runtime silent (longest 2:50) (17 state changes in minute one, three in minute sixteen: 2 edits joined). Run `audit` and `balance` on every finished edit; read the per-minute table and skip the verdict line.
 
 | 8 Sep 2026 baseline | the standard, 7:39 | a long talk, 19:00 | a screen demo, 20:02 |
 |---|---|---|---|
@@ -88,13 +88,13 @@ Two ways to turn a still into a clip, shipped side by side so you pick by lookin
 A clip's length is the span between two phrases in the cut. A subtitle export timed one set **203.8 s wrong** (a cut took 2038.3 s to 1834.5 s; 12 clips designed against timings out up to 196 s). A cut isn't a uniform shift: drift was 0.85 s at the start, then 6 s at 2:30 and 196 s at 29:00.
 
 ```bash
-pnpm descript doc <project> --out doc.json
+bun run descript doc <project> --out doc.json
 python3 scripts/beatclock.py doc.json                      # every surviving tau, with its start
 python3 scripts/beatclock.py doc.json --find "a phrase"
 python3 scripts/beatclock.py doc.json --beat "first words" "last words"   # start, end, duration
 ```
 
-It walks the superTau and skips blocked taus. It divides each duration by `speed` (one cut: 476.83 s undivided, 454.54 s true), and its total equals `get_project`'s duration. Re-run after any cut, reorder or paste. A beat is its own sentence; neighbours are a constraint (2 beats 2.6 s apart are a montage, not 2 clips). A shortened beat loses its last movement. With ignores, report duration by summing unblocked taus (what `pnpm descript script` prints). A cut's length comes off layout cards or the last timecode, never the bed's seconds (the bed is 181 s under a 2:21 cut). A `[mm-ss]` in a media name goes stale on every re-cut: to find where a clip really plays, map `pinScenes[].id` to the card through `cards.components[].layers[].sourceSceneId` and read `layout cards`. The SRT and `layout cards` agree; the markdown transcript drifts late (58 s at 5:30).
+It walks the superTau and skips blocked taus. It divides each duration by `speed` (one cut: 476.83 s undivided, 454.54 s true), and its total equals `get_project`'s duration. Re-run after any cut, reorder or paste. A beat is its own sentence; neighbours are a constraint (2 beats 2.6 s apart are a montage, not 2 clips). A shortened beat loses its last movement. With ignores, report duration by summing unblocked taus (what `bun run descript script` prints). A cut's length comes off layout cards or the last timecode, never the bed's seconds (the bed is 181 s under a 2:21 cut). A `[mm-ss]` in a media name goes stale on every re-cut: to find where a clip really plays, map `pinScenes[].id` to the card through `cards.components[].layers[].sourceSceneId` and read `layout cards`. The SRT and `layout cards` agree; the markdown transcript drifts late (58 s at 5:30).
 
 ## Clips and layouts on the local route
 
@@ -118,7 +118,7 @@ gray and over dark with Python PIL; an ffmpeg `tile` sheet over alpha comes out 
 A sound is a pin no layer draws, the layouts page in the studio owns the object and `--sound`;
  which slot a moment takes, the timing against the frame, levels and density are the `sound` skill's. Sound is the third hook (`@kienobimedia`, 2026: "Everyone obsesses over the words and the visuals, but sound is the third hook most creators skip"), which became the 80%-of-arrivals gate.
 
-A screen demo is where sound goes missing: 12 unbroken demo minutes carried no click or keystroke (also all four naked minutes), though the kit has both. The standard cut places three a minute; a long talk, 2.3, in 2 bursts. Placing: sounds go in the same `edits` pass as the splits and clips (a separate pass is written last, so not at all): `pnpm descript pin <project> <comp> --media "Whip Low Whoosh" --at "<phrase>" --sound --gain 0.4`, `balance` before to find the silence and after to prove it; the pin pass writes `pin --sound` beside every graphic arrival. Three finished edits put a sound on at most 27% of arrivals: sound is this channel's standing gap.
+A screen demo is where sound goes missing: 12 unbroken demo minutes carried no click or keystroke (also all four naked minutes), though the kit has both. The standard cut places three a minute; a long talk, 2.3, in 2 bursts. Placing: sounds go in the same `edits` pass as the splits and clips (a separate pass is written last, so not at all): `bun run descript pin <project> <comp> --media "Whip Low Whoosh" --at "<phrase>" --sound --gain 0.4`, `balance` before to find the silence and after to prove it; the pin pass writes `pin --sound` beside every graphic arrival. Three finished edits put a sound on at most 27% of arrivals: sound is this channel's standing gap.
 
 A Short's sound that `cut check` flags on a speech onset moves with `editor-os sound <project> <second> --to <second>` (to a pause between words) or goes with `--remove`; the second is output time, within 0.25s of the sound's start, and the change survives later `keep` and `tighten`.
 

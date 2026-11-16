@@ -174,7 +174,7 @@ A skill's command is its directory name, so deleting a directory deletes a `/com
 somebody's muscle memory and somebody's manifest both use.
 
 - `vibekit.json` in every consumer. Grep the deleted path across all of them and repoint the
-  entry to the survivor, then `pnpm vibekit sync <dir>` per consumer. A repo subscribing to a
+  entry to the survivor, then `bun run vibekit sync <dir>` per consumer. A repo subscribing to a
   whole folder needs nothing, but one subscribing to the exact path breaks silently.
 - Sibling descriptions that route by name. Grep the deleted registered name across the whole
   of `ai-doc/`, descriptions included, and repoint. A description that names a skill that no

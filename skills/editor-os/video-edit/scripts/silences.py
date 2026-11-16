@@ -39,7 +39,7 @@ TWO THINGS THIS DELIBERATELY DOES NOT DO, both measured and both negative:
     silences.py calibrate <export.mp4> <doc.json> [comp]               the threshold this room wants
     silences.py deadair   <export.mp4> <doc.json> [comp] [--keep 0.35] the cut list the words cannot give
 
-`doc.json` is `pnpm descript doc <project> --out doc.json`, or any payload `dscript.py grab`
+`doc.json` is `bun run descript doc <project> --out doc.json`, or any payload `dscript.py grab`
 archived. `comp` names or indexes the composition; omit it for the first.
 """
 import json, os, re, subprocess, sys, statistics

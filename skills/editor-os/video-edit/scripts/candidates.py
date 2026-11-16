@@ -11,7 +11,7 @@ joined script rather than block by block, because a restart lands in the
 paragraph after the one it abandons.
 
 Usage:
-    # the raw script straight off a doc dump - `pnpm descript doc <project> --out doc.json`
+    # the raw script straight off a doc dump - `bun run descript doc <project> --out doc.json`
     python3 candidates.py doc.json --comp "<name or id>"
 
     # blocks from the editor (a JSON array of strings), or plain text one block per line

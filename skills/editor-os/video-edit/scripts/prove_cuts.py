@@ -9,7 +9,7 @@ next dump. Reading the write back inside the loop does not catch it; only a fres
 So: finish the loop, dump the document again, and run this. It exits 1 while any needle is still in
 the live script, which is the only proof the cut is really there.
 
-    pnpm descript doc <project> --out after.json
+    bun run descript doc <project> --out after.json
     python3 prove_cuts.py after.json needles.json
 """
 import json

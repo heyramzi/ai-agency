@@ -34,4 +34,4 @@ Descript's rich clipboard carries the edit: the `«class HTML»` flavor holds `<
 
 `styles.example.json`: `[{"phrase","highlight","bold"}]`. Read each attribute back and slice the TAU with its range; a wrong style is silent. Run it through `scripts/dscript.py` (`grab` `words` `apply` `check` `history` `restore`): it archives every payload to `~/.descript-clip/history`, the only undo that survives the clipboard being overwritten (Raycast's history is encrypted).
 
-The order is fixed. The clipboard replaces the script region from an older grab; `pnpm descript layout` writes server-side. Cut, markers and pins go first as pastes, every `layout` command after, or the paste silently discards every stamp. The CLI's `edits` pass avoids this: one commit, no order to get wrong.
+The order is fixed. The clipboard replaces the script region from an older grab; `bun run descript layout` writes server-side. Cut, markers and pins go first as pastes, every `layout` command after, or the paste silently discards every stamp. The CLI's `edits` pass avoids this: one commit, no order to get wrong.

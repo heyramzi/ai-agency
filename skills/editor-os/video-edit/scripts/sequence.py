@@ -427,7 +427,7 @@ def dressing(path, n):
     """
     raw = json.load(open(path))
     if "compositions" not in raw:
-        sys.exit("balance reads a `pnpm descript doc` export: the clipboard payload carries no "
+        sys.exit("balance reads a `bun run descript doc` export: the clipboard payload carries no "
                  "pinScene timelines, so a sound cannot be told from a clip in it")
     tl = raw["compositions"][n]["timeline"]
     refs = {m["id"]: m for m in raw["mediaLibrary"]["mediaRefs"]}

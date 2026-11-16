@@ -7,7 +7,7 @@ A long-form video isn't finished when the script is. It's finished when someone 
 | The concept, in the app | Brief, keyword evidence, packaging, the script | `POST /api/v1/youtube/concepts`, then `PUT .../script` |
 | The ClickUp task | Production state, dates, holder, batch | `POST /api/v1/youtube/concepts/<id>/production-task` |
 | The board fields | Publishing, Format, Socials, BATCH, Points, Descript | `cu task field set` |
-| The Descript project | The take, once it exists | `pnpm descript project new` |
+| The Descript project | The take, once it exists | `bun run descript project new` |
 | The calendar | The calendar row | by hand |
 
 - The script's home is the concept (`metadata.script`). A script in a repo file or a chat window doesn't exist.
@@ -38,8 +38,8 @@ cu task field set <taskId> --field d8574a56-d8c0-4ab0-bb47-8343cc9dbf78 \
   --value '["bd92c09f-45eb-4d69-a6e7-8b6b0fe9b6a2"]' --json-value                      # Socials: YouTube
 # 5. Descript project, before the shoot, so the field is never empty
 cd ../vibe-kit/CLIs
-pnpm descript project new "C52 · <Working Title>" --folder "01 YouTube HeyRamzi/In Production"
-pnpm descript rename <projectId> <compId> "C52 · <Working Title>"   # the composition is the project name
+bun run descript project new "C52 · <Working Title>" --folder "01 YouTube HeyRamzi/In Production"
+bun run descript rename <projectId> <compId> "C52 · <Working Title>"   # the composition is the project name
 cd -
 cu task field set <taskId> --field 632095f8-6949-40f7-88dc-7737203ab5c0 \
   --value "https://web.descript.com/<projectId>"

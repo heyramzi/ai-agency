@@ -1,6 +1,6 @@
 # Pins: placing b-roll, overlays and zooms
 
-Open this before writing a `pins.json` or placing a clip with `pnpm descript pin`. The gates and shot triggers that decide what goes where: [sequencing.md](sequencing.md).
+Open this before writing a `pins.json` or placing a clip with `bun run descript pin`. The gates and shot triggers that decide what goes where: [sequencing.md](sequencing.md).
 
 ## Pins: placing b-roll, overlays and zooms
 
@@ -11,10 +11,10 @@ A pin is three coupled objects: `pinTrack` (media, in/out via `audioSegment.offs
   "from": "Nobody takes care of harnessing that information", "to": "for your sales team and your AI"}]
 ```
 
-- Run `catalogue` before any zoom and read the layout line as a gate. `none - no card in this payload carries a pin layer` means no stack to clone, and every zoom lands an **empty card** (31 Aug: 14 blank cards). Then `pnpm descript layout pace` is both placement and repair (`--screen SCREEN` on a screen tour).
+- Run `catalogue` before any zoom and read the layout line as a gate. `none - no card in this payload carries a pin layer` means no stack to clone, and every zoom lands an **empty card** (31 Aug: 14 blank cards). Then `bun run descript layout pace` is both placement and repair (`--screen SCREEN` on a screen tour).
 - A b-roll ends where its scene ends: one that stops short, even by 0.2 s, leaves an empty frame.
 At 85% or more of the card `pin` slows it so the last frame lands on the close (~0.9x is invisible; reports `speed` and `holds: 0`); below 0.85x it refuses and asks for `--to` on an earlier word. Longer is fine (`holds` negative). A keyed overlay isn't held to this. Anything above 0 on a b-roll is the empty frame.
-- Refusals. Clipboard route (`dscript.py pins`) can't place media never on the timeline (40 of 43 in one project); `pnpm descript pin` reads the guid off the document and can (a clip imported 15 days earlier), so reach for the CLI first. Phrases resolve against the surviving script only (a pre-cut phrase after a reorder refuses); an ambiguous phrase takes `nth`/`pre`/`post`; a project that never had a pinTrack needs one clip dragged in. `--to "<phrase>"` is a real order check (`beatclock.py --find` both phrases first).
+- Refusals. Clipboard route (`dscript.py pins`) can't place media never on the timeline (40 of 43 in one project); `bun run descript pin` reads the guid off the document and can (a clip imported 15 days earlier), so reach for the CLI first. Phrases resolve against the surviving script only (a pre-cut phrase after a reorder refuses); an ambiguous phrase takes `nth`/`pre`/`post`; a project that never had a pinTrack needs one clip dragged in. `--to "<phrase>"` is a real order check (`beatclock.py --find` both phrases first).
 - `--to` where the stretch has no cards. The default closes on the next card, which on a canvas walk is 20 minutes on (`holds: 398.6`). `--to` cuts the closing card in the standing look; read `ends` against the clip length in `--dry` (shorter truncates, longer freezes).
 - An alpha `.mov` needs `--keep-cameras`. `pin` hides cameras under anything taking the full frame (`camerasHidden`), and can't tell a keyed clip from b-roll. A qtrle overlay draws in the web editor only while playing: press play before judging a key. `import` refuses the HEVC-alpha MOVs `fill` writes: `ffmpeg -i in.mov -an -c:v qtrle -pix_fmt argb out.mov`. `pin` once wrote every effect enabled regardless of the layout's `isDisabled` rows.
 - No transition where the camera goes off. A smart transition there "creates some weird flicker". `pin` clears the two boundaries bracketing a clip (`transitionsCleared`); `descript transition sweep <project> <comp>` does a whole composition; one boundary is `transition <card> --off`.
