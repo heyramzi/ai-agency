@@ -43,8 +43,9 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 3. **"Self-explanatory visuals are better than text, always"**. A beat is shown by
    what happens on screen (the mail lands, the chip appears, the task files), never told by a label,
    caption or title over it. The check is the mute test in `references/craft.md` with every word the clip
-   adds hidden: if the beat stops reading, redraw the action, don't add a word. Chapter cards and CTAs on
-   his own footage stay, since they mark the video, not a beat.
+   adds hidden: if the beat stops reading, redraw the action, don't add a word. CTAs on his own footage
+   stay, since they mark the video, not a beat. A chapter title over a Tella video doesn't, the hook's least
+   of all: the chapters are the player's markers.
 4. **"Photorealism: what would be a real screenshot is better. If you show the UI of Gmail, it needs to be
    the real-looking UI as of the time the video is recorded"**. A product UI may be
    drawn, but it looks photorealistic: the real product's layout, icons, fonts, spacing, colours and
