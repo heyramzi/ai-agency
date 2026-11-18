@@ -1,12 +1,12 @@
-# Recipes: the long take, the live screen, the walkthrough and four more
+# Recipes: the long take, the live screen, the product plate, the walkthrough and four more
 
-Seven named recipes, each measured off a reference. Build one worked example of a recipe before using it.
+Eight named recipes, each measured off a reference. Build one worked example of a recipe before using it.
 The everyday registers (diagram, analogy, list, words over his face, a 3D object) are in
 [registers.md](registers.md).
 
 ## Contents
 
-[The long take](#the-long-take), [The live screen](#the-live-screen), [The walkthrough](#the-walkthrough),
+[The long take](#the-long-take), [The live screen](#the-live-screen), [The product plate](#the-product-plate), [The walkthrough](#the-walkthrough),
 [The code walk, the introduction, the hand-drawn and the paper board](#the-code-walk-the-introduction-the-hand-drawn-and-the-paper-board)
 
 ## The long take
@@ -68,6 +68,25 @@ Build (`src/anchors/LiveScreen.tsx`; `design.ts` section C holds the numbers): 1
 reveal read as a machine writing), no alpha variant. Words are props; re-render, don't fork. The artefact
 must be the real thing: real favicons, URLs, titles and answers, taken off a real search. It runs under a
 voice that never stops; timed against silence it's 30% too slow. Tools: `teardown.py cuts|palette|sheet`.
+
+## The product plate
+
+The real product does the thing, full frame, and one label per step says what just happened. The author's
+favourite so far (18 Nov 2026): the A17 triage insert,
+34.5s under a line naming 5 things Save to ClickUp does.
+
+- The plate is the product's own set rendered headless at 1920x1080 30fps (here the launch film's Gmail,
+  panel and ClickUp props), so a push-in lays text out sharp. Never a drawn card standing in for it.
+- Each step is a visible change of state, in the order he says them: mail lands, non-tasks grey out, the
+  client's list gets picked, a follow-up's card leaves and becomes a comment on its task, the Gmail label
+  appears. The object moves to where it ends up, so the eye follows it there.
+- One label per step, 2.5 to 7s each, in one fixed corner (top right, 64px in, clear of Tella's logo and
+  the subtitles): a glass pill, 46px bold cream, an indigo dot, springs in 40px from the right and fades
+  out over 8 frames. 0.3 to 0.5s of gap between labels.
+- The label names the result, never his words: "A follow-up joins its task", "Tasks get filed. The rest
+  waits.", "Labelled in Gmail too". 3 to 6 words, a subject and a verb, readable in one glance.
+- Timings come from the plate's own beat file (`src/triage/story.ts` in the film set), so a label lands on
+  the frame its change happens.
 
 ## The walkthrough
 

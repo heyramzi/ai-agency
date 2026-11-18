@@ -79,6 +79,25 @@ hide behind, so its exit is what separates an overlay from a pop. A long take ru
   wide still before and after adding the narrow one: byte-identical is the pass.
 - Register `X`, `XAlpha`, `XNarrow`, `XNarrowAlpha`; the narrow pair take `defaultProps={{ narrow: true }}`.
 
+### An overlay ships cropped to its card
+
+A card, list, label or chapter panel that sits over his footage renders at the card's own size with alpha,
+never as a 1920x1080 frame with the card parked in one spot. The author wants a small square he can drop anywhere
+on the image and resize in the editor (18 Nov 2026, the A17 "Inbox to ClickUp" chapter list, built as a full
+frame with the panel in a corner). A full-frame overlay fixes the position at render time, and every move
+after that is a re-render.
+
+- The composition's width and height are the card's largest box across the whole clip, entry and exit
+  motion included, plus room for the shadow or glow (about 40px a side). Round both up to even numbers,
+  since HEVC and H.264 refuse odd sizes.
+- Lay the card out from the composition's edges, never from `SAFE_X`/`SAFE_Y` or a frame corner: the
+  editor places it, the clip doesn't.
+- One cropped clip replaces the wide and narrow pair for an overlay: it fits either layout as it is.
+- Ship the alpha MOV (`render.md`), and look at it over a real frame of its second with
+  `scripts/over-frame.sh` to check the shadow isn't clipped at the canvas edge.
+- Full frame stays right for a cutaway that owns the screen: a product plate, a diagram that replaces his
+  face, a straight cut.
+
 ## Grounds, and the overlay cut
 `<Shot ground="grid">` (ink, 2 parallax grids, vignette) is the default so nothing ships a silent restyle.
 `"bloom"` is the indigo `NoiseField`, dithered at 0.30 (a stock gradient bands across 1920px of near-black).

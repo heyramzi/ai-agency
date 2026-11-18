@@ -34,7 +34,14 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    implicit, a structure with no name yet, or a recognition. If none of those fits, his face goes there
    instead. A right clip on the wrong sentence is a wrong clip. A word he says, typed into the clip, adds
    nothing: the captions already carry it. Show what the word means happening: "GitHub can be scary" is a
-   repo that turns out to be the folder they know, never "scary" struck out on a card.
+   repo that turns out to be the folder they know, never "scary" struck out on a card. Visual and
+   descriptive wins every time: the thing happening on screen, plus a short label that says what just
+   happened in plain words. The A17 triage insert is the bar the author named (18 Nov 2026): the real product
+   runs, a follow-up email's card leaves the list and lands as a comment on its task, and a corner pill
+   reads "A follow-up joins its task". A label alone is a slide, and motion alone makes the viewer guess
+   (recipe: `references/recipes.md#the-product-plate`). An overlay that sits on his footage (a card, a
+   list, a label) renders cropped to its card with alpha, so he can drop it anywhere and resize it; only
+   a cutaway that owns the screen is full frame (`references/craft.md#an-overlay-ships-cropped-to-its-card`).
 3. **Draw the actual thing, and make the set one video.** "AI Skill System" shipped 8 neutral geometric
    marks, and nobody recognised their own stack in a hexagon. Show the artefact before its logo: a beat on
    Make gets the scenario running, a course gets the lesson page inside it (`broll` 2b). A logo is the
