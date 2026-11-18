@@ -71,7 +71,7 @@ voice that never stops; timed against silence it's 30% too slow. Tools: `teardow
 
 ## The product plate
 
-The real product does the thing, full frame, alone. The author's favourite so far (18 Nov 2026): the A17 triage insert,
+The real product does the thing, full frame, alone. The example is a triage insert,
 34.5s under a line naming 5 things Save to ClickUp does.
 
 - The plate is the product's own set rendered headless at 1920x1080 30fps (here the launch film's Gmail,
@@ -79,9 +79,7 @@ The real product does the thing, full frame, alone. The author's favourite so fa
 - Each step is a visible change of state, in the order he says them: mail lands, non-tasks grey out, the
   client's list gets picked, a follow-up's card leaves and becomes a comment on its task, the Gmail label
   appears. The object moves to where it ends up, so the eye follows it there.
-- No label plate, chapter pill or caption over the product. The A17 insert shipped with a glass pill in
-  the top-right corner naming each step, and it sat on Gmail's own toolbar; the author had it removed ("sans
-  le texte en haut"). His voice says what each change means, and the subtitles carry his words.
+- No label plate, chapter pill or caption over the product. His voice says what each change means, and the subtitles carry his words.
 - Timings come from the plate's own beat file (`src/triage/story.ts` in the film set), so each change of
   state lands on the word that names it.
 

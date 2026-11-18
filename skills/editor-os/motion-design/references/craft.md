@@ -82,9 +82,8 @@ hide behind, so its exit is what separates an overlay from a pop. A long take ru
 ### An overlay ships cropped to its card
 
 A card, list, label or chapter panel that sits over his footage renders at the card's own size with alpha,
-never as a 1920x1080 frame with the card parked in one spot. The author wants a small square he can drop anywhere
-on the image and resize in the editor (18 Nov 2026, the A17 "Inbox to ClickUp" chapter list, built as a full
-frame with the panel in a corner). A full-frame overlay fixes the position at render time, and every move
+never as a 1920x1080 frame with the card parked in one spot. He wants a small square he can drop anywhere
+on the image and resize in the editor. A full-frame overlay fixes the position at render time, and every move
 after that is a re-render.
 
 - The composition's width and height are the card's largest box across the whole clip, entry and exit

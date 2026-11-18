@@ -34,21 +34,19 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    implicit, a structure with no name yet, or a recognition. If none of those fits, his face goes there
    instead. A right clip on the wrong sentence is a wrong clip. A word he says, typed into the clip, adds
    nothing: the captions already carry it. Show what the word means happening: "GitHub can be scary" is a
-   repo that turns out to be the folder they know, never "scary" struck out on a card. The A17 triage
-   insert is the bar the author named (18 Nov 2026): the real product runs, and a follow-up email's card leaves
-   the list and lands as a comment on its task. A product insert shows the product alone, with no label
-   plate or chapter pill over it: a label in a corner lands on the product's own toolbar (he had the A17
-   corner pill removed, "sans le texte en haut"), and his voice already says what happened (recipe:
+   repo that turns out to be the folder they know, never "scary" struck out on a card. The bar is a product insert where the real product runs and a follow-up email's card
+   leaves the list and lands as a comment on its task. A product insert shows the product alone, with no label
+   plate or chapter pill over it: a label in a corner lands on the product's own toolbar, and his voice already says what happened (recipe:
    `references/recipes.md#the-product-plate`). An overlay that sits on his footage (a card, a
    list, a label) renders cropped to its card with alpha, so he can drop it anywhere and resize it; only
    a cutaway that owns the screen is full frame (`references/craft.md#an-overlay-ships-cropped-to-its-card`).
-3. **"Self-explanatory visuals are better than text, always"** (The author, 18 Nov 2026). A beat is shown by
+3. **"Self-explanatory visuals are better than text, always"**. A beat is shown by
    what happens on screen (the mail lands, the chip appears, the task files), never told by a label,
    caption or title over it. The check is the mute test in `references/craft.md` with every word the clip
    adds hidden: if the beat stops reading, redraw the action, don't add a word. Chapter cards and CTAs on
    his own footage stay, since they mark the video, not a beat.
 4. **"Photorealism: what would be a real screenshot is better. If you show the UI of Gmail, it needs to be
-   the real-looking UI as of the time the video is recorded"** (The author, 18 Nov 2026). A product UI may be
+   the real-looking UI as of the time the video is recorded"**. A product UI may be
    drawn, but it looks photorealistic: the real product's layout, icons, fonts, spacing, colours and
    toolbar as they are on the recording date, never from memory or an older build. A real screenshot is a
    reference for the look only. The data on screen is always clean, invented sample data that never
