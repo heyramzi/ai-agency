@@ -123,7 +123,7 @@ caption. It leaves 6 to 10 frames before the last syllable, which hands focus ba
 tail floor that moves earlier.
 
 The clock those sit inside is **a visible change every 1.7 to 2.5s**: 41 in the first 60 seconds, no static
-stretch over 5s, about 7 micro-changes per hard cut. Micro-beats every 1.5 to 2.5s (tool pills, `20%`
+stretch over 5s, about 7 micro-changes per hard cut. Micro-beats every 1.5 to 2.5s (`20%`
 callouts, 1.15x punch-ins, a spotlight dimming all but the active field), meso every 5 to 8s (connector
 travel, prompt-then-output reveals), macro every 15 to 45s (an architecture map, a full workflow). 3
 mechanisms fill it:
@@ -133,7 +133,6 @@ mechanisms fill it:
   reveal is only for a list whose order is the argument.
 - Nothing is shown finished. Charts, fills and connectors draw over 1 to 1.5s (a one-second floor) behind
   a leading point; the mark lands before the fill reaches it.
-- In live demos, split the focus: a pill tracks the tool being invoked, so the screen is never dead.
 
 ## Planning a video's set
 
