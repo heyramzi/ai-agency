@@ -24,7 +24,7 @@ read is `video-script`. The vendored Remotion references (`references/remotion/r
 folder per job) are the engine and hold no taste: one that seems to contradict this file is describing a
 default. To re-vendor, replace the `remotion/` folder whole from the published agent-skills package.
 
-## 3 rules that outrank the rest
+## 5 rules that outrank the rest
 
 1. **A new set waits for the owner to pick a look; a comment he left doesn't.** Show 2 or 3 directions as a
    single still of the same beat, in a local `.html`, then stop and ask (`references/storytelling.md`). He
@@ -42,7 +42,20 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    `references/recipes.md#the-product-plate`). An overlay that sits on his footage (a card, a
    list, a label) renders cropped to its card with alpha, so he can drop it anywhere and resize it; only
    a cutaway that owns the screen is full frame (`references/craft.md#an-overlay-ships-cropped-to-its-card`).
-3. **Draw the actual thing, and make the set one video.** "AI Skill System" shipped 8 neutral geometric
+3. **"Self-explanatory visuals are better than text, always"** (The author, 18 Nov 2026). A beat is shown by
+   what happens on screen (the mail lands, the chip appears, the task files), never told by a label,
+   caption or title over it. The check is the mute test in `references/craft.md` with every word the clip
+   adds hidden: if the beat stops reading, redraw the action, don't add a word. Chapter cards and CTAs on
+   his own footage stay, since they mark the video, not a beat.
+4. **"Photorealism: what would be a real screenshot is better. If you show the UI of Gmail, it needs to be
+   the real-looking UI as of the time the video is recorded"** (The author, 18 Nov 2026). A recreated product
+   matches the real one's layout, icons, fonts, spacing, colours and toolbar as they look on the recording
+   day, built from a screenshot taken that day, never from memory or an older build. The check: on the
+   recording day, capture the live screen in the browser (`browser` skill) at the clip's crop, saved as
+   `public/<video-code>/reference/<yyyy-mm-dd>-<product>.png` in the motion project, then set a still of
+   the recreation beside it at the same size and fix every difference before render. No dated capture in
+   that folder, no render.
+5. **Draw the actual thing, and make the set one video.** "AI Skill System" shipped 8 neutral geometric
    marks, and nobody recognised their own stack in a hexagon. Show the artefact before its logo: a beat on
    Make gets the scenario running, a course gets the lesson page inside it (`broll` 2b). A logo is the
    real mark (simple-icons, else a logo API by domain, never an image search). A product that exists (Claude,

@@ -175,7 +175,7 @@ ffmpeg -i out/final.mp4 -vf "fps=1,scale=360:-1,tile=5x3" -frames:v 1 out/phone.
 
 A clip that doesn't carry the idea isn't scored; it goes back to the value test. Three more tests, any fail sends it back:
 
-- Mute: sound and captions off, does the picture alone tell the beat's idea?
+- Mute: sound, captions and every word the clip adds hidden, does the picture alone tell the beat's idea? If not, redraw the action; a label never fixes it (SKILL.md rule 3).
 - Swap: cover the logo and swap in another tool. A clip that names a tool and works unchanged is generic.
 - Started action: every prompt typed, claim made or toggle flipped gets answered on screen before the clip ends. Capabilities are never flashed as small labels.
 

@@ -91,15 +91,15 @@ A client's own flow, shown slowly for onboarding or an SOP: a window on a desk, 
 Unlike the live screen, somebody operates it. The numbers come from Anthropic's Claude Motion review notes (Oct 2026)
 and we haven't measured a film of our own yet, so build one worked example first.
 
-- Story before code: per flow, 4 to 8 beats. A beat holds a region, the action on it and at most 1 caption. A beat you
-  can't caption in 4 words is 2 beats. Chapter titles are verbs ("Share it").
+- Story before code: per flow, 4 to 8 beats. A beat holds a region and the action on it, with no caption: the
+  action is the explanation (SKILL.md rule 3). A beat you can't name in 4 words is 2 beats.
 - Build the window at real CSS pixels, about 1440x900 on the 1920 stage, so the camera has room. UI text
   reads at about 26px on screen or more, so 14px UI wants at least 1.9x. A beat zooms 1.6 to 2.4x, and
   the whole window never holds past about 1.2s.
 - Camera moves 0.55 to 1.2s, then a 1.4 to 2.2s hold on each point of interest before anything else
   happens. The cursor travels 0.5 to 0.9s on an arc and settles 200 to 300ms before the click.
-- A spotlight dims everything outside the region to about 55%, off while typing. A caption is a chip with a
-  leader line, sitting in the dimmed area, 6 words at most, never "successfully", never repeating a tooltip.
+- A spotlight dims everything outside the region to about 55%, off while typing. No caption chip in the dimmed
+  area: the spotlight and the change of state say where to look and what happened.
 - No speech bubbles over UI, no highlighter rectangles, no toast firing off-frame. A screen that isn't
   shipped yet gets a small grey `Concept mock · Month YYYY` on the closing card.
 - Lift the UI, don't redraw it: build from the repo or the running page, and record what you took in

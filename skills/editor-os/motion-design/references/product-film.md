@@ -30,7 +30,8 @@ is the failure this file prevents.
    every 0.85 to 0.93s (at 128 BPM, a bar, then half a bar). Section changes land on bar downbeats. Cutting
    on every onset isn't what good films do: of the 8, only Raycast Pro beat chance. Compute every cue from
    the BPM (`Math.round(n * BAR)`), never from a typed frame.
-3. **Cards carry 1 to 4 words and alternate with the UI, never sit on top of it.** Median 2 in Raycast Pro,
+3. **Cards carry 1 to 4 words and alternate with the UI, never sit on top of it.** A card sets up what the
+   next shot does, never names what that shot already shows (SKILL.md rule 3). Median 2 in Raycast Pro,
    3 to 4 in Notion. Plain speech, a question or a fact: "See that black bar?", "This used to be dead
    space.", "Claude waits up here.", "No notch? You get a pill.", "Seam for Mac". Slogans ("Your notch, put
    to work.") and triads ("Music, meetings, focus. All in the notch.") read as AI slop and were cut.
@@ -92,7 +93,7 @@ The moves that made the Seam film, as SwiftUI `(response, dampingFraction)` conv
 (stiffness (2π/response)², damping 4πζ/response, mass 1). Take the product's own springs for its own UI,
 since people already know that feel: open 0.32/0.88 (the one overshoot), close 0.4/1.0, resize 0.3/0.95,
 arrive 0.3/0.8, content 0.35/1.0 and 3 frames behind the shape, never bouncing. One black shape, in its
-real outline (SKILL.md rule 3), morphs through every form the product takes, notch to floating pill
+real outline (SKILL.md rule 5), morphs through every form the product takes, notch to floating pill
 included ("we need to show that it can morph into a pill as well"); a cut between forms loses the object.
 Anything alive inside it plays as a 30fps frame sequence from the app's own renderer (a snapshot test that
 freezes time per frame). 2 stills crossfaded to fake the voice glow read as "the waveform does not look
