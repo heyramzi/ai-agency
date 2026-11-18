@@ -48,13 +48,14 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    adds hidden: if the beat stops reading, redraw the action, don't add a word. Chapter cards and CTAs on
    his own footage stay, since they mark the video, not a beat.
 4. **"Photorealism: what would be a real screenshot is better. If you show the UI of Gmail, it needs to be
-   the real-looking UI as of the time the video is recorded"** (The author, 18 Nov 2026). A recreated product
-   matches the real one's layout, icons, fonts, spacing, colours and toolbar as they look on the recording
-   day, built from a screenshot taken that day, never from memory or an older build. The check: on the
-   recording day, capture the live screen in the browser (`browser` skill) at the clip's crop, saved as
-   `public/<video-code>/reference/<yyyy-mm-dd>-<product>.png` in the motion project, then set a still of
-   the recreation beside it at the same size and fix every difference before render. No dated capture in
-   that folder, no render.
+   the real-looking UI as of the time the video is recorded"** (The author, 18 Nov 2026). A product UI may be
+   drawn, but it looks photorealistic: the real product's layout, icons, fonts, spacing, colours and
+   toolbar as they are on the recording date, never from memory or an older build. A real screenshot is a
+   reference for the look only. The data on screen is always clean, invented sample data that never
+   resembles his own account (his real inbox holds confidential mail). The check: on the recording day,
+   capture the live screen in the browser (`browser` skill) at the clip's crop into the session's
+   scratchpad, never into git or a shipped folder, set a still of the drawn UI beside it at the same size,
+   fix every difference in look before render, then delete the capture.
 5. **Draw the actual thing, and make the set one video.** "AI Skill System" shipped 8 neutral geometric
    marks, and nobody recognised their own stack in a hexagon. Show the artefact before its logo: a beat on
    Make gets the scenario running, a course gets the lesson page inside it (`broll` 2b). A logo is the
