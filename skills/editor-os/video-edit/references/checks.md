@@ -94,7 +94,7 @@ Two checks run without being asked, from `cutcheck <dir>` and before every Tella
 
 - **System audio.** Each clip that plays a mic and has `systemAudioVolume` above 0 gets its
   Microphone and System Audio tracks read off `list_sources` and correlated. A match within 5 ms at
-  0.5 or more is the mic again (Wave Link sends it to the Mac's output), so the clip fails, named,
+  0.5 or more is the mic again (Wave Link 3's loopback, missing from Tella's list), so the clip fails, named,
   and the export sends nothing. Fix: `systemAudioVolume` 0. A clip whose computer sound is wanted
   gets "computer sound" in its name. Unreadable tracks fail on the setting alone.
 - **Second voice.** `cut doubled <file|dir> [--limit -10]` reads any export, a Tella `cut.mp4` or a
