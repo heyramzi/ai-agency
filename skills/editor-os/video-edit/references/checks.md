@@ -100,9 +100,10 @@ Two checks run without being asked, from `cutcheck <dir>` and before every Tella
 - **Second voice.** `cut doubled <file|dir> [--limit -10]` reads any export, a Tella `cut.mp4` or a
   local render, for a copy of the voice 0.45 to 3 ms behind it, and fails above the limit.
   `cutcheck` runs it on the render, and on Tella's `cut.mp4` once downloaded. Under -20 dB it
-  fails clean takes: A17's raw mic alone reads -13.3 dB at 0.49 ms, its clean re-export -14.3, the
-  doubled export -1.9. A copy that Studio Sound has resynthesised reads like a clean take (-16.3 on
-  the A17 that shipped), so the system audio check is the gate and this one is the backstop.
+  fails clean takes: on the take that set the limit, the raw mic alone reads -13.3 dB at 0.49 ms,
+  its clean re-export -14.3, the doubled export -1.9. A copy that Studio Sound has resynthesised
+  reads like a clean take (-16.3 on that take's shipped export), so the system audio check is the
+  gate and this one is the backstop.
 
 ## The export gate
 
