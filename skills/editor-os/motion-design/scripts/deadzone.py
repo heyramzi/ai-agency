@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["numpy"]
+# ///
 """What the platform's own UI will cover, on a rendered vertical clip.
 
 WHY THIS EXISTS: `craft.md` keeps the subject between y=300 and y=1650 and `carousel` reserves 260

@@ -52,7 +52,7 @@ hide behind, so its exit is what separates an overlay from a pop. A long take ru
 
 - **Portrait 1080x1920.** Subject between about y=300 and y=1650, the composition floor. The platform UI reaches
   higher and comes in from the right (the action rail sits over the middle-right, where a card lands).
-  `python3 scripts/deadzone.py out/Clip.mp4 --for reels --sheet` measures ink inside the per-platform rectangles
+  `uv run scripts/deadzone.py out/Clip.mp4 --for reels --sheet` measures ink inside the per-platform rectangles
   and exits non-zero; run it on every portrait render (`--for tiktok` too). `n-plus-one.mp4` passed 300/1650 and
   failed it: its key moment sat below y=1436 under the Reels caption block. The numbers are a conservative
   intersection of disagreeing guides; `--calibrate` fits a real screenshot.
