@@ -90,6 +90,20 @@ the video back through Tella's MCP (same key, `https://api.tella.com/mcp`):
 
 The report says which of the four ran. A seam you didn't listen to is named as unheard.
 
+Two checks run without being asked, from `cutcheck <dir>` and before every Tella export:
+
+- **System audio.** Each clip that plays a mic and has `systemAudioVolume` above 0 gets its
+  Microphone and System Audio tracks read off `list_sources` and correlated. A match within 5 ms at
+  0.5 or more is the mic again (Wave Link sends it to the Mac's output), so the clip fails, named,
+  and the export sends nothing. Fix: `systemAudioVolume` 0. A clip whose computer sound is wanted
+  gets "computer sound" in its name. Unreadable tracks fail on the setting alone.
+- **Second voice.** `cut doubled <file|dir> [--limit -10]` reads any export, a Tella `cut.mp4` or a
+  local render, for a copy of the voice 0.45 to 3 ms behind it, and fails above the limit.
+  `cutcheck` runs it on the render, and on Tella's `cut.mp4` once downloaded. Under -20 dB it
+  fails clean takes: A17's raw mic alone reads -13.3 dB at 0.49 ms, its clean re-export -14.3, the
+  doubled export -1.9. A copy that Studio Sound has resynthesised reads like a clean take (-16.3 on
+  the A17 that shipped), so the system audio check is the gate and this one is the backstop.
+
 ## The export gate
 
 Before export, on every video:
