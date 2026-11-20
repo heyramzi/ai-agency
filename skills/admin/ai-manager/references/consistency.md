@@ -64,7 +64,7 @@ sessions.
 3. **Exact commands on fragile steps**: deploys, deletes, auth, sync.
 4. **A narrower scope overriding a wider one.** A nested `AGENTS.md`, a path-scoped rule or a
    skill's own branch that says it differs is an override, not a conflict.
-5. **Product boundaries.** The free kit and the paid pack (`clickup-utils/scripts/skills.mjs`),
+5. **Product boundaries.** The free kit and the paid pack (`packages/clickup-utils/scripts/skills.mjs`),
    vendored packs, the `agency-os` runtime registry. Edit the description and nothing else.
 6. **An agent restating its skill's one-line rule.** An agent has no parent to hop to.
 7. **Public and private twins.** `<!--internal-->` fences make them differ on purpose. A rule

@@ -105,7 +105,7 @@ on the company page when that agent goes (5 Oct 2026). List those skills first. 
   machine for the old name, and sweep routes into anything deleted (`project-manager` listed 12
   skills, 4 gone). Deleting a command that duplicates a skill name: repoint 12 manifests first.
 - A merge isn't done at the delete. Consumer manifests, `commands:` entries and orphans all
-  need the rewrite. A product boundary can forbid a fold: `clickup-utils/scripts/skills.mjs` splits
+  need the rewrite. A product boundary can forbid a fold: `packages/clickup-utils/scripts/skills.mjs` splits
   the free kit (`PUBLIC_SKILLS`) from the paid pack, so `batch-workload` can't fold into `clickup`.
 - Match duplicates on description content, never name (`audit` and `ship` share names across
   packs); similarity scoring misses real ones. An identical opening paragraph is the tell, and a

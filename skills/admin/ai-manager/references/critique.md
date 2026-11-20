@@ -61,7 +61,7 @@ What closes the gap, each one his habit:
 ## Running it
 
 1. Run `shelf_stats.py`, then list every skill and agent with its description and size,
-   across every source repo (`readlink -f` on each `.claude/skills/*/SKILL.md`; `clickup-utils`
+   across every source repo (`readlink -f` on each `.claude/skills/*/SKILL.md`; `packages/clickup-utils`
    and plugins count).
 2. Sort the names and read the neighbours, then group by the tool each one drives. Most
    verdicts fall out of those two lists before any body is opened.
@@ -79,7 +79,7 @@ What closes the gap, each one his habit:
 Give the rewriters one shared brief, one area each. What holds it together, and what bites:
 
 - Some boundaries are not yours to fold. A free kit and a paid pack
-  (`clickup-utils/scripts/skills.mjs`), a runtime registry (`agency-os` frontmatter is what
+  (`packages/clickup-utils/scripts/skills.mjs`), a runtime registry (`agency-os` frontmatter is what
   `agency pull` exports), a vendored tree pinned to an upstream commit. Edit the description
   there and nothing else.
 - Manual-only only where nothing reaches the skill by name: no agent `skills:` line, no
