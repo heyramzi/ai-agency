@@ -1,29 +1,29 @@
 {
-  "date": "2026-10-30T11:03:44.763Z",
+  "date": "2026-11-21T17:36:39.506Z",
   "model": "sonnet",
   "maxTurns": 6,
   "runsPerCase": 1,
-  "passed": 19,
-  "total": 26,
+  "passed": 26,
+  "total": 36,
   "clusters": {
     "swift": {
-      "pass": 1,
+      "pass": 2,
       "total": 4
     },
     "motion": {
-      "pass": 3,
+      "pass": 2,
       "total": 3
     },
     "ui": {
-      "pass": 1,
+      "pass": 3,
       "total": 3
     },
     "checking": {
-      "pass": 3,
+      "pass": 1,
       "total": 3
     },
     "offers": {
-      "pass": 3,
+      "pass": 2,
       "total": 3
     },
     "should-not": {
@@ -31,40 +31,52 @@
       "total": 4
     },
     "agents": {
-      "pass": 4,
+      "pass": 5,
       "total": 6
+    },
+    "search": {
+      "pass": 2,
+      "total": 4
+    },
+    "improve-codebase": {
+      "pass": 2,
+      "total": 3
+    },
+    "launch-film": {
+      "pass": 3,
+      "total": 3
     }
   },
   "runs": [
     {
       "cluster": "swift",
       "expect": "skill:swift",
-      "query": "Seam won't build after the Swift 6 bump: 'sending self risks causing data races' in RecorderService, fix it",
+      "query": "Seam won't build after the Swift 6 bump: 'sending self risks causing data races' in VoiceRecorder, fix it",
       "got": "agent:swift-engineer",
-      "firstTool": "Grep",
+      "firstTool": "Agent",
       "pass": true
     },
     {
       "cluster": "swift",
       "expect": "skill:swift",
       "query": "there's a retain cycle somewhere in Wavenote's transcription manager, memory keeps climbing",
-      "got": null,
-      "firstTool": "Glob",
-      "pass": false
+      "got": "agent:swift-engineer",
+      "firstTool": "Grep",
+      "pass": true
     },
     {
       "cluster": "swift",
       "expect": "skill:swiftui",
       "query": "Wavenote's note list redraws every row each time the timer ticks, why",
-      "got": null,
-      "firstTool": "Glob",
+      "got": "agent:swift-engineer",
+      "firstTool": "Agent",
       "pass": false
     },
     {
       "cluster": "swift",
       "expect": "skill:swiftui",
-      "query": "RecordingDetailView is 600 lines, split it into smaller views",
-      "got": null,
+      "query": "Wavenote's FocusView is 645 lines, split it into smaller views",
+      "got": "skill:ticket",
       "firstTool": "Glob",
       "pass": false
     },
@@ -73,40 +85,40 @@
       "expect": "skill:motion-design",
       "query": "make a Remotion clip for beat 4, the MRR number counting up to 12k",
       "got": "agent:motion-designer",
-      "firstTool": "Glob",
+      "firstTool": "Agent",
       "pass": true
     },
     {
       "cluster": "motion",
       "expect": "skill:transitions-dev",
       "query": "the modal on the pricing page opens with a janky fade, fix the transition",
-      "got": "skill:transitions-dev",
-      "firstTool": "Grep",
+      "got": "agent:frontend-designer",
+      "firstTool": "Glob",
       "pass": true
     },
     {
       "cluster": "motion",
       "expect": "skill:swift-designer",
       "query": "in Wavenote the record button should morph into the stop button with a spring, right now it just snaps",
-      "got": "skill:swift-designer",
-      "firstTool": "Skill",
-      "pass": true
-    },
-    {
-      "cluster": "ui",
-      "expect": "skill:ui-design",
-      "query": "audit the clients page in the web app, the table spacing feels off and the empty state is ugly",
-      "got": null,
+      "got": "agent:swift-engineer",
       "firstTool": "Glob",
       "pass": false
     },
     {
       "cluster": "ui",
+      "expect": "skill:ui-design",
+      "query": "audit the clients page in the web app, the table spacing feels off and the empty state is ugly",
+      "got": "agent:frontend-designer",
+      "firstTool": "Glob",
+      "pass": true
+    },
+    {
+      "cluster": "ui",
       "expect": "skill:ios-design",
       "query": "the Rounds settings screen looks like a default Form, make it feel native and polished",
-      "got": null,
+      "got": "agent:swift-engineer",
       "firstTool": "Grep",
-      "pass": false
+      "pass": true
     },
     {
       "cluster": "ui",
@@ -128,25 +140,25 @@
       "cluster": "checking",
       "expect": "skill:device-interaction",
       "query": "run the Rounds onboarding on the iPhone simulator, tap through and screenshot each step",
-      "got": "skill:device-interaction",
-      "firstTool": "Skill",
-      "pass": true
+      "got": "agent:general-purpose",
+      "firstTool": "Agent",
+      "pass": false
     },
     {
       "cluster": "checking",
       "expect": "skill:browser",
       "query": "open localhost:5173/pricing in the browser and screenshot it at mobile width",
-      "got": "skill:browser",
-      "firstTool": "Skill",
-      "pass": true
+      "got": "agent:frontend-designer",
+      "firstTool": "Agent",
+      "pass": false
     },
     {
       "cluster": "offers",
       "expect": "skill:proposal",
       "query": "Acme Dental wants a quote for the onboarding automation, what should I charge them? draft the SOW",
-      "got": "skill:proposal",
-      "firstTool": "Skill",
-      "pass": true
+      "got": "agent:project-manager",
+      "firstTool": "Agent",
+      "pass": false
     },
     {
       "cluster": "offers",
@@ -172,8 +184,8 @@
         "skill:browser"
       ],
       "query": "verify the September Pennylane invoices match the Qonto debits",
-      "got": "skill:pennylane",
-      "firstTool": "Skill",
+      "got": "agent:general-purpose",
+      "firstTool": "Agent",
       "pass": true
     },
     {
@@ -184,8 +196,8 @@
         "skill:evaluate-pricing-change"
       ],
       "query": "write a LinkedIn post on how we price our offers",
-      "got": "skill:social",
-      "firstTool": "Skill",
+      "got": "agent:content-manager",
+      "firstTool": "Agent",
       "pass": true
     },
     {
@@ -208,8 +220,8 @@
         "agent:swift-engineer"
       ],
       "query": "switch the swift-engineer agent's model to sonnet in its frontmatter",
-      "got": "skill:ai-manager",
-      "firstTool": "Skill",
+      "got": "agent:general-purpose",
+      "firstTool": "Agent",
       "pass": true
     },
     {
@@ -223,10 +235,10 @@
     {
       "cluster": "agents",
       "expect": "agent:broll-scout",
-      "query": "find b-roll for beats 2, 4 and 7",
-      "got": null,
-      "firstTool": "Glob",
-      "pass": false
+      "query": "find b-roll for beats 2, 4 and 7 of the Notion short",
+      "got": "agent:broll-scout",
+      "firstTool": "Agent",
+      "pass": true
     },
     {
       "cluster": "agents",
@@ -248,8 +260,8 @@
       "cluster": "agents",
       "expect": "skill:music",
       "query": "find a calm music bed for the Seam launch video",
-      "got": "skill:music",
-      "firstTool": "Skill",
+      "got": "agent:music-scout",
+      "firstTool": "Agent",
       "pass": true
     },
     {
@@ -259,6 +271,86 @@
       "got": null,
       "firstTool": "Bash",
       "pass": false
+    },
+    {
+      "cluster": "search",
+      "expect": "skill:aso",
+      "query": "Wavenote's App Store keywords field feels weak, find better app store keywords and write them back",
+      "got": null,
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "search",
+      "expect": "skill:aso",
+      "query": "audit this listing https://apps.apple.com/us/app/otter-transcribe-voice-notes/id1276437113",
+      "got": "agent:seo-geo-specialist",
+      "firstTool": "Agent",
+      "pass": false
+    },
+    {
+      "cluster": "search",
+      "expect": "skill:seo",
+      "query": "what should clientglance.com write next to rank on Google? impressions are high but clicks are zero",
+      "got": "agent:seo-geo-specialist",
+      "firstTool": "Agent",
+      "pass": true
+    },
+    {
+      "cluster": "search",
+      "expect": "skill:seo",
+      "query": "refresh this post so it gets cited by ChatGPT: getseam.app/blog/voice-to-text-mac",
+      "got": "agent:seo-geo-specialist",
+      "firstTool": "Agent",
+      "pass": true
+    },
+    {
+      "cluster": "improve-codebase",
+      "expect": "skill:improve",
+      "query": "audit the whole ui repo and tell me what's worth fixing, then write plans a cheaper agent can execute",
+      "got": "skill:improve",
+      "firstTool": "Bash",
+      "pass": true
+    },
+    {
+      "cluster": "improve-codebase",
+      "expect": "skill:improve",
+      "query": "where should we take client-glance next? look at the code and give me grounded options, not generic ideas",
+      "got": "agent:Explore",
+      "firstTool": "Glob",
+      "pass": false
+    },
+    {
+      "cluster": "improve-codebase",
+      "expect": "skill:refactor",
+      "query": "the sync module in to-sheets is a pile of pass-throughs, simplify its boundaries",
+      "got": "agent:software-engineer",
+      "firstTool": "Glob",
+      "pass": true
+    },
+    {
+      "cluster": "launch-film",
+      "expect": "skill:video-reverse-engineer",
+      "query": "we relaunch ClickUp to Sheets on Product Hunt Saturday, start the launch film from the best launch videos out there",
+      "got": "skill:video-reverse-engineer",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "launch-film",
+      "expect": "skill:video-reverse-engineer",
+      "query": "tear down the Notion Mail and Linear launch videos and tell me what our V1 film is missing",
+      "got": "skill:video-reverse-engineer",
+      "firstTool": "Skill",
+      "pass": true
+    },
+    {
+      "cluster": "launch-film",
+      "expect": "skill:reverse-engineer",
+      "query": "reverse engineer how Screen Studio's auto-zoom works so we can build it into CutKit",
+      "got": "skill:reverse-engineer",
+      "firstTool": "Skill",
+      "pass": true
     }
   ]
 }
