@@ -10,7 +10,7 @@
 A self-contained film: 15 to 25 seconds for a launch, no voice-over, the product the only actor, with the
 sound laid on the locked picture. It isn't a clip cut into a read. The numbers come from the Spotify spec ad
 in Rourke's "Claude Opus 5.5: How To Make Motion Graphics" (YouTube `cDb-wPq0Iyk`, 2:09 to 2:29), with the
-Candy Crush and AirPods spots from the same video, torn down on 23 Nov 2026 (TSK-3427), and from 8 launch
+Candy Crush and AirPods spots from the same video, torn down on 23 Nov 2026, and from 8 launch
 films measured on 2 Nov 2026. `uv run scripts/teardown.py gate <render.mp4>` holds the measurable ones and
 exits 1 on a fail: it's the done check, never a look at the file.
 
@@ -20,7 +20,7 @@ cuts them together, which is the failure this file prevents.
 
 ## Story first
 
-The Airtable to Sheets launch film took 4 rounds (TSK-3326), and each round failed the story before the
+The Airtable to Sheets launch film took 4 rounds, and each round failed the story before the
 craft. v1 was a 64 s slideshow of wide shots with tiny text. v2 gave a read-only switch its own beat and a
 settings montage another: "too many details... shorter, focus on the storytelling of the essential it does".
 v3 drew its attachments as SVGs: "the images are fake images, it should be real ones". v3 then measured 28%
