@@ -122,11 +122,6 @@ shelf has grown. Log a failure mode this run surfaced with `heal.cjs log`.
 - [ ] `audit` exits 0, its findings are in the report, and the sync ran after it
 - [ ] New failure modes appended to Learned Patterns
 
-## Learned Patterns
-
-What runs of this skill have taught it, newest first:
-[references/learned-patterns.md](references/learned-patterns.md).
-
 ---
 
 *Originates in Anthropic's skill-creator, Apache License 2.0.*

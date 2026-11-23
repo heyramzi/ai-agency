@@ -104,6 +104,7 @@ on the company page when that agent goes (5 Oct 2026). List those skills first. 
   agents listing it, project Makefiles using `.claude/skills/<name>/scripts/`. Grep the whole
   machine for the old name, and sweep routes into anything deleted (`project-manager` listed 12
   skills, 4 gone). Deleting a command that duplicates a skill name: repoint 12 manifests first.
+- Folding a stale twin or a skill copied between apps: grep the code for each fact before you move it. Find-and-replace copies carry the other app's facts (Wavenote's `swift-designer` held Seam's notch and a dead `SurfaceGlassStrategy`; Seam's `appkit` named a `SurfaceColors.isGlass` no Swift has, 23 Oct 2026).
 - A merge isn't done at the delete. Consumer manifests, `commands:` entries and orphans all
   need the rewrite. A product boundary can forbid a fold: `packages/clickup-utils/scripts/skills.mjs` splits
   the free kit (`PUBLIC_SKILLS`) from the paid pack, so `batch-workload` can't fold into `clickup`.
