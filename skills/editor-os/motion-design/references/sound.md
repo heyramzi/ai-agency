@@ -4,8 +4,8 @@
 
 [The kit](#the-kit), [On the contact frame](#on-the-contact-frame), [Produced marks, the census shelf and the keystroke](#produced-marks-the-census-shelf-and-the-keystroke)
 
-A clip cut into a read carries its own audio track. A product film keeps these contact clicks at half
-volume under its bed (`product-film.md#the-score`).
+A clip cut into a read carries its own audio track. A product film locks its picture first, then lays a
+whoosh or impact on every transform, these contact clicks and a bed under them (`product-film.md#sound`).
 This file is the clip's own voices. Which sound a moment on screen takes, the mix levels, density and
 licence are the `sound` skill's.
 

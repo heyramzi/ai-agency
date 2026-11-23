@@ -152,7 +152,7 @@ Different means the SRT is the only clock; what got said runs longer, reordered,
 face. Diff line timings right before committing filenames, since the names are write-once.
 
 
-A film with no read takes its clock from the track's bar (`product-film.md`). Search what exists before you design.
+A film with no read takes its clock from its own transforms, with the sound laid on after (`product-film.md`). Search what exists before you design.
 Open every clip with a header comment that quotes the line it serves and argues its design. That makes your
 own clip library searchable: grep it for the line you're about to build for before you design from zero.
 

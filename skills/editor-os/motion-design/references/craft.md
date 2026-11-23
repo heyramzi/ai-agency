@@ -23,8 +23,9 @@ Mechanics for a Remotion motion project; SKILL.md holds the judgment. `Shot`, `B
   `width: 100%` parent the ring hangs down and right of what landed, silently.
 - Say "this one" with colour, not more light. Cross-fade between plates; a ternary on a moving value flips inside
   one frame and pops.
-- People on screen (avatars, a team row, assignees) are photoreal faces of people who don't exist: pull them once from
-  thispersondoesnotexist.com into the project's `public/` and crop round. Never drawn or initials avatars, never a real person's photo.
+- People on screen (avatars, a team row, assignees) are photoreal: a face from thispersondoesnotexist.com or a
+  licensed stock portrait, pulled once into the project's `public/` and cropped round. Never drawn or initials
+  avatars, never the photo of someone you know or an unlicensed find. Every other picture in a UI is a licensed photo too.
 
 ## One motion language
 
@@ -114,7 +115,8 @@ third. Register it as its own composition with `defaultProps={{ alpha: true }}` 
 Most clips have no words. Add type only when the read names something the viewer is sent away to find ("API, CLI
 or MCP"; no shape says it), and then labels only: uppercase, tracked out, never a sentence, because a viewer
 reading prose has stopped listening. That's a clip that **replaces** the picture. An overlay keyed over the face
-is sentence case, set to be read (`registers.md`); a product film's type is the voice (`product-film.md`).
+is sentence case, set to be read (`registers.md`); a product film's words sit in the product's own text slot
+and slide up word by word at about 7% of frame height (`product-film.md`).
 
 Text a person would type into a drawn UI (a chat message, a prompt, a search, a form field) is the real example, never a summary in labels or placeholders. The labels-only rule is for captions, not for what's inside the UI: a bubble that says "Who I am · What I do · What I want" becomes "Hi, I run a 6-person bookkeeping firm in Lyon. Help me write a reminder to a client who is late on documents."
 
@@ -158,7 +160,8 @@ every `--sheet`, or a re-render reads back the old frames. `--assert` says nothi
 Run each clip's review in a subagent that opens the frames, so the building session never loads the images. It
 reviews like a harsh director and scores 1 to 10 on 7 axes: hook (something lands in the first 2s), readable at
 360px wide, motion (eases and settles; never slides, stutters at a loop seam or flashes over 3 a second), variety
-(something new every 2 to 4s, skipped under 6s), composition (one subject, no frame border), brand, and sound sync.
+(something new every 2 to 4s, skipped under 6s; a product film changes state about every 1.8s and passes
+`teardown.py gate`), composition (one subject, no frame border), brand, and sound sync.
 Motion and composition also fail on the tells of motion nobody designed, each with its fix: a crossfade or blur-in
 between unrelated scenes (grow the next scene out of an element on screen), a particle burst, shockwave ring or lens
 flare from nothing (motion starts from something on screen), overshoot on every element (landings only), camera

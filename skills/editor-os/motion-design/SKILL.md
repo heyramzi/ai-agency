@@ -60,7 +60,9 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
    Make gets the scenario running, a course gets the lesson page inside it (`broll` 2b). A logo is the
    real mark (simple-icons, else a logo API by domain, never an image search). A product that exists (Claude,
    ClickUp, Descript, a real app screen) is its real UI cropped to the one field the line is about, readable at
-   phone width, never a brand-styled glass card or a whole table pasted in. A stand-in for a physical or product shape takes its
+   phone width, never a brand-styled glass card or a whole table pasted in. A drawn card may carry a product film's morph
+   only when it's built from the product's own shapes and resolves into the real screen. A picture inside a
+   UI (an attachment, an avatar, a cover) is a real licensed photo, never a drawn placeholder. A stand-in for a physical or product shape takes its
    real outline: a snapshot test that used a black rectangle for the MacBook camera notch put a square box
    in a launch film, so check a render or fixture for placeholder geometry before you reuse it. Brand cards are for ideas and claims. 15 correct clips that each open on an
    empty frame make a slideshow. Aim for a single world, a motif that changes and one motion language
@@ -69,9 +71,10 @@ default. To re-vendor, replace the `remotion/` folder whole from the published a
 
 ## Which branch
 
-- No read (no voice-over, no face, no transcript): a product film. Short cards are the only voice and the clock
-  is a licensed bed's bar grid; one object owns the frame for 4 to 6 beats. `references/product-film.md` replaces the
-  clock, type and sound rules below.
+- No read (no voice-over, no face, no transcript): a product film. One core loop in 15 to 25 s, one subject dead
+  centre, every shot transformed into the next, the claim inside the product's own text, and the sound laid on
+  the locked picture. `references/product-film.md` replaces the clock, type and sound rules below, and
+  `uv run scripts/teardown.py gate <render.mp4>` exiting 0 is its done check.
 - Which cell a line gets, or what to do when none fits: `references/placement.md`.
 - A CTA, lower third or end card, evergreen and reused for years: `references/ctas.md` (someone else's channel
   or a CTA described in plain words: the `cta-creation` skill).

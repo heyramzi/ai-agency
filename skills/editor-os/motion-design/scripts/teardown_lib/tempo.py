@@ -9,7 +9,8 @@ import numpy as np
 from .frames import run
 
 def cmd_tempo(path: str, lo: float = 60.0, hi: float = 190.0) -> float:
-    """BPM by spectral-flux comb, then the bar -- the number beats.ts is built in multiples of."""
+    """BPM by spectral-flux comb, then the bar: a pacing unit, and where the bed's hits fall when
+    the sound is laid on the locked picture. The picture isn't cut to it (product-film.md)."""
     wav = Path(path).with_suffix(".teardown.wav")
     run(["ffmpeg", "-v", "error", "-i", path, "-vn", "-ac", "1",
          "-acodec", "pcm_s16le", "-ar", "44100", str(wav), "-y"])
@@ -70,9 +71,9 @@ def cmd_tempo(path: str, lo: float = 60.0, hi: float = 190.0) -> float:
     beat = 60 / bpm
     print(f"BPM {bpm:.2f}")
     print(f"  beat        {beat:.4f}s")
-    print(f"  bar (4/4)   {beat * 4:.4f}s   <- one typographic card")
-    print(f"  2 bars      {beat * 8:.4f}s   <- a line that carries the argument")
-    print(f"  8-bar phrase{beat * 32:.3f}s  <- an act")
+    print(f"  bar (4/4)   {beat * 4:.4f}s")
+    print(f"  2 bars      {beat * 8:.4f}s")
+    print(f"  8-bar phrase{beat * 32:.3f}s")
     for fps_out in (30, 60):
         print(f"  at {fps_out}fps: bar = {beat * 4 * fps_out:.1f} frames")
     return bpm
