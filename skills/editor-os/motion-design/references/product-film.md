@@ -30,8 +30,8 @@ still frames and 31% of its runtime as cards on a blank ground.
   product that's a change crossing each way. WHY: every beat that isn't the loop is a beat the viewer has to
   file, and 20 s holds one idea.
 - **Secondary features and settings never get a beat.** A plan, a toggle, a filter or a schedule folds into
-  the content cycle (default 5) or stays off screen. WHY: v2's read-only beat and settings montage were what
-  the author cut first.
+  the content cycle (default 5) or stays off screen. WHY: v2's read-only beat and settings montage were the
+  first beats cut in review.
 - **Every image, avatar and attachment is a real licensed photo**, never a drawn placeholder: Unsplash or a
   library whose licence covers the launch, saved into the project with its source. WHY: a drawn picture is
   the one thing in a photoreal UI that reads as fake, and the eye goes to it.
