@@ -108,7 +108,7 @@ on the company page when that agent goes (5 Oct 2026). List those skills first. 
 - A merge isn't done at the delete. Consumer manifests, `commands:` entries and orphans all
   need the rewrite. A product boundary can forbid a fold: `packages/clickup-utils/scripts/skills.mjs` splits
   the free kit (`PUBLIC_SKILLS`) from the paid pack, so `batch-workload` can't fold into `clickup`.
-- Match duplicates on description content, never name (`audit` and `ship` share names across
+- Match duplicates on description content, never name (`audit` shares its name across
   packs); similarity scoring misses real ones. An identical opening paragraph is the tell, and a
   shared boilerplate sentence alone can score 0.45 to 0.68 (11 Agency OS skills): dedup the block,
   don't merge the members.
