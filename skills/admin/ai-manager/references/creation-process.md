@@ -67,10 +67,10 @@ An agent is a persona spawned into its own context with its own tools and budget
 name: thing-reviewer                        # equals the filename, lowercase and hyphens
 description: "..."                          # quoted; what it does and when to spawn it
 skills: [refactor, diagnose]                # what it preloads: 1 to 3 core skills
-model: opus                                 # opus default (agents-core.md); haiku only for search-and-collect with no quality call
+model: sonnet                               # sonnet default; opus only for screens, UI, Swift and code (agents-core.md, TSK-3563)
 disallowedTools: Write, Edit, NotebookEdit  # a reviewer that can't edit
 maxTurns: 30                                # a ceiling so a bad run ends
-effort: high                                # only where depth is the deliverable
+effort: medium                              # always set: low for a fetch-only scout, high only for screens and Swift
 ---
 ```
 
