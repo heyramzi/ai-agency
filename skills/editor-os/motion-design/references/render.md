@@ -3,7 +3,7 @@
 An overlay that renders without its alpha channel looks right in every preview and wrong in the edit. Read the
 first half before your first keyed render. The second half covers the other renderer.
 
-**Every render runs through `~/bin/heavy-gate.py` at `--concurrency=1`, 720p for drafts, and the 1080p master renders once at the end.** Check a beat on stills, never a full-length render. With other sessions' builds already queued, the author's laptop ran hot and he asked the Asana film agent to stop rendering (24 Nov 2026).
+**Render drafts at 720p with `--concurrency=1`, and the 1080p master once at the end.** Check a beat on stills, never a full-length render: a laptop running other builds gets hot fast.
 
 ## Alpha fails silently
 
