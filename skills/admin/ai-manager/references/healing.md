@@ -14,7 +14,7 @@ opens when it matters.
 | a mechanical coding mistake (a pattern a parser can see) | a lint rule, hook or typecheck flag, never prose |
 | a constraint every skill in a domain hits | a rule scoped to that domain |
 | the repo's shape, commands, conventions | `CLAUDE.md` / `AGENTS.md` |
-| how one project looks or moves (a value, surface, curve he corrected) | that repo's `DESIGN.md`, by [design-taste.md](design-taste.md) |
+| how one project looks or moves (a value, surface, curve he corrected) | that repo's `DESIGN.md`, by `ui-design`'s `references/design-taste.md` |
 | an external system's behaviour | the skill that talks to it |
 | a one-off about this conversation | nowhere |
 

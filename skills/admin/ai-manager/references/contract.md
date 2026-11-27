@@ -69,11 +69,13 @@ holds the refresh procedure.
 ## Naming and placement
 
 - Skills: `ai-doc/skills/<area>/<family>/<kebab-name>/SKILL.md`. The areas are fixed
-  (`ls ai-doc/skills`); a family is a shelf of 2 to 8 related skills (`growth/search`, `apple/swift`),
-  and **a skill never sits loose under its area**. The directory name is the command. **Every `.md`
-  stays under 200 lines, a skill holds at most 25, and no path climbs with `../`** (a consumer's
-  `SKILL.md` is a symlink, so `../` resolves against the consumer repo; write `~/...`).
-  `scripts/check-skill-length.mjs` gates all three. A skill's command comes from its directory and ignores its `name:`.
+  (`ls ai-doc/skills`); a family is a shelf of related skills (`growth/search`, `apple/swift`), one
+  skill is fine, and it splits past `familyMaxSkills`. **A skill never sits loose under its area**,
+  except in an area listed in `flatAreas` (`editor-os`, a product pack shipped as it lays out).
+  The directory name is the command. **Every `.md` stays under `fileMaxLines`, a skill holds at
+  most `skillMaxFiles`, and no path climbs with `../`** (a consumer's `SKILL.md` is a symlink, so
+  `../` resolves against the consumer repo; write `~/...`). The numbers live in
+  `ai-doc/limits.json`, and `scripts/check-skill-length.mjs` gates all three. A skill's command comes from its directory and ignores its `name:`.
 - Agents: `ai-doc/agents/<category>/<kebab-name>.md`, the filename equal to `name:`
   (`design/frontend-designer.md` is `frontend-designer`), lowercase and hyphens, no colon. Eight
   per category.
@@ -125,8 +127,9 @@ and to invoke `impeccable:<command>` through the Skill tool before changing anyt
 `readlink -f .claude/skills/<name>/SKILL.md`**, never by guessing the path (skills sit inside a
 family; four sessions each spent 3 to 5 calls on this).
 
-- Inside vibe-kit: `cd CLIs && bun run vibekit sync ..`. vibe-kit is a consumer of its own `vibekit.json`.
-- A commit touching `ai-doc/` syncs every consumer through vibe-kit's `post-commit` hook
+- The kit itself: sync the repo that holds it. The kit has no `vibekit.json` of its own, since a
+  second manifest nested in a synced repo loads every skill twice.
+- A commit touching `ai-doc/` syncs every consumer through the `post-commit` hook
   (`bash scripts/install-hooks.sh` installs it; log `~/.cache/vibekit-sync.log`). By hand, from
   `CLIs/`: `bun run vibekit sync <project-dir>`, where a relative path resolves against `CLIs/`. A
   folder subscription (`"marketing"`) pulls it recursively.
