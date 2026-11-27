@@ -53,7 +53,7 @@ Siblings: `social` (`references/shorts-production.md` for encoding, Drive, Click
 | 7 | review | `sequencing.md` (`editor-os transcript`, `plan`, `wait`) | he decided the open beats and the music; `edit.json` holds his choices |
 | 8 | handoff | `projects-and-media.md` (`descript background`, then `descript settings`) | one grid under the whole video, settings clean, project left for his pass |
 
-A Short never coaches, reorders or chapters.
+A Short never coaches, reorders or chapters. Before handoff, read the kept script as a viewer: the hook promises what this part delivers, the last 30 s closes, and every claim runs the right way round.
 
 ## Transcript cleanup
 
